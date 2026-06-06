@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Contact Danmark Rosalejos for collaborations, opportunities, and project inquiries." />
+  <title>Contact | Danmark Rosalejos</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body class="contact-page">
+
+<header id="header">
+  <a href="../index.html#home" class="logo">DAN.DEV</a>
+  <nav id="nav">
+    <a href="../index.html#home">Home</a>
+    <a href="../index.html#services">Services</a>
+    <a href="../index.html#projects">Work</a>
+    <a href="../index.html#skills">Skills</a>
+    <a href="../index.html#education">Education</a>
+    <a href="../index.html#certificates">Certifications</a>
+    <a href="contact.html" class="active">Contact</a>
+  </nav>
+  <button class="hamburger" id="hbg" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<div class="mobile-nav" id="mnav">
+  <a href="../index.html#home" onclick="closeMenu()">Home</a>
+  <a href="../index.html#services" onclick="closeMenu()">Services</a>
+  <a href="../index.html#projects" onclick="closeMenu()">Work</a>
+  <a href="../index.html#skills" onclick="closeMenu()">Skills</a>
+  <a href="../index.html#education" onclick="closeMenu()">Education</a>
+  <a href="../index.html#certificates" onclick="closeMenu()">Certifications</a>
+  <a href="contact.html" onclick="closeMenu()">Contact</a>
+</div>
+
+<main class="contact-page-main">
+  <section class="section contact-page-section">
+    <div class="container">
+      <div class="contact-page-head reveal">
+        <h1>Get In Touch</h1>
+        <p>Feel free to reach out for collaborations, opportunities, or just to say hello! I'm always open to discussing new projects.</p>
+      </div>
+
+      <div class="contact-page-grid">
+        <div class="contact-info-col contact-panel reveal">
+          <h3 class="contact-col-title">CONTACT INFORMATION</h3>
+          <div class="contact-info-list">
+            <div class="contact-info-item">
+              <div class="contact-info-icon"><i class="fa-brands fa-facebook-f"></i></div>
+              <div class="contact-info-text">
+                <span class="contact-info-label">FACEBOOK</span>
+                <span class="contact-info-value">Danmark Rosalejos</span>
+              </div>
+            </div>
+            <div class="contact-info-sep"></div>
+            <div class="contact-info-item">
+              <div class="contact-info-icon"><i class="fa-brands fa-discord"></i></div>
+              <div class="contact-info-text">
+                <span class="contact-info-label">DISCORD</span>
+                <span class="contact-info-value">danwebdev</span>
+              </div>
+            </div>
+            <div class="contact-info-sep"></div>
+            <div class="contact-info-item">
+              <div class="contact-info-icon"><i class="fa-brands fa-github"></i></div>
+              <div class="contact-info-text">
+                <span class="contact-info-label">GITHUB</span>
+                <span class="contact-info-value">danmarkdev</span>
+              </div>
+            </div>
+            <div class="contact-info-sep"></div>
+            <div class="contact-info-item">
+              <div class="contact-info-icon"><i class="fa-solid fa-phone"></i></div>
+              <div class="contact-info-text">
+                <span class="contact-info-label">PHONE</span>
+                <span class="contact-info-value">+63 969 489 1753</span>
+              </div>
+            </div>
+            <div class="contact-info-sep"></div>
+            <div class="contact-info-item">
+              <div class="contact-info-icon"><i class="fa-solid fa-envelope"></i></div>
+              <div class="contact-info-text">
+                <span class="contact-info-label">EMAIL</span>
+                <span class="contact-info-value">kdanmarkrosalejos@gmail.com</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form-col contact-panel reveal">
+          <h3 class="contact-col-title">SEND A MESSAGE</h3>
+          <div class="contact-form">
+            <div class="form-row">
+              <label for="cf-name">YOUR NAME</label>
+              <input type="text" id="cf-name" placeholder="John Doe" />
+            </div>
+            <div class="form-row">
+              <label for="cf-email">YOUR EMAIL</label>
+              <input type="email" id="cf-email" placeholder="john@example.com" />
+            </div>
+            <div class="form-row">
+              <label for="cf-subject">SUBJECT</label>
+              <input type="text" id="cf-subject" placeholder="Project Inquiry" />
+            </div>
+            <div class="form-row">
+              <label for="cf-msg">YOUR MESSAGE</label>
+              <textarea id="cf-msg" placeholder="Tell me about your project..."></textarea>
+            </div>
+            <button id="cf-btn" onclick="sendMsg()">SEND MESSAGE</button>
+            <div id="cf-status"></div>
+          </div>
+        </div>
+      </div>
+
+      <a href="../index.html#home" class="back-home">&larr; Back to Home</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <p>&copy; 2026 Danmark Rosalejos. All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script src="../script.js"></script>
+</body>
+</html>

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Danmark Rosalejos - Web Developer specializing in HTML, CSS, JS, PHP, SQL, and backend integrations." />
+  <meta property="og:title" content="Danmark Rosalejos | Web Developer" />
+  <meta property="og:description" content="Web Developer - HTML, CSS, JS, PHP, SQL, PHPMailer, EmailJS" />
+  <meta property="og:type" content="website" />
+  <title>Danmark Rosalejos | Portfolio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-inner">
+    <h1 class="loader-title">WELCOME</h1>
+    <div class="loader-bar-track"><div class="loader-bar-fill" id="lbar"></div></div>
+  </div>
+</div>
+
+<!-- NAV -->
+<header id="header">
+  <a href="#home" class="logo">DAN.DEV</a>
+  <nav id="nav">
+    <a href="#home">Home</a>
+    <a href="#services">Services</a>
+    <a href="#projects">Work</a>
+    <a href="#skills">Skills</a>
+    <a href="#education">Education</a>
+    <a href="#certificates">Certifications</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <button class="hamburger" id="hbg" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mnav">
+  <a href="#home" onclick="closeMenu()">Home</a>
+  <a href="#services" onclick="closeMenu()">Services</a>
+  <a href="#projects" onclick="closeMenu()">Work</a>
+  <a href="#skills" onclick="closeMenu()">Skills</a>
+  <a href="#education" onclick="closeMenu()">Education</a>
+  <a href="#certificates" onclick="closeMenu()">Certifications</a>
+  <a href="#contact" onclick="closeMenu()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section id="home" class="hero">
+  <div class="hero-dot-bg"></div>
+  <div class="container hero-grid">
+
+    <div class="hero-left reveal">
+      <p class="hero-eyebrow">
+        Web Developer
+      </p>
+      <h1 class="hero-name">Danmark Rosalejos</h1>
+      <p class="hero-bio">
+        A skilled web developer delivering <strong>clean, scalable solutions</strong> -
+        responsive front-ends, PHP &amp; MySQL backends, email integrations, and live deployment.
+      </p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn-primary">VIEW PROJECTS</a>
+        <a href="#contact" class="btn-outline">HIRE ME</a>
+      </div>
+    </div>
+
+    <div class="hero-right reveal">
+      <div class="photo-frame">
+        <div class="photo-accent-ring"></div>
+        <div class="photo-wrap">
+          <img src="assets/profile.jpg" alt="Danmark Rosalejos" />
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="section section-alt">
+  <div class="container">
+    <div class="section-header reveal">
+      <h2 class="section-big-heading">SERVICES</h2>
+      <span class="section-label-right">WHAT I DO</span>
+    </div>
+    <div class="section-divider reveal"></div>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-num">01</div>
+        <div class="service-icon"><i class="fa-solid fa-code"></i></div>
+        <h3>Web Development</h3>
+        <p>Custom websites built with HTML5, CSS3, JS, and PHP. Responsive, fast, and performance-optimized from front to back.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-num">02</div>
+        <div class="service-icon"><i class="fa-solid fa-bolt"></i></div>
+        <h3>Webhook Integration</h3>
+        <p>Inbound webhook systems that receive real-time data from external services directly into your web app.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-num">03</div>
+        <div class="service-icon"><i class="fa-solid fa-server"></i></div>
+        <h3>Deployment</h3>
+        <p>Full deployment management on GitHub Pages and other hosting platforms, ensuring your site is live and stable.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <h2 class="section-big-heading">PROJECTS</h2>
+      <span class="section-label-right">PORTFOLIO</span>
+    </div>
+    <div class="section-divider reveal"></div>
+    <div class="projects-list">
+
+      <div class="project-row reveal">
+        <div class="project-inner">
+          <div class="project-meta">
+            <div class="project-tech">HTML / CSS / JS</div>
+            <span class="project-index">01</span>
+          </div>
+          <h3 class="project-row-title">AquaPump Management System</h3>
+          <p class="project-row-desc">A web-based monitoring and control system for aqua pump operations, featuring a real-time dashboard with live status indicators.</p>
+          <a href="https://danmarkrosalejos.github.io/AquaControl-Pump-System/" target="_blank" class="project-live-link">View Live Site <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </div>
+
+      <div class="project-row reveal">
+        <div class="project-inner">
+          <div class="project-meta">
+            <div class="project-tech">PHP / MYSQL / JS / WEBHOOK INTEGRATION</div>
+            <span class="project-index">02</span>
+          </div>
+          <h3 class="project-row-title">HealthSync Clinic Management System</h3>
+          <p class="project-sub-label">For STI College Bacoor</p>
+          <p class="project-row-desc">A clinic management system to simplify the school nurse's workflow - digital records, communication tools, and streamlined healthcare processes.</p>
+          <a href="https://healthsync.hstn.me" target="_blank" class="project-live-link">View Live Site <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="section section-alt">
+  <div class="container">
+    <div class="stack-title-row reveal">
+      <h2 class="section-big-heading">TECHNICAL STACK</h2>
+      <span class="section-label-right">EXPERTISE</span>
+    </div>
+    <div class="section-divider reveal"></div>
+    <div class="stack-columns reveal">
+      <div class="stack-col">
+        <div class="stack-col-title">LANGUAGES</div>
+        <ul class="stack-list">
+          <li>HTML5 / CSS3</li>
+          <li>JavaScript</li>
+          <li>PHP</li>
+          <li>SQL / MySQL</li>
+        </ul>
+      </div>
+      <div class="stack-col">
+        <div class="stack-col-title">WEB DEV</div>
+        <ul class="stack-list">
+          <li>Responsive Design</li>
+          <li>Webhook Integration</li>
+          <li>Deployment</li>
+          <li>PHPMailer</li>
+          <li>EmailJS</li>
+        </ul>
+      </div>
+      <div class="stack-col">
+        <div class="stack-col-title">TOOLS</div>
+        <ul class="stack-list">
+          <li>GitHub</li>
+          <li>VS Code</li>
+          <li>Netlify / InfinityFree</li>
+          <li>AeonFree</li>
+          <li>Windows 10</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education" class="section edu-section">
+  <div class="container">
+    <div class="education-panel reveal">
+      <h2 class="education-title">Education</h2>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-left">
+            <div class="tl-dot active"></div>
+            <div class="tl-line"></div>
+          </div>
+          <div class="tl-right">
+            <div class="tl-year">2024 - Present</div>
+            <h4>Senior High School</h4>
+            <p>STI College - ICT Track (Grade 12). Currently focused on web development, databases, and practical ICT projects.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-left">
+            <div class="tl-dot"></div>
+            <div class="tl-line"></div>
+          </div>
+          <div class="tl-right">
+            <div class="tl-year">2021 - 2024</div>
+            <h4>Junior High School</h4>
+            <p>Bacoor National High School Main. Built my foundation in computer literacy and technical problem solving.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certificates" class="section cert-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <h2 class="section-big-heading">CERTIFICATIONS</h2>
+      <span class="section-label-right">CREDENTIALS</span>
+    </div>
+    <div class="section-divider reveal"></div>
+    <div class="cert-grid cert-grid-wide reveal">
+      <div class="cert-item">
+        <div class="cert-img-wrap">
+          <img src="certs/freecodecamp-responsive.png" alt="Responsive Web Design Certificate" />
+        </div>
+        <div class="cert-info">
+          <h4>Responsive Web Design</h4>
+          <p>FREECODECAMP &nbsp;|&nbsp; Sep 2025</p>
+        </div>
+      </div>
+      <div class="cert-item">
+        <div class="cert-img-wrap">
+          <img src="certs/cognitive-class.png" alt="Cognitive Class Certificate" />
+        </div>
+        <div class="cert-info">
+          <h4>Cognitive Class</h4>
+          <p>IBM COGNITIVE CLASS &nbsp;|&nbsp; Sep 2025</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section contact-section">
+  <div class="container">
+    <div class="contact-top reveal">
+      <p class="section-label">READY TO START?</p>
+      <h2 class="contact-heading">Let's build something<br><span>exceptional.</span></h2>
+    </div>
+    <div class="contact-icon-row reveal">
+      <a href="contacts/contact.html" class="contact-round" aria-label="Open email contact form">
+        <i class="fa-solid fa-envelope"></i>
+      </a>
+      <a href="https://github.com/danmarkdev" target="_blank" rel="noopener" class="contact-round" aria-label="GitHub profile">
+        <i class="fa-brands fa-github"></i>
+      </a>
+      <a href="https://www.linkedin.com/in/danmark-rosalejos-2b89503b1/" target="_blank" rel="noopener" class="contact-round" aria-label="LinkedIn profile">
+        <i class="fa-brands fa-linkedin"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container footer-inner">
+    <p>&copy; 2025 Danmark Rosalejos. All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
