@@ -6,8 +6,8 @@
   --bg-alt:  #000000;
   --surface: #000000;
   --border:  #1e1e1e;
-  --accent:  #6c63ff;
-  --accent2: #5a52e0;
+  --accent:  #ffffff;
+  --accent2: #cccccc;
   --text:    #f0f0f0;
   --muted:   #777777;
   --dim:     #3a3a3a;
@@ -79,7 +79,7 @@ input, textarea { user-select: text !important; -webkit-user-select: text !impor
 }
 #header.scrolled {
   background: rgba(0,0,0,0.98);
-  border-bottom-color: rgba(108,99,255,0.2);
+  border-bottom-color: rgba(255,255,255,0.15);
 }
 
 .logo {
@@ -98,7 +98,7 @@ input, textarea { user-select: text !important; -webkit-user-select: text !impor
 #nav a:not(.nav-cta)::after {
   content: '';
   position: absolute; bottom: -4px; left: 0; right: 0;
-  height: 1px; background: var(--accent);
+  height: 1px; background: #ffffff;
   transform: scaleX(0); transition: transform 0.2s;
 }
 #nav a:not(.nav-cta):hover::after,
@@ -140,7 +140,7 @@ input, textarea { user-select: text !important; -webkit-user-select: text !impor
 
 .section-label {
   font-size: 0.65rem; font-weight: 700;
-  letter-spacing: 0.25em; color: var(--accent);
+  letter-spacing: 0.25em; color: #ffffff;
   text-transform: uppercase; margin-bottom: 0.65rem;
 }
 .section-heading {
@@ -289,7 +289,7 @@ input, textarea { user-select: text !important; -webkit-user-select: text !impor
 .service-card::before {
   content: '';
   position: absolute; top: 0; left: 0; right: 0;
-  height: 2px; background: var(--accent);
+  height: 2px; background: #ffffff;
   transform: scaleX(0); transform-origin: left;
   transition: transform 0.3s ease;
 }
@@ -356,7 +356,7 @@ input, textarea { user-select: text !important; -webkit-user-select: text !impor
   text-decoration: none; margin-top: auto; padding-top: 0.5rem;
   transition: color 0.2s, gap 0.2s;
 }
-.project-live-link:hover { color: var(--accent); gap: 0.75rem; }
+.project-live-link:hover { color: #ffffff; gap: 0.75rem; text-decoration: underline; }
 
 /* ── SKILLS / TECHNICAL STACK ── */
 .stack-title-row {
@@ -384,7 +384,7 @@ input, textarea { user-select: text !important; -webkit-user-select: text !impor
 .stack-list li::before {
   content: ''; display: inline-block;
   width: 6px; height: 6px;
-  background: var(--accent); border-radius: 1px; flex-shrink: 0;
+  background: #ffffff; border-radius: 1px; flex-shrink: 0;
 }
 
 /* ── EDUCATION ── */
@@ -578,7 +578,7 @@ input, textarea { user-select: text !important; -webkit-user-select: text !impor
   transition: border-color 0.2s; resize: vertical; width: 100%;
 }
 .form-row input:focus,
-.form-row textarea:focus { border-color: rgba(108,99,255,0.45); }
+.form-row textarea:focus { border-color: rgba(255,255,255,0.35); }
 .form-row input::placeholder,
 .form-row textarea::placeholder { color: var(--dim); }
 textarea { min-height: 130px; }
@@ -652,7 +652,6 @@ footer p { font-size: 0.75rem; color: var(--dim); }
   .hero-name { font-size: 2.2rem; }
   .section-big-heading { font-size: 2rem; }
 }
-
 
 
 
