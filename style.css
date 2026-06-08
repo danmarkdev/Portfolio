@@ -432,22 +432,22 @@ input, textarea { user-select: text !important; -webkit-user-select: text !impor
   gap: 1.5rem;
 }
 
-/* Card base — dark bg, large rounded corners like screenshot */
+/* Card base — black bg, white border */
 .cert-item {
   display: flex;
   flex-direction: column;
-  background: #131313;
-  border: 1px solid #222222;
+  background: #000000;
+  border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 16px;
   overflow: hidden;
   transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.25s ease;
   cursor: pointer;
 }
 
-/* Subtle lift on hover */
+/* Brighter border on hover */
 .cert-item:hover {
-  border-color: rgba(255, 255, 255, 0.18);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  border-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 8px 32px rgba(255, 255, 255, 0.06);
   transform: translateY(-4px);
 }
 
