@@ -429,62 +429,68 @@ input, textarea { user-select: text !important; -webkit-user-select: text !impor
 .cert-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.25rem;
+  gap: 1.5rem;
 }
 
-/* Card base */
+/* Card base — dark bg, large rounded corners like screenshot */
 .cert-item {
   display: flex;
   flex-direction: column;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 6px;
+  background: #131313;
+  border: 1px solid #222222;
+  border-radius: 16px;
   overflow: hidden;
   transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.25s ease;
   cursor: pointer;
 }
 
-/* Glowing white border on hover */
+/* Subtle lift on hover */
 .cert-item:hover {
-  border-color: rgba(255, 255, 255, 0.55);
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.12),
-    0 8px 32px rgba(255, 255, 255, 0.07),
-    0 2px 8px rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
   transform: translateY(-4px);
 }
 
+/* Certificate image area */
 .cert-img-wrap {
   width: 100%;
   aspect-ratio: 16 / 10;
   overflow: hidden;
-  background: #111;
+  background: #1a1a1a;
+  border-radius: 10px;
+  margin: 12px;
+  width: calc(100% - 24px);
 }
 .cert-img-wrap img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  border-radius: 8px;
   transition: transform 0.4s ease;
 }
 .cert-item:hover .cert-img-wrap img {
-  transform: scale(1.04);
+  transform: scale(1.03);
 }
+
+/* Text info below image */
 .cert-info {
-  padding: 1rem 1.25rem;
+  padding: 0.75rem 1.25rem 1.25rem;
 }
 .cert-info h4 {
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 700;
   color: #fff;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.25rem;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
 }
 .cert-info p {
-  font-size: 0.67rem;
-  font-weight: 600;
+  font-size: 0.82rem;
+  font-weight: 400;
   color: var(--muted);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 /* ── CONTACT (homepage section) ── */
@@ -654,7 +660,6 @@ footer p { font-size: 0.75rem; color: var(--dim); }
   .hero-name { font-size: 2.2rem; }
   .section-big-heading { font-size: 2rem; }
 }
-
 
 
 
