@@ -425,22 +425,11 @@ input, textarea { user-select: text !important; -webkit-user-select: text !impor
   border-top: 1px solid var(--border);
 }
 
-/*
-  2-column grid.
-  The 5th cert (.cert-lone) uses grid-column to span both columns
-  and aligns itself to the center via justify-self + a max-width.
-*/
+/* 3-column grid — 6 certs = 2 perfect rows */
 .cert-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.25rem;
-}
-
-/* The lone 5th cert: spans both columns, centered, same width as one column */
-.cert-lone {
-  grid-column: 1 / -1;           /* stretch across all columns */
-  justify-self: center;          /* center it horizontally */
-  width: calc(50% - 0.625rem);  /* same width as a single column card */
 }
 
 /* Card base */
@@ -638,9 +627,8 @@ footer p { font-size: 0.75rem; color: var(--dim); }
   .contact-page-grid { grid-template-columns: 1fr; }
   .footer-inner { flex-direction: column; gap: 0.5rem; text-align: center; }
 
-  /* Stack certs to 1 column on tablet */
-  .cert-grid { grid-template-columns: 1fr; }
-  .cert-lone { grid-column: 1; justify-self: stretch; width: 100%; }
+  /* 2 columns on tablet */
+  .cert-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 700px) {
@@ -650,8 +638,10 @@ footer p { font-size: 0.75rem; color: var(--dim); }
   .stack-col:last-child { border-bottom: none; }
   .services-grid { grid-template-columns: 1fr; }
   .projects-list { grid-template-columns: 1fr; }
+
+  /* 1 column on mobile */
   .cert-grid { grid-template-columns: 1fr; }
-  .cert-lone { grid-column: 1; justify-self: stretch; width: 100%; }
+
   .tl-right h4 { white-space: normal; }
   .hero-name { font-size: 2.6rem; }
   .contact-icon-row { gap: 1rem; }
