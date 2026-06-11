@@ -96,10 +96,11 @@ function sendMsg() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       access_key: 'dccfe411-ebfa-41c4-956c-e33f7ba558ab',
-      name:    name,
-      email:   email,
-      subject: subject || 'New message from Portfolio',
-      message: msg
+      name:       name,
+      email:      email,
+      subject:    subject || 'New message from Portfolio',
+      message:    msg,
+      botcheck:   false
     })
   })
   .then(function (res) { return res.json(); })
@@ -134,6 +135,3 @@ document.addEventListener('keydown',     function (e) {
   if ((e.ctrlKey || e.metaKey) && ['c','x','u','s','a'].includes(e.key.toLowerCase())) e.preventDefault();
   if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && ['i','j'].includes(e.key.toLowerCase()))) e.preventDefault();
 });
-
-
-
