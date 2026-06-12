@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="style.css?v=2" />
+  <link rel="stylesheet" href="style.css?v=3" />
 </head>
 <body>
 
@@ -46,15 +46,24 @@
   </button>
 </header>
 
-<!-- MOBILE NAV -->
-<div class="mobile-nav" id="mnav">
-  <a href="#home" onclick="closeMenu()">Home</a>
-  <a href="#services" onclick="closeMenu()">Services</a>
-  <a href="#projects" onclick="closeMenu()">Work</a>
-  <a href="#skills" onclick="closeMenu()">Skills</a>
-  <a href="#education" onclick="closeMenu()">Education</a>
-  <a href="#certificates" onclick="closeMenu()">Certifications</a>
-  <a href="#contact" onclick="closeMenu()">Contact</a>
+<!-- MOBILE NAV OVERLAY -->
+<div class="mobile-nav-overlay" id="mnav-overlay" aria-hidden="true"></div>
+<div class="mobile-nav" id="mnav" role="dialog" aria-label="Mobile navigation">
+  <div class="mobile-nav-header">
+    <span class="mobile-nav-logo">DAN.DEV</span>
+    <button class="mobile-nav-close" id="mnav-close" aria-label="Close menu">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+  <nav class="mobile-nav-links">
+    <a href="#home"         onclick="closeMenu()">Home</a>
+    <a href="#services"     onclick="closeMenu()">Services</a>
+    <a href="#projects"     onclick="closeMenu()">Work</a>
+    <a href="#skills"       onclick="closeMenu()">Skills</a>
+    <a href="#education"    onclick="closeMenu()">Education</a>
+    <a href="#certificates" onclick="closeMenu()">Certifications</a>
+    <a href="#contact"      onclick="closeMenu()">Contact</a>
+  </nav>
 </div>
 
 <!-- HERO -->
