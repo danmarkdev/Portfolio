@@ -107,16 +107,15 @@ function sendMsg() {
       name:       name,
       email:      email,
       subject:    subject || 'New message from Portfolio',
-      message:    msg,
-      botcheck:   false
+      message:    msg
     })
   })
   .then(function (res) { return res.json(); })
   .then(function (data) {
     console.log('Web3Forms response:', data);
     if (data.success) {
-      status.style.color = '#ffffff';
-      status.textContent = "Message sent!";
+      status.style.color = '#22c55e';
+      status.textContent = "Message Sent!";
       document.getElementById('cf-name').value  = '';
       document.getElementById('cf-email').value = '';
       if (document.getElementById('cf-subject')) document.getElementById('cf-subject').value = '';
