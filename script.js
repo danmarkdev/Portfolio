@@ -29,18 +29,23 @@ var hbg  = document.getElementById('hbg');
 var mnav = document.getElementById('mnav');
 if (hbg && mnav) {
   hbg.addEventListener('click', function () {
-    hbg.classList.toggle('open');
-    mnav.classList.toggle('open');
+    var isOpen = mnav.classList.toggle('open');
+    hbg.classList.toggle('open', isOpen);
+    document.body.classList.toggle('menu-open', isOpen);
+    hbg.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
   });
 }
 function closeMenu() {
   if (hbg)  hbg.classList.remove('open');
   if (mnav) mnav.classList.remove('open');
+  document.body.classList.remove('menu-open');
+  if (hbg) hbg.setAttribute('aria-expanded', 'false');
 }
 
 /* ACTIVE NAV (index page only) */
 var sections  = document.querySelectorAll('section[id]');
 var navLinks  = document.querySelectorAll('#nav a:not(.nav-cta)');
+var mobileNavLinks = document.querySelectorAll('#mnav a');
 if (sections.length) {
   window.addEventListener('scroll', function () {
     var cur = '';
@@ -48,6 +53,9 @@ if (sections.length) {
       if (window.scrollY >= s.offsetTop - 120) cur = s.id;
     });
     navLinks.forEach(function (a) {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + cur);
+    });
+    mobileNavLinks.forEach(function (a) {
       a.classList.toggle('active', a.getAttribute('href') === '#' + cur);
     });
   });
