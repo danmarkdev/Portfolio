@@ -99,21 +99,19 @@ function sendMsg() {
   status.style.color = '#888';
   status.textContent = 'Sending your message…';
 
-  fetch('https://api.web3forms.com/submit', {
+  fetch('https://formspree.io/f/xaqzgqal', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      access_key: 'dccfe411-ebfa-41c4-956c-e33f7ba558ab',
-      name:       name,
-      email:      email,
-      subject:    subject || 'New message from Portfolio',
-      message:    msg
+      name:    name,
+      email:   email,
+      subject: subject || 'New message from Portfolio',
+      message: msg
     })
   })
   .then(function (res) { return res.json(); })
   .then(function (data) {
-    console.log('Web3Forms response:', data);
-    if (data.success) {
+    if (data.ok) {
       status.style.color = '#22c55e';
       status.textContent = "Message Sent!";
       document.getElementById('cf-name').value  = '';
