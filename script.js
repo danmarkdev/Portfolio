@@ -113,9 +113,10 @@ function sendMsg() {
   })
   .then(function (res) { return res.json(); })
   .then(function (data) {
+    console.log('Web3Forms response:', data);
     if (data.success) {
-      status.style.color = '#6c63ff';
-      status.textContent = "Message sent! I'll get back to you soon.";
+      status.style.color = '#ffffff';
+      status.textContent = "Message sent!";
       document.getElementById('cf-name').value  = '';
       document.getElementById('cf-email').value = '';
       if (document.getElementById('cf-subject')) document.getElementById('cf-subject').value = '';
