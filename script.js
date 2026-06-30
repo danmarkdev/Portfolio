@@ -34,7 +34,7 @@
       if(d.y<0||d.y>H) d.vy*=-1;
 
       var mDist = Math.hypot(d.x-mouse.x, d.y-mouse.y);
-      var alpha = mDist<MOUSE_DIST ? .9 : .22;
+      var alpha = mDist<MOUSE_DIST ? 1 : .55;
 
       ctx.beginPath();
       ctx.arc(d.x,d.y,d.r,0,Math.PI*2);
@@ -45,7 +45,7 @@
         var d2=dots[j];
         var dist=Math.hypot(d.x-d2.x,d.y-d2.y);
         if(dist<CONN_DIST){
-          var lineA = (1-dist/CONN_DIST)*0.12;
+          var lineA = (1-dist/CONN_DIST)*0.35;
           ctx.beginPath();
           ctx.moveTo(d.x,d.y);
           ctx.lineTo(d2.x,d2.y);
