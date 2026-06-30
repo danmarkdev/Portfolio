@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Discover the portfolio of Danmark Rosalejos, a skilled in web app developer building functional real world systems from responsive frontends to backends, webhook integrations and live deployment." />
-  <meta name="keywords" content="Krysler Danmark S. Rosalejos, Danmark S. Rosalejos, Danmark Rosalejos, Dan.Dev, Web App Developer, Web Developer, Web Design, Portfolio, Developer Cavite, Philippines, Frontend Developer, Backend Developer">
-  <meta name="author" content="Danmark Rosalejos">
-  <meta property="og:title" content="Danmark Rosalejos | Web App Developer" />
-  <meta property="og:description" content="Official Portfolio of Danmark Rosalejos, a highly skilled in web app developer building functional real time systems from responsive frontends to backends, webhook integration and live deployment." />
-  <meta property="og:type" content="Portfolio" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Discover the portfolio of Danmark Rosalejos, a skilled web app developer building functional real world systems from responsive frontends to backends, webhook integrations and live deployment."/>
+  <meta name="keywords" content="Krysler Danmark S. Rosalejos, Danmark S. Rosalejos, Danmark Rosalejos, Dan.Dev, Web App Developer, Web Developer, Web Design, Portfolio, Developer Cavite, Philippines, Frontend Developer, Backend Developer"/>
+  <meta name="author" content="Danmark Rosalejos"/>
+  <meta property="og:title" content="Danmark Rosalejos | Web App Developer"/>
+  <meta property="og:description" content="Official Portfolio of Danmark Rosalejos, a highly skilled web app developer building functional real time systems from responsive frontends to backends, webhook integration and live deployment."/>
+  <meta property="og:type" content="Portfolio"/>
   <title>Danmark Rosalejos</title>
-
-  <link rel="icon" type="image/png" href="favicon.png" />
-  <link rel="shortcut icon" href="favicon.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="style.css?v=4" />
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="shortcut icon" href="favicon.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
+
+<!-- ANIMATED BACKGROUND -->
+<canvas id="bg-canvas"></canvas>
 
 <!-- LOADER -->
 <div id="loader">
@@ -31,7 +32,7 @@
 
 <!-- NAV -->
 <header id="header">
-  <a href="#home" class="logo">DAN.DEV</a>
+  <a href="#home" class="logo">DAN<span class="logo-dot">.</span>DEV</a>
   <nav id="nav">
     <a href="#home">Home</a>
     <a href="#services">Services</a>
@@ -59,14 +60,11 @@
 
 <!-- HERO -->
 <section id="home" class="hero">
-  <div class="hero-dot-bg"></div>
   <div class="container hero-grid">
     <div class="hero-left reveal">
-      <p class="hero-eyebrow">Web App Developer</p>
+      <p class="hero-eyebrow"><span class="hero-eyebrow-dot"></span>Web App Developer</p>
       <h1 class="hero-name">Danmark Rosalejos</h1>
-      <p class="hero-bio">
-        Specialized in Web App Developing and Webhook Integration.
-      </p>
+      <p class="hero-bio">A skilled <strong>web app developer</strong> building functional, real-world systems from responsive frontends to backends, webhook integrations, and live deployment.</p>
       <div class="hero-actions">
         <a href="#projects" class="btn-primary">VIEW PROJECTS</a>
         <a href="#contact" class="btn-outline">HIRE ME</a>
@@ -74,9 +72,9 @@
     </div>
     <div class="hero-right reveal">
       <div class="photo-frame">
-        <div class="photo-accent-ring"></div>
+        <div class="photo-hex-border"></div>
         <div class="photo-wrap">
-          <img src="profile.jpg" alt="Danmark Rosalejos" />
+          <img src="profile.jpg" alt="Danmark Rosalejos"/>
         </div>
       </div>
     </div>
@@ -92,24 +90,34 @@
     </div>
     <div class="section-divider reveal"></div>
     <div class="services-grid">
+
       <div class="service-card reveal">
         <div class="service-num">01</div>
-        <div class="service-icon"><i class="fa-solid fa-code"></i></div>
+        <div class="service-icon-wrap">
+          <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
         <h3>Web App Development</h3>
         <p>Full-stack web applications built to be functional, scalable, and performance-optimized from front to back.</p>
       </div>
+
       <div class="service-card reveal">
         <div class="service-num">02</div>
-        <div class="service-icon"><i class="fa-solid fa-bolt"></i></div>
+        <div class="service-icon-wrap">
+          <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
         <h3>Webhook Integration</h3>
         <p>Inbound webhook systems that receive real-time data from external services directly into your web app.</p>
       </div>
+
       <div class="service-card reveal">
         <div class="service-num">03</div>
-        <div class="service-icon"><i class="fa-solid fa-server"></i></div>
+        <div class="service-icon-wrap">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
         <h3>Deployment</h3>
         <p>Full deployment management on GitHub Pages and other hosting platforms, ensuring your site is live and stable.</p>
       </div>
+
     </div>
   </div>
 </section>
@@ -123,29 +131,51 @@
     </div>
     <div class="section-divider reveal"></div>
     <div class="projects-list">
+
       <div class="project-row reveal">
         <div class="project-inner">
           <div class="project-meta">
-            <div class="project-tech">PHP / MYSQL / JS / WEBHOOK INTEGRATION</div>
-            <span class="project-index">01</span>
+            <div class="project-tech-tags">
+              <span class="project-tag">PHP</span>
+              <span class="project-tag">MySQL</span>
+              <span class="project-tag">JS</span>
+              <span class="project-tag">Webhook</span>
+            </div>
+            <a href="https://healthsync.hstn.me" target="_blank" class="project-ext-link" aria-label="Open project">
+              <svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
           </div>
           <h3 class="project-row-title">HealthSync Clinic Management System</h3>
           <p class="project-sub-label">For STI College Bacoor</p>
           <p class="project-row-desc">A clinic management system simplifying the school nurse's workflow, digital records, real-time communication tools, and streamlined healthcare processes.</p>
-          <a href="https://healthsync.hstn.me" target="_blank" class="project-live-link">View Live Site <i class="fa-solid fa-arrow-right"></i></a>
+          <a href="https://healthsync.hstn.me" target="_blank" class="project-live-link">
+            View Live Site
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
         </div>
       </div>
+
       <div class="project-row reveal">
         <div class="project-inner">
           <div class="project-meta">
-            <div class="project-tech">HTML / CSS / VANILLA JS</div>
-            <span class="project-index">02</span>
+            <div class="project-tech-tags">
+              <span class="project-tag">HTML</span>
+              <span class="project-tag">CSS</span>
+              <span class="project-tag">Vanilla JS</span>
+            </div>
+            <a href="https://danmarkdev.github.io/A-Cup-of-Cafe/" target="_blank" class="project-ext-link" aria-label="Open project">
+              <svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
           </div>
           <h3 class="project-row-title">A Cup of Cafe</h3>
-          <p class="project-row-desc">A digital storefront built to demonstrate design and development range a story-driven layout for a Manila coffee brand, featuring scroll animations, custom cursor interactions and a responsive build across screen sizes.</p>
-          <a href="https://danmarkdev.github.io/A-Cup-of-Cafe/" target="_blank" class="project-live-link">View Live Site <i class="fa-solid fa-arrow-right"></i></a>
+          <p class="project-row-desc">A digital storefront built to demonstrate design and development range — a story-driven layout for a Manila coffee brand, featuring scroll animations, custom cursor interactions, and a responsive build across screen sizes.</p>
+          <a href="https://danmarkdev.github.io/A-Cup-of-Cafe/" target="_blank" class="project-live-link">
+            View Live Site
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
         </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -153,41 +183,45 @@
 <!-- SKILLS -->
 <section id="skills" class="section section-alt">
   <div class="container">
-    <div class="stack-title-row reveal">
+    <div class="section-header reveal">
       <h2 class="section-big-heading">TECHNICAL STACK</h2>
       <span class="section-label-right">EXPERTISE</span>
     </div>
     <div class="section-divider reveal"></div>
     <div class="stack-columns reveal">
+
       <div class="stack-col">
         <div class="stack-col-title">LANGUAGES</div>
         <ul class="stack-list">
-          <li>HTML</li>
-          <li>CSS</li>
-          <li>JavaScript</li>
-          <li>PHP</li>
-          <li>SQL / MySQL</li>
+          <li><svg viewBox="0 0 24 24"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>HTML</li>
+          <li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>CSS</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="15"/></svg>JavaScript</li>
+          <li><svg viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>PHP</li>
+          <li><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>SQL / MySQL</li>
         </ul>
       </div>
+
       <div class="stack-col">
         <div class="stack-col-title">WEB APP DEV</div>
         <ul class="stack-list">
-          <li>Responsive Design</li>
-          <li>Webhook Integration</li>
-          <li>Deployment</li>
-          <li>API Integration</li>
+          <li><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg>Responsive Design</li>
+          <li><svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>Webhook Integration</li>
+          <li><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Deployment</li>
+          <li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>API Integration</li>
         </ul>
       </div>
+
       <div class="stack-col">
         <div class="stack-col-title">TOOLS</div>
         <ul class="stack-list">
-          <li>GitHub</li>
-          <li>VS Code</li>
-          <li>Netlify / AeonFree / InfinityFree</li>
-          <li>Vercel</li> 
-          <li>Windows 10</li>
+          <li><svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>GitHub</li>
+          <li><svg viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>VS Code</li>
+          <li><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>Netlify / AeonFree / InfinityFree</li>
+          <li><svg viewBox="0 0 24 24"><triangle points="12 2 2 19 22 19"><animate attributeName="opacity" dur="never"/></triangle><path d="M12 2L2 19h20L12 2z"/></svg>Vercel</li>
+          <li><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>Windows 10</li>
         </ul>
       </div>
+
     </div>
   </div>
 </section>
@@ -204,9 +238,9 @@
             <div class="tl-line"></div>
           </div>
           <div class="tl-right">
-            <div class="tl-year">2024 - Present</div>
+            <div class="tl-year">2024 — Present</div>
             <h4>STI College</h4>
-            <p>TVL Track - ICT. Awarded With Honors in Grade 12 Focused on Web & Mobile Application Development.</p>
+            <p>TVL Track — ICT. Awarded With Honors in Grade 12. Focused on Web &amp; Mobile Application Development.</p>
           </div>
         </div>
         <div class="tl-item">
@@ -215,9 +249,9 @@
             <div class="tl-line"></div>
           </div>
           <div class="tl-right">
-            <div class="tl-year">2021 - 2024</div>
+            <div class="tl-year">2021 — 2024</div>
             <h4>Bacoor National High School Molino Main</h4>
-            <p>Specialized in Technical Drafting 2D/3D modeling and digital blueprinting using AutoCad.</p>
+            <p>Specialized in Technical Drafting, 2D/3D modeling, and digital blueprinting using AutoCAD.</p>
           </div>
         </div>
       </div>
@@ -233,12 +267,11 @@
       <span class="section-label-right">CREDENTIALS</span>
     </div>
     <div class="section-divider reveal"></div>
-
     <div class="cert-grid reveal">
 
       <div class="cert-item">
         <div class="cert-img-wrap">
-          <img src="Freecodecamp responsive web design.PNG" alt="Responsive Web Design Certificate" />
+          <img src="Freecodecamp responsive web design.PNG" alt="Responsive Web Design Certificate"/>
         </div>
         <div class="cert-info">
           <h4>Responsive Web Design</h4>
@@ -248,7 +281,7 @@
 
       <div class="cert-item">
         <div class="cert-img-wrap">
-          <img src="Build Website Cognitive AI Class.png" alt="Cognitive Class Certificate" />
+          <img src="Build Website Cognitive AI Class.png" alt="Cognitive Class Certificate"/>
         </div>
         <div class="cert-info">
           <h4>Build Website</h4>
@@ -258,7 +291,7 @@
 
       <div class="cert-item">
         <div class="cert-img-wrap">
-          <img src="web development cert.jpg" alt="Web Development for Beginners Certificate" />
+          <img src="web development cert.jpg" alt="Web Development for Beginners Certificate"/>
         </div>
         <div class="cert-info">
           <h4>Web Development for Beginners</h4>
@@ -268,7 +301,7 @@
 
       <div class="cert-item">
         <div class="cert-img-wrap">
-          <img src="JavaScript.jpg" alt="JavaScript for Beginners Certificate" />
+          <img src="JavaScript.jpg" alt="JavaScript for Beginners Certificate"/>
         </div>
         <div class="cert-info">
           <h4>JavaScript for Beginners</h4>
@@ -278,7 +311,7 @@
 
       <div class="cert-item">
         <div class="cert-img-wrap">
-          <img src="Introduction to CSS.jpg" alt="Introduction to CSS Certificate" />
+          <img src="Introduction to CSS.jpg" alt="Introduction to CSS Certificate"/>
         </div>
         <div class="cert-info">
           <h4>Introduction to CSS</h4>
@@ -288,7 +321,7 @@
 
       <div class="cert-item">
         <div class="cert-img-wrap">
-          <img src="Introduction to html.jpg" alt="Introduction to HTML Certificate" />
+          <img src="Introduction to html.jpg" alt="Introduction to HTML Certificate"/>
         </div>
         <div class="cert-info">
           <h4>Introduction to HTML</h4>
@@ -304,18 +337,18 @@
 <section id="contact" class="section contact-section">
   <div class="container">
     <div class="contact-top reveal">
-      <p class="section-label">READY TO START?</p>
+      <p class="contact-label-top">READY TO START?</p>
       <h2 class="contact-heading">Let's build something<br><span>exceptional.</span></h2>
     </div>
     <div class="contact-icon-row reveal">
-      <a href="contact.html" class="contact-round" aria-label="Open email contact form">
-        <i class="fa-solid fa-envelope"></i>
+      <a href="contact.html" class="contact-round" aria-label="Email contact form">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
       </a>
       <a href="https://github.com/danmarkdev" target="_blank" rel="noopener" class="contact-round" aria-label="GitHub profile">
-        <i class="fa-brands fa-github"></i>
+        <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
       </a>
       <a href="https://www.linkedin.com/in/danmark-rosalejos-2b89503b1/" target="_blank" rel="noopener" class="contact-round" aria-label="LinkedIn profile">
-        <i class="fa-brands fa-linkedin"></i>
+        <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
       </a>
     </div>
   </div>
@@ -325,6 +358,7 @@
 <footer>
   <div class="container footer-inner">
     <p>&copy; 2025 Danmark Rosalejos. All Rights Reserved.</p>
+    <span class="footer-logo">DAN.DEV</span>
   </div>
 </footer>
 
