@@ -145,8 +145,9 @@ body.menu-open{overflow:hidden}
   margin-top:auto; padding-top:.9rem;
   border-top:1px solid #1a1a1a;
 }
-.project-live-link svg{width:13px;height:13px;stroke:currentColor;stroke-width:1.5;fill:none;flex-shrink:0;transition:transform .25s}
-.project-row:hover .project-live-link svg{transform:translate(3px,-3px)}
+.project-live-link svg{width:13px;height:13px;stroke:currentColor;stroke-width:1.5;fill:none;flex-shrink:0;transition:transform .25s ease}
+.project-row:hover .project-live-link svg,
+.project-live-link:hover svg{transform:translate(3px,-3px)}
 
 /* SKILLS */
 .stack-columns{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
@@ -211,7 +212,6 @@ body.menu-open{overflow:hidden}
 .contact-info-item{display:flex;align-items:center;gap:1.25rem;padding:1.1rem 0}
 .contact-info-icon{width:34px;height:34px;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#444;border:1px solid #1e1e1e;border-radius:6px;transition:color .2s,border-color .2s}
 .contact-info-icon svg{width:15px;height:15px;stroke:currentColor;stroke-width:1.5;fill:none}
-.contact-info-icon svg[fill="currentColor"]{fill:currentColor;stroke:none}
 .contact-info-item:hover .contact-info-icon{color:#fff;border-color:#333}
 .contact-info-text{display:flex;flex-direction:column;gap:.15rem}
 .contact-info-label{font-size:.58rem;font-weight:800;letter-spacing:.18em;color:#fff;text-transform:uppercase}
