@@ -36,10 +36,10 @@ body.menu-open{overflow:hidden}
 #nav a:not(.nav-cta):hover::after,#nav a:not(.nav-cta).active::after{transform:scaleX(1)}
 #nav a:hover,#nav a.active{color:#fff}
 .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;position:relative;z-index:1001;width:30px;height:22px;justify-content:center}
-.hamburger span{display:block;width:22px;height:1.5px;background:#fff;border-radius:2px;transition:transform .3s ease,opacity .3s ease}
-.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.hamburger span{display:block;width:22px;height:1.5px;background:#fff;border-radius:2px;transition:transform .3s ease,opacity .3s ease;transform-origin:center}
+.hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
 .hamburger.open span:nth-child(2){opacity:0}
-.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+.hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
 .mobile-nav{display:flex;position:fixed;inset:0;background:#000;flex-direction:column;align-items:center;justify-content:center;gap:2rem;z-index:998;opacity:0;visibility:hidden;transform:scale(.97);transition:opacity .3s ease,transform .3s ease,visibility .3s}
 .mobile-nav.open{opacity:1;visibility:visible;transform:scale(1)}
 .mobile-nav a{font-size:1.5rem;font-weight:700;color:#555;text-decoration:none;transition:color .2s;opacity:0;transform:translateY(12px)}
@@ -147,7 +147,8 @@ body.menu-open{overflow:hidden}
 }
 .project-live-link svg{width:13px;height:13px;stroke:currentColor;stroke-width:1.5;fill:none;flex-shrink:0;transition:transform .25s ease}
 .project-row:hover .project-live-link svg,
-.project-live-link:hover svg{transform:translate(3px,-3px)}
+.project-live-link:hover svg,
+.project-live-link:active svg{transform:translateX(4px)}
 
 /* SKILLS */
 .stack-columns{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
