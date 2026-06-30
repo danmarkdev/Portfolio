@@ -99,7 +99,9 @@ body.menu-open{overflow:hidden}
   transform:translateY(-6px);
   box-shadow:0 20px 50px rgba(0,0,0,.5);
 }
-.service-icon-wrap{display:none}
+.service-icon-wrap{width:46px;height:46px;border:1px solid #1e1e1e;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:1.4rem;background:#0c0c0c;transition:border-color .3s,background .3s}
+.service-card:hover .service-icon-wrap{border-color:#444;background:#111}
+.service-icon-wrap svg{width:20px;height:20px;stroke:#fff;stroke-width:1.5;fill:none}
 .service-card h3{font-size:.95rem;font-weight:700;color:#fff;margin-bottom:.65rem;line-height:1.3}
 .service-card p{font-size:.82rem;color:var(--muted);line-height:1.8}
 .service-num{display:none}
@@ -143,8 +145,9 @@ body.menu-open{overflow:hidden}
   margin-top:auto; padding-top:.9rem;
   border-top:1px solid #1a1a1a;
 }
-.project-live-link svg{width:13px;height:13px;stroke:currentColor;stroke-width:1.5;fill:none;flex-shrink:0;transition:transform .25s}
-.project-row:hover .project-live-link svg{transform:translate(3px,-3px)}
+.project-live-link svg{display:none}
+.project-live-link .link-dash{transition:transform .25s;font-weight:700}
+.project-row:hover .project-live-link .link-dash{transform:translateX(4px)}
 
 /* SKILLS */
 .stack-columns{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
@@ -163,8 +166,8 @@ body.menu-open{overflow:hidden}
 .timeline{display:flex;flex-direction:column;gap:0}
 .tl-item{display:grid;grid-template-columns:20px minmax(0,1fr);gap:1.5rem}
 .tl-left{display:flex;flex-direction:column;align-items:center;padding-top:3px}
-.tl-dot{width:8px;height:8px;border:1px solid #333;background:#000;border-radius:50%;flex-shrink:0;transition:border-color .3s}
-.tl-dot.active{border-color:#666;background:#222}
+.tl-dot{width:14px;height:2px;border:none;background:#444;border-radius:1px;flex-shrink:0;transition:background .3s}
+.tl-dot.active{background:#fff}
 .tl-line{width:1px;flex:1;background:var(--border);margin-top:6px;min-height:80px}
 .tl-right{padding-bottom:2rem}
 .tl-year{color:#333;font-size:.65rem;font-weight:700;letter-spacing:.12em;margin-bottom:.6rem;text-transform:uppercase}
