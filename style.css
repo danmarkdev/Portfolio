@@ -286,7 +286,13 @@ footer p{font-size:.72rem;color:#2a2a2a}
 }
 @media(max-width:700px){
   .section{padding:5rem 0}
-  .stack-columns{grid-template-columns:1fr}
+  .stack-grid{grid-template-columns:1fr;gap:1.75rem}
+  .stack-card{background:transparent;border:none;padding:0;border-radius:0}
+  .stack-card:hover{transform:none;border-color:transparent}
+  .stack-card-title{font-size:.7rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:#fff;margin-bottom:.9rem}
+  .stack-tags{gap:.5rem}
+  .stack-tag{background:#111;border:1px solid #262626;font-size:.75rem;padding:.45rem .85rem;border-radius:6px}
+  .stack-tag:hover{transform:none}
   .services-grid{grid-template-columns:1fr}
   .projects-list{grid-template-columns:1fr}
   .cert-grid{grid-template-columns:1fr}
