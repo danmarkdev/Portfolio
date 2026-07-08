@@ -290,7 +290,15 @@ footer p{font-size:.72rem;color:#2a2a2a}
   .stack-card{background:transparent;border:none;padding:0;border-radius:0}
   .stack-card:hover{transform:none;border-color:transparent}
   .stack-card-title{font-size:.7rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:#fff;margin-bottom:.9rem}
-  .stack-tags{gap:.5rem}
+  .stack-tags{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:.6rem;
+}
+.stack-tag{
+  text-align:center;
+  width:100%;
+}
   .stack-tag{background:#111;border:1px solid #262626;font-size:.75rem;padding:.45rem .85rem;border-radius:6px}
   .stack-tag:hover{transform:none}
   .services-grid{grid-template-columns:1fr}
