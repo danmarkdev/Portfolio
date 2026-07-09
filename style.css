@@ -150,28 +150,37 @@ body.menu-open{overflow:hidden}
 .project-live-link:hover svg,
 .project-live-link:active svg{transform:translateX(4px)}
 
-/* SKILLS - STACK CARDS */
-.stack-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+/* SKILLS - STACKED LIST (label above, pills flow in a row below) */
+.stack-grid{
+  display:flex;
+  flex-direction:column;
+  gap:2.4rem;
+}
 .stack-card{
-  background:#070707;
-  border:1px solid #1a1a1a;
-  border-radius:14px;
-  padding:2rem 1.75rem;
-  transition:border-color .3s,transform .3s;
+  background:transparent;
+  border:none;
+  padding:0;
+  transition:none;
 }
 .stack-card:hover{
-  border-color:#3a3a3a;
-  transform:translateY(-4px);
+  border-color:transparent;
+  transform:none;
 }
 .stack-card-title{
-  font-size:1rem;
+  font-size:.78rem;
   font-weight:800;
   color:#fff;
-  letter-spacing:-.01em;
-  margin-bottom:1.4rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  margin-bottom:1rem;
 }
-.stack-tags{display:flex;flex-wrap:wrap;gap:.6rem}
+.stack-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.6rem;
+}
 .stack-tag{
+  white-space:nowrap;
   font-size:.78rem;
   font-weight:600;
   color:#ccc;
@@ -185,17 +194,6 @@ body.menu-open{overflow:hidden}
   border-color:#444;
   color:#fff;
   background:#161616;
-}
-
-/* Web App Dev card (4th card) has 4 tags: force a clean 2x2 grid on desktop
-   so nothing wraps onto its own lonely row */
-.stack-card:nth-child(4) .stack-tags{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:.6rem;
-}
-.stack-card:nth-child(4) .stack-tag{
-  text-align:center;
 }
 
 /* EDUCATION */
@@ -297,27 +295,7 @@ footer p{font-size:.72rem;color:#2a2a2a}
 }
 @media(max-width:700px){
   .section{padding:5rem 0}
-  .stack-grid{grid-template-columns:1fr;gap:1.75rem}
-  .stack-card{background:transparent;border:none;padding:0;border-radius:0}
-  .stack-card:hover{transform:none;border-color:transparent}
-  .stack-card-title{font-size:.7rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:#fff;margin-bottom:.9rem}
-  .stack-tags{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:.6rem;
-}
-.stack-tag{
-  text-align:center;
-  width:100%;
-}
-  .stack-tag{background:#111;border:1px solid #262626;font-size:.75rem;padding:.45rem .85rem;border-radius:6px}
-  .stack-tag:hover{transform:none}
-  /* When a category has an odd number of tags (e.g. HTML/CSS/JavaScript,
-     PHP/SQL/MySQL, Bootstrap/Tailwind/Laravel) the leftover 3rd tag now
-     stretches across the full row instead of sitting alone */
-  .stack-tags .stack-tag:nth-child(3):last-child{
-    grid-column:1 / -1;
-  }
+  .stack-grid{gap:1.9rem}
   .services-grid{grid-template-columns:1fr}
   .projects-list{grid-template-columns:1fr}
   .cert-grid{grid-template-columns:1fr}
