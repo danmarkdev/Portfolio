@@ -150,29 +150,25 @@ body.menu-open{overflow:hidden}
 .project-live-link:hover svg,
 .project-live-link:active svg{transform:translateX(4px)}
 
-/* SKILLS - STACKED LIST (label above, pills flow in a row below) */
-.stack-grid{
-  display:flex;
-  flex-direction:column;
-  gap:2.4rem;
-}
+/* SKILLS - BOXED CARD GRID (desktop default) */
+.stack-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
 .stack-card{
-  background:transparent;
-  border:none;
-  padding:0;
-  transition:none;
+  background:#070707;
+  border:1px solid #1a1a1a;
+  border-radius:14px;
+  padding:2rem 1.75rem;
+  transition:border-color .3s,transform .3s;
 }
 .stack-card:hover{
-  border-color:transparent;
-  transform:none;
+  border-color:#3a3a3a;
+  transform:translateY(-4px);
 }
 .stack-card-title{
-  font-size:.78rem;
+  font-size:1rem;
   font-weight:800;
   color:#fff;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  margin-bottom:1rem;
+  letter-spacing:-.01em;
+  margin-bottom:1.4rem;
 }
 .stack-tags{
   display:flex;
@@ -295,7 +291,40 @@ footer p{font-size:.72rem;color:#2a2a2a}
 }
 @media(max-width:700px){
   .section{padding:5rem 0}
-  .stack-grid{gap:1.9rem}
+  /* Mobile-only: switch from boxed cards to a flat stacked list */
+  .stack-grid{
+    display:flex;
+    flex-direction:column;
+    gap:2.2rem;
+  }
+  .stack-card{
+    background:transparent;
+    border:none;
+    padding:0;
+    border-radius:0;
+  }
+  .stack-card:hover{
+    transform:none;
+    border-color:transparent;
+  }
+  .stack-card-title{
+    font-size:.72rem;
+    font-weight:800;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:#fff;
+    margin-bottom:.9rem;
+  }
+  .stack-tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:.6rem;
+  }
+  .stack-tag{
+    white-space:nowrap;
+    font-size:.78rem;
+    padding:.5rem 1rem;
+  }
   .services-grid{grid-template-columns:1fr}
   .projects-list{grid-template-columns:1fr}
   .cert-grid{grid-template-columns:1fr}
