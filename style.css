@@ -325,9 +325,37 @@ footer p{font-size:.72rem;color:#2a2a2a}
     font-size:.78rem;
     padding:.5rem 1rem;
   }
-  .services-grid{grid-template-columns:1fr}
-  .projects-list{grid-template-columns:1fr}
-  .cert-grid{grid-template-columns:1fr}
+
+  /* Mobile-only: Services / Projects / Certifications become
+     horizontal swipeable, scroll-snapping carousels */
+  .services-grid,
+  .projects-list,
+  .cert-grid{
+    display:flex;
+    flex-wrap:nowrap;
+    grid-template-columns:none;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    gap:1rem;
+    padding:0 5% 1.25rem;
+    margin:0 -5%;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .services-grid::-webkit-scrollbar,
+  .projects-list::-webkit-scrollbar,
+  .cert-grid::-webkit-scrollbar{
+    display:none;
+  }
+  .service-card,
+  .project-row,
+  .cert-item{
+    flex:0 0 82%;
+    scroll-snap-align:center;
+  }
+  .service-card{padding:2rem 1.5rem}
+  .project-inner{padding:1.75rem 1.5rem 1.5rem}
+
   .tl-right h4{white-space:normal}
   .hero-name{font-size:2.5rem}
   .contact-icon-row{gap:.85rem}
