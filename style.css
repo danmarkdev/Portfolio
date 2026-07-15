@@ -76,6 +76,21 @@ body.menu-open{overflow:hidden}
 .btn-outline{display:inline-block;padding:.82rem 2rem;background:transparent;color:#fff;text-decoration:none;font-size:.72rem;font-weight:700;letter-spacing:.1em;border-radius:2px;border:1px solid #2a2a2a;transition:border-color .2s,transform .15s}
 .btn-outline:hover{border-color:#555;transform:translateY(-2px)}
 
+/* HERO — full stack strip below CTAs */
+.hero-stack{margin-top:2.25rem;max-width:520px}
+.hero-stack-label{display:block;font-size:.6rem;font-weight:800;letter-spacing:.25em;color:#3a3a3a;text-transform:uppercase;margin-bottom:.85rem}
+.hero-stack-row{display:flex;flex-wrap:wrap;gap:.5rem}
+.hs-chip{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-size:.7rem;font-weight:600;color:#ccc;
+  background:#0c0c0c;border:1px solid #232323;border-radius:100px;
+  padding:.4rem .8rem .4rem .55rem;
+  transition:border-color .2s,color .2s,background .2s,transform .15s;
+}
+.hs-chip:hover{border-color:#555;color:#fff;background:#141414;transform:translateY(-1px)}
+.hs-chip img{width:14px;height:14px;object-fit:contain;flex-shrink:0}
+.hs-chip-plain{padding-left:.8rem}
+
 /* HERO RIGHT — floating badge photo layout */
 .hero-right{display:flex;justify-content:center;align-items:center;position:relative}
 .photo-orbit{position:relative;width:100%;max-width:380px;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center}
@@ -104,7 +119,7 @@ body.menu-open{overflow:hidden}
   animation:floaty 4.5s ease-in-out infinite;
 }
 .float-badge .fb-icon{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.float-badge .fb-icon svg{width:15px;height:15px}
+.float-badge .fb-icon img{width:15px;height:15px;object-fit:contain;display:block}
 .float-badge .fb-text{display:flex;flex-direction:column;line-height:1.15}
 .float-badge .fb-title{font-size:.72rem;font-weight:700;color:#fff}
 .float-badge .fb-sub{font-size:.6rem;color:#666;font-weight:500}
@@ -118,9 +133,11 @@ body.menu-open{overflow:hidden}
   bottom:-4%;right:6%;
   animation-delay:1.3s;
   background:#0c0c0c;
+  max-width:132px;
 }
 .fb-stat .fb-icon{background:#1a140c}
-.fb-stat .fb-title{font-size:.78rem}
+.fb-stat .fb-title{font-size:.72rem}
+.fb-stat .fb-sub{font-size:.56rem;white-space:nowrap}
 
 @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 
@@ -192,7 +209,7 @@ body.menu-open{overflow:hidden}
 .project-live-link:hover svg,
 .project-live-link:active svg{transform:translateX(4px)}
 
-/* SKILLS — self-contained inline icons (no external CDN dependency) */
+/* SKILLS — real brand logos via Simple Icons / Devicon */
 .stack-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
 .stack-card{
   background:#070707;
@@ -245,7 +262,7 @@ body.menu-open{overflow:hidden}
   justify-content:center;
   flex-shrink:0;
 }
-.stack-ico svg{width:12px;height:12px;fill:#fff;stroke:#fff}
+.stack-ico img{width:13px;height:13px;object-fit:contain;display:block}
 
 /* EDUCATION */
 .edu-section{background:transparent;padding:7rem 0;position:relative;z-index:1}
@@ -370,6 +387,8 @@ footer p{font-size:.72rem;color:#2a2a2a}
   .hero-eyebrow{justify-content:center}
   .hero-bio{margin-left:auto;margin-right:auto}
   .hero-actions{justify-content:center}
+  .hero-stack{margin-left:auto;margin-right:auto}
+  .hero-stack-row{justify-content:center}
   .photo-orbit{max-width:320px}
   .photo-wrap{width:190px;height:190px}
   .float-badge{padding:.45rem .7rem}
