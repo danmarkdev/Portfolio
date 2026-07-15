@@ -81,38 +81,81 @@
           </div>
         </div>
 
-        <!-- Tech stack — floating badges surrounding the profile photo -->
-        <div class="stack-badge sb-1">
-          <span class="fb-icon" style="background:#E34F26"><img src="https://cdn.simpleicons.org/html5/ffffff" alt="HTML5" loading="lazy"/></span>
-          <span class="fb-text"><span class="fb-title">HTML5</span><span class="fb-sub">Markup</span></span>
-        </div>
-        <div class="stack-badge sb-2">
-          <span class="fb-icon" style="background:#F7DF1E"><img src="https://cdn.simpleicons.org/javascript/000000" alt="JavaScript" loading="lazy"/></span>
-          <span class="fb-text"><span class="fb-title">JavaScript</span><span class="fb-sub">Frontend</span></span>
-        </div>
-        <div class="stack-badge sb-3">
-          <span class="fb-icon" style="background:#777BB4"><img src="https://cdn.simpleicons.org/php/ffffff" alt="PHP" loading="lazy"/></span>
-          <span class="fb-text"><span class="fb-title">PHP</span><span class="fb-sub">Backend</span></span>
-        </div>
-        <div class="stack-badge sb-4">
-          <span class="fb-icon" style="background:#4479A1"><img src="https://cdn.simpleicons.org/mysql/ffffff" alt="MySQL" loading="lazy"/></span>
-          <span class="fb-text"><span class="fb-title">MySQL</span><span class="fb-sub">Database</span></span>
-        </div>
-        <div class="stack-badge sb-5">
-          <span class="fb-icon" style="background:#7952B3"><img src="https://cdn.simpleicons.org/bootstrap/ffffff" alt="Bootstrap" loading="lazy"/></span>
-          <span class="fb-text"><span class="fb-title">Bootstrap</span><span class="fb-sub">UI Framework</span></span>
-        </div>
-        <div class="stack-badge sb-6">
-          <span class="fb-icon" style="background:#FF2D20"><img src="https://cdn.simpleicons.org/laravel/ffffff" alt="Laravel" loading="lazy"/></span>
-          <span class="fb-text"><span class="fb-title">Laravel</span><span class="fb-sub">PHP Framework</span></span>
-        </div>
-        <div class="stack-badge sb-7">
-          <span class="fb-icon" style="background:#181717"><img src="https://cdn.simpleicons.org/github/ffffff" alt="GitHub" loading="lazy"/></span>
-          <span class="fb-text"><span class="fb-title">GitHub</span><span class="fb-sub">Version Control</span></span>
-        </div>
-        <div class="stack-badge sb-8">
-          <span class="fb-icon" style="background:#1e1e1e"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" alt="VS Code" loading="lazy"/></span>
-          <span class="fb-text"><span class="fb-title">VS Code</span><span class="fb-sub">Editor</span></span>
+        <!-- Tech stack — badges orbiting the profile photo (pure CSS orbit) -->
+        <div class="orbit-ring" id="orbitRing">
+
+          <div class="orbit-item oi-0" style="--angle:0deg">
+            <div class="orbit-counter">
+              <div class="stack-badge">
+                <span class="fb-icon" style="background:#E34F26"><img src="https://cdn.simpleicons.org/html5/ffffff" alt="HTML5" loading="lazy"/></span>
+                <span class="fb-text"><span class="fb-title">HTML5</span><span class="fb-sub">Markup</span></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="orbit-item oi-45" style="--angle:45deg">
+            <div class="orbit-counter">
+              <div class="stack-badge">
+                <span class="fb-icon" style="background:#F7DF1E"><img src="https://cdn.simpleicons.org/javascript/000000" alt="JavaScript" loading="lazy"/></span>
+                <span class="fb-text"><span class="fb-title">JavaScript</span><span class="fb-sub">Frontend</span></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="orbit-item oi-90" style="--angle:90deg">
+            <div class="orbit-counter">
+              <div class="stack-badge">
+                <span class="fb-icon" style="background:#4479A1"><img src="https://cdn.simpleicons.org/mysql/ffffff" alt="MySQL" loading="lazy"/></span>
+                <span class="fb-text"><span class="fb-title">MySQL</span><span class="fb-sub">Database</span></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="orbit-item oi-135" style="--angle:135deg">
+            <div class="orbit-counter">
+              <div class="stack-badge">
+                <span class="fb-icon" style="background:#1e1e1e"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" alt="VS Code" loading="lazy"/></span>
+                <span class="fb-text"><span class="fb-title">VS Code</span><span class="fb-sub">Editor</span></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="orbit-item oi-180" style="--angle:180deg">
+            <div class="orbit-counter">
+              <div class="stack-badge">
+                <span class="fb-icon" style="background:#FF2D20"><img src="https://cdn.simpleicons.org/laravel/ffffff" alt="Laravel" loading="lazy"/></span>
+                <span class="fb-text"><span class="fb-title">Laravel</span><span class="fb-sub">PHP Framework</span></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="orbit-item oi-225" style="--angle:225deg">
+            <div class="orbit-counter">
+              <div class="stack-badge">
+                <span class="fb-icon" style="background:#181717"><img src="https://cdn.simpleicons.org/github/ffffff" alt="GitHub" loading="lazy"/></span>
+                <span class="fb-text"><span class="fb-title">GitHub</span><span class="fb-sub">Version Control</span></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="orbit-item oi-270" style="--angle:270deg">
+            <div class="orbit-counter">
+              <div class="stack-badge">
+                <span class="fb-icon" style="background:#7952B3"><img src="https://cdn.simpleicons.org/bootstrap/ffffff" alt="Bootstrap" loading="lazy"/></span>
+                <span class="fb-text"><span class="fb-title">Bootstrap</span><span class="fb-sub">UI Framework</span></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="orbit-item oi-315" style="--angle:315deg">
+            <div class="orbit-counter">
+              <div class="stack-badge">
+                <span class="fb-icon" style="background:#777BB4"><img src="https://cdn.simpleicons.org/php/ffffff" alt="PHP" loading="lazy"/></span>
+                <span class="fb-text"><span class="fb-title">PHP</span><span class="fb-sub">Backend</span></span>
+              </div>
+            </div>
+          </div>
+
         </div>
 
       </div>
