@@ -147,58 +147,6 @@ var obs=new IntersectionObserver(function(entries){
 },{threshold:.1});
 document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
 
-/* TECH STACK ORBIT — icons circling the profile photo */
-(function(){
-  var orbit = document.getElementById('photoOrbit');
-  var ring = document.getElementById('techOrbitRing');
-  if(!orbit||!ring) return;
-
-  var items = [
-    { name:'HTML5', icon:'<img src="https://cdn.simpleicons.org/html5/ffffff" alt="HTML5" loading="lazy"/>' },
-    { name:'CSS', icon:'<img src="https://cdn.simpleicons.org/css/ffffff" alt="CSS" loading="lazy"/>' },
-    { name:'JavaScript', icon:'<img src="https://cdn.simpleicons.org/javascript/000000" alt="JavaScript" loading="lazy"/>' },
-    { name:'PHP', icon:'<img src="https://cdn.simpleicons.org/php/ffffff" alt="PHP" loading="lazy"/>' },
-    { name:'MySQL', icon:'<img src="https://cdn.simpleicons.org/mysql/ffffff" alt="MySQL" loading="lazy"/>' },
-    { name:'Bootstrap', icon:'<img src="https://cdn.simpleicons.org/bootstrap/ffffff" alt="Bootstrap" loading="lazy"/>' },
-    { name:'Tailwind', icon:'<img src="https://cdn.simpleicons.org/tailwindcss/ffffff" alt="Tailwind CSS" loading="lazy"/>' },
-    { name:'Laravel', icon:'<img src="https://cdn.simpleicons.org/laravel/ffffff" alt="Laravel" loading="lazy"/>' },
-    { name:'GitHub', icon:'<img src="https://cdn.simpleicons.org/github/ffffff" alt="GitHub" loading="lazy"/>' },
-    { name:'Vercel', icon:'<img src="https://cdn.simpleicons.org/vercel/ffffff" alt="Vercel" loading="lazy"/>' },
-    { name:'Netlify', icon:'<img src="https://cdn.simpleicons.org/netlify/ffffff" alt="Netlify" loading="lazy"/>' },
-    { name:'VS Code', icon:'<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" alt="VS Code" loading="lazy"/>' }
-  ];
-
-  // build the orbit items once
-  items.forEach(function(it){
-    var wrap = document.createElement('div');
-    wrap.className = 'tech-orbit-item';
-    var icon = document.createElement('div');
-    icon.className = 'tech-orbit-icon';
-    icon.title = it.name;
-    icon.innerHTML = it.icon;
-    wrap.appendChild(icon);
-    ring.appendChild(wrap);
-  });
-
-  var itemEls = ring.querySelectorAll('.tech-orbit-item');
-
-  function layout(){
-    var size = orbit.offsetWidth || 380;
-    var radius = size/2 - 18 - 6; // keep icons inside the container, just outside the photo ring
-    var step = 360 / itemEls.length;
-    itemEls.forEach(function(el, i){
-      var angle = step * i;
-      var rad = angle * Math.PI / 180;
-      var x = Math.cos(rad) * radius;
-      var y = Math.sin(rad) * radius;
-      el.style.transform = 'translate(' + x + 'px,' + y + 'px)';
-    });
-  }
-
-  layout();
-  window.addEventListener('resize', layout);
-})();
-
 /* CONTACT FORM */
 function sendMsg(){
   var name=document.getElementById('cf-name')?document.getElementById('cf-name').value.trim():'';
