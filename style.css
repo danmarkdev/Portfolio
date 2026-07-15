@@ -89,6 +89,7 @@ body.menu-open{overflow:hidden}
 }
 .hs-chip:hover{border-color:#555;color:#fff;background:#141414;transform:translateY(-1px)}
 .hs-chip img{width:14px;height:14px;object-fit:contain;flex-shrink:0}
+.hs-chip svg{flex-shrink:0}
 .hs-chip-plain{padding-left:.8rem}
 
 /* HERO RIGHT — floating badge photo layout */
@@ -126,18 +127,17 @@ body.menu-open{overflow:hidden}
 
 .fb-github{top:10%;left:-6%;animation-delay:.2s}
 .fb-js{top:6%;right:-8%;animation-delay:1.1s}
-.fb-mysql{left:-12%;top:46%;animation-delay:.6s}
+.fb-sql{left:-12%;top:46%;animation-delay:.6s}
 .fb-vscode{right:-14%;top:44%;animation-delay:1.6s}
-.fb-php{bottom:6%;left:2%;animation-delay:.9s}
 .fb-stat{
   bottom:-4%;right:6%;
   animation-delay:1.3s;
   background:#0c0c0c;
-  max-width:132px;
+  max-width:168px;
 }
 .fb-stat .fb-icon{background:#1a140c}
 .fb-stat .fb-title{font-size:.72rem}
-.fb-stat .fb-sub{font-size:.56rem;white-space:nowrap}
+.fb-stat .fb-sub{font-size:.56rem;white-space:normal;line-height:1.3;max-width:118px}
 
 @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 
@@ -263,6 +263,7 @@ body.menu-open{overflow:hidden}
   flex-shrink:0;
 }
 .stack-ico img{width:13px;height:13px;object-fit:contain;display:block}
+.stack-ico svg{display:block}
 
 /* EDUCATION */
 .edu-section{background:transparent;padding:7rem 0;position:relative;z-index:1}
@@ -396,7 +397,7 @@ footer p{font-size:.72rem;color:#2a2a2a}
   .float-badge .fb-sub{font-size:.55rem}
   .fb-github{left:-2%}
   .fb-js{right:-2%}
-  .fb-mysql{left:-6%}
+  .fb-sql{left:-6%}
   .fb-vscode{right:-8%}
   .contact-page-grid{grid-template-columns:1fr}
   .footer-inner{flex-direction:column;gap:.5rem;text-align:center}
