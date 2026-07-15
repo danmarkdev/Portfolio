@@ -147,55 +147,56 @@ var obs=new IntersectionObserver(function(entries){
 },{threshold:.1});
 document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
 
-/* ROTATING "FULL STACK" BADGE — cycles through the entire tech stack */
+/* TECH STACK ORBIT — icons circling the profile photo */
 (function(){
-  var badge = document.getElementById('rotatingBadge');
-  var iconEl = document.getElementById('rotatingBadgeIcon');
-  var titleEl = document.getElementById('rotatingBadgeTitle');
-  if(!badge||!iconEl||!titleEl) return;
+  var orbit = document.getElementById('photoOrbit');
+  var ring = document.getElementById('techOrbitRing');
+  if(!orbit||!ring) return;
 
   var items = [
-    { name:'HTML5', bg:'#E34F26', icon:'<img src="https://cdn.simpleicons.org/html5/ffffff" alt="HTML5" loading="lazy"/>' },
-    { name:'CSS', bg:'#663399', icon:'<img src="https://cdn.simpleicons.org/css/ffffff" alt="CSS" loading="lazy"/>' },
-    { name:'JavaScript', bg:'#F7DF1E', icon:'<img src="https://cdn.simpleicons.org/javascript/000000" alt="JavaScript" loading="lazy"/>' },
-    { name:'PHP', bg:'#777BB4', icon:'<img src="https://cdn.simpleicons.org/php/ffffff" alt="PHP" loading="lazy"/>' },
-    { name:'SQL', bg:'#0EA5E9', icon:'<svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 5v6c0 1.66-4.03 3-9 3s-9-1.34-9-3V5"/><path d="M3 11v6c0 1.66 4.03 3 9 3s9-1.34 9-3v-6"/></svg>' },
-    { name:'MySQL', bg:'#4479A1', icon:'<img src="https://cdn.simpleicons.org/mysql/ffffff" alt="MySQL" loading="lazy"/>' },
-    { name:'Bootstrap', bg:'#7952B3', icon:'<img src="https://cdn.simpleicons.org/bootstrap/ffffff" alt="Bootstrap" loading="lazy"/>' },
-    { name:'Tailwind', bg:'#06B6D4', icon:'<img src="https://cdn.simpleicons.org/tailwindcss/ffffff" alt="Tailwind CSS" loading="lazy"/>' },
-    { name:'Laravel', bg:'#FF2D20', icon:'<img src="https://cdn.simpleicons.org/laravel/ffffff" alt="Laravel" loading="lazy"/>' },
-    { name:'GitHub', bg:'#181717', icon:'<img src="https://cdn.simpleicons.org/github/ffffff" alt="GitHub" loading="lazy"/>' },
-    { name:'Vercel', bg:'#000000', icon:'<img src="https://cdn.simpleicons.org/vercel/ffffff" alt="Vercel" loading="lazy"/>' },
-    { name:'Netlify', bg:'#00C7B7', icon:'<img src="https://cdn.simpleicons.org/netlify/ffffff" alt="Netlify" loading="lazy"/>' },
-    { name:'Render', bg:'#000000', icon:'<img src="https://cdn.simpleicons.org/render/ffffff" alt="Render" loading="lazy"/>' },
-    { name:'InfinityFree', bg:'#7738C8', icon:'<img src="https://cdn.simpleicons.org/infinityfree/ffffff" alt="InfinityFree" loading="lazy"/>' },
-    { name:'AeonFree', bg:'#22C55E', icon:'<svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><rect x="2" y="3" width="20" height="7" rx="2"/><rect x="2" y="14" width="20" height="7" rx="2"/><circle cx="6" cy="6.5" r="0.6" fill="#ffffff" stroke="none"/><circle cx="6" cy="17.5" r="0.6" fill="#ffffff" stroke="none"/></svg>' },
-    { name:'XAMPP', bg:'#FB7A24', icon:'<img src="https://cdn.simpleicons.org/xampp/ffffff" alt="XAMPP" loading="lazy"/>' },
-    { name:'VS Code', bg:'#1e1e1e', icon:'<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" alt="VS Code" loading="lazy"/>' },
-    { name:'Windows 10', bg:'#0c0c0c', icon:'<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows8/windows8-original.svg" alt="Windows 10" loading="lazy"/>' },
-    { name:'Linux MX', bg:'#000000', icon:'<img src="https://cdn.simpleicons.org/mxlinux/ffffff" alt="MX Linux" loading="lazy"/>' }
+    { name:'HTML5', icon:'<img src="https://cdn.simpleicons.org/html5/ffffff" alt="HTML5" loading="lazy"/>' },
+    { name:'CSS', icon:'<img src="https://cdn.simpleicons.org/css/ffffff" alt="CSS" loading="lazy"/>' },
+    { name:'JavaScript', icon:'<img src="https://cdn.simpleicons.org/javascript/000000" alt="JavaScript" loading="lazy"/>' },
+    { name:'PHP', icon:'<img src="https://cdn.simpleicons.org/php/ffffff" alt="PHP" loading="lazy"/>' },
+    { name:'MySQL', icon:'<img src="https://cdn.simpleicons.org/mysql/ffffff" alt="MySQL" loading="lazy"/>' },
+    { name:'Bootstrap', icon:'<img src="https://cdn.simpleicons.org/bootstrap/ffffff" alt="Bootstrap" loading="lazy"/>' },
+    { name:'Tailwind', icon:'<img src="https://cdn.simpleicons.org/tailwindcss/ffffff" alt="Tailwind CSS" loading="lazy"/>' },
+    { name:'Laravel', icon:'<img src="https://cdn.simpleicons.org/laravel/ffffff" alt="Laravel" loading="lazy"/>' },
+    { name:'GitHub', icon:'<img src="https://cdn.simpleicons.org/github/ffffff" alt="GitHub" loading="lazy"/>' },
+    { name:'Vercel', icon:'<img src="https://cdn.simpleicons.org/vercel/ffffff" alt="Vercel" loading="lazy"/>' },
+    { name:'Netlify', icon:'<img src="https://cdn.simpleicons.org/netlify/ffffff" alt="Netlify" loading="lazy"/>' },
+    { name:'VS Code', icon:'<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" alt="VS Code" loading="lazy"/>' }
   ];
 
-  var idx = 0;
+  // build the orbit items once
+  items.forEach(function(it){
+    var wrap = document.createElement('div');
+    wrap.className = 'tech-orbit-item';
+    var icon = document.createElement('div');
+    icon.className = 'tech-orbit-icon';
+    icon.title = it.name;
+    icon.innerHTML = it.icon;
+    wrap.appendChild(icon);
+    ring.appendChild(wrap);
+  });
 
-  function render(){
-    var it = items[idx];
-    iconEl.style.background = it.bg;
-    iconEl.innerHTML = it.icon;
-    titleEl.textContent = it.name;
-    badge.style.opacity = '1';
+  var itemEls = ring.querySelectorAll('.tech-orbit-item');
+
+  function layout(){
+    var size = orbit.offsetWidth || 380;
+    var radius = size/2 - 18 - 6; // keep icons inside the container, just outside the photo ring
+    var step = 360 / itemEls.length;
+    itemEls.forEach(function(el, i){
+      var angle = step * i;
+      var rad = angle * Math.PI / 180;
+      var x = Math.cos(rad) * radius;
+      var y = Math.sin(rad) * radius;
+      el.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+    });
   }
 
-  function next(){
-    badge.style.opacity = '0';
-    setTimeout(function(){
-      idx = (idx+1) % items.length;
-      render();
-    }, 250);
-  }
-
-  render();
-  setInterval(next, 1800);
+  layout();
+  window.addEventListener('resize', layout);
 })();
 
 /* CONTACT FORM */
