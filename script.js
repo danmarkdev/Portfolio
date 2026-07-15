@@ -28,7 +28,6 @@
   function draw(){
     ctx.clearRect(0,0,W,H);
 
-    /* update positions first */
     for(var k=0;k<dots.length;k++){
       var p = dots[k];
       p.x += p.vx; p.y += p.vy;
@@ -36,7 +35,6 @@
       if(p.y<0||p.y>H) p.vy*=-1;
     }
 
-    /* connecting lines — NO shadowBlur here (O(n^2) count, keep it cheap) */
     ctx.shadowBlur = 0;
     ctx.lineWidth = .7;
     for(var i=0;i<dots.length;i++){
@@ -56,7 +54,6 @@
       }
     }
 
-    /* glowing dots — cheap, only NUM (90) shadowBlur calls per frame */
     for(var k2=0;k2<dots.length;k2++){
       var q = dots[k2];
       var mDist = Math.hypot(q.x-mouse.x, q.y-mouse.y);
