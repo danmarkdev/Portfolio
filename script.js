@@ -147,6 +147,42 @@ var obs=new IntersectionObserver(function(entries){
 },{threshold:.1});
 document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
 
+/* ROTATING "FULL STACK" BADGE — cycles through GitHub / JavaScript / SQL / VS Code */
+(function(){
+  var badge = document.getElementById('rotatingBadge');
+  var iconEl = document.getElementById('rotatingBadgeIcon');
+  var titleEl = document.getElementById('rotatingBadgeTitle');
+  if(!badge||!iconEl||!titleEl) return;
+
+  var items = [
+    { name:'GitHub', bg:'#181717', icon:'<img src="https://cdn.simpleicons.org/github/ffffff" alt="GitHub" loading="lazy"/>' },
+    { name:'JavaScript', bg:'#F7DF1E', icon:'<img src="https://cdn.simpleicons.org/javascript/000000" alt="JavaScript" loading="lazy"/>' },
+    { name:'SQL', bg:'#0EA5E9', icon:'<svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 5v6c0 1.66-4.03 3-9 3s-9-1.34-9-3V5"/><path d="M3 11v6c0 1.66 4.03 3 9 3s9-1.34 9-3v-6"/></svg>' },
+    { name:'VS Code', bg:'#1e1e1e', icon:'<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" alt="VS Code" loading="lazy"/>' }
+  ];
+
+  var idx = 0;
+
+  function render(){
+    var it = items[idx];
+    iconEl.style.background = it.bg;
+    iconEl.innerHTML = it.icon;
+    titleEl.textContent = it.name;
+    badge.style.opacity = '1';
+  }
+
+  function next(){
+    badge.style.opacity = '0';
+    setTimeout(function(){
+      idx = (idx+1) % items.length;
+      render();
+    }, 250);
+  }
+
+  render();
+  setInterval(next, 2200);
+})();
+
 /* CONTACT FORM */
 function sendMsg(){
   var name=document.getElementById('cf-name')?document.getElementById('cf-name').value.trim():'';
