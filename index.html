@@ -69,40 +69,10 @@
         <a href="#projects" class="btn-primary">VIEW PROJECTS</a>
         <a href="#contact" class="btn-outline">LET'S TALK</a>
       </div>
-
-      <div class="hero-stack">
-        <span class="hero-stack-label">FULL STACK</span>
-        <div class="hero-stack-row">
-          <span class="hs-chip"><img src="https://cdn.simpleicons.org/html5" alt="HTML5" loading="lazy"/>HTML5</span>
-          <span class="hs-chip"><img src="https://cdn.simpleicons.org/css" alt="CSS" loading="lazy"/>CSS</span>
-          <span class="hs-chip"><img src="https://cdn.simpleicons.org/javascript" alt="JavaScript" loading="lazy"/>JavaScript</span>
-          <span class="hs-chip"><img src="https://cdn.simpleicons.org/php" alt="PHP" loading="lazy"/>PHP</span>
-          <span class="hs-chip"><svg viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 5v6c0 1.66-4.03 3-9 3s-9-1.34-9-3V5"/><path d="M3 11v6c0 1.66 4.03 3 9 3s9-1.34 9-3v-6"/></svg>SQL</span>
-          <span class="hs-chip"><img src="https://cdn.simpleicons.org/mysql" alt="MySQL" loading="lazy"/>MySQL</span>
-          <span class="hs-chip"><img src="https://cdn.simpleicons.org/bootstrap" alt="Bootstrap" loading="lazy"/>Bootstrap</span>
-          <span class="hs-chip"><img src="https://cdn.simpleicons.org/tailwindcss" alt="Tailwind CSS" loading="lazy"/>Tailwind</span>
-          <span class="hs-chip"><img src="https://cdn.simpleicons.org/laravel" alt="Laravel" loading="lazy"/>Laravel</span>
-          <span class="hs-chip"><img src="https://cdn.simpleicons.org/github/ffffff" alt="GitHub" loading="lazy"/>GitHub</span>
-          <span class="hs-chip"><img src="https://cdn.simpleicons.org/vercel/ffffff" alt="Vercel" loading="lazy"/>Vercel</span>
-          <span class="hs-chip"><img src="https://cdn.simpleicons.org/netlify" alt="Netlify" loading="lazy"/>Netlify</span>
-          <span class="hs-chip"><img src="https://cdn.simpleicons.org/render/ffffff" alt="Render" loading="lazy"/>Render</span>
-          <span class="hs-chip"><img src="https://cdn.simpleicons.org/infinityfree" alt="InfinityFree" loading="lazy"/>InfinityFree</span>
-          <span class="hs-chip"><svg viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="3" width="20" height="7" rx="2"/><rect x="2" y="14" width="20" height="7" rx="2"/><circle cx="6" cy="6.5" r="0.6" fill="#22C55E" stroke="none"/><circle cx="6" cy="17.5" r="0.6" fill="#22C55E" stroke="none"/></svg>AeonFree</span>
-          <span class="hs-chip"><img src="https://cdn.simpleicons.org/xampp" alt="XAMPP" loading="lazy"/>XAMPP</span>
-          <span class="hs-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" alt="VS Code" loading="lazy"/>VS Code</span>
-          <span class="hs-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows8/windows8-original.svg" alt="Windows 10" loading="lazy"/>Windows 10</span>
-          <span class="hs-chip"><img src="https://cdn.simpleicons.org/mxlinux/ffffff" alt="MX Linux" loading="lazy"/>Linux MX</span>
-        </div>
-      </div>
     </div>
 
     <div class="hero-right reveal">
-      <div class="photo-orbit">
-
-        <span class="orbit-dot d1"></span>
-        <span class="orbit-dot d2"></span>
-        <span class="orbit-dot d3"></span>
-        <span class="orbit-dot d4"></span>
+      <div class="photo-orbit" id="photoOrbit">
 
         <div class="photo-frame">
           <div class="photo-hex-border"></div>
@@ -111,13 +81,8 @@
           </div>
         </div>
 
-        <!-- Rotating "Full Stack" badge — cycles through the entire tech stack -->
-        <div class="float-badge fb-fullstack" id="rotatingBadge">
-          <span class="fb-icon" id="rotatingBadgeIcon" style="background:#181717">
-            <img src="https://cdn.simpleicons.org/github/ffffff" alt="GitHub" loading="lazy"/>
-          </span>
-          <span class="fb-text"><span class="fb-title" id="rotatingBadgeTitle">GitHub</span><span class="fb-sub">Full Stack</span></span>
-        </div>
+        <!-- Tech stack icons orbiting the profile photo -->
+        <div class="tech-orbit-ring" id="techOrbitRing"></div>
 
       </div>
 
