@@ -136,6 +136,20 @@ if(sections.length){
   });
 }
 
+/* TECHNICAL STACK TABS */
+var stackTabs = document.getElementById('stackTabs');
+if(stackTabs){
+  var tabBtns = stackTabs.querySelectorAll('.stack-tab-btn');
+  var panels = document.querySelectorAll('.stack-panel');
+  stackTabs.addEventListener('click', function(e){
+    var btn = e.target.closest('.stack-tab-btn');
+    if(!btn) return;
+    var target = btn.getAttribute('data-tab');
+    tabBtns.forEach(function(b){ b.classList.toggle('active', b===btn); });
+    panels.forEach(function(p){ p.classList.toggle('active', p.getAttribute('data-panel')===target); });
+  });
+}
+
 /* SCROLL REVEAL */
 var obs=new IntersectionObserver(function(entries){
   entries.forEach(function(e,i){
