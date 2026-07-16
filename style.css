@@ -30,11 +30,10 @@ body.menu-open{overflow:hidden}
 #header.scrolled{border-bottom-color:#737373}
 .logo{font-size:1.05rem;font-weight:900;color:#000000;text-decoration:none;letter-spacing:.08em;position:relative;z-index:1001}
 .logo-dot{color:#000000}
-#nav{display:flex;align-items:center;gap:2.5rem}
-#nav a{font-size:.72rem;font-weight:500;color:var(--muted);text-decoration:none;letter-spacing:.1em;text-transform:uppercase;transition:color .2s;position:relative}
-#nav a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:#000000;transform:scaleX(0);transition:transform .2s}
-#nav a:not(.nav-cta):hover::after,#nav a:not(.nav-cta).active::after{transform:scaleX(1)}
-#nav a:hover,#nav a.active{color:#000000}
+#nav{display:flex;align-items:center;gap:.35rem}
+#nav a{font-size:.72rem;font-weight:600;color:#ffffff;text-decoration:none;letter-spacing:.08em;text-transform:uppercase;padding:.55rem .95rem;border-radius:100px;transition:background .2s,color .2s}
+#nav a:hover{background:rgba(255,255,255,.14)}
+#nav a.active{background:rgba(255,255,255,.22)}
 .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;position:relative;z-index:1001;width:30px;height:22px;justify-content:center}
 .hamburger span{display:block;width:22px;height:1.5px;background:#000000;border-radius:2px;transition:transform .3s ease,opacity .3s ease;transform-origin:center}
 .hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
@@ -42,8 +41,9 @@ body.menu-open{overflow:hidden}
 .hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
 .mobile-nav{display:flex;position:fixed;inset:0;background:#4d4d4d;flex-direction:column;align-items:center;justify-content:center;gap:2rem;z-index:998;opacity:0;visibility:hidden;transform:scale(.97);transition:opacity .3s ease,transform .3s ease,visibility .3s}
 .mobile-nav.open{opacity:1;visibility:visible;transform:scale(1)}
-.mobile-nav a{font-size:1.5rem;font-weight:700;color:#ffffff;text-decoration:none;transition:color .2s;opacity:0;transform:translateY(12px)}
-.mobile-nav a:hover,.mobile-nav a.active{color:#000000}
+.mobile-nav a{font-size:1.5rem;font-weight:700;color:#ffffff;text-decoration:none;transition:opacity .2s;opacity:0;transform:translateY(12px)}
+.mobile-nav a:hover{opacity:.7}
+.mobile-nav a.active{color:#ffffff;text-decoration:underline;text-underline-offset:8px}
 .mobile-nav.open a{opacity:1;transform:translateY(0);transition:opacity .35s ease,transform .35s ease}
 .mobile-nav.open a:nth-child(1){transition-delay:.07s}
 .mobile-nav.open a:nth-child(2){transition-delay:.12s}
@@ -69,8 +69,8 @@ body.menu-open{overflow:hidden}
 .hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
 .btn-primary{display:inline-block;padding:.82rem 2rem;background:#000000;color:#ffffff;text-decoration:none;font-size:.72rem;font-weight:700;letter-spacing:.1em;border-radius:2px;transition:background .2s,transform .15s}
 .btn-primary:hover{background:#1f1f1f;transform:translateY(-2px)}
-.btn-outline{display:inline-block;padding:.82rem 2rem;background:transparent;color:#000000;text-decoration:none;font-size:.72rem;font-weight:700;letter-spacing:.1em;border-radius:2px;border:1px solid #737373;transition:border-color .2s,transform .15s}
-.btn-outline:hover{border-color:#a0a0a0;transform:translateY(-2px)}
+.btn-outline{display:inline-block;padding:.82rem 2rem;background:#ffffff;color:#000000;text-decoration:none;font-size:.72rem;font-weight:700;letter-spacing:.1em;border-radius:2px;border:1px solid #ffffff;transition:background .2s,border-color .2s,transform .15s,box-shadow .2s}
+.btn-outline:hover{background:#e6e6e6;border-color:#e6e6e6;transform:translateY(-2px);box-shadow:0 10px 25px rgba(255,255,255,.18)}
 
 /* HERO RIGHT — floating badge photo layout */
 .hero-right{display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative}
