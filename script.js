@@ -136,7 +136,9 @@ if(sections.length){
   });
 }
 
-/* TECHNICAL STACK TABS */
+/* TECHNICAL STACK TABS (mobile: switch panel. desktop: tabs are hidden via CSS
+   and all panels show at once in a grid, so this click handler simply has no
+   visible effect on desktop — which is exactly what we want) */
 var stackTabs = document.getElementById('stackTabs');
 if(stackTabs){
   var tabBtns = stackTabs.querySelectorAll('.stack-tab-btn');
