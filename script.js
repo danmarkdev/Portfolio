@@ -37,11 +37,13 @@ try{
           var ch = CHARS[Math.floor(Math.random()*CHARS.length)];
           var fade = 1 - (j/d.len);
           if(j===0){
-            ctx.fillStyle = 'rgba(255,255,255,'+(0.9*fade+0.1)+')';
-            ctx.shadowBlur = 6;
-            ctx.shadowColor = 'rgba(255,255,255,.7)';
+            /* leading character - bright green with glow */
+            ctx.fillStyle = 'rgba(120,255,150,'+(0.95*fade+0.1)+')';
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = 'rgba(80,255,120,.8)';
           } else {
-            ctx.fillStyle = 'rgba(255,255,255,'+(fade*0.45)+')';
+            /* trailing characters - classic matrix green */
+            ctx.fillStyle = 'rgba(40,220,90,'+(fade*0.5)+')';
             ctx.shadowBlur = 0;
           }
           ctx.fillText(ch, x, y);
@@ -68,31 +70,6 @@ try{
 }catch(bgErr){
   console.error('Background animation failed to start:', bgErr);
 }
-
-/* LOADER */
-(function(){
-  var loader = document.getElementById('loader');
-  var bar = document.getElementById('lbar');
-  if(!bar||!loader) return;
-  var done = false;
-  function hideLoader(){
-    if(done) return;
-    done = true;
-    loader.style.opacity='0';
-    setTimeout(function(){ loader.style.display='none'; },500);
-  }
-  var p=0;
-  var tick=setInterval(function(){
-    p=Math.min(p+Math.random()*18,100);
-    bar.style.width=p+'%';
-    if(p>=100){
-      clearInterval(tick);
-      setTimeout(hideLoader,300);
-    }
-  },100);
-  /* safety net: never let the loader trap the page, no matter what */
-  setTimeout(hideLoader, 4000);
-})();
 
 /* HEADER SCROLL */
 window.addEventListener('scroll',function(){
