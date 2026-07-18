@@ -107,6 +107,16 @@ if(sections.length){
     mobileNavLinks.forEach(function(a){ a.classList.toggle('active',a.getAttribute('href')==='#'+cur); });
   });
 }
+/* set active state instantly on click, so the nav pill turns black right away
+   instead of waiting for the scroll listener to catch up with smooth-scroll */
+[navLinks, mobileNavLinks].forEach(function(list){
+  list.forEach(function(a){
+    a.addEventListener('click',function(){
+      list.forEach(function(b){ b.classList.remove('active'); });
+      a.classList.add('active');
+    });
+  });
+});
 
 /* TECHNICAL STACK TABS (mobile: switch panel. desktop: tabs are hidden via CSS
    and all panels show at once in a grid, so this click handler simply has no
