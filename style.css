@@ -370,20 +370,17 @@ body.menu-open{overflow:hidden}
 .project-row:hover::before{opacity:1}
 .project-inner{display:flex;flex-direction:column;gap:.85rem;height:100%;width:100%;position:relative;z-index:1}
 
-/* Project screenshot on top of each card — full image always visible, letterbox blends into the card */
+/* Project screenshot on top of each card — frame matches the screenshots' own aspect ratio */
 .project-img-wrap{
   width:100%;
-  height:210px;
+  aspect-ratio:43/20;
   overflow:hidden;
-  background:#565656;
-  display:flex;
-  align-items:center;
-  justify-content:center;
 }
 .project-img-wrap img{
   width:100%;
   height:100%;
-  object-fit:contain;
+  object-fit:cover;
+  object-position:center;
   display:block;
   transition:transform .5s ease;
 }
@@ -855,5 +852,4 @@ footer p{font-family: var(--font-body); font-size:.78rem;color:#a0a0a0}
   .section-big-heading{font-size:2rem}
   .cert-item{width:180px}
   .project-row{width:240px}
-  .project-img-wrap{height:170px}
 }
