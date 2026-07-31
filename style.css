@@ -370,17 +370,20 @@ body.menu-open{overflow:hidden}
 .project-row:hover::before{opacity:1}
 .project-inner{display:flex;flex-direction:column;gap:.85rem;height:100%;width:100%;position:relative;z-index:1}
 
-/* Project screenshot on top of each card — fills the frame edge to edge, no gray bars */
+/* Project screenshot on top of each card — full image always visible, letterbox blends into the card */
 .project-img-wrap{
   width:100%;
   height:210px;
   overflow:hidden;
+  background:#565656;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 .project-img-wrap img{
   width:100%;
   height:100%;
-  object-fit:cover;
-  object-position:top center;
+  object-fit:contain;
   display:block;
   transition:transform .5s ease;
 }
