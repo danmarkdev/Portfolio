@@ -328,7 +328,7 @@ body.menu-open{overflow:hidden}
 .service-num{display:none}
 
 /* PROJECTS */
-.projects-list{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;align-items:stretch}
+.projects-list{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;align-items:stretch}
 .project-row{
   position:relative;
   background:#565656;
@@ -350,26 +350,27 @@ body.menu-open{overflow:hidden}
   opacity:0; transition:opacity .3s ease; pointer-events:none;
 }
 .project-row:hover::before{opacity:1}
-.project-inner{padding:2.25rem 2rem 2rem;display:flex;flex-direction:column;gap:.85rem;height:100%;width:100%;position:relative;z-index:1}
-.project-meta{display:flex;justify-content:space-between;align-items:flex-start}
-.project-tech-tags{display:flex;gap:.4rem;flex-wrap:wrap}
-.project-tag{
-  font-family: var(--font-heading);
-  font-size: .65rem;
-  font-weight: 600;
-  letter-spacing: .08em;
-  color: #ffffff;
-  border: 1px solid #6e6e6e;
-  padding: .25rem .6rem;
-  border-radius: 100px;
-  text-transform: uppercase;
-  transition: color .25s,border-color .25s,background .25s;
+.project-inner{display:flex;flex-direction:column;gap:.85rem;height:100%;width:100%;position:relative;z-index:1}
+
+/* Project screenshot on top of each card */
+.project-img-wrap{
+  width:100%;
+  aspect-ratio:16/10;
+  overflow:hidden;
+  background:#4a4a4a;
+  border-bottom:1px solid var(--border);
 }
-@media(hover:hover) and (pointer:fine){
-  .project-row:hover .project-tag{color:#1a1a1a;border-color:#949494;background:rgba(255,255,255,.04)}
+.project-img-wrap img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  transition:transform .5s ease;
 }
-.project-tag:active,.project-tag:focus{color:#ffffff;border-color:#6e6e6e;background:transparent}
-.project-ext-link{display:none}
+.project-row:hover .project-img-wrap img{transform:scale(1.04)}
+
+.project-body{padding:1.75rem 2rem 2rem;display:flex;flex-direction:column;gap:.85rem;flex:1}
+
 .project-row-title{
   font-family: var(--font-heading);
   font-size: 1.3rem;
@@ -377,7 +378,6 @@ body.menu-open{overflow:hidden}
   color: #000000;
   line-height: 1.25;
   letter-spacing: -.02em;
-  margin-top: .3rem;
 }
 .project-sub-label{
   font-family: var(--font-body);
@@ -810,7 +810,7 @@ footer p{font-family: var(--font-body); font-size:.78rem;color:#a0a0a0}
   .services-grid::-webkit-scrollbar,.projects-list::-webkit-scrollbar{display:none}
   .service-card,.project-row{flex:0 0 82%;scroll-snap-align:center}
   .service-card{padding:2rem 1.5rem}
-  .project-inner{padding:1.75rem 1.5rem 1.5rem}
+  .project-body{padding:1.5rem}
   .cert-item{width:210px}
   .cert-track{animation-duration:26s}
   .tl-right h4{white-space:normal}
