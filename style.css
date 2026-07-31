@@ -172,7 +172,9 @@ body.menu-open{overflow:hidden}
 .btn-primary:hover{background:#1f1f1f;transform:translateY(-2px)}
 .btn-primary:active,.btn-primary:focus,.btn-primary:visited{background:#000000;color:#ffffff;transform:none}
 .btn-outline{
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
   padding: .85rem 2.2rem;
   background: #ffffff;
   color: #000000;
