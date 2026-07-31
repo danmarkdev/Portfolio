@@ -222,12 +222,8 @@
     </div>
     <div class="section-divider reveal"></div>
 
-    <div class="projects-carousel-wrap reveal">
-      <button class="carousel-arrow prev" onclick="scrollProjects(-1)" aria-label="Previous project">
-        <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
-      </button>
-
-      <div class="projects-list" id="projectsList">
+    <div class="projects-marquee reveal">
+      <div class="projects-track" id="projectsTrack">
 
         <!-- PROJECT 1 -->
         <div class="project-row">
@@ -299,25 +295,77 @@
           </div>
         </div>
 
-      </div>
+        <!-- duplicate set for seamless infinite loop -->
+        <div class="project-row" aria-hidden="true">
+          <div class="project-inner">
+            <div class="project-img-wrap">
+              <img src="HealthSync.PNG" alt=""/>
+            </div>
+            <div class="project-body">
+              <h3 class="project-row-title">HealthSync Clinic Management System</h3>
+              <p class="project-sub-label">For STI College Bacoor</p>
+              <p class="project-row-desc">A web based system simplifying the school nurse's workflow, digital records, real-time communication tools and streamlined healthcare processes.</p>
+              <a href="https://healthsync.hstn.me" target="_blank" class="project-live-link">
+                View Live Site
+                <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
 
-      <button class="carousel-arrow next" onclick="scrollProjects(1)" aria-label="Next project">
-        <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
-      </button>
+        <div class="project-row" aria-hidden="true">
+          <div class="project-inner">
+            <div class="project-img-wrap">
+              <img src="RicoTheBrickLand.PNG" alt=""/>
+            </div>
+            <div class="project-body">
+              <h3 class="project-row-title">Rico The Brickland Hills</h3>
+              <p class="project-row-desc">A pixel game featuring Rico in the plumber's journey across the brickland hills and grab coins, stomp the snurples and race against the timer to reach each world's flagpole.</p>
+              <a href="https://danmarkdev.github.io/RicoTheBricklandHills/" target="_blank" class="project-live-link">
+                View Live Site
+                <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-row" aria-hidden="true">
+          <div class="project-inner">
+            <div class="project-img-wrap">
+              <img src="ACupOfCafe.PNG" alt=""/>
+            </div>
+            <div class="project-body">
+              <h3 class="project-row-title">A Cup of Cafe</h3>
+              <p class="project-row-desc">A digital storefront built to demonstrate design and development range a story driven layout for a Manila coffee brand, featuring scroll animations, custom cursor interactions, and a responsive build across screen sizes.</p>
+              <a href="https://danmarkdev.github.io/ACupOfCafe/" target="_blank" class="project-live-link">
+                View Live Site
+                <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-row" aria-hidden="true">
+          <div class="project-inner">
+            <div class="project-img-wrap">
+              <img src="LBFF.PNG" alt=""/>
+            </div>
+            <div class="project-body">
+              <h3 class="project-row-title">Digital Father's Day Letter</h3>
+              <p class="project-sub-label">For Lorimi Bacoor Faith Family (LBFF)</p>
+              <p class="project-row-desc">An interactive tap to open envelope revealing a scripture rooted tribute to the two church pastors, personalized letters, a scroll-triggered reveal and a closing message of gratitude from the congregation.</p>
+              <a href="https://lbff.hstn.me/" target="_blank" class="project-live-link">
+                View Live Site
+                <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 </section>
-
-<script>
-  function scrollProjects(dir){
-    var list = document.getElementById('projectsList');
-    var card = list.querySelector('.project-row');
-    var styles = card ? getComputedStyle(list) : null;
-    var gap = styles ? parseFloat(styles.columnGap || styles.gap || 24) : 24;
-    var amount = (card ? card.getBoundingClientRect().width : 340) + gap;
-    list.scrollBy({ left: dir * amount, behavior: 'smooth' });
-  }
-</script>
   
 <!-- SKILLS -->
 <section id="skills" class="section section-alt">
