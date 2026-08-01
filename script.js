@@ -162,6 +162,7 @@ function initSwipeMarquee(trackId, loopSeconds){
   var startX = 0;
   var startPos = 0;
   var speed = 0;          // px per second, auto-scroll rate
+  var activePointerId = null;
 
   function measure(){
     half = track.scrollWidth / 2;
@@ -196,28 +197,38 @@ function initSwipeMarquee(trackId, loopSeconds){
     moved = false;
     startX = e.clientX;
     startPos = pos;
-    track.classList.add('dragging');
-    if(track.setPointerCapture){
-      try{ track.setPointerCapture(e.pointerId); }catch(err){}
-    }
+    activePointerId = e.pointerId;
+    /* NOTE: we deliberately do NOT call setPointerCapture here. Capturing on
+       every pointerdown — even a plain click on a link — makes the browser
+       redirect the resulting mouseup/click to this track element instead of
+       the link that was actually pressed, so the click silently never fires
+       on the <a> tag. We only capture once we've confirmed a real drag
+       (see pointerMove below), so ordinary clicks pass straight through. */
   }
 
   function pointerMove(e){
     if(!dragging) return;
     var dx = e.clientX - startX;
-    /* FIX: raised from 4px to 15px — 4px was small enough that normal mouse
-       jitter during a plain click was being misread as a drag, which then
-       caused the click handler below to preventDefault() and swallow every
-       "View Live Site" link click. 15px only triggers on an actual drag. */
-    if(Math.abs(dx) > 15) moved = true;
-    pos = wrap360(startPos - dx);
-    render();
+    if(!moved && Math.abs(dx) > 15){
+      moved = true;
+      track.classList.add('dragging');
+      if(track.setPointerCapture){
+        try{ track.setPointerCapture(activePointerId); }catch(err){}
+      }
+    }
+    if(moved){
+      pos = wrap360(startPos - dx);
+      render();
+    }
   }
 
   function pointerUp(){
     if(!dragging) return;
     dragging = false;
     track.classList.remove('dragging');
+    if(moved && track.releasePointerCapture){
+      try{ track.releasePointerCapture(activePointerId); }catch(err){}
+    }
   }
 
   track.style.animation = 'none';
