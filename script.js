@@ -205,7 +205,11 @@ function initSwipeMarquee(trackId, loopSeconds){
   function pointerMove(e){
     if(!dragging) return;
     var dx = e.clientX - startX;
-    if(Math.abs(dx) > 4) moved = true;
+    /* FIX: raised from 4px to 15px — 4px was small enough that normal mouse
+       jitter during a plain click was being misread as a drag, which then
+       caused the click handler below to preventDefault() and swallow every
+       "View Live Site" link click. 15px only triggers on an actual drag. */
+    if(Math.abs(dx) > 15) moved = true;
     pos = wrap360(startPos - dx);
     render();
   }
