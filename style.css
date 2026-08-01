@@ -339,8 +339,13 @@ body.menu-open{overflow:hidden}
   gap:1.5rem;
   width:max-content;
   animation:projectsScroll 60s linear infinite;
+  cursor:grab;
+  touch-action:pan-y;
 }
 .projects-marquee:hover .projects-track{animation-play-state:paused}
+.projects-track.dragging{cursor:grabbing}
+.projects-track.dragging .project-row{pointer-events:none}
+.project-img-wrap img{-webkit-user-drag:none;user-drag:none}
 @keyframes projectsScroll{
   from{transform:translateX(0)}
   to{transform:translateX(-50%)}
@@ -825,8 +830,7 @@ footer p{font-family: var(--font-body); font-size:.78rem;color:#a0a0a0}
   }
   .services-grid::-webkit-scrollbar{display:none}
   .service-card{flex:0 0 82%;scroll-snap-align:center;padding:2rem 1.5rem}
-  .project-row{width:280px}
-  .projects-track{animation-duration:42s}
+  .project-row{width:82%;max-width:340px}
   .cert-item{width:300px}
   .cert-track{animation-duration:55s}
   .tl-right h4{white-space:normal}
@@ -851,5 +855,5 @@ footer p{font-family: var(--font-body); font-size:.78rem;color:#a0a0a0}
   .hero-name{font-size:2.2rem}
   .section-big-heading{font-size:2rem}
   .cert-item{width:250px}
-  .project-row{width:240px}
+  .project-row{width:80%;max-width:280px}
 }
