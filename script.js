@@ -145,11 +145,14 @@ var obs=new IntersectionObserver(function(entries){
 },{threshold:.1});
 document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
 
-/* PROJECTS MARQUEE — draggable/swipeable on both desktop (mouse) and mobile (touch),
-   still auto-scrolls on its own whenever the person isn't actively dragging it */
-(function(){
-  var track = document.getElementById('projectsTrack');
-  var wrap = track ? track.closest('.projects-marquee') : null;
+/* DRAGGABLE / SWIPEABLE MARQUEE — reusable for both the Projects and
+   Certificates tracks. Works with mouse drag on desktop and touch swipe on
+   mobile (Pointer Events cover both), and keeps auto-scrolling on its own
+   whenever the person isn't actively dragging it. loopSeconds controls how
+   long one full auto-scroll loop takes, same as the old CSS animation did. */
+function initSwipeMarquee(trackId, loopSeconds){
+  var track = document.getElementById(trackId);
+  var wrap = track ? track.closest('.projects-marquee, .cert-marquee') : null;
   if(!track || !wrap) return;
 
   var half = 0;          // width of one full (non-duplicated) set of cards
@@ -159,11 +162,10 @@ document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
   var startX = 0;
   var startPos = 0;
   var speed = 0;          // px per second, auto-scroll rate
-  var resumeTimer = null;
 
   function measure(){
     half = track.scrollWidth / 2;
-    speed = half / 60; // keep the original ~60s-per-loop pace
+    speed = half / loopSeconds;
   }
 
   function wrap360(p){
@@ -198,7 +200,6 @@ document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
     if(track.setPointerCapture){
       try{ track.setPointerCapture(e.pointerId); }catch(err){}
     }
-    if(resumeTimer){ clearTimeout(resumeTimer); resumeTimer=null; }
   }
 
   function pointerMove(e){
@@ -222,7 +223,7 @@ document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
   track.addEventListener('pointercancel', pointerUp);
   track.addEventListener('pointerleave', function(){ if(dragging) pointerUp(); });
 
-  /* prevent a dragged swipe from also firing the project's "View Live Site" link */
+  /* prevent a dragged swipe from also firing a link/card click underneath it */
   track.addEventListener('click', function(e){
     if(moved){ e.preventDefault(); e.stopPropagation(); }
   }, true);
@@ -231,7 +232,10 @@ document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
   window.addEventListener('load', measure);
   measure();
   requestAnimationFrame(tick);
-})();
+}
+
+initSwipeMarquee('projectsTrack', 60); // ~60s per loop, same pace as before
+initSwipeMarquee('certTrack', 75);     // ~75s per loop, same pace as before
 
 /* CONTACT FORM */
 function sendMsg(){
