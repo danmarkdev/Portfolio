@@ -145,6 +145,94 @@ var obs=new IntersectionObserver(function(entries){
 },{threshold:.1});
 document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
 
+/* PROJECTS MARQUEE — draggable/swipeable on both desktop (mouse) and mobile (touch),
+   still auto-scrolls on its own whenever the person isn't actively dragging it */
+(function(){
+  var track = document.getElementById('projectsTrack');
+  var wrap = track ? track.closest('.projects-marquee') : null;
+  if(!track || !wrap) return;
+
+  var half = 0;          // width of one full (non-duplicated) set of cards
+  var pos = 0;            // current scroll offset in px
+  var dragging = false;
+  var moved = false;      // did the pointer travel far enough to count as a drag (vs a tap)
+  var startX = 0;
+  var startPos = 0;
+  var speed = 0;          // px per second, auto-scroll rate
+  var resumeTimer = null;
+
+  function measure(){
+    half = track.scrollWidth / 2;
+    speed = half / 60; // keep the original ~60s-per-loop pace
+  }
+
+  function wrap360(p){
+    if(half<=0) return 0;
+    p = p % half;
+    if(p<0) p += half;
+    return p;
+  }
+
+  function render(){
+    track.style.transform = 'translateX(' + (-pos) + 'px)';
+  }
+
+  var lastTime = null;
+  function tick(t){
+    if(lastTime===null) lastTime = t;
+    var dt = (t - lastTime) / 1000;
+    lastTime = t;
+    if(!dragging){
+      pos = wrap360(pos + speed*dt);
+      render();
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function pointerDown(e){
+    dragging = true;
+    moved = false;
+    startX = e.clientX;
+    startPos = pos;
+    track.classList.add('dragging');
+    if(track.setPointerCapture){
+      try{ track.setPointerCapture(e.pointerId); }catch(err){}
+    }
+    if(resumeTimer){ clearTimeout(resumeTimer); resumeTimer=null; }
+  }
+
+  function pointerMove(e){
+    if(!dragging) return;
+    var dx = e.clientX - startX;
+    if(Math.abs(dx) > 4) moved = true;
+    pos = wrap360(startPos - dx);
+    render();
+  }
+
+  function pointerUp(){
+    if(!dragging) return;
+    dragging = false;
+    track.classList.remove('dragging');
+  }
+
+  track.style.animation = 'none';
+  track.addEventListener('pointerdown', pointerDown);
+  track.addEventListener('pointermove', pointerMove);
+  track.addEventListener('pointerup', pointerUp);
+  track.addEventListener('pointercancel', pointerUp);
+  track.addEventListener('pointerleave', function(){ if(dragging) pointerUp(); });
+
+  /* prevent a dragged swipe from also firing the project's "View Live Site" link */
+  track.addEventListener('click', function(e){
+    if(moved){ e.preventDefault(); e.stopPropagation(); }
+  }, true);
+
+  window.addEventListener('resize', measure);
+  window.addEventListener('load', measure);
+  measure();
+  requestAnimationFrame(tick);
+})();
+
 /* CONTACT FORM */
 function sendMsg(){
   var name=document.getElementById('cf-name')?document.getElementById('cf-name').value.trim():'';
