@@ -429,43 +429,32 @@ body.menu-open{overflow:hidden}
 .project-live-link:active svg{transform:translateX(4px)}
 
 /* SKILLS */
-.stack-tabs{
-  display:flex;
-  flex-wrap:wrap;
-  gap:.6rem;
-  margin-bottom:1.75rem;
-}
-.stack-tab-btn{
-  font-family: var(--font-heading);
-  font-size: .8rem;
-  font-weight: 600;
-  letter-spacing: .03em;
-  color: #ffffff;
-  background: #5c5c5c;
-  border: 1px solid #6e6e6e;
-  padding: .6rem 1.2rem;
-  border-radius: 100px;
-  cursor: pointer;
-  transition: border-color .2s,color .2s,background .2s;
-}
-.stack-tab-btn:hover{border-color:#949494;color:#000000}
-.stack-tab-btn.active{background:#000000;color:#ffffff;border-color:#000000}
+.stack-tabs{display:none}
 
 .stack-panels{
+  display:flex;
+  gap:1rem;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  padding-bottom:.25rem;
+}
+.stack-panels::-webkit-scrollbar{display:none}
+
+.stack-panel{
+  display:block;
+  flex:0 0 78%;
+  max-width:280px;
+  scroll-snap-align:center;
   background:#565656;
   border:1px solid #666666;
   border-radius:14px;
-  padding:2rem 1.75rem;
-  min-height:110px;
+  padding:1.6rem 1.4rem;
+  transition:border-color .3s,transform .3s,box-shadow .3s;
 }
-.stack-panel{display:none}
-.stack-panel.active{
-  display:block;
-  animation:panelFade .35s ease;
-}
-@keyframes panelFade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .stack-panel-title{
-  display:none;
+  display:block;
   font-family: var(--font-heading);
   font-size: .82rem;
   font-weight: 700;
@@ -511,34 +500,25 @@ body.menu-open{overflow:hidden}
 .stack-ico img{width:13px;height:13px;object-fit:contain;display:block}
 .stack-ico svg{display:block}
 
-/* SKILLS — DESKTOP */
+/* SKILLS — DESKTOP: one straight 5-column row */
 @media(min-width:961px){
-  .stack-tabs{display:none}
   .stack-panels{
-    background:transparent;
-    border:none;
-    padding:0;
-    min-height:auto;
+    overflow:visible;
     display:grid;
-    grid-template-columns:repeat(3,1fr);
+    grid-template-columns:repeat(5,1fr);
     gap:1.25rem;
+    padding-bottom:0;
   }
   .stack-panel{
-    display:block;
-    opacity:1;
-    transform:none;
-    background:#565656;
-    border:1px solid #666666;
-    border-radius:14px;
-    padding:1.85rem 1.75rem;
-    transition:border-color .3s,transform .3s,box-shadow .3s;
+    flex:none;
+    max-width:none;
+    padding:1.85rem 1.5rem;
   }
   .stack-panel:hover{
     border-color:#8a8a8a;
     transform:translateY(-4px);
     box-shadow:0 18px 40px rgba(0,0,0,.45);
   }
-  .stack-panel-title{display:block}
 }
 
 /* EDUCATION */
@@ -815,9 +795,8 @@ footer p{font-family: var(--font-body); font-size:.78rem;color:#a0a0a0}
 }
 @media(max-width:700px){
   .section{padding:5rem 0}
-  .stack-tabs{flex-wrap:wrap;gap:.5rem;margin-bottom:1.25rem}
-  .stack-tab-btn{font-size:.72rem;padding:.5rem .95rem}
-  .stack-panels{padding:1.5rem 1.25rem}
+  .stack-panels{gap:.85rem}
+  .stack-panel{flex:0 0 82%;padding:1.4rem 1.25rem}
   .stack-tag{font-size:.8rem;padding:.42rem .85rem .42rem .5rem}
   .services-grid{
     display:flex;
