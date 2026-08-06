@@ -14,15 +14,12 @@
   <link rel="shortcut icon" href="favicon.png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
-<!-- ANIMATED BACKGROUND -->
-<canvas id="bg-canvas"></canvas>
-
-<!-- NAV -->
+<!-- NAV — floating pill -->
 <header id="header">
   <a href="#home" class="logo">DAN<span class="logo-dot">.</span>DEV</a>
   <nav id="nav">
@@ -32,8 +29,11 @@
     <a href="#skills">Skills</a>
     <a href="#education">About</a>
     <a href="#certificates">Certificates</a>
-    <a href="#contact">Contact</a>
   </nav>
+  <a href="#contact" class="nav-cta">
+    Let's Talk
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg>
+  </a>
   <button class="hamburger" id="hbg" aria-label="Toggle menu" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
