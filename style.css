@@ -86,8 +86,8 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   align-items:center;
   gap:.4rem;
 }
-.logo::before{content:'';width:8px;height:8px;border-radius:2px;background:var(--accent);display:inline-block}
-.logo-dot{color:var(--accent)}
+.logo::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block}
+.logo-dot{width:4px;height:4px;border-radius:50%;background:var(--accent);display:inline-block;margin:0 1px 3px}
 
 #nav{
   display:flex;
@@ -128,7 +128,7 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 .nav-cta:hover{background:var(--accent-hover);border-color:var(--accent-hover);transform:translateY(-1px);box-shadow:0 8px 18px var(--accent-glow)}
 .nav-cta:active{transform:translateY(0);box-shadow:none}
 .nav-cta.active{background:var(--accent-hover);border-color:var(--accent-hover)}
-.nav-cta svg{width:13px;height:13px;stroke:currentColor;stroke-width:2;fill:none}
+.nav-cta svg{width:16px;height:16px;stroke:currentColor;stroke-width:2.5;fill:none;flex-shrink:0}
 
 .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;position:relative;z-index:1001;width:38px;height:38px;align-items:center;justify-content:center;flex-shrink:0;border-radius:50%;transition:background .2s ease}
 .hamburger:hover{background:var(--accent-soft)}
@@ -191,8 +191,8 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   font-family: var(--font-heading);
   font-size: clamp(2.6rem,5vw,4.2rem);
   font-weight: 700;
-  line-height: 1.08;
-  letter-spacing: -.03em;
+  line-height: 1.15;
+  letter-spacing: -.01em;
   color: var(--text);
   margin-bottom: 1.4rem;
 }
