@@ -597,16 +597,29 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   .stack-panel{flex:0 0 88%}
 }
 
-/* EDUCATION */
+/* EDUCATION — two-column: sticky title left, timeline fills the right */
 .edu-section{background:transparent;padding:6rem 0;position:relative;z-index:1}
-.education-panel{max-width:700px;background:var(--surface);border:1px solid var(--border);border-radius:22px;padding:2.5rem 2.5rem 1.75rem;box-shadow:var(--shadow-card)}
+.education-panel{
+  max-width:none;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:2.75rem;
+  box-shadow:var(--shadow-card);
+  display:grid;
+  grid-template-columns:280px 1fr;
+  gap:3rem;
+}
 .education-title{
   font-family: var(--font-heading);
   color: var(--text);
   font-size: clamp(1.5rem,3vw,2rem);
   font-weight: 700;
   letter-spacing: -.03em;
-  margin-bottom: 2.5rem;
+  margin-bottom: 0;
+  position: sticky;
+  top: calc(var(--nav-h) + 2rem);
+  align-self: start;
 }
 .timeline{display:flex;flex-direction:column;gap:0}
 .tl-item{display:grid;grid-template-columns:20px minmax(0,1fr);gap:1.5rem}
@@ -865,6 +878,14 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .year-badge-sub{font-size:.64rem}
   .contact-page-grid{grid-template-columns:1fr}
   .footer-inner{flex-direction:column;gap:.5rem;text-align:center}
+
+  .education-panel{
+    grid-template-columns:1fr;
+    gap:1.5rem;
+  }
+  .education-title{
+    position:static;
+  }
 }
 @media(max-width:700px){
   .section-header{align-items:center}
