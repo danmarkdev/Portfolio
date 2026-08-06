@@ -46,6 +46,19 @@ html{scrollbar-width:none}
 
 .container{width:90%;max-width:var(--max-w);margin:0 auto}
 
+/* Background canvas must be taken out of normal document flow,
+   otherwise its JS-set width/height reserves real space on the page
+   and pushes all content below it down. */
+#bg-canvas{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:-1;
+  pointer-events:none;
+  display:block;
+}
+
 h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.02em}
 
 /* NAV — floating centered pill, detached from the top edge */
