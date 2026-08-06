@@ -128,13 +128,14 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 .nav-cta:active{transform:translateY(0);box-shadow:none}
 .nav-cta.active{background:var(--accent-hover);border-color:var(--accent-hover)}
 
-.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;position:relative;z-index:1001;width:38px;height:38px;align-items:center;justify-content:center;flex-shrink:0;border-radius:50%;transition:background .2s ease}
+.hamburger{display:none;background:none;border:none;cursor:pointer;position:relative;z-index:1001;width:38px;height:38px;flex-shrink:0;border-radius:50%;transition:background .2s ease}
 .hamburger:hover{background:var(--accent-soft)}
-.hamburger span{display:block;width:18px;height:2px;background:var(--text);border-radius:2px;transition:transform .3s ease,opacity .3s ease;transform-origin:center}
-.hamburger span+span{margin-top:5px}
-.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger span{position:absolute;left:50%;top:50%;width:18px;height:2px;background:var(--text);border-radius:2px;transition:transform .3s ease,opacity .3s ease;transform:translate(-50%,-50%) translateY(0) rotate(0)}
+.hamburger span:nth-child(1){transform:translate(-50%,-50%) translateY(-6px) rotate(0)}
+.hamburger span:nth-child(3){transform:translate(-50%,-50%) translateY(6px) rotate(0)}
+.hamburger.open span:nth-child(1){transform:translate(-50%,-50%) translateY(0) rotate(45deg)}
 .hamburger.open span:nth-child(2){opacity:0}
-.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.hamburger.open span:nth-child(3){transform:translate(-50%,-50%) translateY(0) rotate(-45deg)}
 
 .mobile-nav{display:flex;position:fixed;inset:0;background:var(--bg);flex-direction:column;align-items:center;justify-content:center;gap:1.75rem;z-index:998;opacity:0;visibility:hidden;transform:scale(.97);transition:opacity .3s ease,transform .3s ease,visibility .3s}
 .mobile-nav.open{opacity:1;visibility:visible;transform:scale(1)}
@@ -150,6 +151,14 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 }
 .mobile-nav a:hover{color:var(--accent)}
 .mobile-nav a.active{color:var(--accent)}
+.mobile-nav a.mnav-cta{
+  background:var(--accent);
+  color:#ffffff;
+  padding:.85rem 2.2rem;
+  border-radius:100px;
+  font-size:1.15rem;
+}
+.mobile-nav a.mnav-cta:hover{color:#ffffff;background:var(--accent-hover)}
 .mobile-nav.open a{opacity:1;transform:translateY(0);transition:opacity .35s ease,transform .35s ease}
 .mobile-nav.open a:nth-child(1){transition-delay:.07s}
 .mobile-nav.open a:nth-child(2){transition-delay:.12s}
@@ -162,7 +171,7 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 /* SECTIONS */
 .section{padding:7rem 0;position:relative;z-index:1}
 .section-alt{background:transparent}
-.section-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:1.25rem}
+.section-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.25rem}
 .section-big-heading{
   font-family: var(--font-heading);
   font-size: clamp(2rem,4.5vw,3.2rem);
@@ -178,7 +187,7 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   letter-spacing: .18em;
   color: var(--accent);
   text-transform: uppercase;
-  padding-bottom: .4rem;
+  padding-top: .5rem;
 }
 .section-divider{width:100%;height:1px;background:rgba(163,177,198,.4);margin-bottom:3.5rem}
 
@@ -698,8 +707,8 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 .contact-round:hover{color:var(--accent);transform:translateY(-3px);box-shadow:var(--shadow-card-hover)}
 
 /* CONTACT PAGE */
-.contact-page-main{min-height:calc(100vh - var(--nav-h));padding-top:calc(var(--nav-h) + 3rem);position:relative;z-index:1}
-.contact-page-section{padding:2rem 0 2.25rem}
+.contact-page-main{min-height:calc(100vh - var(--nav-h));padding-top:calc(var(--nav-h) + 1rem);position:relative;z-index:1}
+.contact-page-section{padding:1rem 0 2.25rem}
 .contact-page-head{max-width:600px;margin:0 auto 3.5rem;text-align:center}
 .contact-page-head h1{
   font-family: var(--font-heading);
