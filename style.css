@@ -868,6 +868,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 }
 @media(max-width:700px){
   .section-header{align-items:center}
+  .section-big-heading{font-size:1.5rem;white-space:nowrap}
   .section-label-right{padding-top:0;text-align:right;white-space:nowrap}
   .section{padding:4.5rem 0}
   .stack-panels{gap:.85rem}
@@ -910,7 +911,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .stack-badge .fb-icon img{width:12px;height:12px}
   .stack-badge .fb-text{display:none}
   .hero-name{font-size:2.1rem}
-  .section-big-heading{font-size:1.9rem}
+  .section-big-heading{font-size:1.25rem}
   .cert-item{width:250px}
   .project-row{width:80%;max-width:280px}
   .hero-actions{gap:.5rem}
