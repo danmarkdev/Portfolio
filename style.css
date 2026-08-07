@@ -710,6 +710,9 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 .code-text{color:#e5e7eb}
 .code-text.code-current{color:#8fa8ff;font-weight:600}
 
+/* description text inside the typed <desc> tag — green, same as code-comment */
+.code-desc{color:#4ade80}
+
 /* blinking typing cursor, shown only on the actively-typed line */
 .code-caret{
   display:inline-block;
