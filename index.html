@@ -607,71 +607,67 @@
 
 <script src="script.js"></script>
 <script>
+  
 /* ---------- Education card: auto-typing "real HTML" effect ---------- */
 (function () {
   var mount = document.getElementById('eduCode');
   if (!mount) return;
 
-  var BLANK = { indent: 1, blank: true };
+  var BLANK = { indent: 0, blank: true };
 
-  function entry(year, current, school, program) {
+  function entry(year, current, school) {
     return [
-      { indent: 2, segs: [{ c: 'code-comment', t: '<!-- ' + year + ' -->' }] },
-      { indent: 2, segs: [{ c: 'code-tag', t: '<school>' }] },
-      { indent: 3, segs: [{ c: current ? 'code-text code-current' : 'code-text', t: school }] },
-      { indent: 2, segs: [{ c: 'code-tag', t: '</school>' }] },
-      { indent: 2, segs: [{ c: 'code-tag', t: '<program>' }] },
-      { indent: 3, segs: [{ c: 'code-text', t: program }] },
-      { indent: 2, segs: [{ c: 'code-tag', t: '</program>' }] },
+      { indent: 0, segs: [
+          { c: 'code-tag', t: '<school ' },
+          { c: 'code-attr', t: 'year=' },
+          { c: 'code-attr-val', t: '"' + year + '"' },
+          { c: 'code-tag', t: '>' }
+        ] },
+      { indent: 1, segs: [{ c: current ? 'code-text code-current' : 'code-text', t: school }] },
+      { indent: 0, segs: [{ c: 'code-tag', t: '</school>' }] },
       BLANK
     ];
   }
 
-  var lines = [
-    { indent: 0, segs: [{ c: 'code-punct', t: '<!doctype html>' }] },
-    { indent: 0, segs: [{ c: 'code-tag', t: '<html>' }] },
-    { indent: 1, segs: [{ c: 'code-tag', t: '<head>' }] },
-    { indent: 2, segs: [
-        { c: 'code-tag', t: '<title>' },
-        { c: 'code-text', t: 'Danmark Rosalejos — Education' },
-        { c: 'code-tag', t: '</title>' }
-      ] },
-    { indent: 1, segs: [{ c: 'code-tag', t: '</head>' }] },
-    { indent: 0, segs: [{ c: 'code-tag', t: '<body>' }] },
-    BLANK
-  ]
-  .concat(entry('2026 - Present', true, 'Technological University of the Philippines Manila',
-      'BTVTED Compro \u2014 Bachelor of Technical-Vocational Teacher Education, major in Computer Programming.'))
-  .concat(entry('2024 - 2026', false, 'STI College Bacoor',
-      'TVL Track - ICT. Yearly Awarded With Honors in Grade 12. Focused on Web & Mobile Application Development.'))
-  .concat(entry('2021 - 2024', false, 'Bacoor National High School Molino Main',
-      'Specialized in Technical Drafting, 2D/3D modeling, and digital blueprinting using AutoCAD.'))
-  .concat([
-    { indent: 1, segs: [{ c: 'code-tag', t: '</body>' }] },
-    { indent: 0, segs: [{ c: 'code-tag', t: '</html>' }] }
-  ]);
+  var lines = []
+    .concat(entry('2026 - Present', true, 'Technological University of the Philippines Manila'))
+    .concat(entry('2024 - 2026', false, 'STI College Bacoor'))
+    .concat(entry('2021 - 2024', false, 'Bacoor National High School Molino Main'));
 
-  var CHAR_DELAY = 12;   // ms per character
-  var LINE_DELAY = 55;   // ms pause between lines
+  // drop the trailing blank line after the last entry
+  lines.pop();
+
+  var CHAR_DELAY = 30;   // ms per character — slower, easier to read
+  var LINE_DELAY = 140;  // ms pause between lines
   var typed = false;
+
+  function scrollToBottom() {
+    mount.scrollTop = mount.scrollHeight;
+  }
 
   function typeLine(lineIndex) {
     if (lineIndex >= lines.length) return;
     var def = lines[lineIndex];
 
     var row = document.createElement('div');
-    row.className = 'code-line' + (def.indent ? ' code-indent' + def.indent : '');
+    row.className = 'code-line';
     mount.appendChild(row);
 
     if (def.blank) {
       row.innerHTML = '&nbsp;';
+      scrollToBottom();
       setTimeout(function () { typeLine(lineIndex + 1); }, LINE_DELAY);
       return;
     }
 
+    var content = document.createElement('span');
+    content.className = 'code-content';
+    if (def.indent) content.style.marginLeft = (def.indent * 1.6) + 'rem';
+    row.appendChild(content);
+
     var caret = document.createElement('span');
     caret.className = 'code-caret';
-    row.appendChild(caret);
+    content.appendChild(caret);
 
     var segIndex = 0, charIndex = 0;
 
@@ -685,7 +681,7 @@
       if (charIndex === 0) {
         var span = document.createElement('span');
         span.className = seg.c;
-        row.insertBefore(span, caret);
+        content.insertBefore(span, caret);
       }
       var span = caret.previousSibling;
       span.textContent += seg.t[charIndex];
@@ -694,6 +690,7 @@
         segIndex++;
         charIndex = 0;
       }
+      scrollToBottom();
       setTimeout(typeChar, CHAR_DELAY);
     }
     typeChar();
