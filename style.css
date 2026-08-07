@@ -663,9 +663,10 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 .code-body{
   counter-reset: codeline;
   padding:1.5rem 0;
-  overflow-x:auto;
+  overflow-y:auto;
+  overflow-x:hidden;
   scrollbar-width:none;
-  min-height:420px;
+  height:360px;
 }
 .code-body::-webkit-scrollbar{display:none}
 
@@ -692,9 +693,9 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 }
 .code-line:hover{background:rgba(255,255,255,.03)}
 
-.code-indent1{padding-left:2.8rem}
-.code-indent2{padding-left:4.1rem}
-.code-indent3{padding-left:5.4rem}
+/* indentation lives on an inner wrapper (not the row) so the line
+   number column always stays in a straight vertical line */
+.code-content{display:inline}
 
 .code-punct{color:#6b7280}
 .code-key{color:#7dd3fc}
@@ -979,11 +980,8 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .edu-header{margin-bottom:1.75rem}
   .code-titlebar{padding:.7rem 1rem;gap:.75rem}
   .code-filename{font-size:.68rem;padding:.25rem .6rem}
-  .code-body{padding:1.1rem 0}
+  .code-body{padding:1.1rem 0;height:300px}
   .code-line{font-size:.72rem;padding:.15rem 1rem;gap:.7rem;line-height:1.75}
-  .code-indent1{padding-left:1.6rem}
-  .code-indent2{padding-left:2.4rem}
-  .code-indent3{padding-left:3.2rem}
   .code-line::before{flex:0 0 16px}
 }
 @media(max-width:480px){
@@ -1007,7 +1005,5 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .btn-primary,.btn-outline{font-size:.68rem;padding-left:.9rem;padding-right:.9rem;gap:.35rem}
 
   .code-line{font-size:.66rem}
-  .code-indent1{padding-left:1.2rem}
-  .code-indent2{padding-left:1.9rem}
-  .code-indent3{padding-left:2.6rem}
+  .code-body{height:260px}
 }
