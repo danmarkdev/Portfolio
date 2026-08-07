@@ -219,3 +219,110 @@ document.addEventListener('keydown',function(e){
   if((e.ctrlKey||e.metaKey)&&['c','x','u','s','a'].includes(e.key.toLowerCase())) e.preventDefault();
   if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&['i','j'].includes(e.key.toLowerCase()))) e.preventDefault();
 });
+
+/* ---------- EDUCATION CARD: auto-typing "real HTML" effect ---------- */
+(function () {
+  var mount = document.getElementById('eduCode');
+  if (!mount) return;
+
+  var BLANK = { indent: 0, blank: true };
+
+  function entry(year, current, school) {
+    return [
+      { indent: 0, segs: [
+          { c: 'code-tag', t: '<school ' },
+          { c: 'code-attr', t: 'year=' },
+          { c: 'code-attr-val', t: '"' + year + '"' },
+          { c: 'code-tag', t: '>' }
+        ] },
+      { indent: 1, segs: [{ c: current ? 'code-text code-current' : 'code-text', t: school }] },
+      { indent: 0, segs: [{ c: 'code-tag', t: '</school>' }] },
+      BLANK
+    ];
+  }
+
+  var lines = []
+    .concat(entry('2026 - Present', true, 'Technological University of the Philippines Manila'))
+    .concat(entry('2024 - 2026', false, 'STI College Bacoor'))
+    .concat(entry('2021 - 2024', false, 'Bacoor National High School Molino Main'));
+
+  // drop the trailing blank line after the last entry
+  lines.pop();
+
+  var CHAR_DELAY = 30;   // ms per character — slower, easier to read
+  var LINE_DELAY = 140;  // ms pause between lines
+  var typed = false;
+
+  function scrollToBottom() {
+    mount.scrollTop = mount.scrollHeight;
+  }
+
+  function typeLine(lineIndex) {
+    if (lineIndex >= lines.length) return;
+    var def = lines[lineIndex];
+
+    var row = document.createElement('div');
+    row.className = 'code-line';
+    mount.appendChild(row);
+
+    if (def.blank) {
+      row.innerHTML = '&nbsp;';
+      scrollToBottom();
+      setTimeout(function () { typeLine(lineIndex + 1); }, LINE_DELAY);
+      return;
+    }
+
+    var content = document.createElement('span');
+    content.className = 'code-content';
+    if (def.indent) content.style.marginLeft = (def.indent * 1.6) + 'rem';
+    row.appendChild(content);
+
+    var caret = document.createElement('span');
+    caret.className = 'code-caret';
+    content.appendChild(caret);
+
+    var segIndex = 0, charIndex = 0;
+
+    function typeChar() {
+      if (segIndex >= def.segs.length) {
+        caret.remove();
+        setTimeout(function () { typeLine(lineIndex + 1); }, LINE_DELAY);
+        return;
+      }
+      var seg = def.segs[segIndex];
+      if (charIndex === 0) {
+        var span = document.createElement('span');
+        span.className = seg.c;
+        content.insertBefore(span, caret);
+      }
+      var span = caret.previousSibling;
+      span.textContent += seg.t[charIndex];
+      charIndex++;
+      if (charIndex >= seg.t.length) {
+        segIndex++;
+        charIndex = 0;
+      }
+      scrollToBottom();
+      setTimeout(typeChar, CHAR_DELAY);
+    }
+    typeChar();
+  }
+
+  function startTyping() {
+    if (typed) return;
+    typed = true;
+    mount.innerHTML = '';
+    typeLine(0);
+  }
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        startTyping();
+        observer.disconnect();
+      }
+    });
+  }, { threshold: 0.25 });
+
+  observer.observe(mount);
+})();
