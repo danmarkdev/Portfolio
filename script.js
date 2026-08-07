@@ -227,30 +227,24 @@ document.addEventListener('keydown',function(e){
 
   var BLANK = { indent: 0, blank: true };
 
-  /* now takes an optional 4th arg: desc — the paragraph shown under the
-     school name in the screenshot (e.g. "BTVTED Compro - Bachelor of
-     Technical-Vocational Teacher Education, major in Computer Programming."),
-     rendered as a nested <desc> tag so it still reads like real markup. */
+  /* Plain-text version — no <school year="...">, no <desc>/</desc>,
+     no </school>. Just the year, the school name, and the description,
+     styled the same as before (year highlighted, current school bold/blue,
+     description in green). */
   function entry(year, current, school, desc) {
     var lines = [
       { indent: 0, segs: [
-          { c: 'code-tag', t: '<school ' },
-          { c: 'code-attr', t: 'year=' },
-          { c: 'code-attr-val', t: '"' + year + '"' },
-          { c: 'code-tag', t: '>' }
+          { c: 'code-attr-val', t: year }
         ] },
       { indent: 1, segs: [{ c: current ? 'code-text code-current' : 'code-text', t: school }] }
     ];
 
     if (desc) {
       lines.push({ indent: 1, segs: [
-          { c: 'code-tag', t: '<desc>' },
-          { c: 'code-desc', t: desc },
-          { c: 'code-tag', t: '</desc>' }
+          { c: 'code-desc', t: desc }
         ] });
     }
 
-    lines.push({ indent: 0, segs: [{ c: 'code-tag', t: '</school>' }] });
     lines.push(BLANK);
     return lines;
   }
