@@ -438,7 +438,7 @@
 <section id="education" class="section edu-section">
   <div class="container">
     <div class="edu-header reveal">
-      <span class="edu-eyebrow">&lt;/&gt; education.json</span>
+      <span class="edu-eyebrow">&lt;/&gt; education</span>
       <h2 class="education-title">Education Path</h2>
     </div>
 
@@ -449,32 +449,9 @@
           <span class="dot dot-y"></span>
           <span class="dot dot-g"></span>
         </div>
-        <span class="code-filename">education.json</span>
       </div>
 
-      <div class="code-body">
-        <div class="code-line"><span class="code-punct">[</span></div>
-
-        <div class="code-line code-indent1"><span class="code-punct">{</span></div>
-        <div class="code-line code-indent2"><span class="code-key">"year"</span><span class="code-punct">:</span> <span class="code-string code-current">"2026 - Present"</span><span class="code-punct">,</span></div>
-        <div class="code-line code-indent2"><span class="code-key">"school"</span><span class="code-punct">:</span> <span class="code-string">"Technological University of the Philippines Manila"</span><span class="code-punct">,</span></div>
-        <div class="code-line code-indent2"><span class="code-key">"program"</span><span class="code-punct">:</span> <span class="code-string">"BTVTED Compro - Bachelor of Technical-Vocational Teacher Education, major in Computer Programming."</span></div>
-        <div class="code-line code-indent1"><span class="code-punct">},</span></div>
-
-        <div class="code-line code-indent1"><span class="code-punct">{</span></div>
-        <div class="code-line code-indent2"><span class="code-key">"year"</span><span class="code-punct">:</span> <span class="code-string">"2024 - 2026"</span><span class="code-punct">,</span></div>
-        <div class="code-line code-indent2"><span class="code-key">"school"</span><span class="code-punct">:</span> <span class="code-string">"STI College Bacoor"</span><span class="code-punct">,</span></div>
-        <div class="code-line code-indent2"><span class="code-key">"program"</span><span class="code-punct">:</span> <span class="code-string">"TVL Track - ICT. Yearly Awarded With Honors in Grade 12. Focused on Web &amp; Mobile Application Development."</span></div>
-        <div class="code-line code-indent1"><span class="code-punct">},</span></div>
-
-        <div class="code-line code-indent1"><span class="code-punct">{</span></div>
-        <div class="code-line code-indent2"><span class="code-key">"year"</span><span class="code-punct">:</span> <span class="code-string">"2021 - 2024"</span><span class="code-punct">,</span></div>
-        <div class="code-line code-indent2"><span class="code-key">"school"</span><span class="code-punct">:</span> <span class="code-string">"Bacoor National High School Molino Main"</span><span class="code-punct">,</span></div>
-        <div class="code-line code-indent2"><span class="code-key">"program"</span><span class="code-punct">:</span> <span class="code-string">"Specialized in Technical Drafting, 2D/3D modeling, and digital blueprinting using AutoCAD."</span></div>
-        <div class="code-line code-indent1"><span class="code-punct">}</span></div>
-
-        <div class="code-line"><span class="code-punct">]</span></div>
-      </div>
+      <div class="code-body" id="eduCode"></div>
     </div>
   </div>
 </section>
@@ -629,5 +606,117 @@
 </footer>
 
 <script src="script.js"></script>
+<script>
+/* ---------- Education card: auto-typing "real HTML" effect ---------- */
+(function () {
+  var mount = document.getElementById('eduCode');
+  if (!mount) return;
+
+  var BLANK = { indent: 1, blank: true };
+
+  function entry(year, current, school, program) {
+    return [
+      { indent: 2, segs: [{ c: 'code-comment', t: '<!-- ' + year + ' -->' }] },
+      { indent: 2, segs: [{ c: 'code-tag', t: '<school>' }] },
+      { indent: 3, segs: [{ c: current ? 'code-text code-current' : 'code-text', t: school }] },
+      { indent: 2, segs: [{ c: 'code-tag', t: '</school>' }] },
+      { indent: 2, segs: [{ c: 'code-tag', t: '<program>' }] },
+      { indent: 3, segs: [{ c: 'code-text', t: program }] },
+      { indent: 2, segs: [{ c: 'code-tag', t: '</program>' }] },
+      BLANK
+    ];
+  }
+
+  var lines = [
+    { indent: 0, segs: [{ c: 'code-punct', t: '<!doctype html>' }] },
+    { indent: 0, segs: [{ c: 'code-tag', t: '<html>' }] },
+    { indent: 1, segs: [{ c: 'code-tag', t: '<head>' }] },
+    { indent: 2, segs: [
+        { c: 'code-tag', t: '<title>' },
+        { c: 'code-text', t: 'Danmark Rosalejos — Education' },
+        { c: 'code-tag', t: '</title>' }
+      ] },
+    { indent: 1, segs: [{ c: 'code-tag', t: '</head>' }] },
+    { indent: 0, segs: [{ c: 'code-tag', t: '<body>' }] },
+    BLANK
+  ]
+  .concat(entry('2026 - Present', true, 'Technological University of the Philippines Manila',
+      'BTVTED Compro \u2014 Bachelor of Technical-Vocational Teacher Education, major in Computer Programming.'))
+  .concat(entry('2024 - 2026', false, 'STI College Bacoor',
+      'TVL Track - ICT. Yearly Awarded With Honors in Grade 12. Focused on Web & Mobile Application Development.'))
+  .concat(entry('2021 - 2024', false, 'Bacoor National High School Molino Main',
+      'Specialized in Technical Drafting, 2D/3D modeling, and digital blueprinting using AutoCAD.'))
+  .concat([
+    { indent: 1, segs: [{ c: 'code-tag', t: '</body>' }] },
+    { indent: 0, segs: [{ c: 'code-tag', t: '</html>' }] }
+  ]);
+
+  var CHAR_DELAY = 12;   // ms per character
+  var LINE_DELAY = 55;   // ms pause between lines
+  var typed = false;
+
+  function typeLine(lineIndex) {
+    if (lineIndex >= lines.length) return;
+    var def = lines[lineIndex];
+
+    var row = document.createElement('div');
+    row.className = 'code-line' + (def.indent ? ' code-indent' + def.indent : '');
+    mount.appendChild(row);
+
+    if (def.blank) {
+      row.innerHTML = '&nbsp;';
+      setTimeout(function () { typeLine(lineIndex + 1); }, LINE_DELAY);
+      return;
+    }
+
+    var caret = document.createElement('span');
+    caret.className = 'code-caret';
+    row.appendChild(caret);
+
+    var segIndex = 0, charIndex = 0;
+
+    function typeChar() {
+      if (segIndex >= def.segs.length) {
+        caret.remove();
+        setTimeout(function () { typeLine(lineIndex + 1); }, LINE_DELAY);
+        return;
+      }
+      var seg = def.segs[segIndex];
+      if (charIndex === 0) {
+        var span = document.createElement('span');
+        span.className = seg.c;
+        row.insertBefore(span, caret);
+      }
+      var span = caret.previousSibling;
+      span.textContent += seg.t[charIndex];
+      charIndex++;
+      if (charIndex >= seg.t.length) {
+        segIndex++;
+        charIndex = 0;
+      }
+      setTimeout(typeChar, CHAR_DELAY);
+    }
+    typeChar();
+  }
+
+  function startTyping() {
+    if (typed) return;
+    typed = true;
+    mount.innerHTML = '';
+    typeLine(0);
+  }
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        startTyping();
+        observer.disconnect();
+      }
+    });
+  }, { threshold: 0.25 });
+
+  observer.observe(mount);
+})();
+</script>
 </body>
 </html>
