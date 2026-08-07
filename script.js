@@ -227,24 +227,53 @@ document.addEventListener('keydown',function(e){
 
   var BLANK = { indent: 0, blank: true };
 
-  function entry(year, current, school) {
-    return [
+  /* now takes an optional 4th arg: desc — the paragraph shown under the
+     school name in the screenshot (e.g. "BTVTED Compro - Bachelor of
+     Technical-Vocational Teacher Education, major in Computer Programming."),
+     rendered as a nested <desc> tag so it still reads like real markup. */
+  function entry(year, current, school, desc) {
+    var lines = [
       { indent: 0, segs: [
           { c: 'code-tag', t: '<school ' },
           { c: 'code-attr', t: 'year=' },
           { c: 'code-attr-val', t: '"' + year + '"' },
           { c: 'code-tag', t: '>' }
         ] },
-      { indent: 1, segs: [{ c: current ? 'code-text code-current' : 'code-text', t: school }] },
-      { indent: 0, segs: [{ c: 'code-tag', t: '</school>' }] },
-      BLANK
+      { indent: 1, segs: [{ c: current ? 'code-text code-current' : 'code-text', t: school }] }
     ];
+
+    if (desc) {
+      lines.push({ indent: 1, segs: [
+          { c: 'code-tag', t: '<desc>' },
+          { c: 'code-desc', t: desc },
+          { c: 'code-tag', t: '</desc>' }
+        ] });
+    }
+
+    lines.push({ indent: 0, segs: [{ c: 'code-tag', t: '</school>' }] });
+    lines.push(BLANK);
+    return lines;
   }
 
   var lines = []
-    .concat(entry('2026 - Present', true, 'Technological University of the Philippines Manila'))
-    .concat(entry('2024 - 2026', false, 'STI College Bacoor'))
-    .concat(entry('2021 - 2024', false, 'Bacoor National High School Molino Main'));
+    .concat(entry(
+      '2026 - Present',
+      true,
+      'Technological University of the Philippines Manila',
+      'BTVTED Compro - Bachelor of Technical-Vocational Teacher Education, major in Computer Programming.'
+    ))
+    .concat(entry(
+      '2024 - 2026',
+      false,
+      'STI College Bacoor',
+      'TVL Track - ICT. Yearly Awarded With Honors in Grade 12. Focused on Web & Mobile Application Development.'
+    ))
+    .concat(entry(
+      '2021 - 2024',
+      false,
+      'Bacoor National High School Molino Main',
+      'Specialized in Technical Drafting, 2D/3D modeling, and digital blueprinting using AutoCAD.'
+    ));
 
   // drop the trailing blank line after the last entry
   lines.pop();
