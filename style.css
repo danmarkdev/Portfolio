@@ -665,6 +665,7 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   padding:1.5rem 0;
   overflow-x:auto;
   scrollbar-width:none;
+  min-height:420px;
 }
 .code-body::-webkit-scrollbar{display:none}
 
@@ -680,6 +681,7 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   white-space:pre-wrap;
   word-break:break-word;
   transition:background .15s ease;
+  min-height:1.9em;
 }
 .code-line::before{
   content: counter(codeline);
@@ -692,26 +694,29 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 
 .code-indent1{padding-left:2.8rem}
 .code-indent2{padding-left:4.1rem}
+.code-indent3{padding-left:5.4rem}
 
 .code-punct{color:#6b7280}
 .code-key{color:#7dd3fc}
 .code-string{color:#c9b3ff}
 .code-string.code-current{color:#8fa8ff;font-weight:600}
 
-/* subtle highlight bar for the "current" entry line */
-.code-line:has(.code-current){
-  background:rgba(51,85,255,.09);
-  border-left:2px solid var(--accent);
-}
+/* real-HTML syntax palette used by the typed education snippet */
+.code-tag{color:#7dd3fc}
+.code-attr{color:#facc15}
+.code-attr-val{color:#c9b3ff}
+.code-comment{color:#4ade80}
+.code-text{color:#e5e7eb}
+.code-text.code-current{color:#8fa8ff;font-weight:600}
 
-/* blinking cursor after the final closing bracket for a coding feel */
-.code-body .code-line:last-child::after{
-  content:'';
+/* blinking typing cursor, shown only on the actively-typed line */
+.code-caret{
   display:inline-block;
   width:7px;
   height:1.1em;
   background:var(--accent);
-  margin-left:.3rem;
+  margin-left:2px;
+  vertical-align:-2px;
   animation:blinkCursor 1s step-end infinite;
 }
 @keyframes blinkCursor{50%{opacity:0}}
@@ -978,6 +983,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .code-line{font-size:.72rem;padding:.15rem 1rem;gap:.7rem;line-height:1.75}
   .code-indent1{padding-left:1.6rem}
   .code-indent2{padding-left:2.4rem}
+  .code-indent3{padding-left:3.2rem}
   .code-line::before{flex:0 0 16px}
 }
 @media(max-width:480px){
@@ -1003,4 +1009,5 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .code-line{font-size:.66rem}
   .code-indent1{padding-left:1.2rem}
   .code-indent2{padding-left:1.9rem}
+  .code-indent3{padding-left:2.6rem}
 }
