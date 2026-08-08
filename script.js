@@ -82,14 +82,6 @@ function initSwipeMarquee(trackId, loopSeconds){
   var wrap = track ? track.closest('.projects-marquee, .cert-marquee') : null;
   if(!track || !wrap) return;
 
-  /* On mobile, skip the custom drag/auto-scroll marquee entirely and let the
-     browser's native touch scrolling + CSS scroll-snap handle it instead —
-     the same direct, finger-controlled swipe as the Technical Stack cards
-     (no auto-drift, no simulated drag fighting the person's swipe). */
-  if(window.matchMedia('(max-width:960px)').matches){
-    return;
-  }
-
   var half = 0;          // width of one full (non-duplicated) set of cards
   var pos = 0;            // current scroll offset in px
   var dragging = false;
@@ -98,6 +90,17 @@ function initSwipeMarquee(trackId, loopSeconds){
   var startPos = 0;
   var speed = 0;          // px per second, auto-scroll rate
   var activePointerId = null;
+
+  /* momentum tracking — lets a released swipe glide and decelerate on its
+     own, the same "flick" feel as native touch scrolling (like the
+     Technical Stack cards), instead of stopping dead the instant the
+     finger lifts. */
+  var momentumVelocity = 0;  // px/sec, active right after release
+  var momentumActive = false;
+  var lastMoveTime = 0;
+  var lastMovePos = 0;
+  var MAX_VELOCITY = 4200;   // px/sec cap so a hard flick doesn't fling too far
+  var FRICTION = 3.2;        // higher = stops sooner
 
   function measure(){
     half = track.scrollWidth / 2;
@@ -121,7 +124,16 @@ function initSwipeMarquee(trackId, loopSeconds){
     var dt = (t - lastTime) / 1000;
     lastTime = t;
     if(!dragging){
-      pos = wrap360(pos + speed*dt);
+      if(momentumActive){
+        pos = wrap360(pos + momentumVelocity*dt);
+        /* exponential decay, frame-rate independent */
+        momentumVelocity *= Math.pow(1/(1+FRICTION), dt);
+        if(Math.abs(momentumVelocity) < 40){
+          momentumActive = false;
+        }
+      } else {
+        pos = wrap360(pos + speed*dt);
+      }
       render();
     }
     requestAnimationFrame(tick);
@@ -130,8 +142,12 @@ function initSwipeMarquee(trackId, loopSeconds){
   function pointerDown(e){
     dragging = true;
     moved = false;
+    momentumActive = false;
+    momentumVelocity = 0;
     startX = e.clientX;
     startPos = pos;
+    lastMoveTime = performance.now();
+    lastMovePos = pos;
     activePointerId = e.pointerId;
     /* NOTE: we deliberately do NOT call setPointerCapture here. Capturing on
        every pointerdown — even a plain click on a link — makes the browser
@@ -154,6 +170,17 @@ function initSwipeMarquee(trackId, loopSeconds){
     if(moved){
       pos = wrap360(startPos - dx);
       render();
+
+      /* sample velocity from the last little stretch of movement so
+         release can carry that speed into the momentum glide */
+      var now = performance.now();
+      var dt = now - lastMoveTime;
+      if(dt > 0){
+        var rawVelocity = (pos - lastMovePos) / dt * 1000; // px/sec
+        momentumVelocity = Math.max(-MAX_VELOCITY, Math.min(MAX_VELOCITY, rawVelocity));
+        lastMoveTime = now;
+        lastMovePos = pos;
+      }
     }
   }
 
@@ -163,6 +190,10 @@ function initSwipeMarquee(trackId, loopSeconds){
     track.classList.remove('dragging');
     if(moved && track.releasePointerCapture){
       try{ track.releasePointerCapture(activePointerId); }catch(err){}
+    }
+    /* hand off to momentum glide if the release was a real flick */
+    if(moved && Math.abs(momentumVelocity) > 40){
+      momentumActive = true;
     }
   }
 
