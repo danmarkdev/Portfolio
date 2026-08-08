@@ -368,38 +368,6 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 .stack-badge .fb-title{font-family: var(--font-heading); font-size:.78rem;font-weight:700;color:var(--text)}
 .stack-badge .fb-sub{font-family: var(--font-body); font-size:.65rem;color:var(--dim);font-weight:500}
 
-/* "1 Year" badge — floating, overlapping the bottom-right edge of the photo.
-   Positioned outside the circular path the rotating skill icons travel on,
-   so it never collides with them no matter where the ring has spun to. */
-.year-badge-center{
-  position:absolute;
-  bottom:6%;
-  left:62%;
-  transform:translate(-50%, 50%);
-  display:flex;
-  align-items:center;
-  gap:.9rem;
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:.7rem 1.35rem;
-  box-shadow:var(--shadow-card-hover);
-  z-index:5;
-}
-}
-.year-badge-icon{width:40px;height:40px;border-radius:11px;background:linear-gradient(145deg,#f59e0b,#facc15);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 6px 14px rgba(250,204,21,.45)}
-.year-badge-icon svg{width:20px;height:20px}
-.year-badge-text{display:flex;flex-direction:column;gap:.15rem;line-height:1.2}
-.year-badge-title{font-family: var(--font-heading); font-size:1.25rem;font-weight:700;color:var(--text);letter-spacing:-.02em}
-.year-badge-sub{
-  font-family: var(--font-body);
-  font-size:.7rem;
-  font-weight:600;
-  color:var(--dim);
-  text-transform:uppercase;
-  letter-spacing:.06em;
-}
-
 /* SERVICES */
 .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
 .service-card{
@@ -978,10 +946,6 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .stack-badge .fb-title{font-size:.7rem}
   .stack-badge .fb-sub{font-size:.6rem}
   .orbit-ring{--radius:148px}
-  .year-badge-center{padding:.6rem 1.05rem}
-  .year-badge-icon{width:34px;height:34px}
-  .year-badge-title{font-size:1.6rem}
-  .year-badge-sub{font-size:.64rem}
   .contact-page-grid{grid-template-columns:1fr}
   .footer-inner{flex-direction:column;gap:.5rem;text-align:center}
 }
@@ -1036,11 +1000,6 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .stack-badge .fb-icon{width:24px;height:24px}
   .stack-badge .fb-icon img{width:13px;height:13px}
   .stack-badge .fb-text{display:none}
-  .year-badge-center{padding:.45rem .8rem;gap:.6rem}
-  .year-badge-icon{width:28px;height:28px;border-radius:9px}
-  .year-badge-icon svg{width:16px;height:16px}
-  .year-badge-title{font-size:1.05rem}
-  .year-badge-sub{font-size:.56rem}
   .hero-name{font-size:2.1rem}
   .section-big-heading{font-size:1.25rem}
   .cert-item{width:250px}
