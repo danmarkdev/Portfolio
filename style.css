@@ -368,12 +368,15 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 .stack-badge .fb-title{font-family: var(--font-heading); font-size:.78rem;font-weight:700;color:var(--text)}
 .stack-badge .fb-sub{font-family: var(--font-body); font-size:.65rem;color:var(--dim);font-weight:500}
 
-/* "1 Year" badge — floating, overlapping the bottom of the profile photo */
+/* "1 Year" badge — floating, overlapping the left-middle edge of the photo
+   (vertically centered). Pulled out far enough to the left that it sits
+   outside the circular path the rotating skill icons travel on, so it
+   never collides with them no matter where the ring has spun to. */
 .year-badge-center{
   position:absolute;
-  bottom:6%;
-  left:50%;
-  transform:translateX(-50%);
+  top:50%;
+  left:0;
+  transform:translate(-45%, -50%);
   display:flex;
   align-items:center;
   gap:.9rem;
@@ -975,7 +978,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .stack-badge .fb-title{font-size:.7rem}
   .stack-badge .fb-sub{font-size:.6rem}
   .orbit-ring{--radius:148px}
-  .year-badge-center{padding:.6rem 1.05rem;bottom:4%}
+  .year-badge-center{padding:.6rem 1.05rem}
   .year-badge-icon{width:34px;height:34px}
   .year-badge-title{font-size:1.6rem}
   .year-badge-sub{font-size:.64rem}
@@ -1033,7 +1036,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .stack-badge .fb-icon{width:24px;height:24px}
   .stack-badge .fb-icon img{width:13px;height:13px}
   .stack-badge .fb-text{display:none}
-  .year-badge-center{padding:.45rem .8rem;gap:.6rem;bottom:2%}
+  .year-badge-center{padding:.45rem .8rem;gap:.6rem}
   .year-badge-icon{width:28px;height:28px;border-radius:9px}
   .year-badge-icon svg{width:16px;height:16px}
   .year-badge-title{font-size:1.05rem}
