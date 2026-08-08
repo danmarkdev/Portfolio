@@ -1008,6 +1008,8 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .contact-icon-row{gap:.85rem}
   .contact-panel{padding:1.75rem 1.25rem}
   .mobile-nav a{font-size:1rem;padding:.95rem 1.25rem}
+  .contact-page-main{padding-top:calc(var(--nav-h) - .5rem)}
+  .contact-page-head{margin-bottom:2rem}
 
   .edu-header{margin-bottom:1.75rem}
   .code-titlebar{padding:.7rem 1rem;gap:.75rem}
