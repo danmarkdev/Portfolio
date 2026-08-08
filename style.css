@@ -368,15 +368,14 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 .stack-badge .fb-title{font-family: var(--font-heading); font-size:.78rem;font-weight:700;color:var(--text)}
 .stack-badge .fb-sub{font-family: var(--font-body); font-size:.65rem;color:var(--dim);font-weight:500}
 
-/* "1 Year" badge — floating, overlapping the left-middle edge of the photo
-   (vertically centered). Pulled out far enough to the left that it sits
-   outside the circular path the rotating skill icons travel on, so it
-   never collides with them no matter where the ring has spun to. */
+/* "1 Year" badge — floating, overlapping the bottom-right edge of the photo.
+   Positioned outside the circular path the rotating skill icons travel on,
+   so it never collides with them no matter where the ring has spun to. */
 .year-badge-center{
   position:absolute;
-  top:50%;
-  left:0;
-  transform:translate(-45%, -50%);
+  top:74%;
+  left:100%;
+  transform:translate(-58%, -50%);
   display:flex;
   align-items:center;
   gap:.9rem;
