@@ -82,6 +82,14 @@ function initSwipeMarquee(trackId, loopSeconds){
   var wrap = track ? track.closest('.projects-marquee, .cert-marquee') : null;
   if(!track || !wrap) return;
 
+  /* On mobile, skip the custom drag/auto-scroll marquee entirely and let the
+     browser's native touch scrolling + CSS scroll-snap handle it instead —
+     the same direct, finger-controlled swipe as the Technical Stack cards
+     (no auto-drift, no simulated drag fighting the person's swipe). */
+  if(window.matchMedia('(max-width:960px)').matches){
+    return;
+  }
+
   var half = 0;          // width of one full (non-duplicated) set of cards
   var pos = 0;            // current scroll offset in px
   var dragging = false;
