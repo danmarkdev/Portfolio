@@ -151,30 +151,59 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 .hamburger.open span:nth-child(2){opacity:0}
 .hamburger.open span:nth-child(3){transform:translate(-50%,-50%) translateY(0) rotate(-45deg)}
 
-.mobile-nav{display:flex;position:fixed;inset:0;background:var(--bg);flex-direction:column;align-items:center;justify-content:center;gap:1.75rem;z-index:998;opacity:0;visibility:hidden;transform:scale(.97);transition:opacity .3s ease,transform .3s ease,visibility .3s}
+/* MOBILE NAV — stacked pill cards, matching the reference screenshot.
+   Each link is its own rounded card; Contact keeps the same card style
+   but with blue text instead of a solid filled button. */
+.mobile-nav{
+  display:flex;
+  position:fixed;
+  inset:0;
+  background:var(--bg);
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:1rem;
+  padding:0 1.5rem;
+  z-index:998;
+  opacity:0;
+  visibility:hidden;
+  transform:scale(.97);
+  transition:opacity .3s ease,transform .3s ease,visibility .3s;
+}
 .mobile-nav.open{opacity:1;visibility:visible;transform:scale(1)}
+
 .mobile-nav a{
+  width:100%;
+  max-width:380px;
+  text-align:center;
   font-family: var(--font-body);
-  font-size: 1.6rem;
-  font-weight: 500;
+  font-size: 1.1rem;
+  font-weight: 700;
   color: var(--text);
   text-decoration: none;
-  transition: color .2s;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:100px;
+  padding:1.05rem 1.5rem;
+  box-shadow:var(--shadow-card);
+  transition:color .2s ease, box-shadow .2s ease, transform .15s ease;
   opacity: 0;
   transform: translateY(12px);
 }
-.mobile-nav a:hover{color:var(--accent)}
-.mobile-nav a.active{color:var(--accent);font-weight:600}
+.mobile-nav a:hover{color:var(--accent);box-shadow:var(--shadow-card-hover)}
+.mobile-nav a.active{color:var(--accent)}
+
+/* Contact — same pill card as the rest, but blue text instead of a filled button */
 .mobile-nav a.mnav-cta{
-  background:var(--accent);
-  color:#ffffff;
-  padding:.85rem 2.2rem;
-  border-radius:100px;
-  font-family: var(--font-body);
-  font-size:.82rem;
-  font-weight:600;
+  background:var(--surface);
+  color:var(--accent);
+  font-weight:700;
 }
-.mobile-nav a.mnav-cta:hover{color:#ffffff;background:var(--accent-hover)}
+.mobile-nav a.mnav-cta:hover{
+  color:var(--accent-hover);
+  background:var(--surface);
+}
+
 .mobile-nav.open a{opacity:1;transform:translateY(0);transition:opacity .35s ease,transform .35s ease}
 .mobile-nav.open a:nth-child(1){transition-delay:.07s}
 .mobile-nav.open a:nth-child(2){transition-delay:.12s}
@@ -978,7 +1007,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .hero-name{font-size:2.1rem;white-space:normal}
   .contact-icon-row{gap:.85rem}
   .contact-panel{padding:1.75rem 1.25rem}
-  .mobile-nav a{font-size:1.45rem}
+  .mobile-nav a{font-size:1rem;padding:.95rem 1.25rem}
 
   .edu-header{margin-bottom:1.75rem}
   .code-titlebar{padding:.7rem 1rem;gap:.75rem}
