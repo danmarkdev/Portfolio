@@ -72,50 +72,39 @@ var obs=new IntersectionObserver(function(entries){
 },{threshold:.1});
 document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
 
-/* DRAGGABLE / SWIPEABLE MARQUEE — reusable for both the Projects and
-   Certificates tracks. Works with mouse drag on desktop and touch swipe on
-   mobile (Pointer Events cover both), and keeps auto-scrolling on its own
-   whenever the person isn't actively dragging it. loopSeconds controls how
-   long one full auto-scroll loop takes, same as the old CSS animation did. */
+/* SWIPEABLE MARQUEE — reusable for both the Projects and Certificates
+   tracks. Uses native horizontal scrolling on the wrapper (.projects-marquee
+   / .cert-marquee) so touch swipe on mobile feels exactly like the
+   Technical Stack cards (native momentum/inertia, no custom touch code
+   fighting the browser). Auto-scroll and looping are driven by nudging
+   wrap.scrollLeft, and pause automatically the moment the person starts
+   scrolling it themselves — whether via touch, mouse wheel, or the
+   desktop mouse-drag handlers below. */
 function initSwipeMarquee(trackId, loopSeconds){
   var track = document.getElementById(trackId);
   var wrap = track ? track.closest('.projects-marquee, .cert-marquee') : null;
   if(!track || !wrap) return;
 
-  var half = 0;          // width of one full (non-duplicated) set of cards
-  var pos = 0;            // current scroll offset in px
-  var dragging = false;
-  var moved = false;      // did the pointer travel far enough to count as a drag (vs a tap)
+  var half = 0;            // width of one full (non-duplicated) set of cards
+  var speed = 0;            // px per second, auto-scroll rate
+  var dragging = false;     // desktop mouse-drag in progress
+  var moved = false;        // did the pointer travel far enough to count as a drag (vs a tap)
   var startX = 0;
-  var startPos = 0;
-  var speed = 0;          // px per second, auto-scroll rate
+  var startScroll = 0;
   var activePointerId = null;
-
-  /* momentum tracking — lets a released swipe glide and decelerate on its
-     own, the same "flick" feel as native touch scrolling (like the
-     Technical Stack cards), instead of stopping dead the instant the
-     finger lifts. */
-  var momentumVelocity = 0;  // px/sec, active right after release
-  var momentumActive = false;
-  var lastMoveTime = 0;
-  var lastMovePos = 0;
-  var MAX_VELOCITY = 4200;   // px/sec cap so a hard flick doesn't fling too far
-  var FRICTION = 3.2;        // higher = stops sooner
+  var userScrolling = false;    // true right after a native touch/wheel scroll
+  var userScrollTimeout = null;
 
   function measure(){
     half = track.scrollWidth / 2;
     speed = half / loopSeconds;
+    if(wrap.scrollLeft === 0) wrap.scrollLeft = 1; // avoid edge-locking at 0
   }
 
-  function wrap360(p){
-    if(half<=0) return 0;
-    p = p % half;
-    if(p<0) p += half;
-    return p;
-  }
-
-  function render(){
-    track.style.transform = 'translateX(' + (-pos) + 'px)';
+  function wrapScroll(){
+    if(half<=0) return;
+    if(wrap.scrollLeft >= half) wrap.scrollLeft -= half;
+    else if(wrap.scrollLeft <= 0) wrap.scrollLeft += half;
   }
 
   var lastTime = null;
@@ -123,44 +112,38 @@ function initSwipeMarquee(trackId, loopSeconds){
     if(lastTime===null) lastTime = t;
     var dt = (t - lastTime) / 1000;
     lastTime = t;
-    if(!dragging){
-      if(momentumActive){
-        pos = wrap360(pos + momentumVelocity*dt);
-        /* exponential decay, frame-rate independent */
-        momentumVelocity *= Math.pow(1/(1+FRICTION), dt);
-        if(Math.abs(momentumVelocity) < 40){
-          momentumActive = false;
-        }
-      } else {
-        pos = wrap360(pos + speed*dt);
-      }
-      render();
+    if(!dragging && !userScrolling){
+      wrap.scrollLeft += speed*dt;
+      wrapScroll();
     }
     requestAnimationFrame(tick);
   }
 
+  /* native touch swipe (mobile) / mouse wheel — the browser handles the
+     actual scrolling and momentum, we just pause auto-scroll while the
+     person is interacting and keep the loop seamless by wrapping scrollLeft */
+  wrap.addEventListener('scroll', function(){
+    if(dragging) return;
+    userScrolling = true;
+    wrapScroll();
+    clearTimeout(userScrollTimeout);
+    userScrollTimeout = setTimeout(function(){ userScrolling = false; }, 600);
+  }, { passive:true });
+
+  /* mouse drag — desktop only, touch devices already get native scroll above */
   function pointerDown(e){
+    if(e.pointerType==='touch') return;
     dragging = true;
     moved = false;
-    momentumActive = false;
-    momentumVelocity = 0;
     startX = e.clientX;
-    startPos = pos;
-    lastMoveTime = performance.now();
-    lastMovePos = pos;
+    startScroll = wrap.scrollLeft;
     activePointerId = e.pointerId;
-    /* NOTE: we deliberately do NOT call setPointerCapture here. Capturing on
-       every pointerdown — even a plain click on a link — makes the browser
-       redirect the resulting mouseup/click to this track element instead of
-       the link that was actually pressed, so the click silently never fires
-       on the <a> tag. We only capture once we've confirmed a real drag
-       (see pointerMove below), so ordinary clicks pass straight through. */
   }
 
   function pointerMove(e){
     if(!dragging) return;
     var dx = e.clientX - startX;
-    if(!moved && Math.abs(dx) > 15){
+    if(!moved && Math.abs(dx) > 5){
       moved = true;
       track.classList.add('dragging');
       if(track.setPointerCapture){
@@ -168,19 +151,8 @@ function initSwipeMarquee(trackId, loopSeconds){
       }
     }
     if(moved){
-      pos = wrap360(startPos - dx);
-      render();
-
-      /* sample velocity from the last little stretch of movement so
-         release can carry that speed into the momentum glide */
-      var now = performance.now();
-      var dt = now - lastMoveTime;
-      if(dt > 0){
-        var rawVelocity = (pos - lastMovePos) / dt * 1000; // px/sec
-        momentumVelocity = Math.max(-MAX_VELOCITY, Math.min(MAX_VELOCITY, rawVelocity));
-        lastMoveTime = now;
-        lastMovePos = pos;
-      }
+      wrap.scrollLeft = startScroll - dx;
+      wrapScroll();
     }
   }
 
@@ -191,13 +163,8 @@ function initSwipeMarquee(trackId, loopSeconds){
     if(moved && track.releasePointerCapture){
       try{ track.releasePointerCapture(activePointerId); }catch(err){}
     }
-    /* hand off to momentum glide if the release was a real flick */
-    if(moved && Math.abs(momentumVelocity) > 40){
-      momentumActive = true;
-    }
   }
 
-  track.style.animation = 'none';
   track.addEventListener('pointerdown', pointerDown);
   track.addEventListener('pointermove', pointerMove);
   track.addEventListener('pointerup', pointerUp);
