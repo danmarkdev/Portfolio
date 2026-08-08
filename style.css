@@ -163,7 +163,7 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   align-items:center;
   justify-content:center;
   gap:1rem;
-  padding:0 1.5rem;
+  padding:calc(var(--nav-h) + 1.5rem) 1.5rem 2rem;
   z-index:998;
   opacity:0;
   visibility:hidden;
