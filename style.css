@@ -404,21 +404,30 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 }
 .service-num{display:none}
 
-/* PROJECTS — auto-scrolling / swipeable marquee (behavior unchanged, restyled) */
-.projects-marquee{
+/* PROJECTS — swipeable / auto-scrolling marquee (native scroll) */
+.projects-marquee,
+.cert-marquee{
   width:100%;
-  overflow:hidden;
+  overflow-x:auto;
+  overflow-y:hidden;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
   -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
   mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
 }
-.projects-track{
+.projects-marquee::-webkit-scrollbar,
+.cert-marquee::-webkit-scrollbar{display:none}
+
+.projects-track,
+.cert-track{
   display:flex;
   gap:1.5rem;
   width:max-content;
   cursor:grab;
-  touch-action:pan-y;
 }
-.projects-track.dragging{cursor:grabbing}
+.projects-track.dragging,
+.cert-track.dragging{cursor:grabbing}
+.project-row{pointer-events:auto}
 .projects-track.dragging .project-row{pointer-events:none}
 .project-img-wrap img{-webkit-user-drag:none;user-drag:none}
 .project-row{
@@ -729,21 +738,6 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 
 /* CERTS */
 .cert-section{background:transparent;position:relative;z-index:1}
-.cert-marquee{
-  width:100%;
-  overflow:hidden;
-  -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
-  mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
-}
-.cert-track{
-  display:flex;
-  gap:1.5rem;
-  width:max-content;
-  cursor:grab;
-  touch-action:pan-y;
-}
-.cert-track.dragging{cursor:grabbing}
-.cert-img-wrap img{-webkit-user-drag:none;user-drag:none}
 .cert-item{
   width:360px;
   flex:0 0 auto;
