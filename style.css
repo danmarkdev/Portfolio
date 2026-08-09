@@ -513,6 +513,9 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   padding:1.6rem 1.7rem;
   transition:box-shadow .3s,transform .3s;
   box-shadow:var(--shadow-card);
+  display:flex;
+  flex-direction:column;
+  height:100%;
 }
 .stack-panel:hover{
   transform:translateY(-3px);
@@ -550,6 +553,7 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   display:flex;
   flex-direction:column;
   gap:.7rem;
+  flex:1;
 }
 .stack-tag{
   display:flex;
@@ -574,11 +578,12 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   color: var(--muted);
 }
 
-/* SKILLS — DESKTOP: all 5 cards in one straight row */
+/* SKILLS — DESKTOP: all 5 cards in one straight row, same height */
 @media(min-width:961px){
   .stack-panels{
     display:grid;
     grid-template-columns:repeat(5,1fr);
+    align-items:stretch;
     gap:1.1rem;
   }
 }
@@ -594,6 +599,7 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
     display:flex;
     flex-direction:row;
     flex-wrap:nowrap;
+    align-items:stretch;
     gap:1rem;
     overflow-x:auto;
     scroll-snap-type:x mandatory;
