@@ -564,7 +564,7 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   justify-content:center;
   flex-shrink:0;
 }
-.stack-ico img{width:14px;height:14px;object-fit:contain;display:block}
+.stack-ico img{width:15px;height:15px;object-fit:contain;display:block}
 .stack-ico svg{display:block}
 .stack-tag-text{
   font-family: var(--font-body);
@@ -573,13 +573,18 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   color: var(--muted);
 }
 
-/* SKILLS — DESKTOP: cards flow in a responsive grid (adapts to any panel count) */
+/* SKILLS — DESKTOP: all 5 cards in one straight row */
 @media(min-width:961px){
   .stack-panels{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-    gap:1.25rem;
+    grid-template-columns:repeat(5,1fr);
+    gap:1.1rem;
   }
+}
+@media(min-width:961px) and (max-width:1180px){
+  .stack-panel{padding:1.3rem 1.15rem}
+  .stack-panel-title{font-size:.82rem;gap:.5rem}
+  .stack-tag-text{font-size:.8rem}
 }
 
 /* SKILLS — MOBILE/TABLET: swipeable card row */
