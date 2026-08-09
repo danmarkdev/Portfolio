@@ -254,9 +254,10 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   font-size: 1.05rem;
   color: var(--muted);
   line-height: 1.8;
-  max-width: 600px;
+  max-width: 620px;
   margin-bottom: 2.4rem;
   font-weight: 400;
+  text-wrap: balance;
 }
 .hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
 .btn-primary{
