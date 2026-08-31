@@ -218,7 +218,7 @@ function initSwipeMarquee(trackId, loopSeconds){
 initSwipeMarquee('projectsTrack', 60); // ~60s per loop, same pace as before
 initSwipeMarquee('certTrack', 75);     // ~75s per loop, same pace as before
 
-/* CONTACT FORM */
+/* CONTACT FORM — now using Google Apps Script (free, no submission limits) */
 function sendMsg(){
   var name=document.getElementById('cf-name')?document.getElementById('cf-name').value.trim():'';
   var email=document.getElementById('cf-email')?document.getElementById('cf-email').value.trim():'';
@@ -231,10 +231,16 @@ function sendMsg(){
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ status.style.color='#ff6b6b'; status.textContent='Please enter a valid email address.'; return; }
   btn.disabled=true; btn.textContent='Sending...';
   status.style.color='#666'; status.textContent='Sending your message\u2026';
-  fetch('https://formspree.io/f/xaqzgqal',{
+
+  var formData = new URLSearchParams();
+  formData.append('name', name);
+  formData.append('email', email);
+  formData.append('subject', subject || 'New message from Portfolio');
+  formData.append('message', msg);
+
+  fetch('https://script.google.com/macros/s/AKfycbx9vIB7FvB0Inv97LWBio3U4_XNGmVLPlAvZxJ7cBNQN2xtIIwkqEW9GzRj9yIxYCd7/exec',{
     method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({name:name,email:email,subject:subject||'New message from Portfolio',message:msg})
+    body: formData
   }).then(function(res){ return res.json(); }).then(function(data){
     if(data.ok){
       status.style.color='#22c55e'; status.textContent='Message Sent!';
