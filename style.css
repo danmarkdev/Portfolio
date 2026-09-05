@@ -384,12 +384,14 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 }
 .stack-badge:hover{box-shadow:var(--shadow-card-hover);transform:scale(1.08)}
 .stack-badge .fb-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.stack-badge .fb-icon img{width:15px;height:15px;object-fit:contain;display:block}
+.stack-badge .fb-icon img,
+.stack-badge .fb-icon svg{width:15px;height:15px;object-fit:contain;display:block}
 
 /* shared "colored chip" icon used both in the hero orbit badges and the
    Technical Stack grid below — one true brand-colored logo per chip */
 .fb-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.fb-icon img{width:15px;height:15px;object-fit:contain;display:block}
+.fb-icon img,
+.fb-icon svg{width:15px;height:15px;object-fit:contain;display:block}
 
 /* SERVICES */
 .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
@@ -516,13 +518,14 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 .project-live-link:hover svg,
 .project-live-link:active svg{transform:translateX(4px)}
 
-/* SKILLS — flat, borderless icon grid on the page background (no dark
-   panel, no hover hint text). Each icon still shows a small tooltip on
-   hover, styled to match the site's light theme instead of a dark card. */
+/* SKILLS — light "tech panel" card matching the site's surface style,
+   holding a single flat grid of icon chips with a hover tooltip. */
 .tech-panel{
-  background:transparent;
-  padding:0;
-  box-shadow:none;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:2.75rem 2.25rem;
+  box-shadow:var(--shadow-card);
 }
 .tech-icon-grid{
   display:flex;
@@ -535,9 +538,8 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   width:64px;
   height:64px;
   border-radius:15px;
-  background:var(--surface);
+  background:var(--bg);
   border:1px solid var(--border);
-  box-shadow:var(--shadow-card);
   display:flex;
   align-items:center;
   justify-content:center;
@@ -560,18 +562,17 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   bottom:calc(100% + 12px);
   left:50%;
   transform:translateX(-50%) translateY(6px);
-  background:var(--text);
-  color:#ffffff;
+  background:#141726;
+  color:#e5e7eb;
   font-family: var(--font-body);
   font-size:.74rem;
   font-weight:500;
   line-height:1.4;
   padding:.55rem .8rem;
   border-radius:9px;
-  white-space:normal;
-  text-align:center;
-  width:max-content;
-  max-width:200px;
+  border:1px solid #2a2f4a;
+  white-space:nowrap;
+  max-width:220px;
   opacity:0;
   pointer-events:none;
   transition:opacity .18s ease, transform .18s ease;
@@ -585,7 +586,7 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   left:50%;
   transform:translateX(-50%);
   border:6px solid transparent;
-  border-top-color:var(--text);
+  border-top-color:#141726;
   opacity:0;
   transition:opacity .18s ease;
   z-index:6;
@@ -604,13 +605,15 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 /* SKILLS — MOBILE/TABLET: smaller chips, tooltip wraps instead of
    overflowing the viewport */
 @media(max-width:700px){
-  .tech-panel{padding:0}
+  .tech-panel{padding:2rem 1.25rem}
   .tech-icon-box{width:52px;height:52px;border-radius:13px}
   .tech-icon-box .fb-icon{width:32px;height:32px}
   .tech-icon-box .fb-icon img,
   .tech-icon-box .fb-icon svg{width:17px;height:17px}
   .tech-icon-box::after{
+    white-space:normal;
     max-width:150px;
+    text-align:center;
     font-size:.7rem;
   }
 }
@@ -964,7 +967,8 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .photo-wrap{width:220px;height:220px}
   .stack-badge{width:37px;height:37px}
   .stack-badge .fb-icon{width:24px;height:24px}
-  .stack-badge .fb-icon img{width:13px;height:13px}
+  .stack-badge .fb-icon img,
+  .stack-badge .fb-icon svg{width:13px;height:13px}
   .orbit-ring{--radius:162px}
   .contact-page-grid{grid-template-columns:1fr}
   .footer-inner{flex-direction:column;gap:.5rem;text-align:center}
@@ -1010,7 +1014,8 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .orbit-ring{--radius:130px}
   .stack-badge{width:32px;height:32px}
   .stack-badge .fb-icon{width:20px;height:20px}
-  .stack-badge .fb-icon img{width:11px;height:11px}
+  .stack-badge .fb-icon img,
+  .stack-badge .fb-icon svg{width:11px;height:11px}
   .hero-name{font-size:2.1rem}
   .section-big-heading{font-size:1.25rem}
   .cert-item{width:250px}
