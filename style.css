@@ -312,7 +312,7 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   inset:0;
   z-index:2;
   pointer-events:none;
-  --radius:175px;
+  --radius:192px;
   animation:orbitspin 44s linear infinite;
 }
 .photo-orbit:hover .orbit-ring,
@@ -346,26 +346,38 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 .orbit-item.oi-8 .orbit-counter{animation-name:counterspin-8}
 .orbit-item.oi-9 .orbit-counter{animation-name:counterspin-9}
 .orbit-item.oi-10 .orbit-counter{animation-name:counterspin-10}
+.orbit-item.oi-11 .orbit-counter{animation-name:counterspin-11}
+.orbit-item.oi-12 .orbit-counter{animation-name:counterspin-12}
+.orbit-item.oi-13 .orbit-counter{animation-name:counterspin-13}
+.orbit-item.oi-14 .orbit-counter{animation-name:counterspin-14}
+.orbit-item.oi-15 .orbit-counter{animation-name:counterspin-15}
+.orbit-item.oi-16 .orbit-counter{animation-name:counterspin-16}
 
 @keyframes counterspin-0{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(-360deg)}}
-@keyframes counterspin-1{from{transform:translate(-50%,-50%) rotate(-32.7deg)}to{transform:translate(-50%,-50%) rotate(-392.7deg)}}
-@keyframes counterspin-2{from{transform:translate(-50%,-50%) rotate(-65.5deg)}to{transform:translate(-50%,-50%) rotate(-425.5deg)}}
-@keyframes counterspin-3{from{transform:translate(-50%,-50%) rotate(-98.2deg)}to{transform:translate(-50%,-50%) rotate(-458.2deg)}}
-@keyframes counterspin-4{from{transform:translate(-50%,-50%) rotate(-130.9deg)}to{transform:translate(-50%,-50%) rotate(-490.9deg)}}
-@keyframes counterspin-5{from{transform:translate(-50%,-50%) rotate(-163.6deg)}to{transform:translate(-50%,-50%) rotate(-523.6deg)}}
-@keyframes counterspin-6{from{transform:translate(-50%,-50%) rotate(-196.4deg)}to{transform:translate(-50%,-50%) rotate(-556.4deg)}}
-@keyframes counterspin-7{from{transform:translate(-50%,-50%) rotate(-229.1deg)}to{transform:translate(-50%,-50%) rotate(-589.1deg)}}
-@keyframes counterspin-8{from{transform:translate(-50%,-50%) rotate(-261.8deg)}to{transform:translate(-50%,-50%) rotate(-621.8deg)}}
-@keyframes counterspin-9{from{transform:translate(-50%,-50%) rotate(-294.5deg)}to{transform:translate(-50%,-50%) rotate(-654.5deg)}}
-@keyframes counterspin-10{from{transform:translate(-50%,-50%) rotate(-327.3deg)}to{transform:translate(-50%,-50%) rotate(-687.3deg)}}
+@keyframes counterspin-1{from{transform:translate(-50%,-50%) rotate(-21.2deg)}to{transform:translate(-50%,-50%) rotate(-381.2deg)}}
+@keyframes counterspin-2{from{transform:translate(-50%,-50%) rotate(-42.4deg)}to{transform:translate(-50%,-50%) rotate(-402.4deg)}}
+@keyframes counterspin-3{from{transform:translate(-50%,-50%) rotate(-63.5deg)}to{transform:translate(-50%,-50%) rotate(-423.5deg)}}
+@keyframes counterspin-4{from{transform:translate(-50%,-50%) rotate(-84.7deg)}to{transform:translate(-50%,-50%) rotate(-444.7deg)}}
+@keyframes counterspin-5{from{transform:translate(-50%,-50%) rotate(-105.9deg)}to{transform:translate(-50%,-50%) rotate(-465.9deg)}}
+@keyframes counterspin-6{from{transform:translate(-50%,-50%) rotate(-127.1deg)}to{transform:translate(-50%,-50%) rotate(-487.1deg)}}
+@keyframes counterspin-7{from{transform:translate(-50%,-50%) rotate(-148.2deg)}to{transform:translate(-50%,-50%) rotate(-508.2deg)}}
+@keyframes counterspin-8{from{transform:translate(-50%,-50%) rotate(-169.4deg)}to{transform:translate(-50%,-50%) rotate(-529.4deg)}}
+@keyframes counterspin-9{from{transform:translate(-50%,-50%) rotate(-190.6deg)}to{transform:translate(-50%,-50%) rotate(-550.6deg)}}
+@keyframes counterspin-10{from{transform:translate(-50%,-50%) rotate(-211.8deg)}to{transform:translate(-50%,-50%) rotate(-571.8deg)}}
+@keyframes counterspin-11{from{transform:translate(-50%,-50%) rotate(-232.9deg)}to{transform:translate(-50%,-50%) rotate(-592.9deg)}}
+@keyframes counterspin-12{from{transform:translate(-50%,-50%) rotate(-254.1deg)}to{transform:translate(-50%,-50%) rotate(-614.1deg)}}
+@keyframes counterspin-13{from{transform:translate(-50%,-50%) rotate(-275.3deg)}to{transform:translate(-50%,-50%) rotate(-635.3deg)}}
+@keyframes counterspin-14{from{transform:translate(-50%,-50%) rotate(-296.5deg)}to{transform:translate(-50%,-50%) rotate(-656.5deg)}}
+@keyframes counterspin-15{from{transform:translate(-50%,-50%) rotate(-317.6deg)}to{transform:translate(-50%,-50%) rotate(-677.6deg)}}
+@keyframes counterspin-16{from{transform:translate(-50%,-50%) rotate(-338.8deg)}to{transform:translate(-50%,-50%) rotate(-698.8deg)}}
 
 /* icon-only circular badge (no text) */
 .stack-badge{
   display:flex;
   align-items:center;
   justify-content:center;
-  width:46px;
-  height:46px;
+  width:42px;
+  height:42px;
   background:var(--surface);
   border:1px solid var(--border);
   border-radius:50%;
@@ -373,8 +385,8 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   transition:box-shadow .2s,transform .2s;
 }
 .stack-badge:hover{box-shadow:var(--shadow-card-hover);transform:scale(1.08)}
-.stack-badge .fb-icon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.stack-badge .fb-icon img{width:16px;height:16px;object-fit:contain;display:block}
+.stack-badge .fb-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.stack-badge .fb-icon img{width:15px;height:15px;object-fit:contain;display:block}
 
 /* SERVICES */
 .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
@@ -955,10 +967,10 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .mobile-br{display:inline}
   .photo-orbit{max-width:370px;margin:0 auto}
   .photo-wrap{width:220px;height:220px}
-  .stack-badge{width:40px;height:40px}
-  .stack-badge .fb-icon{width:26px;height:26px}
-  .stack-badge .fb-icon img{width:14px;height:14px}
-  .orbit-ring{--radius:148px}
+  .stack-badge{width:37px;height:37px}
+  .stack-badge .fb-icon{width:24px;height:24px}
+  .stack-badge .fb-icon img{width:13px;height:13px}
+  .orbit-ring{--radius:162px}
   .contact-page-grid{grid-template-columns:1fr}
   .footer-inner{flex-direction:column;gap:.5rem;text-align:center}
 }
@@ -1003,10 +1015,10 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 @media(max-width:480px){
   .photo-orbit{max-width:310px}
   .photo-wrap{width:185px;height:185px}
-  .orbit-ring{--radius:118px}
-  .stack-badge{width:36px;height:36px}
-  .stack-badge .fb-icon{width:22px;height:22px}
-  .stack-badge .fb-icon img{width:12px;height:12px}
+  .orbit-ring{--radius:130px}
+  .stack-badge{width:32px;height:32px}
+  .stack-badge .fb-icon{width:20px;height:20px}
+  .stack-badge .fb-icon img{width:11px;height:11px}
   .hero-name{font-size:2.1rem}
   .section-big-heading{font-size:1.25rem}
   .cert-item{width:250px}
