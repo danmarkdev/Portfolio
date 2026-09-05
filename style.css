@@ -535,66 +535,105 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 }
 .tech-icon-box{
   position:relative;
-  width:64px;
-  height:64px;
-  border-radius:15px;
-  background:var(--bg);
-  border:1px solid var(--border);
+  width:72px;
+  height:72px;
+  border-radius:16px;
+  background:transparent;
+  border:none;
   display:flex;
   align-items:center;
   justify-content:center;
   cursor:pointer;
-  transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+  transition:transform .2s ease, box-shadow .2s ease;
 }
-.tech-icon-box .fb-icon{width:38px;height:38px;border-radius:10px}
-.tech-icon-box .fb-icon img,
-.tech-icon-box .fb-icon svg{width:20px;height:20px}
+/* the colored badge now fills almost the entire tile — bold, single-layer,
+   true-to-brand square instead of a small icon floating in a pale box */
+.tech-icon-box > .fb-icon{width:100%;height:100%;border-radius:16px;box-shadow:var(--shadow-card)}
+.tech-icon-box > .fb-icon img,
+.tech-icon-box > .fb-icon svg{width:34px;height:34px}
 .tech-icon-box:hover{
   transform:translateY(-5px);
-  border-color:var(--accent);
-  box-shadow:0 12px 26px rgba(51,85,255,.28);
-  z-index:2;
+  box-shadow:0 14px 28px -8px rgba(18,22,43,.22);
+  z-index:5;
 }
-/* tooltip */
-.tech-icon-box::after{
-  content:attr(data-tooltip);
+.tech-icon-box:hover > .fb-icon{box-shadow:var(--shadow-card-hover)}
+
+/* rich tooltip card — icon + name + category tag + description,
+   shown above the icon on hover */
+.tech-tip{
   position:absolute;
-  bottom:calc(100% + 12px);
+  bottom:calc(100% + 14px);
   left:50%;
   transform:translateX(-50%) translateY(6px);
-  background:#141726;
-  color:#e5e7eb;
-  font-family: var(--font-body);
-  font-size:.74rem;
-  font-weight:500;
-  line-height:1.4;
-  padding:.55rem .8rem;
-  border-radius:9px;
-  border:1px solid #2a2f4a;
-  white-space:nowrap;
-  max-width:220px;
-  opacity:0;
-  pointer-events:none;
-  transition:opacity .18s ease, transform .18s ease;
+  width:260px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:1rem 1.1rem;
   box-shadow:var(--shadow-card-hover);
-  z-index:6;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity .18s ease, transform .18s ease, visibility .18s;
+  z-index:20;
+  text-align:left;
 }
-.tech-icon-box::before{
+.tech-icon-box:hover .tech-tip{
+  opacity:1;
+  visibility:visible;
+  transform:translateX(-50%) translateY(0);
+}
+.tech-tip-head{
+  display:flex;
+  align-items:center;
+  gap:.7rem;
+  margin-bottom:.55rem;
+}
+.tech-tip-icon{
+  width:34px;
+  height:34px;
+  border-radius:9px;
+  flex-shrink:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.tech-tip-icon img,
+.tech-tip-icon svg{width:18px;height:18px}
+.tech-tip-titles{display:flex;flex-direction:column;gap:.2rem;min-width:0}
+.tech-tip-name{
+  font-family: var(--font-heading);
+  font-size:.95rem;
+  font-weight:700;
+  color:var(--text);
+  line-height:1.2;
+}
+.tech-tip-tag{
+  align-self:flex-start;
+  font-family: var(--font-body);
+  font-size:.6rem;
+  font-weight:700;
+  letter-spacing:.08em;
+  color:var(--accent);
+  background:var(--accent-soft);
+  border-radius:100px;
+  padding:.15rem .55rem;
+}
+.tech-tip-desc{
+  font-family: var(--font-body);
+  font-size:.8rem;
+  color:var(--muted);
+  line-height:1.55;
+}
+/* little pointer under the card, aimed at the icon */
+.tech-tip::after{
   content:'';
   position:absolute;
-  bottom:calc(100% + 5px);
+  top:100%;
   left:50%;
   transform:translateX(-50%);
-  border:6px solid transparent;
-  border-top-color:#141726;
-  opacity:0;
-  transition:opacity .18s ease;
-  z-index:6;
-}
-.tech-icon-box:hover::after,
-.tech-icon-box:hover::before{
-  opacity:1;
-  transform:translateX(-50%) translateY(0);
+  border:7px solid transparent;
+  border-top-color:var(--surface);
 }
 
 /* SKILLS — DESKTOP: give the grid a little more breathing room */
@@ -602,26 +641,24 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   .tech-icon-grid{gap:1.15rem}
 }
 
-/* SKILLS — MOBILE/TABLET: smaller chips, tooltip wraps instead of
-   overflowing the viewport */
+/* SKILLS — MOBILE/TABLET: smaller tiles, tooltip card recentres and
+   shrinks so it never overflows the viewport */
 @media(max-width:700px){
   .tech-panel{padding:2rem 1.25rem}
-  .tech-icon-box{width:52px;height:52px;border-radius:13px}
-  .tech-icon-box .fb-icon{width:32px;height:32px}
-  .tech-icon-box .fb-icon img,
-  .tech-icon-box .fb-icon svg{width:17px;height:17px}
-  .tech-icon-box::after{
-    white-space:normal;
-    max-width:150px;
-    text-align:center;
-    font-size:.7rem;
-  }
+  .tech-icon-box{width:58px;height:58px;border-radius:14px}
+  .tech-icon-box > .fb-icon img,
+  .tech-icon-box > .fb-icon svg{width:28px;height:28px}
+  .tech-tip{width:220px;padding:.85rem .95rem}
+  .tech-tip-name{font-size:.88rem}
+  .tech-tip-desc{font-size:.76rem}
 }
 @media(max-width:480px){
-  .tech-icon-box{width:46px;height:46px}
-  .tech-icon-box .fb-icon{width:28px;height:28px}
-  .tech-icon-box .fb-icon img,
-  .tech-icon-box .fb-icon svg{width:15px;height:15px}
+  .tech-icon-box{width:50px;height:50px}
+  .tech-icon-box > .fb-icon img,
+  .tech-icon-box > .fb-icon svg{width:24px;height:24px}
+  .tech-tip{width:190px;left:0;transform:translateX(0) translateY(6px)}
+  .tech-icon-box:hover .tech-tip{transform:translateX(0) translateY(0)}
+  .tech-tip::after{left:24px}
 }
 
 /* EDUCATION — code-editor styled panel, title centered on top */
