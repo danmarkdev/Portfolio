@@ -564,7 +564,8 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   position:absolute;
   bottom:calc(100% + 14px);
   left:50%;
-  transform:translateX(-50%) translateY(6px);
+  --tip-shift:0px;
+  transform:translateX(calc(-50% + var(--tip-shift))) translateY(6px);
   width:260px;
   background:var(--surface);
   border:1px solid var(--border);
@@ -581,7 +582,7 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 .tech-icon-box:hover .tech-tip{
   opacity:1;
   visibility:visible;
-  transform:translateX(-50%) translateY(0);
+  transform:translateX(calc(-50% + var(--tip-shift))) translateY(0);
 }
 .tech-tip-head{
   display:flex;
@@ -631,7 +632,7 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   position:absolute;
   top:100%;
   left:50%;
-  transform:translateX(-50%);
+  transform:translateX(calc(-50% - var(--tip-shift)));
   border:7px solid transparent;
   border-top-color:var(--surface);
 }
