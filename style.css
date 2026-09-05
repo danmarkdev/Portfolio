@@ -351,25 +351,23 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 .orbit-item.oi-13 .orbit-counter{animation-name:counterspin-13}
 .orbit-item.oi-14 .orbit-counter{animation-name:counterspin-14}
 .orbit-item.oi-15 .orbit-counter{animation-name:counterspin-15}
-.orbit-item.oi-16 .orbit-counter{animation-name:counterspin-16}
 
 @keyframes counterspin-0{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(-360deg)}}
-@keyframes counterspin-1{from{transform:translate(-50%,-50%) rotate(-21.2deg)}to{transform:translate(-50%,-50%) rotate(-381.2deg)}}
-@keyframes counterspin-2{from{transform:translate(-50%,-50%) rotate(-42.4deg)}to{transform:translate(-50%,-50%) rotate(-402.4deg)}}
-@keyframes counterspin-3{from{transform:translate(-50%,-50%) rotate(-63.5deg)}to{transform:translate(-50%,-50%) rotate(-423.5deg)}}
-@keyframes counterspin-4{from{transform:translate(-50%,-50%) rotate(-84.7deg)}to{transform:translate(-50%,-50%) rotate(-444.7deg)}}
-@keyframes counterspin-5{from{transform:translate(-50%,-50%) rotate(-105.9deg)}to{transform:translate(-50%,-50%) rotate(-465.9deg)}}
-@keyframes counterspin-6{from{transform:translate(-50%,-50%) rotate(-127.1deg)}to{transform:translate(-50%,-50%) rotate(-487.1deg)}}
-@keyframes counterspin-7{from{transform:translate(-50%,-50%) rotate(-148.2deg)}to{transform:translate(-50%,-50%) rotate(-508.2deg)}}
-@keyframes counterspin-8{from{transform:translate(-50%,-50%) rotate(-169.4deg)}to{transform:translate(-50%,-50%) rotate(-529.4deg)}}
-@keyframes counterspin-9{from{transform:translate(-50%,-50%) rotate(-190.6deg)}to{transform:translate(-50%,-50%) rotate(-550.6deg)}}
-@keyframes counterspin-10{from{transform:translate(-50%,-50%) rotate(-211.8deg)}to{transform:translate(-50%,-50%) rotate(-571.8deg)}}
-@keyframes counterspin-11{from{transform:translate(-50%,-50%) rotate(-232.9deg)}to{transform:translate(-50%,-50%) rotate(-592.9deg)}}
-@keyframes counterspin-12{from{transform:translate(-50%,-50%) rotate(-254.1deg)}to{transform:translate(-50%,-50%) rotate(-614.1deg)}}
-@keyframes counterspin-13{from{transform:translate(-50%,-50%) rotate(-275.3deg)}to{transform:translate(-50%,-50%) rotate(-635.3deg)}}
-@keyframes counterspin-14{from{transform:translate(-50%,-50%) rotate(-296.5deg)}to{transform:translate(-50%,-50%) rotate(-656.5deg)}}
-@keyframes counterspin-15{from{transform:translate(-50%,-50%) rotate(-317.6deg)}to{transform:translate(-50%,-50%) rotate(-677.6deg)}}
-@keyframes counterspin-16{from{transform:translate(-50%,-50%) rotate(-338.8deg)}to{transform:translate(-50%,-50%) rotate(-698.8deg)}}
+@keyframes counterspin-1{from{transform:translate(-50%,-50%) rotate(-22.5deg)}to{transform:translate(-50%,-50%) rotate(-382.5deg)}}
+@keyframes counterspin-2{from{transform:translate(-50%,-50%) rotate(-45deg)}to{transform:translate(-50%,-50%) rotate(-405deg)}}
+@keyframes counterspin-3{from{transform:translate(-50%,-50%) rotate(-67.5deg)}to{transform:translate(-50%,-50%) rotate(-427.5deg)}}
+@keyframes counterspin-4{from{transform:translate(-50%,-50%) rotate(-90deg)}to{transform:translate(-50%,-50%) rotate(-450deg)}}
+@keyframes counterspin-5{from{transform:translate(-50%,-50%) rotate(-112.5deg)}to{transform:translate(-50%,-50%) rotate(-472.5deg)}}
+@keyframes counterspin-6{from{transform:translate(-50%,-50%) rotate(-135deg)}to{transform:translate(-50%,-50%) rotate(-495deg)}}
+@keyframes counterspin-7{from{transform:translate(-50%,-50%) rotate(-157.5deg)}to{transform:translate(-50%,-50%) rotate(-517.5deg)}}
+@keyframes counterspin-8{from{transform:translate(-50%,-50%) rotate(-180deg)}to{transform:translate(-50%,-50%) rotate(-540deg)}}
+@keyframes counterspin-9{from{transform:translate(-50%,-50%) rotate(-202.5deg)}to{transform:translate(-50%,-50%) rotate(-562.5deg)}}
+@keyframes counterspin-10{from{transform:translate(-50%,-50%) rotate(-225deg)}to{transform:translate(-50%,-50%) rotate(-585deg)}}
+@keyframes counterspin-11{from{transform:translate(-50%,-50%) rotate(-247.5deg)}to{transform:translate(-50%,-50%) rotate(-607.5deg)}}
+@keyframes counterspin-12{from{transform:translate(-50%,-50%) rotate(-270deg)}to{transform:translate(-50%,-50%) rotate(-630deg)}}
+@keyframes counterspin-13{from{transform:translate(-50%,-50%) rotate(-292.5deg)}to{transform:translate(-50%,-50%) rotate(-652.5deg)}}
+@keyframes counterspin-14{from{transform:translate(-50%,-50%) rotate(-315deg)}to{transform:translate(-50%,-50%) rotate(-675deg)}}
+@keyframes counterspin-15{from{transform:translate(-50%,-50%) rotate(-337.5deg)}to{transform:translate(-50%,-50%) rotate(-697.5deg)}}
 
 /* icon-only circular badge (no text) */
 .stack-badge{
