@@ -1,3 +1,34 @@
+/* ICON FALLBACK — if a brand logo fails to load (dead link, renamed
+   slug, hotlink block, temporary CDN hiccup), swap it for a clean
+   text badge (the tool's initials) instead of leaving a broken-image
+   icon visible. Runs immediately since this script sits at the end
+   of <body>, after every icon element already exists in the DOM. */
+document.querySelectorAll('.fb-icon img').forEach(function (img) {
+  img.addEventListener('error', function () {
+    var wrap = img.closest('.fb-icon');
+    var alt = img.getAttribute('alt') || '?';
+    var initials = (alt.replace(/[^A-Za-z0-9]/g, '').slice(0, 2) || '?').toUpperCase();
+
+    // pick readable text color based on the chip's own background
+    var dark = true;
+    if (wrap) {
+      var bg = getComputedStyle(wrap).backgroundColor;
+      var rgb = bg && bg.match(/\d+/g);
+      if (rgb && rgb.length >= 3) {
+        var lum = 0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2];
+        dark = lum > 150; // light background -> use dark text
+      }
+    }
+
+    var span = document.createElement('span');
+    span.textContent = initials;
+    span.style.cssText =
+      'font-family:var(--font-heading, sans-serif);font-weight:700;' +
+      'font-size:.55em;line-height:1;color:' + (dark ? '#12162b' : '#ffffff') + ';';
+    img.replaceWith(span);
+  }, { once: true });
+});
+
 /* HEADER SCROLL */
 window.addEventListener('scroll',function(){
   var h=document.getElementById('header');
