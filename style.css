@@ -516,23 +516,13 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 .project-live-link:hover svg,
 .project-live-link:active svg{transform:translateX(4px)}
 
-/* SKILLS — dark "tech panel" card holding a single flat grid of icon
-   chips, each with a hover tooltip. Replaces the old per-category
-   panel layout with something closer to a compact icon board. */
+/* SKILLS — flat, borderless icon grid on the page background (no dark
+   panel, no hover hint text). Each icon still shows a small tooltip on
+   hover, styled to match the site's light theme instead of a dark card. */
 .tech-panel{
-  background:#0d0f18;
-  border:1px solid #1f2333;
-  border-radius:22px;
-  padding:2.75rem 2.25rem;
-  box-shadow:var(--shadow-card-hover);
-}
-.tech-hint{
-  font-family: var(--font-mono);
-  font-size: .78rem;
-  color: #8890a8;
-  text-align: center;
-  margin-bottom: 2.25rem;
-  letter-spacing: .01em;
+  background:transparent;
+  padding:0;
+  box-shadow:none;
 }
 .tech-icon-grid{
   display:flex;
@@ -545,8 +535,9 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   width:64px;
   height:64px;
   border-radius:15px;
-  background:#141726;
-  border:1px solid #232842;
+  background:var(--surface);
+  border:1px solid var(--border);
+  box-shadow:var(--shadow-card);
   display:flex;
   align-items:center;
   justify-content:center;
@@ -569,15 +560,14 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   bottom:calc(100% + 12px);
   left:50%;
   transform:translateX(-50%) translateY(6px);
-  background:#141726;
-  color:#e5e7eb;
+  background:var(--text);
+  color:#ffffff;
   font-family: var(--font-body);
   font-size:.74rem;
   font-weight:500;
   line-height:1.4;
   padding:.55rem .8rem;
   border-radius:9px;
-  border:1px solid #2a2f4a;
   white-space:nowrap;
   max-width:220px;
   opacity:0;
@@ -593,7 +583,7 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   left:50%;
   transform:translateX(-50%);
   border:6px solid transparent;
-  border-top-color:#141726;
+  border-top-color:var(--text);
   opacity:0;
   transition:opacity .18s ease;
   z-index:6;
@@ -612,7 +602,7 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 /* SKILLS — MOBILE/TABLET: smaller chips, tooltip wraps instead of
    overflowing the viewport */
 @media(max-width:700px){
-  .tech-panel{padding:2rem 1.25rem}
+  .tech-panel{padding:0}
   .tech-icon-box{width:52px;height:52px;border-radius:13px}
   .tech-icon-box .fb-icon{width:32px;height:32px}
   .tech-icon-box .fb-icon img,
