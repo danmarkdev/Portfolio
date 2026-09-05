@@ -568,8 +568,10 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   line-height:1.4;
   padding:.55rem .8rem;
   border-radius:9px;
-  white-space:nowrap;
-  max-width:220px;
+  white-space:normal;
+  text-align:center;
+  width:max-content;
+  max-width:200px;
   opacity:0;
   pointer-events:none;
   transition:opacity .18s ease, transform .18s ease;
@@ -608,9 +610,7 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   .tech-icon-box .fb-icon img,
   .tech-icon-box .fb-icon svg{width:17px;height:17px}
   .tech-icon-box::after{
-    white-space:normal;
     max-width:150px;
-    text-align:center;
     font-size:.7rem;
   }
 }
