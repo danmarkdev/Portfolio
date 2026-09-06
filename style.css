@@ -665,9 +665,7 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   .tech-icon-box{width:50px;height:50px}
   .tech-icon-box > .fb-icon img,
   .tech-icon-box > .fb-icon svg{width:24px;height:24px}
-  .tech-tip{width:190px;left:0;transform:translateX(0) translateY(6px)}
-  .tech-icon-box:hover .tech-tip{transform:translateX(0) translateY(0)}
-  .tech-tip::after{left:24px}
+  .tech-tip{width:190px}
 }
 
 /* EDUCATION — code-editor styled panel, title centered on top */
