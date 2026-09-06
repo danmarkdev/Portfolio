@@ -561,6 +561,15 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 }
 .tech-icon-box:hover > .fb-icon{box-shadow:var(--shadow-card-hover)}
 
+/* Force every Technical Stack tile (and its tooltip icon) onto the same
+   neutral chip, instead of the mismatched per-icon inline background
+   colors (some brand-colored, some plain white) set in the HTML. */
+.tech-icon-box > .fb-icon,
+.tech-tip-icon.fb-icon{
+  background: var(--accent-soft) !important;
+  border: 1px solid var(--border);
+}
+
 /* rich tooltip card — icon + name + category tag + description,
    shown above the icon on hover */
 .tech-tip{
