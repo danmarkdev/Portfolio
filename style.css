@@ -390,6 +390,14 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 .stack-badge .fb-icon img,
 .stack-badge .fb-icon svg{width:20px;height:20px;object-fit:contain;display:block}
 
+/* Force every orbiting hero badge onto the same neutral chip instead of
+   the mismatched per-icon inline background colors (some brand-colored,
+   some plain white that nearly vanishes against the light page bg). */
+.stack-badge > .fb-icon{
+  background: var(--accent-soft) !important;
+  border: 1px solid var(--border);
+}
+
 /* shared "colored chip" icon used both in the hero orbit badges and the
    Technical Stack grid below — one true brand-colored logo per chip */
 .fb-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -560,6 +568,15 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   z-index:5;
 }
 .tech-icon-box:hover > .fb-icon{box-shadow:var(--shadow-card-hover)}
+
+/* Force every Technical Stack tile (and its tooltip icon) onto the same
+   neutral chip, instead of the mismatched per-icon inline background
+   colors (some brand-colored, some plain white) set in the HTML. */
+.tech-icon-box > .fb-icon,
+.tech-tip-icon.fb-icon{
+  background: var(--accent-soft) !important;
+  border: 1px solid var(--border);
+}
 
 /* rich tooltip card — icon + name + category tag + description,
    shown above the icon on hover */
