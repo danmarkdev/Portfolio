@@ -66,13 +66,12 @@
       <div class="photo-orbit" id="photoOrbit">
 
         <div class="photo-frame">
-          <div class="photo-hex-border"></div>
           <div class="photo-wrap">
             <img src="newpfp.jpg" alt="Danmark Rosalejos"/>
           </div>
         </div>
 
-        <!-- Tech stack — icon-only badges orbiting the profile photo (pure CSS orbit) -->
+        <!-- Tech stack — icon-only badges floating around the profile photo (fixed positions, subtle bob) -->
         <div class="orbit-ring" id="orbitRing">
 
           <div class="orbit-item oi-0" style="--angle:0deg">
@@ -948,6 +947,7 @@
 
 <script src="script.js"></script>
 <script>
+  
   // Keep Technical Stack tooltips fully on-screen: icons near the left/right
   // edge of the panel would otherwise push their card past the viewport.
   (function () {
