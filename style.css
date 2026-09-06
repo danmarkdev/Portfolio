@@ -300,24 +300,19 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 .hero-right{display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative}
 .photo-orbit{position:relative;width:100%;max-width:440px;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center}
 .photo-frame{position:relative;display:inline-block;z-index:2}
-.photo-hex-border{position:absolute;inset:-4px;border-radius:50%;border:1px dashed rgba(79,70,229,.35);animation:rotateBorder 16s linear infinite}
-.photo-hex-border::before{content:'';position:absolute;inset:8px;border-radius:50%;border:1px solid rgba(163,177,198,.4)}
-@keyframes rotateBorder{to{transform:rotate(360deg)}}
 .photo-wrap{width:260px;height:260px;border-radius:50%;overflow:hidden;position:relative;z-index:1;border:6px solid var(--bg);box-shadow:var(--shadow-card)}
 .photo-wrap img{width:100%;height:100%;object-fit:cover}
 
-/* TECH STACK — icon-only badges orbiting the profile photo (pure CSS orbit) */
+/* TECH STACK — icon-only badges floating around the profile photo.
+   Fixed positions (angle set once per item via --angle), no orbit spin —
+   each badge just bobs gently up and down at its own place. */
 .orbit-ring{
   position:absolute;
   inset:0;
   z-index:2;
   pointer-events:none;
   --radius:192px;
-  animation:orbitspin 44s linear infinite;
 }
-.photo-orbit:hover .orbit-ring,
-.photo-orbit:hover .orbit-counter{animation-play-state:paused}
-@keyframes orbitspin{to{transform:rotate(360deg)}}
 
 .orbit-item{
   position:absolute;
@@ -331,43 +326,36 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   position:absolute;
   top:0;
   left:0;
-  transform:translate(-50%,-50%) rotate(calc(var(--angle) * -1));
-  animation:counterspin-0 44s linear infinite;
   pointer-events:auto;
+  animation-name: floatBob;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
 }
-.orbit-item.oi-0 .orbit-counter{animation-name:counterspin-0}
-.orbit-item.oi-1 .orbit-counter{animation-name:counterspin-1}
-.orbit-item.oi-2 .orbit-counter{animation-name:counterspin-2}
-.orbit-item.oi-3 .orbit-counter{animation-name:counterspin-3}
-.orbit-item.oi-4 .orbit-counter{animation-name:counterspin-4}
-.orbit-item.oi-5 .orbit-counter{animation-name:counterspin-5}
-.orbit-item.oi-6 .orbit-counter{animation-name:counterspin-6}
-.orbit-item.oi-7 .orbit-counter{animation-name:counterspin-7}
-.orbit-item.oi-8 .orbit-counter{animation-name:counterspin-8}
-.orbit-item.oi-9 .orbit-counter{animation-name:counterspin-9}
-.orbit-item.oi-10 .orbit-counter{animation-name:counterspin-10}
-.orbit-item.oi-11 .orbit-counter{animation-name:counterspin-11}
-.orbit-item.oi-12 .orbit-counter{animation-name:counterspin-12}
-.orbit-item.oi-13 .orbit-counter{animation-name:counterspin-13}
-.orbit-item.oi-14 .orbit-counter{animation-name:counterspin-14}
-.orbit-item.oi-15 .orbit-counter{animation-name:counterspin-15}
+.photo-orbit:hover .orbit-counter{animation-play-state:paused}
 
-@keyframes counterspin-0{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(-360deg)}}
-@keyframes counterspin-1{from{transform:translate(-50%,-50%) rotate(-22.5deg)}to{transform:translate(-50%,-50%) rotate(-382.5deg)}}
-@keyframes counterspin-2{from{transform:translate(-50%,-50%) rotate(-45deg)}to{transform:translate(-50%,-50%) rotate(-405deg)}}
-@keyframes counterspin-3{from{transform:translate(-50%,-50%) rotate(-67.5deg)}to{transform:translate(-50%,-50%) rotate(-427.5deg)}}
-@keyframes counterspin-4{from{transform:translate(-50%,-50%) rotate(-90deg)}to{transform:translate(-50%,-50%) rotate(-450deg)}}
-@keyframes counterspin-5{from{transform:translate(-50%,-50%) rotate(-112.5deg)}to{transform:translate(-50%,-50%) rotate(-472.5deg)}}
-@keyframes counterspin-6{from{transform:translate(-50%,-50%) rotate(-135deg)}to{transform:translate(-50%,-50%) rotate(-495deg)}}
-@keyframes counterspin-7{from{transform:translate(-50%,-50%) rotate(-157.5deg)}to{transform:translate(-50%,-50%) rotate(-517.5deg)}}
-@keyframes counterspin-8{from{transform:translate(-50%,-50%) rotate(-180deg)}to{transform:translate(-50%,-50%) rotate(-540deg)}}
-@keyframes counterspin-9{from{transform:translate(-50%,-50%) rotate(-202.5deg)}to{transform:translate(-50%,-50%) rotate(-562.5deg)}}
-@keyframes counterspin-10{from{transform:translate(-50%,-50%) rotate(-225deg)}to{transform:translate(-50%,-50%) rotate(-585deg)}}
-@keyframes counterspin-11{from{transform:translate(-50%,-50%) rotate(-247.5deg)}to{transform:translate(-50%,-50%) rotate(-607.5deg)}}
-@keyframes counterspin-12{from{transform:translate(-50%,-50%) rotate(-270deg)}to{transform:translate(-50%,-50%) rotate(-630deg)}}
-@keyframes counterspin-13{from{transform:translate(-50%,-50%) rotate(-292.5deg)}to{transform:translate(-50%,-50%) rotate(-652.5deg)}}
-@keyframes counterspin-14{from{transform:translate(-50%,-50%) rotate(-315deg)}to{transform:translate(-50%,-50%) rotate(-675deg)}}
-@keyframes counterspin-15{from{transform:translate(-50%,-50%) rotate(-337.5deg)}to{transform:translate(-50%,-50%) rotate(-697.5deg)}}
+@keyframes floatBob{
+  0%,100%{transform:translate(-50%,-50%) rotate(calc(var(--angle) * -1)) translateY(0)}
+  50%{transform:translate(-50%,-50%) rotate(calc(var(--angle) * -1)) translateY(-8px)}
+}
+
+/* stagger delay/duration per icon so they don't all bob in unison —
+   gives a natural, organic "floating" feel like the reference site */
+.orbit-item.oi-0 .orbit-counter{animation-delay:0s;animation-duration:3s}
+.orbit-item.oi-1 .orbit-counter{animation-delay:.2s;animation-duration:3.4s}
+.orbit-item.oi-2 .orbit-counter{animation-delay:.4s;animation-duration:2.8s}
+.orbit-item.oi-3 .orbit-counter{animation-delay:.1s;animation-duration:3.6s}
+.orbit-item.oi-4 .orbit-counter{animation-delay:.5s;animation-duration:3.1s}
+.orbit-item.oi-5 .orbit-counter{animation-delay:.3s;animation-duration:2.9s}
+.orbit-item.oi-6 .orbit-counter{animation-delay:.6s;animation-duration:3.5s}
+.orbit-item.oi-7 .orbit-counter{animation-delay:.15s;animation-duration:3.2s}
+.orbit-item.oi-8 .orbit-counter{animation-delay:.45s;animation-duration:2.7s}
+.orbit-item.oi-9 .orbit-counter{animation-delay:.25s;animation-duration:3.7s}
+.orbit-item.oi-10 .orbit-counter{animation-delay:.55s;animation-duration:3.3s}
+.orbit-item.oi-11 .orbit-counter{animation-delay:.35s;animation-duration:2.85s}
+.orbit-item.oi-12 .orbit-counter{animation-delay:.05s;animation-duration:3.45s}
+.orbit-item.oi-13 .orbit-counter{animation-delay:.5s;animation-duration:3.05s}
+.orbit-item.oi-14 .orbit-counter{animation-delay:.3s;animation-duration:3.3s}
+.orbit-item.oi-15 .orbit-counter{animation-delay:.55s;animation-duration:3.9s}
 
 /* icon-only circular badge (no text) */
 .stack-badge{
