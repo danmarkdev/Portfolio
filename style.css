@@ -1017,6 +1017,76 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease}
 .reveal.visible{opacity:1;transform:none}
 
+/* TESTIMONIALS — fanned card deck, cycles through with clicks/dots */
+.testimonial-deck-wrap{max-width:640px;margin:0 auto;position:relative}
+.testimonial-deck{position:relative;min-height:280px}
+.testi-card{
+  position:absolute;
+  inset:0;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:2.75rem 2.5rem 2.25rem;
+  box-shadow:var(--shadow-card);
+  display:flex;
+  flex-direction:column;
+  gap:1.5rem;
+  cursor:pointer;
+  transition:transform .5s cubic-bezier(.16,1,.3,1),opacity .5s ease,box-shadow .3s ease;
+}
+.testi-card.testi-active{transform:translateY(0) scale(1) rotate(0deg);z-index:3;opacity:1;box-shadow:var(--shadow-card-hover);cursor:default}
+.testi-card.testi-behind-1{transform:translateY(16px) scale(.96) rotate(-3deg);z-index:2;opacity:.85}
+.testi-card.testi-behind-2{transform:translateY(30px) scale(.92) rotate(3deg);z-index:1;opacity:.55}
+.testi-card.testi-hidden{opacity:0;pointer-events:none;transform:translateY(36px) scale(.88)}
+
+.testi-quote-icon{
+  font-family:var(--font-heading);
+  font-size:3rem;
+  line-height:1;
+  color:var(--accent);
+  font-weight:800;
+}
+.testi-text{
+  font-family:var(--font-body);
+  font-size:1rem;
+  font-style:italic;
+  color:var(--muted);
+  line-height:1.8;
+}
+.testi-footer{display:flex;align-items:center;gap:.9rem;margin-top:auto}
+.testi-avatar{
+  width:44px;height:44px;flex-shrink:0;
+  border-radius:50%;
+  background:var(--accent-soft);
+  color:var(--accent);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-heading);
+  font-weight:700;
+  font-size:1.1rem;
+}
+.testi-name{
+  font-family:var(--font-heading);
+  font-weight:700;
+  color:var(--text);
+  font-size:.98rem;
+}
+
+.testi-dots{display:flex;justify-content:center;gap:.5rem;margin-top:2rem}
+.testi-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--border);
+  border:none;
+  cursor:pointer;
+  transition:background .2s ease,transform .2s ease;
+}
+.testi-dot.testi-dot-active{background:var(--accent);transform:scale(1.35)}
+
+@media(max-width:700px){
+  .testimonial-deck{min-height:340px}
+  .testi-card{padding:2.25rem 1.5rem 1.75rem}
+  .testi-text{font-size:.92rem}
+}
+
 /* RESPONSIVE */
 @media(max-width:960px){
   #nav{display:none}
