@@ -428,15 +428,27 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 }
 .service-num{display:none}
 
-/* PROJECTS — responsive grid of compact, squared-off cards: image on top,
-   title + a small round link icon, then a clamped description. */
-.projects-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(270px,1fr));
-  gap:1.75rem;
+/* PROJECTS — draggable/auto-scrolling marquee (same engine as Certificates):
+   fixed-size cards in a straight single row, image box sized so the whole
+   screenshot is visible instead of being cropped into a square. */
+.projects-marquee{
+  width:100%;
+  overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
 }
+.project-track{
+  display:flex;
+  gap:1.75rem;
+  width:max-content;
+  cursor:grab;
+  touch-action:pan-y;
+}
+.project-track.dragging{cursor:grabbing}
 
 .project-card{
+  width:340px;
+  flex:0 0 auto;
   background:var(--surface);
   border:1px solid var(--border);
   border-radius:26px;
@@ -453,14 +465,15 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 
 .project-img-wrap{
   width:100%;
-  aspect-ratio:1/1;
+  aspect-ratio:16/10;
   overflow:hidden;
   padding:.7rem .7rem 0;
+  background:var(--bg);
 }
 .project-img-wrap img{
   width:100%;
   height:100%;
-  object-fit:cover;
+  object-fit:contain;
   object-position:center;
   display:block;
   border-radius:18px;
@@ -1043,7 +1056,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   }
   .services-grid::-webkit-scrollbar{display:none}
   .service-card{flex:0 0 82%;scroll-snap-align:center;padding:2rem 1.5rem}
-  .projects-grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.1rem}
+  .project-card{width:270px}
   .project-body{padding:1.1rem 1.25rem 1.35rem}
   .cert-item{width:300px}
   .hero-name{font-size:2.1rem;white-space:normal}
@@ -1070,7 +1083,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .hero-name{font-size:2.1rem}
   .section-big-heading{font-size:1.25rem}
   .cert-item{width:250px}
-  .projects-grid{grid-template-columns:1fr}
+  .project-card{width:225px}
   .hero-actions{gap:.5rem}
   .btn-primary,.btn-outline{font-size:.68rem;padding-left:.9rem;padding-right:.9rem;gap:.35rem}
 
