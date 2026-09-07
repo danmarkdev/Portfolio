@@ -440,6 +440,22 @@ document.addEventListener('keydown',function(e){
   var AUTOPLAY_MS = 6000;
   var timer = null;
 
+  /* Cards are stacked with position:absolute so the deck wrapper doesn't
+     naturally grow to fit them. Measure the tallest card's real content
+     height (scrollHeight still reports full content even when a card's
+     own box is being stretched to inset:0) and size the deck to match,
+     so a longer quote never pushes the avatar/name below the card. */
+  function sizeDeck() {
+    var maxH = 0;
+    cards.forEach(function (c) {
+      maxH = Math.max(maxH, c.scrollHeight);
+    });
+    if (maxH > 0) deck.style.height = maxH + 'px';
+  }
+  sizeDeck();
+  window.addEventListener('resize', sizeDeck);
+  window.addEventListener('load', sizeDeck);
+
   cards.forEach(function (_, i) {
     var dot = document.createElement('button');
     dot.className = 'testi-dot';
