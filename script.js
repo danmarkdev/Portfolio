@@ -426,3 +426,60 @@ document.addEventListener('keydown',function(e){
 
   observer.observe(mount);
 })();
+
+/* ---------- TESTIMONIALS: fanned deck cycler ---------- */
+(function () {
+  var deck = document.getElementById('testiDeck');
+  var dotsWrap = document.getElementById('testiDots');
+  if (!deck || !dotsWrap) return;
+
+  var cards = Array.prototype.slice.call(deck.querySelectorAll('.testi-card'));
+  if (!cards.length) return;
+
+  var active = 0;
+  var AUTOPLAY_MS = 6000;
+  var timer = null;
+
+  cards.forEach(function (_, i) {
+    var dot = document.createElement('button');
+    dot.className = 'testi-dot';
+    dot.setAttribute('aria-label', 'Show testimonial ' + (i + 1));
+    dot.addEventListener('click', function () { goTo(i); });
+    dotsWrap.appendChild(dot);
+  });
+  var dots = Array.prototype.slice.call(dotsWrap.querySelectorAll('.testi-dot'));
+
+  function render() {
+    cards.forEach(function (card, i) {
+      card.classList.remove('testi-active', 'testi-behind-1', 'testi-behind-2', 'testi-hidden');
+      var offset = (i - active + cards.length) % cards.length;
+      if (offset === 0) card.classList.add('testi-active');
+      else if (offset === 1) card.classList.add('testi-behind-1');
+      else if (offset === 2) card.classList.add('testi-behind-2');
+      else card.classList.add('testi-hidden');
+    });
+    dots.forEach(function (d, i) { d.classList.toggle('testi-dot-active', i === active); });
+  }
+
+  function goTo(i) {
+    active = i % cards.length;
+    render();
+    restartAutoplay();
+  }
+
+  function next() { goTo((active + 1) % cards.length); }
+
+  function restartAutoplay() {
+    if (timer) clearInterval(timer);
+    if (cards.length > 1) timer = setInterval(next, AUTOPLAY_MS);
+  }
+
+  cards.forEach(function (card, i) {
+    card.addEventListener('click', function () {
+      if (i !== active) goTo(i);
+    });
+  });
+
+  render();
+  restartAutoplay();
+})();
