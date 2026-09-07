@@ -103,12 +103,12 @@ var obs=new IntersectionObserver(function(entries){
 },{threshold:.1});
 document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
 
-/* DRAGGABLE / SWIPEABLE MARQUEE — used by the Certificates track. Works with
-   mouse drag on desktop and touch swipe on mobile (Pointer Events cover both),
-   and keeps auto-scrolling on its own whenever the person isn't actively
-   dragging it. loopSeconds controls how long one full auto-scroll loop takes,
-   same as the old CSS animation did. (Projects is now a static grid, so this
-   is only wired up for certTrack below.) */
+/* DRAGGABLE / SWIPEABLE MARQUEE — used by the Projects and Certificates
+   tracks. Works with mouse drag on desktop and touch swipe on mobile
+   (Pointer Events cover both), and keeps auto-scrolling on its own
+   whenever the person isn't actively dragging it. loopSeconds controls
+   how long one full auto-scroll loop takes, same as the old CSS
+   animation did. */
 function initSwipeMarquee(trackId, loopSeconds){
   var track = document.getElementById(trackId);
   var wrap = track ? track.closest('.projects-marquee, .cert-marquee') : null;
@@ -247,6 +247,7 @@ function initSwipeMarquee(trackId, loopSeconds){
   requestAnimationFrame(tick);
 }
 
+initSwipeMarquee('projectTrack', 90);  // slow, gentle auto-scroll for Projects
 initSwipeMarquee('certTrack', 75);     // ~75s per loop, same pace as before
 
 /* CONTACT FORM — now using Google Apps Script (free, no submission limits) */
