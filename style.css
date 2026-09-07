@@ -47,16 +47,6 @@ html{scrollbar-width:none}
 
 .container{width:90%;max-width:var(--max-w);margin:0 auto}
 
-/* ANCHOR SCROLL FIX — the nav is position:fixed, so it floats on top of
-   whatever content happens to be at the very top of the viewport. Without
-   this, jumping straight to a section via a nav link or a URL hash (e.g.
-   /#testimonials) lands that section's heading exactly behind the floating
-   pill, hiding it. scroll-margin-top tells the browser to stop short and
-   leave clearance below the nav for every anchor target. */
-section[id]{
-  scroll-margin-top: calc(var(--nav-h) + 1.5rem);
-}
-
 /* Background canvas must be taken out of normal document flow,
    otherwise its JS-set width/height reserves real space on the page
    and pushes all content below it down. */
@@ -827,22 +817,13 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 }
 @keyframes blinkCursor{50%{opacity:0}}
 
-/* CERTS — contained to the same reading width as the rest of the page
-   (like .container) instead of bleeding edge-to-edge across the browser
-   window. Bleeding to the raw viewport edge is what made cards look like
-   they were being sliced in half by the screen — this keeps the same
-   auto-scrolling / draggable behavior, just visually boxed in like every
-   other section. The fade at the two ends is also wider and softer so a
-   card scrolling past the edge fades out smoothly instead of looking like
-   a hard, jarring crop. */
+/* CERTS */
 .cert-section{background:transparent;position:relative;z-index:1}
 .cert-marquee{
-  width:90%;
-  max-width:var(--max-w);
-  margin:0 auto;
+  width:100%;
   overflow:hidden;
-  -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
-  mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
 }
 .cert-track{
   display:flex;
@@ -1171,7 +1152,6 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .hero-name{font-size:2.1rem}
   .section-big-heading{font-size:1.25rem}
   .cert-item{width:250px}
-  .cert-marquee{width:94%}
   .project-img-wrap{aspect-ratio:21/9}
   .project-body{padding:1rem 1.25rem 1.2rem;gap:.35rem}
   .project-card-title{font-size:1rem}
