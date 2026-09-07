@@ -934,29 +934,6 @@
 
 <script src="script.js"></script>
 <script>
-  
-  // Keep Technical Stack tooltips fully on-screen: icons near the left/right
-  // edge of the panel would otherwise push their card past the viewport.
-  (function () {
-    var margin = 16;
-    document.querySelectorAll('.tech-icon-box').forEach(function (box) {
-      var tip = box.querySelector('.tech-tip');
-      if (!tip) return;
-      box.addEventListener('mouseenter', function () {
-        tip.style.setProperty('--tip-shift', '0px');
-        var rect = tip.getBoundingClientRect();
-        var shift = 0;
-        if (rect.left < margin) {
-          shift = margin - rect.left;
-        } else if (rect.right > window.innerWidth - margin) {
-          shift = (window.innerWidth - margin) - rect.right;
-        }
-        if (shift !== 0) {
-          tip.style.setProperty('--tip-shift', shift + 'px');
-        }
-      });
-    });
-  })();
 </script>
 </body>
 </html>
