@@ -62,6 +62,10 @@ html{scrollbar-width:none}
 
 h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.02em}
 
+/* Prevent the floating nav pill from covering a section's heading when
+   jumping to it via nav click or a direct #hash URL (e.g. /#testimonials) */
+section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
+
 /* NAV — floating centered pill, detached from the top edge */
 #header{
   position:fixed;
@@ -214,6 +218,11 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 .mobile-nav.open a:nth-child(7){transition-delay:.37s}
 
 /* SECTIONS */
+/* scroll-margin-top reserves space for the floating fixed nav pill so
+   jumping to any #anchor (via nav click or a direct URL hash) never
+   scrolls a section's heading underneath the header. */
+.section,
+section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .section{padding:7rem 0;position:relative;z-index:1}
 .section-alt{background:transparent}
 .section-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.25rem}
@@ -1019,7 +1028,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 
 /* TESTIMONIALS — fanned card deck, cycles through with clicks/dots */
 .testimonial-deck-wrap{max-width:640px;margin:0 auto;position:relative}
-.testimonial-deck{position:relative;min-height:280px}
+.testimonial-deck{position:relative;min-height:220px;transition:height .3s ease}
 .testi-card{
   position:absolute;
   inset:0;
@@ -1082,7 +1091,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 .testi-dot.testi-dot-active{background:var(--accent);transform:scale(1.35)}
 
 @media(max-width:700px){
-  .testimonial-deck{min-height:340px}
+  .testimonial-deck{min-height:300px}
   .testi-card{padding:2.25rem 1.5rem 1.75rem}
   .testi-text{font-size:.92rem}
 }
