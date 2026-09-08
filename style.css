@@ -672,6 +672,22 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   border-top-color:var(--surface);
 }
 
+/* Flip tooltip below the icon when there isn't room above it */
+.tech-icon-box.tip-flip .tech-tip{
+  bottom:auto;
+  top:calc(100% + 14px);
+  transform:translateX(calc(-50% + var(--tip-shift, 0px))) translateY(-6px);
+}
+.tech-icon-box.tip-flip:hover .tech-tip{
+  transform:translateX(calc(-50% + var(--tip-shift, 0px))) translateY(0);
+}
+.tech-icon-box.tip-flip .tech-tip::after{
+  top:auto;
+  bottom:100%;
+  border-top-color:transparent;
+  border-bottom-color:var(--surface);
+}
+
 /* SKILLS — DESKTOP: give the grid a little more breathing room */
 @media(min-width:961px){
   .tech-icon-grid{gap:1.15rem}
