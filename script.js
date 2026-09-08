@@ -499,3 +499,34 @@ document.addEventListener('keydown',function(e){
   render();
   restartAutoplay();
 })();
+
+/* TECH TIP EDGE GUARD — keeps the Technical Stack description card from
+   spilling off the left/right edge of the screen on mobile. The card is
+   centered on its icon by default; here we measure how far it would
+   overflow the viewport and push it back in by setting --tip-shift,
+   which .tech-tip (and its pointer arrow) already read from the CSS. */
+function adjustTechTips(){
+  var margin = 12; // keep at least this much space from the screen edge
+  document.querySelectorAll('.tech-icon-box').forEach(function(box){
+    var tip = box.querySelector('.tech-tip');
+    if(!tip) return;
+
+    box.style.setProperty('--tip-shift','0px'); // reset before measuring
+    var boxRect = box.getBoundingClientRect();
+    var tipWidth = tip.offsetWidth;
+    var centerX = boxRect.left + boxRect.width / 2;
+    var tipLeft = centerX - tipWidth / 2;
+    var tipRight = centerX + tipWidth / 2;
+
+    var shift = 0;
+    if (tipLeft < margin) {
+      shift = margin - tipLeft;
+    } else if (tipRight > window.innerWidth - margin) {
+      shift = (window.innerWidth - margin) - tipRight;
+    }
+    box.style.setProperty('--tip-shift', shift + 'px');
+  });
+}
+window.addEventListener('load', adjustTechTips);
+window.addEventListener('resize', adjustTechTips);
+window.addEventListener('orientationchange', adjustTechTips);
