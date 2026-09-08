@@ -502,31 +502,43 @@ document.addEventListener('keydown',function(e){
 
 /* TECH TIP EDGE GUARD — keeps the Technical Stack description card from
    spilling off the left/right edge of the screen on mobile. The card is
-   centered on its icon by default; here we measure how far it would
-   overflow the viewport and push it back in by setting --tip-shift,
-   which .tech-tip (and its pointer arrow) already read from the CSS. */
-function adjustTechTips(){
+   centered on its icon by default; this measures how far it would
+   overflow the viewport and pushes it back in by setting --tip-shift,
+   which .tech-tip (and its pointer arrow) already read from the CSS.
+   Recalculated right as each tooltip is about to show (hover/touch/focus)
+   rather than only once at page load, so it can never go stale if the
+   layout shifts after load (font reflow, scroll, browser UI collapsing). */
+function computeTipShift(box){
+  var tip = box.querySelector('.tech-tip');
+  if(!tip) return;
   var margin = 12; // keep at least this much space from the screen edge
-  document.querySelectorAll('.tech-icon-box').forEach(function(box){
-    var tip = box.querySelector('.tech-tip');
-    if(!tip) return;
 
-    box.style.setProperty('--tip-shift','0px'); // reset before measuring
-    var boxRect = box.getBoundingClientRect();
-    var tipWidth = tip.offsetWidth;
-    var centerX = boxRect.left + boxRect.width / 2;
-    var tipLeft = centerX - tipWidth / 2;
-    var tipRight = centerX + tipWidth / 2;
+  box.style.setProperty('--tip-shift','0px'); // reset before measuring
+  var boxRect = box.getBoundingClientRect();
+  var tipWidth = tip.offsetWidth;
+  var vw = (window.visualViewport && window.visualViewport.width) || window.innerWidth;
+  var centerX = boxRect.left + boxRect.width / 2;
+  var tipLeft = centerX - tipWidth / 2;
+  var tipRight = centerX + tipWidth / 2;
 
-    var shift = 0;
-    if (tipLeft < margin) {
-      shift = margin - tipLeft;
-    } else if (tipRight > window.innerWidth - margin) {
-      shift = (window.innerWidth - margin) - tipRight;
-    }
-    box.style.setProperty('--tip-shift', shift + 'px');
-  });
+  var shift = 0;
+  if (tipLeft < margin) {
+    shift = margin - tipLeft;
+  } else if (tipRight > vw - margin) {
+    shift = (vw - margin) - tipRight;
+  }
+  box.style.setProperty('--tip-shift', shift + 'px');
 }
-window.addEventListener('load', adjustTechTips);
-window.addEventListener('resize', adjustTechTips);
-window.addEventListener('orientationchange', adjustTechTips);
+
+document.querySelectorAll('.tech-icon-box').forEach(function(box){
+  box.addEventListener('mouseenter', function(){ computeTipShift(box); });
+  box.addEventListener('touchstart', function(){ computeTipShift(box); }, { passive:true });
+  box.addEventListener('focus', function(){ computeTipShift(box); }, true);
+});
+
+function adjustAllTechTips(){
+  document.querySelectorAll('.tech-icon-box').forEach(computeTipShift);
+}
+window.addEventListener('load', adjustAllTechTips);
+window.addEventListener('resize', adjustAllTechTips);
+window.addEventListener('orientationchange', adjustAllTechTips);
