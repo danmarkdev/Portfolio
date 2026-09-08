@@ -518,9 +518,20 @@ function computeTipShift(box){
 
   var boxRect = box.getBoundingClientRect();
 
-  // vertical flip: not enough room above -> show tooltip below instead
+  // vertical flip: not enough room above -> show tooltip below instead.
+  // "Room above" is measured against whichever is closer: the viewport
+  // edge, OR the top of the tech-panel card itself. Top-row icons sit
+  // right under the section header with almost no real gap, so without
+  // this second boundary a tall tooltip technically "fits" inside the
+  // viewport but still spills upward over the header text above the
+  // panel. Clamping to the panel's own top edge forces those icons to
+  // flip below instead.
+  var panel = box.closest('.tech-panel');
+  var panelTop = panel ? panel.getBoundingClientRect().top : 0;
+  var topBoundary = Math.max(0, panelTop);
+  var spaceAbove = boxRect.top - topBoundary;
+
   var tipHeight = tip.offsetHeight;
-  var spaceAbove = boxRect.top;
   if (spaceAbove < tipHeight + 14 + 20) {
     box.classList.add('tip-flip');
   }
@@ -541,58 +552,65 @@ function computeTipShift(box){
 }
 
 /* Trigger handling:
-   - Desktop (mouse/keyboard): keep the original hover/focus behavior.
-   - Touch devices: :hover is unreliable on iOS/Android (it can apply
-     late, after the browser chrome/address bar has already settled,
-     which means measuring on touchstart uses stale layout numbers —
-     this was the cause of tooltips overlapping the header or getting
-     clipped at the screen edge). Instead, a tap explicitly toggles a
-     `tip-open` class, and the position is measured on the next animation
-     frame, once layout is guaranteed to be final. A tap elsewhere on the
-     page, or a real scroll gesture, closes the open tooltip again. */
+   - Real hover devices (mouse + fine pointer): keep the original
+     hover/focus behavior untouched.
+   - Everything else (touch, and — critically — in-app WebViews like
+     Facebook's, which often only emit synthetic mouse/click events and
+     never fire real `touchstart`/`touchend`, or make CSS `:hover` "stick"
+     permanently since there's no real mouse to trigger `mouseleave`):
+     use a single `click` listener instead. `click` is the one event
+     virtually every browser and WebView fires reliably after a tap,
+     which is why the earlier touch-event-based approach silently did
+     nothing in Facebook's in-app browser. The CSS `:hover` rules are
+     also scoped to hover-capable devices only (see style.css), so
+     there's no chance of the two triggers fighting each other.
+     Position is measured a couple of animation frames after opening,
+     once the browser has fully settled layout, and any open tooltip is
+     closed as soon as the user scrolls or taps elsewhere, so a stale
+     position measured mid-scroll can never linger on screen. */
+var supportsHover = !!(window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches);
+
+function closeAllTechTips(){
+  document.querySelectorAll('.tech-icon-box.tip-open').forEach(function(b){
+    b.classList.remove('tip-open');
+  });
+}
+
 document.querySelectorAll('.tech-icon-box').forEach(function(box){
-  var touchStartX = 0, touchStartY = 0, touchMoved = false;
+  if (supportsHover) {
+    box.addEventListener('mouseenter', function(){ computeTipShift(box); });
+    box.addEventListener('focus', function(){ computeTipShift(box); }, true);
+    return;
+  }
 
-  box.addEventListener('mouseenter', function(){ computeTipShift(box); });
-  box.addEventListener('focus', function(){ computeTipShift(box); }, true);
-
-  box.addEventListener('touchstart', function(e){
-    touchMoved = false;
-    if (e.touches && e.touches[0]) {
-      touchStartX = e.touches[0].clientX;
-      touchStartY = e.touches[0].clientY;
-    }
-  }, { passive:true });
-
-  box.addEventListener('touchmove', function(e){
-    if (!e.touches || !e.touches[0]) return;
-    var dx = e.touches[0].clientX - touchStartX;
-    var dy = e.touches[0].clientY - touchStartY;
-    if (Math.abs(dx) > 10 || Math.abs(dy) > 10) touchMoved = true;
-  }, { passive:true });
-
-  box.addEventListener('touchend', function(e){
-    if (touchMoved) return; // was a scroll, not a tap — don't toggle
+  box.addEventListener('click', function(e){
     e.preventDefault();
+    e.stopPropagation();
     var wasOpen = box.classList.contains('tip-open');
-    document.querySelectorAll('.tech-icon-box.tip-open').forEach(function(b){
-      if (b !== box) b.classList.remove('tip-open');
-    });
+    closeAllTechTips();
     box.classList.toggle('tip-open', !wasOpen);
     if (!wasOpen) {
-      requestAnimationFrame(function(){ computeTipShift(box); });
+      // double rAF: wait for the class toggle to actually paint before
+      // measuring, so offsetHeight/getBoundingClientRect reflect the
+      // tooltip's final, visible layout rather than a mid-transition one
+      requestAnimationFrame(function(){
+        requestAnimationFrame(function(){ computeTipShift(box); });
+      });
     }
-  }, { passive:false });
+  });
 });
 
-// tapping anywhere outside a tooltip's icon closes it
-document.addEventListener('touchstart', function(e){
-  if (!e.target.closest('.tech-icon-box')) {
-    document.querySelectorAll('.tech-icon-box.tip-open').forEach(function(b){
-      b.classList.remove('tip-open');
-    });
-  }
-}, { passive:true });
+// tapping/clicking anywhere outside a tooltip's icon closes it
+document.addEventListener('click', function(e){
+  if (!e.target.closest('.tech-icon-box')) closeAllTechTips();
+});
+
+// a stale tooltip position (measured against a scroll offset that no
+// longer applies) is worse than no tooltip — close it the moment the
+// page moves instead of trying to keep repositioning it live
+if (!supportsHover) {
+  window.addEventListener('scroll', closeAllTechTips, { passive:true });
+}
 
 function adjustAllTechTips(){
   document.querySelectorAll('.tech-icon-box').forEach(computeTipShift);
