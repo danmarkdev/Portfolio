@@ -29,16 +29,16 @@ document.querySelectorAll('.fb-icon img').forEach(function (img) {
   }, { once: true });
 });
 
-/* TECH TIP POSITIONING — keep the "Tools I Use" description card inside
-   the viewport. The CSS centers each .tech-tip directly under its icon
-   (left:50% + translateX(-50% + --tip-shift)), which looks fine for
-   icons in the middle of the grid, but for icons near the left/right
-   edge of the screen — especially in the tighter mobile layout — that
-   fixed centering pushes half the card off-screen and it gets clipped.
-   This measures the card's real position the moment it's about to show
-   and nudges it back in with --tip-shift so it always stays fully
-   visible, while keeping its little pointer aimed at the icon (the
-   pointer's own transform in CSS already reads the same variable). */
+/* TECH TIP POSITIONING (DESKTOP HOVER) — keep the "Tools I Use"
+   description card inside the viewport. The CSS centers each .tech-tip
+   directly under its icon (left:50% + translateX(-50% + --tip-shift)),
+   which looks fine for icons in the middle of the grid, but for icons
+   near the left/right edge of the screen that fixed centering pushes
+   half the card off-screen and it gets clipped. This measures the
+   card's real position the moment it's about to show and nudges it
+   back in with --tip-shift so it always stays fully visible. On
+   mobile this tooltip is hidden entirely (see style.css) in favor of
+   the fixed panel below, so this only ever runs for desktop hover. */
 (function () {
   var EDGE_MARGIN = 12; // px gap to keep from the edge of the screen
 
@@ -65,19 +65,53 @@ document.querySelectorAll('.fb-icon img').forEach(function (img) {
   }
 
   document.querySelectorAll('.tech-icon-box').forEach(function (box) {
-    // desktop hover
     box.addEventListener('mouseenter', function () { positionTip(box); });
-    // touch devices (tap) — some mobile browsers fire mouseenter on tap
-    // already, but this guarantees it on ones that don't
-    box.addEventListener('touchstart', function () { positionTip(box); }, { passive: true });
-    // keyboard/focus access
     box.addEventListener('focusin', function () { positionTip(box); });
   });
 
-  // re-measure on resize/orientation change in case a tip is mid-display
   window.addEventListener('resize', function () {
     document.querySelectorAll('.tech-icon-box').forEach(positionTip);
   });
+})();
+
+/* TECH DESCRIPTION — FIXED MOBILE PANEL
+   On mobile, tapping an icon used to pop the description card up right
+   next to that icon — so it landed in a different spot on screen every
+   time, which read as the description "jumping around". Instead there's
+   now one description card (#techDescFixed, styled in style.css) that
+   always sits in the exact same place above the icon grid. Tapping any
+   icon only ever swaps what's written inside it — nothing about its
+   position ever moves. The name/tag/description markup already lives
+   once per icon inside that icon's own (now mobile-hidden) .tech-tip,
+   so this just clones it over rather than duplicating any content. */
+(function () {
+  var target = document.getElementById('techDescFixedInner');
+  if (!target) return;
+
+  var boxes = document.querySelectorAll('.tech-icon-box');
+  if (!boxes.length) return;
+
+  function showDesc(box) {
+    var tip = box.querySelector('.tech-tip');
+    if (!tip) return;
+    var head = tip.querySelector('.tech-tip-head');
+    var desc = tip.querySelector('.tech-tip-desc');
+    if (!head || !desc) return;
+
+    target.innerHTML = '';
+    target.appendChild(head.cloneNode(true));
+    target.appendChild(desc.cloneNode(true));
+
+    boxes.forEach(function (b) { b.classList.remove('active'); });
+    box.classList.add('active');
+  }
+
+  boxes.forEach(function (box) {
+    box.addEventListener('click', function () { showDesc(box); });
+  });
+
+  // populate with the first tool by default so the panel isn't empty
+  showDesc(boxes[0]);
 })();
 
 /* HEADER SCROLL */
