@@ -540,11 +540,59 @@ function computeTipShift(box){
   box.style.setProperty('--tip-shift', shift + 'px');
 }
 
+/* Trigger handling:
+   - Desktop (mouse/keyboard): keep the original hover/focus behavior.
+   - Touch devices: :hover is unreliable on iOS/Android (it can apply
+     late, after the browser chrome/address bar has already settled,
+     which means measuring on touchstart uses stale layout numbers —
+     this was the cause of tooltips overlapping the header or getting
+     clipped at the screen edge). Instead, a tap explicitly toggles a
+     `tip-open` class, and the position is measured on the next animation
+     frame, once layout is guaranteed to be final. A tap elsewhere on the
+     page, or a real scroll gesture, closes the open tooltip again. */
 document.querySelectorAll('.tech-icon-box').forEach(function(box){
+  var touchStartX = 0, touchStartY = 0, touchMoved = false;
+
   box.addEventListener('mouseenter', function(){ computeTipShift(box); });
-  box.addEventListener('touchstart', function(){ computeTipShift(box); }, { passive:true });
   box.addEventListener('focus', function(){ computeTipShift(box); }, true);
+
+  box.addEventListener('touchstart', function(e){
+    touchMoved = false;
+    if (e.touches && e.touches[0]) {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }
+  }, { passive:true });
+
+  box.addEventListener('touchmove', function(e){
+    if (!e.touches || !e.touches[0]) return;
+    var dx = e.touches[0].clientX - touchStartX;
+    var dy = e.touches[0].clientY - touchStartY;
+    if (Math.abs(dx) > 10 || Math.abs(dy) > 10) touchMoved = true;
+  }, { passive:true });
+
+  box.addEventListener('touchend', function(e){
+    if (touchMoved) return; // was a scroll, not a tap — don't toggle
+    e.preventDefault();
+    var wasOpen = box.classList.contains('tip-open');
+    document.querySelectorAll('.tech-icon-box.tip-open').forEach(function(b){
+      if (b !== box) b.classList.remove('tip-open');
+    });
+    box.classList.toggle('tip-open', !wasOpen);
+    if (!wasOpen) {
+      requestAnimationFrame(function(){ computeTipShift(box); });
+    }
+  }, { passive:false });
 });
+
+// tapping anywhere outside a tooltip's icon closes it
+document.addEventListener('touchstart', function(e){
+  if (!e.target.closest('.tech-icon-box')) {
+    document.querySelectorAll('.tech-icon-box.tip-open').forEach(function(b){
+      b.classList.remove('tip-open');
+    });
+  }
+}, { passive:true });
 
 function adjustAllTechTips(){
   document.querySelectorAll('.tech-icon-box').forEach(computeTipShift);
