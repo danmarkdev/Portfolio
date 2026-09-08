@@ -593,8 +593,14 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   border: 1px solid var(--border);
 }
 
+/* highlight whichever icon's info is currently shown in the fixed
+   mobile description panel below, so it's clear which one is selected */
+.tech-icon-box.active > .fb-icon{
+  box-shadow:0 0 0 3px var(--accent), var(--shadow-card-hover);
+}
+
 /* rich tooltip card — icon + name + category tag + description,
-   shown above the icon on hover */
+   shown above the icon on hover (desktop only — see mobile override below) */
 .tech-tip{
   position:absolute;
   bottom:calc(100% + 14px);
@@ -672,28 +678,13 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   border-top-color:var(--surface);
 }
 
-/* SKILLS — DESKTOP: give the grid a little more breathing room */
-@media(min-width:961px){
-  .tech-icon-grid{gap:1.15rem}
-}
-
-/* SKILLS — MOBILE/TABLET: smaller tiles, tooltip card recentres and
-   shrinks so it never overflows the viewport */
-@media(max-width:700px){
-  .tech-panel{padding:2rem 1.25rem}
-  .tech-icon-box{width:58px;height:58px;border-radius:14px}
-  .tech-icon-box > .fb-icon img,
-  .tech-icon-box > .fb-icon svg{width:28px;height:28px}
-  .tech-tip{width:220px;padding:.85rem .95rem}
-  .tech-tip-name{font-size:.88rem}
-  .tech-tip-desc{font-size:.76rem}
-}
-@media(max-width:480px){
-  .tech-icon-box{width:50px;height:50px}
-  .tech-icon-box > .fb-icon img,
-  .tech-icon-box > .fb-icon svg{width:24px;height:24px}
-  .tech-tip{width:190px}
-}
+/* FIXED DESCRIPTION PANEL — mobile-only. Instead of a floating tooltip
+   that pops up in a different spot next to whichever icon you tap
+   (which reads as the description "jumping around" the screen), this
+   is a single card in one constant place, right above the icon grid.
+   Tapping any icon just swaps this card's content in place. Hidden on
+   desktop, where the per-icon hover tooltip above already works fine. */
+.tech-desc-fixed{display:none}
 
 /* EDUCATION — code-editor styled panel, title centered on top */
 .edu-section{background:transparent;padding:6rem 0;position:relative;z-index:1}
@@ -1151,6 +1142,35 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .code-body{padding:1.1rem 0;height:300px}
   .code-line{font-size:.72rem;padding:.15rem 1rem;gap:.7rem;line-height:1.75}
   .code-line::before{flex:0 0 16px}
+
+  /* SKILLS — MOBILE: switch from floating per-icon tooltip to one fixed
+     description card that always sits in the same place above the grid.
+     Tapping icons only ever changes its content, never its position. */
+  .tech-panel{padding:2rem 1.25rem}
+  .tech-tip{display:none !important}
+  .tech-desc-fixed{
+    display:block;
+    background:var(--bg);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:1rem 1.1rem;
+    margin-bottom:1.5rem;
+    min-height:96px;
+  }
+  .tech-desc-fixed-inner:empty::before{
+    content:'Tap an icon to see details.';
+    display:block;
+    font-family:var(--font-body);
+    font-size:.82rem;
+    color:var(--dim);
+    padding-top:.2rem;
+  }
+  .tech-desc-fixed .tech-tip-head{margin-bottom:.5rem}
+  .tech-desc-fixed .tech-tip-desc{margin:0}
+
+  .tech-icon-box{width:58px;height:58px;border-radius:14px}
+  .tech-icon-box > .fb-icon img,
+  .tech-icon-box > .fb-icon svg{width:28px;height:28px}
 }
 @media(max-width:480px){
   .photo-orbit{max-width:310px}
@@ -1171,4 +1191,8 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 
   .code-line{font-size:.66rem}
   .code-body{height:260px}
+
+  .tech-icon-box{width:50px;height:50px}
+  .tech-icon-box > .fb-icon img,
+  .tech-icon-box > .fb-icon svg{width:24px;height:24px}
 }
