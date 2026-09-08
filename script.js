@@ -29,6 +29,57 @@ document.querySelectorAll('.fb-icon img').forEach(function (img) {
   }, { once: true });
 });
 
+/* TECH TIP POSITIONING — keep the "Tools I Use" description card inside
+   the viewport. The CSS centers each .tech-tip directly under its icon
+   (left:50% + translateX(-50% + --tip-shift)), which looks fine for
+   icons in the middle of the grid, but for icons near the left/right
+   edge of the screen — especially in the tighter mobile layout — that
+   fixed centering pushes half the card off-screen and it gets clipped.
+   This measures the card's real position the moment it's about to show
+   and nudges it back in with --tip-shift so it always stays fully
+   visible, while keeping its little pointer aimed at the icon (the
+   pointer's own transform in CSS already reads the same variable). */
+(function () {
+  var EDGE_MARGIN = 12; // px gap to keep from the edge of the screen
+
+  function positionTip(box) {
+    var tip = box.querySelector('.tech-tip');
+    if (!tip) return;
+
+    // reset first so we measure the card's natural centered position
+    tip.style.setProperty('--tip-shift', '0px');
+
+    var rect = tip.getBoundingClientRect();
+    var shift = 0;
+
+    var overflowRight = rect.right - (window.innerWidth - EDGE_MARGIN);
+    var overflowLeft = EDGE_MARGIN - rect.left;
+
+    if (overflowRight > 0) {
+      shift = -overflowRight;
+    } else if (overflowLeft > 0) {
+      shift = overflowLeft;
+    }
+
+    tip.style.setProperty('--tip-shift', shift + 'px');
+  }
+
+  document.querySelectorAll('.tech-icon-box').forEach(function (box) {
+    // desktop hover
+    box.addEventListener('mouseenter', function () { positionTip(box); });
+    // touch devices (tap) — some mobile browsers fire mouseenter on tap
+    // already, but this guarantees it on ones that don't
+    box.addEventListener('touchstart', function () { positionTip(box); }, { passive: true });
+    // keyboard/focus access
+    box.addEventListener('focusin', function () { positionTip(box); });
+  });
+
+  // re-measure on resize/orientation change in case a tip is mid-display
+  window.addEventListener('resize', function () {
+    document.querySelectorAll('.tech-icon-box').forEach(positionTip);
+  });
+})();
+
 /* HEADER SCROLL */
 window.addEventListener('scroll',function(){
   var h=document.getElementById('header');
