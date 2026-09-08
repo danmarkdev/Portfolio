@@ -511,10 +511,20 @@ document.addEventListener('keydown',function(e){
 function computeTipShift(box){
   var tip = box.querySelector('.tech-tip');
   if(!tip) return;
-  var margin = 12; // keep at least this much space from the screen edge
+  var margin = 12;
 
+  box.classList.remove('tip-flip');
   box.style.setProperty('--tip-shift','0px'); // reset before measuring
+
   var boxRect = box.getBoundingClientRect();
+
+  // vertical flip: not enough room above -> show tooltip below instead
+  var tipHeight = tip.offsetHeight;
+  var spaceAbove = boxRect.top;
+  if (spaceAbove < tipHeight + 14 + 20) {
+    box.classList.add('tip-flip');
+  }
+
   var tipWidth = tip.offsetWidth;
   var vw = (window.visualViewport && window.visualViewport.width) || window.innerWidth;
   var centerX = boxRect.left + boxRect.width / 2;
