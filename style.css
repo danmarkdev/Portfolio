@@ -600,7 +600,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   bottom:calc(100% + 14px);
   left:50%;
   --tip-shift:0px;
-  transform:translateX(calc(-50% + var(--tip-shift))) translateY(6px);
+  transform:translateX(calc(-50% + var(--tip-shift, 0px))) translateY(6px);
   width:260px;
   background:var(--surface);
   border:1px solid var(--border);
@@ -617,7 +617,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .tech-icon-box:hover .tech-tip{
   opacity:1;
   visibility:visible;
-  transform:translateX(calc(-50% + var(--tip-shift))) translateY(0);
+  transform:translateX(calc(-50% + var(--tip-shift, 0px))) translateY(0);
 }
 .tech-tip-head{
   display:flex;
@@ -667,7 +667,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   position:absolute;
   top:100%;
   left:50%;
-  transform:translateX(calc(-50% - var(--tip-shift)));
+  transform:translateX(calc(-50% - var(--tip-shift, 0px)));
   border:7px solid transparent;
   border-top-color:var(--surface);
 }
