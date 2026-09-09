@@ -626,10 +626,12 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   gap:.5rem;
 }
 .tech-tip-icon{
+  display:none;
   width:20px;
   height:20px;
   border-radius:6px;
   flex-shrink:0;
+}
 }
 .tech-tip-tag, .tech-tip-desc{
   display:none;
