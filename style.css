@@ -1062,6 +1062,12 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 .testi-card.testi-behind-2{transform:translateY(30px) scale(.92) rotate(3deg);z-index:1;opacity:.55}
 .testi-card.testi-hidden{opacity:0;pointer-events:none;transform:translateY(36px) scale(.88)}
 
+.testi-card-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:.75rem;
+}
 .testi-quote-icon{
   font-family:var(--font-heading);
   font-size:2.1rem;
@@ -1069,6 +1075,23 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   color:var(--accent);
   font-weight:800;
 }
+/* rating pill — matches the "10/10" badge shown next to the reviewer name
+   on the reference site, restyled to the portfolio's blue accent theme */
+.testi-rating{
+  display:inline-flex;
+  align-items:center;
+  gap:.35rem;
+  flex-shrink:0;
+  background:var(--accent-soft);
+  color:var(--accent);
+  border-radius:100px;
+  padding:.32rem .75rem;
+  font-family: var(--font-body);
+  font-size:.75rem;
+  font-weight:700;
+  margin-top:.2rem;
+}
+.testi-rating svg{width:13px;height:13px;flex-shrink:0}
 .testi-text{
   font-family:var(--font-body);
   font-size:.88rem;
@@ -1109,6 +1132,8 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .testimonial-deck{min-height:200px}
   .testi-card{padding:1.5rem 1.25rem 1.25rem;gap:.85rem}
   .testi-quote-icon{font-size:1.8rem}
+  .testi-rating{font-size:.68rem;padding:.28rem .6rem}
+  .testi-rating svg{width:11px;height:11px}
   .testi-text{font-size:.82rem;line-height:1.6}
   .testi-avatar{width:32px;height:32px;font-size:.85rem}
   .testi-name{font-size:.82rem}
