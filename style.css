@@ -1052,7 +1052,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   font-weight:700;
   margin-top:.2rem;
 }
-.testi-rating svg{width:13px;height:13px;flex-shrink:0}
+.testi-rating svg{width:13px;height:13px;flex-shrink:0;fill:#FFC107}
 .testi-text{
   font-family:var(--font-body);
   font-size:.88rem;
