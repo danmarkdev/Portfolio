@@ -1129,8 +1129,8 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .orbit-ring{--radius:162px}
   .contact-page-grid{grid-template-columns:1fr}
   .footer-inner{flex-direction:column;gap:.5rem;text-align:center}
-  .tech-icon-grid{display:grid;grid-template-columns:repeat(4,1fr);justify-items:center;gap:.85rem}
-  .tech-icon-box{width:100%;max-width:72px;aspect-ratio:1/1;height:auto}
+.tech-icon-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:.85rem}
+.tech-icon-box{width:calc(25% - .64rem);max-width:72px;aspect-ratio:1/1;height:auto}
 }
 @media(max-width:700px){
   .section-header{align-items:center}
