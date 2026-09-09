@@ -547,11 +547,11 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 /* SKILLS — light "tech panel" card matching the site's surface style,
    holding a single flat grid of icon chips with a hover tooltip. */
 .tech-panel{
-  background:var(--surface);
-  border:1px solid var(--border);
+  background:transparent;
+  border:none;
   border-radius:22px;
   padding:2.75rem 2.25rem;
-  box-shadow:var(--shadow-card);
+  box-shadow:none;
 }
 .tech-icon-grid{
   display:flex;
