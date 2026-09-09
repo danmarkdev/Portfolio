@@ -593,89 +593,55 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   border: 1px solid var(--border);
 }
 
-/* rich tooltip card — icon + name + category tag + description,
-   shown above the icon on hover */
+/* simplified tooltip — name-only dark pill, no icon/tag/description */
 .tech-tip{
   position:absolute;
-  bottom:calc(100% + 14px);
+  bottom:calc(100% + 12px);
   left:50%;
   --tip-shift:0px;
   transform:translateX(calc(-50% + var(--tip-shift, 0px))) translateY(6px);
-  width:260px;
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:1rem 1.1rem;
-  box-shadow:var(--shadow-card-hover);
+  width:max-content;
+  max-width:200px;
+  background:#12162b;
+  border:none;
+  border-radius:8px;
+  padding:.5rem .9rem;
+  box-shadow:0 8px 20px -6px rgba(18,22,43,.35);
   opacity:0;
   visibility:hidden;
   pointer-events:none;
   transition:opacity .18s ease, transform .18s ease, visibility .18s;
   z-index:20;
-  text-align:left;
+  text-align:center;
 }
 .tech-icon-box:hover .tech-tip{
   opacity:1;
   visibility:visible;
   transform:translateX(calc(-50% + var(--tip-shift, 0px))) translateY(0);
 }
-.tech-tip-head{
-  display:flex;
-  align-items:center;
-  gap:.7rem;
-  margin-bottom:.55rem;
+.tech-tip-head, .tech-tip-icon, .tech-tip-tag, .tech-tip-desc{
+  display:none;
 }
-.tech-tip-icon{
-  width:34px;
-  height:34px;
-  border-radius:9px;
-  flex-shrink:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-.tech-tip-icon img,
-.tech-tip-icon svg{width:18px;height:18px}
-.tech-tip-titles{display:flex;flex-direction:column;gap:.2rem;min-width:0}
 .tech-tip-name{
-  font-family: var(--font-heading);
-  font-size:.95rem;
-  font-weight:700;
-  color:var(--text);
-  line-height:1.2;
-}
-.tech-tip-tag{
-  align-self:flex-start;
-  font-family: var(--font-body);
-  font-size:.6rem;
-  font-weight:700;
-  letter-spacing:.08em;
-  color:var(--accent);
-  background:var(--accent-soft);
-  border-radius:100px;
-  padding:.15rem .55rem;
-}
-.tech-tip-desc{
   font-family: var(--font-body);
   font-size:.8rem;
-  color:var(--muted);
-  line-height:1.55;
+  font-weight:600;
+  color:#ffffff;
+  line-height:1.2;
+  white-space:nowrap;
 }
-/* little pointer under the card, aimed at the icon */
 .tech-tip::after{
   content:'';
   position:absolute;
   top:100%;
   left:50%;
   transform:translateX(calc(-50% - var(--tip-shift, 0px)));
-  border:7px solid transparent;
-  border-top-color:var(--surface);
+  border:6px solid transparent;
+  border-top-color:#12162b;
 }
-
-/* Flip tooltip below the icon when there isn't room above it */
 .tech-icon-box.tip-flip .tech-tip{
   bottom:auto;
-  top:calc(100% + 14px);
+  top:calc(100% + 12px);
   transform:translateX(calc(-50% + var(--tip-shift, 0px))) translateY(-6px);
 }
 .tech-icon-box.tip-flip:hover .tech-tip{
@@ -685,30 +651,12 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   top:auto;
   bottom:100%;
   border-top-color:transparent;
-  border-bottom-color:var(--surface);
+  border-bottom-color:#12162b;
 }
 
 /* SKILLS — DESKTOP: give the grid a little more breathing room */
 @media(min-width:961px){
   .tech-icon-grid{gap:1.15rem}
-}
-
-/* SKILLS — MOBILE/TABLET: smaller tiles, tooltip card recentres and
-   shrinks so it never overflows the viewport */
-@media(max-width:700px){
-  .tech-panel{padding:2rem 1.25rem}
-  .tech-icon-box{width:58px;height:58px;border-radius:14px}
-  .tech-icon-box > .fb-icon img,
-  .tech-icon-box > .fb-icon svg{width:28px;height:28px}
-  .tech-tip{width:220px;padding:.85rem .95rem}
-  .tech-tip-name{font-size:.88rem}
-  .tech-tip-desc{font-size:.76rem}
-}
-@media(max-width:480px){
-  .tech-icon-box{width:50px;height:50px}
-  .tech-icon-box > .fb-icon img,
-  .tech-icon-box > .fb-icon svg{width:24px;height:24px}
-  .tech-tip{width:190px}
 }
 
 /* EDUCATION — code-editor styled panel, title centered on top */
