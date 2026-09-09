@@ -667,14 +667,17 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   border-bottom-color:#ffffff;
 }
 
-/* SKILLS — DESKTOP: give the grid a little more breathing room, and lock
-   the icons to a fixed 9-per-row layout so they don't reflow into a
-   different row split (e.g. 8/8/4) when the window is resized or DevTools
-   is opened. */
+/* SKILLS — DESKTOP: give the grid a little more breathing room, lock the
+   icons to a fixed 9-per-row layout so they don't reflow, and shrink the
+   panel itself to hug that fixed-width grid instead of stretching full width */
 @media(min-width:961px){
   .tech-icon-grid{
     gap:1.15rem;
     width: calc(9 * 72px + 8 * 1.15rem);
+    margin: 0 auto;
+  }
+  .tech-panel{
+    width: fit-content;
     margin: 0 auto;
   }
 }
