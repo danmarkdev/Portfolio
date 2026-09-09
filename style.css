@@ -619,7 +619,12 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   visibility:visible;
   transform:translateX(calc(-50% + var(--tip-shift, 0px))) translateY(0);
 }
-.tech-tip-head, .tech-tip-icon, .tech-tip-tag, .tech-tip-desc{
+.tech-tip-head{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.tech-tip-icon, .tech-tip-tag, .tech-tip-desc{
   display:none;
 }
 .tech-tip-name{
