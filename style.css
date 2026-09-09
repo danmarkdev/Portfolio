@@ -632,6 +632,8 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   border-radius:6px;
   flex-shrink:0;
 }
+.tech-tip-tag, .tech-tip-desc{
+  display:none;
 }
 .tech-tip-tag, .tech-tip-desc{
   display:none;
