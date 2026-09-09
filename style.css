@@ -587,8 +587,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 /* Force every Technical Stack tile (and its tooltip icon) onto the same
    neutral chip, instead of the mismatched per-icon inline background
    colors (some brand-colored, some plain white) set in the HTML. */
-.tech-icon-box > .fb-icon,
-.tech-tip-icon.fb-icon{
+.tech-icon-box > .fb-icon{
   background: var(--accent-soft) !important;
   border: 1px solid var(--border);
 }
@@ -630,6 +629,8 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   height:20px;
   border-radius:6px;
   flex-shrink:0;
+  background:none !important;
+  border:none !important;
 }
 .tech-tip-tag, .tech-tip-desc{
   display:none;
