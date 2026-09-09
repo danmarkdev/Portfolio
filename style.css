@@ -602,8 +602,8 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   transform:translateX(calc(-50% + var(--tip-shift, 0px))) translateY(6px);
   width:max-content;
   max-width:200px;
-  background:#12162b;
-  border:none;
+  background:#ffffff;
+  border:1px solid var(--border);
   border-radius:8px;
   padding:.5rem .9rem;
   box-shadow:0 8px 20px -6px rgba(18,22,43,.35);
@@ -638,7 +638,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   font-family: var(--font-body);
   font-size:.8rem;
   font-weight:600;
-  color:#ffffff;
+  color:#12162b;
   line-height:1.2;
   white-space:nowrap;
 }
@@ -649,7 +649,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   left:50%;
   transform:translateX(calc(-50% - var(--tip-shift, 0px)));
   border:6px solid transparent;
-  border-top-color:#12162b;
+  border-top-color:#ffffff;
 }
 .tech-icon-box.tip-flip .tech-tip{
   bottom:auto;
@@ -663,7 +663,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   top:auto;
   bottom:100%;
   border-top-color:transparent;
-  border-bottom-color:#12162b;
+  border-bottom-color:#ffffff;
 }
 
 /* SKILLS — DESKTOP: give the grid a little more breathing room */
