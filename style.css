@@ -126,9 +126,9 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   display:inline-flex;
   align-items:center;
   gap:.4rem;
-  background:var(--accent);
-  border:1px solid var(--accent);
-  color:#ffffff;
+  background:var(--surface);
+  border:1px solid var(--border);
+  color:var(--text);
   padding:.6rem 1.3rem;
   border-radius:100px;
   font-family:var(--font-body);
