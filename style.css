@@ -1,1201 +1,573 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Sora:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+/* ICON FALLBACK — if a brand logo fails to load (dead link, renamed
+   slug, hotlink block, temporary CDN hiccup), swap it for a clean
+   text badge (the tool's initials) instead of leaving a broken-image
+   icon visible. Runs immediately since this script sits at the end
+   of <body>, after every icon element already exists in the DOM. */
+document.querySelectorAll('.fb-icon img').forEach(function (img) {
+  img.addEventListener('error', function () {
+    var wrap = img.closest('.fb-icon');
+    var alt = img.getAttribute('alt') || '?';
+    var initials = (alt.replace(/[^A-Za-z0-9]/g, '').slice(0, 2) || '?').toUpperCase();
 
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    // pick readable text color based on the chip's own background
+    var dark = true;
+    if (wrap) {
+      var bg = getComputedStyle(wrap).backgroundColor;
+      var rgb = bg && bg.match(/\d+/g);
+      if (rgb && rgb.length >= 3) {
+        var lum = 0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2];
+        dark = lum > 150; // light background -> use dark text
+      }
+    }
 
-:root{
-  /* Flat modern palette — clean cards, single soft drop-shadow, no inset/emboss */ 
-  --bg:#f7f8fb;
-  --surface:#ffffff;
-  --accent:#3355FF;
-  --accent-glow:rgba(51,85,255,.24);
-  --accent-hover:#2543D6;
-  --accent-soft:#eef1ff;
-  --text:#12162b;
-  --muted:#565f7a;
-  --dim:#8890a8;
-  --border:#e6e8f0;
-  --nav-h:96px;
-  --max-w:1140px;
-  --font-heading:'Sora', sans-serif;
-  --font-body:'Plus Jakarta Sans', sans-serif;
-  --font-mono:'JetBrains Mono', monospace;
+    var span = document.createElement('span');
+    span.textContent = initials;
+    span.style.cssText =
+      'font-family:var(--font-heading, sans-serif);font-weight:700;' +
+      'font-size:.55em;line-height:1;color:' + (dark ? '#12162b' : '#ffffff') + ';';
+    img.replaceWith(span);
+  }, { once: true });
+});
 
-  --shadow-card: 0 1px 2px rgba(18,22,43,.04), 0 10px 28px -10px rgba(18,22,43,.10);
-  --shadow-card-hover: 0 4px 10px rgba(18,22,43,.05), 0 22px 44px -12px rgba(18,22,43,.16);
-  --shadow-pop: 0 14px 34px -10px var(--accent-glow);
+/* HEADER SCROLL */
+window.addEventListener('scroll',function(){
+  var h=document.getElementById('header');
+  if(h) h.classList.toggle('scrolled',window.scrollY>30);
+});
+
+/* HAMBURGER */
+var hbg=document.getElementById('hbg');
+var mnav=document.getElementById('mnav');
+if(hbg&&mnav){
+  hbg.addEventListener('click',function(){
+    var isOpen=mnav.classList.toggle('open');
+    hbg.classList.toggle('open',isOpen);
+    document.body.classList.toggle('menu-open',isOpen);
+    hbg.setAttribute('aria-expanded',isOpen?'true':'false');
+  });
 }
-
-html{scroll-behavior:smooth}
-*{-webkit-tap-highlight-color:transparent}
-html,body{max-width:100%;overflow-x:hidden}
-body{
-  font-family: var(--font-body);
-  font-size: 1rem;
-  line-height: 1.6;
-  background: var(--bg);
-  color: var(--muted);
-  -webkit-user-select: none;
-  user-select: none;
-}
-a,button{outline:none;-webkit-tap-highlight-color:transparent}
-a:focus,button:focus{outline:none}
-a{text-decoration:none}
-input,textarea{font-family: var(--font-body); user-select:text!important;-webkit-user-select:text!important}
-body.menu-open{overflow:hidden}
-::-webkit-scrollbar{width:0;background:transparent}
-html{scrollbar-width:none}
-
-.container{width:90%;max-width:var(--max-w);margin:0 auto}
-
-/* Background canvas must be taken out of normal document flow,
-   otherwise its JS-set width/height reserves real space on the page
-   and pushes all content below it down. */
-#bg-canvas{
-  position:fixed;
-  inset:0;
-  width:100%;
-  height:100%;
-  z-index:-1;
-  pointer-events:none;
-  display:block;
+function closeMenu(){
+  if(hbg) hbg.classList.remove('open');
+  if(mnav) mnav.classList.remove('open');
+  document.body.classList.remove('menu-open');
+  if(hbg) hbg.setAttribute('aria-expanded','false');
 }
 
-h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.02em}
-
-/* NAV — floating centered pill, detached from the top edge */
-#header{
-  position:fixed;
-  top:1.1rem;
-  left:50%;
-  transform:translateX(-50%);
-  width:calc(100% - 2.5rem);
-  max-width:900px;
-  height:auto;
-  background:rgba(255,255,255,.78);
-  backdrop-filter:blur(16px);
-  -webkit-backdrop-filter:blur(16px);
-  border:1px solid var(--border);
-  border-radius:100px;
-  padding:.6rem 1.4rem;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:1.5rem;
-  z-index:1000;
-  box-shadow:var(--shadow-card);
-  transition:box-shadow .3s ease, background .3s ease, border-color .3s ease;
+/* KEEP THE MOBILE MENU IN SYNC WITH VIEWPORT WIDTH
+   The mobile nav overlay is only ever opened/closed by JS (the
+   ".open" class) — it has no CSS media query of its own that hides it
+   above the mobile breakpoint. So if it's left open and the window
+   crosses back above 960px (closing DevTools' device toolbar,
+   rotating a tablet, resizing the browser, etc.) it stayed stuck open,
+   full-screen, on top of the desktop layout. This listener closes it
+   automatically the moment the viewport is no longer "mobile" width,
+   matching the same 960px breakpoint used in style.css. */
+var MOBILE_BREAKPOINT = window.matchMedia('(max-width: 960px)');
+function handleBreakpointChange(e){
+  if(!e.matches) closeMenu();
 }
-#header.scrolled{background:rgba(255,255,255,.94);box-shadow:var(--shadow-card-hover);border-color:rgba(230,232,240,.9)}
-.logo{
-  font-family: var(--font-heading);
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--text);
-  text-decoration: none;
-  letter-spacing: -.01em;
-  position: relative;
-  z-index: 1001;
-  flex-shrink:0;
-  display:inline-flex;
-  align-items:center;
-  gap:.4rem;
-}
-.logo-dot{color:var(--text)}
-
-#nav{
-  display:flex;
-  align-items:center;
-  gap:1.7rem;
-  margin:0 auto;
-}
-#nav a{
-  font-family: var(--font-body);
-  font-size: .85rem;
-  font-weight: 500;
-  color: var(--muted);
-  text-decoration: none;
-  padding: .4rem .85rem;
-  border-radius:100px;
-  position: relative;
-  transition: color .2s ease, background .2s ease;
-}
-#nav a:hover{color:var(--text);background:var(--accent-soft)}
-#nav a.active{color:var(--accent);font-weight:600;background:var(--accent-soft)}
-
-.nav-cta{
-  display:inline-flex;
-  align-items:center;
-  gap:.4rem;
-  background:var(--surface);
-  border:1px solid var(--border);
-  color:var(--text);
-  padding:.6rem 1.3rem;
-  border-radius:100px;
-  font-family:var(--font-body);
-  font-size:.82rem;
-  font-weight:600;
-  text-decoration:none;
-  flex-shrink:0;
-  transition:all .25s cubic-bezier(.16,1,.3,1);
-}
-.nav-cta:hover{background:var(--accent-hover);border-color:var(--accent-hover);transform:translateY(-1px);box-shadow:0 8px 18px var(--accent-glow)}
-.nav-cta:active{transform:translateY(0);box-shadow:none}
-.nav-cta.active{background:var(--surface);border-color:var(--border);color:var(--text)}
-#nav a.nav-cta.active{
-  background:var(--surface);
-  border-color:var(--border);
-  color:var(--text);
+if (MOBILE_BREAKPOINT.addEventListener) {
+  MOBILE_BREAKPOINT.addEventListener('change', handleBreakpointChange);
+} else if (MOBILE_BREAKPOINT.addListener) {
+  MOBILE_BREAKPOINT.addListener(handleBreakpointChange); // older Safari fallback
 }
 
-.hamburger{display:none;background:none;border:none;cursor:pointer;position:relative;z-index:1001;width:38px;height:38px;flex-shrink:0;border-radius:50%;transition:background .2s ease}
-.hamburger:hover{background:var(--accent-soft)}
-.hamburger span{position:absolute;left:50%;top:50%;width:18px;height:2px;background:var(--text);border-radius:2px;transition:transform .3s ease,opacity .3s ease;transform:translate(-50%,-50%) translateY(0) rotate(0)}
-.hamburger span:nth-child(1){transform:translate(-50%,-50%) translateY(-6px) rotate(0)}
-.hamburger span:nth-child(3){transform:translate(-50%,-50%) translateY(6px) rotate(0)}
-.hamburger.open span:nth-child(1){transform:translate(-50%,-50%) translateY(0) rotate(45deg)}
-.hamburger.open span:nth-child(2){opacity:0}
-.hamburger.open span:nth-child(3){transform:translate(-50%,-50%) translateY(0) rotate(-45deg)}
+/* ACTIVE NAV */
+var sections=document.querySelectorAll('section[id]');
+var navLinks=document.querySelectorAll('#nav a:not(.nav-cta)');
+var mobileNavLinks=document.querySelectorAll('#mnav a');
+if(sections.length){
+  window.addEventListener('scroll',function(){
+    var cur='';
+    sections.forEach(function(s){ if(window.scrollY>=s.offsetTop-120) cur=s.id; });
+    navLinks.forEach(function(a){ a.classList.toggle('active',a.getAttribute('href')==='#'+cur); });
+    mobileNavLinks.forEach(function(a){ a.classList.toggle('active',a.getAttribute('href')==='#'+cur); });
+  });
+}
+/* set active state instantly on click, so the nav pill turns black right away
+   instead of waiting for the scroll listener to catch up with smooth-scroll */
+[navLinks, mobileNavLinks].forEach(function(list){
+  list.forEach(function(a){
+    a.addEventListener('click',function(){
+      list.forEach(function(b){ b.classList.remove('active'); });
+      a.classList.add('active');
+    });
+  });
+});
 
-/* MOBILE NAV — stacked pill cards, matching the reference screenshot.
-   Each link is its own rounded card; Contact keeps the same card style
-   but with blue text instead of a solid filled button. */
-.mobile-nav{
-  display:flex;
-  position:fixed;
-  inset:0;
-  background:var(--bg);
-  flex-direction:column;
-  align-items:center;
-  gap:1rem;
-  padding:calc(var(--nav-h) - .5rem) 1.5rem 1.5rem;
-  z-index:998;
-  opacity:0;
-  visibility:hidden;
-  transform:scale(.97);
-  transition:opacity .3s ease,transform .3s ease,visibility .3s;
-  padding:calc(var(--nav-h) - .5rem) 1.5rem 1.5rem;
-  overflow-y:auto;
-  -webkit-overflow-scrolling:touch;
-  z-index:998;
-}
-.mobile-nav::before,
-.mobile-nav::after{
-  content:"";
-  margin:auto 0;
-}
-.mobile-nav.open{opacity:1;visibility:visible;transform:scale(1)}
-
-.mobile-nav a{
-  width:100%;
-  max-width:380px;
-  text-align:center;
-  font-family: var(--font-body);
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--text);
-  text-decoration: none;
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:100px;
-  padding:1.05rem 1.5rem;
-  box-shadow:var(--shadow-card);
-  transition:color .2s ease, box-shadow .2s ease, transform .15s ease;
-  opacity: 0;
-  transform: translateY(12px);
-}
-.mobile-nav a:hover{color:var(--accent);box-shadow:var(--shadow-card-hover)}
-.mobile-nav a.active{color:var(--accent)}
-
-/* Contact — same pill card as the rest, but blue text instead of a filled button */
-.mobile-nav a.mnav-cta{
-  background:var(--surface);
-  color:var(--text);
-  font-weight:700;
-}
-.mobile-nav a.mnav-cta:hover{
-  color:var(--accent-hover);
-  background:var(--surface);
+/* TECHNICAL STACK TABS (mobile: switch panel. desktop: tabs are hidden via CSS
+   and all panels show at once in a grid, so this click handler simply has no
+   visible effect on desktop — which is exactly what we want) */
+var stackTabs = document.getElementById('stackTabs');
+if(stackTabs){
+  var tabBtns = stackTabs.querySelectorAll('.stack-tab-btn');
+  var panels = document.querySelectorAll('.stack-panel');
+  stackTabs.addEventListener('click', function(e){
+    var btn = e.target.closest('.stack-tab-btn');
+    if(!btn) return;
+    var target = btn.getAttribute('data-tab');
+    tabBtns.forEach(function(b){ b.classList.toggle('active', b===btn); });
+    panels.forEach(function(p){ p.classList.toggle('active', p.getAttribute('data-panel')===target); });
+  });
 }
 
-.mobile-nav.open a{opacity:1;transform:translateY(0);transition:opacity .35s ease,transform .35s ease}
-.mobile-nav.open a:nth-child(1){transition-delay:.07s}
-.mobile-nav.open a:nth-child(2){transition-delay:.12s}
-.mobile-nav.open a:nth-child(3){transition-delay:.17s}
-.mobile-nav.open a:nth-child(4){transition-delay:.22s}
-.mobile-nav.open a:nth-child(5){transition-delay:.27s}
-.mobile-nav.open a:nth-child(6){transition-delay:.32s}
-.mobile-nav.open a:nth-child(7){transition-delay:.37s}
+/* SCROLL REVEAL */
+var obs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e,i){
+    if(e.isIntersecting){
+      setTimeout(function(){ e.target.classList.add('visible'); },i*60);
+      obs.unobserve(e.target);
+    }
+  });
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
 
-/* SECTIONS */
-/* scroll-margin-top reserves space for the floating fixed nav pill so
-   jumping to any #anchor (via nav click or a direct URL hash) never
-   scrolls a section's heading underneath the header. */
-.section,
-section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
-.section{padding:7rem 0;position:relative;z-index:1}
-.section-alt{background:transparent}
-.section-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.25rem}
-.section-big-heading{
-  font-family: var(--font-heading);
-  font-size: clamp(2rem,4.5vw,3.2rem);
-  font-weight: 700;
-  color: var(--text);
-  letter-spacing: -.03em;
-  line-height: 1;
-}
-.section-label-right{
-  font-family: var(--font-body);
-  font-size: .72rem;
-  font-weight: 700;
-  letter-spacing: .18em;
-  color: var(--accent);
-  text-transform: uppercase;
-  padding-top: .5rem;
-}
-.section-divider{width:100%;height:1px;background:rgba(163,177,198,.4);margin-bottom:3.5rem}
+/* DRAGGABLE / SWIPEABLE MARQUEE — used by the Projects and Certificates
+   tracks. Works with mouse drag on desktop and touch swipe on mobile
+   (Pointer Events cover both), and keeps auto-scrolling on its own
+   whenever the person isn't actively dragging it. loopSeconds controls
+   how long one full auto-scroll loop takes, same as the old CSS
+   animation did. */
+function initSwipeMarquee(trackId, loopSeconds){
+  var track = document.getElementById(trackId);
+  var wrap = track ? track.closest('.projects-marquee, .cert-marquee') : null;
+  if(!track || !wrap) return;
 
-/* HERO */
-.hero{min-height:100vh;padding-top:calc(var(--nav-h) + 2rem);display:flex;align-items:center;position:relative;overflow:hidden;z-index:1}
-.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:3rem;position:relative;z-index:1}
-.hero-name{
-  font-family: var(--font-heading);
-  font-size: clamp(2rem,4vw,3.4rem);
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -.01em;
-  color: var(--text);
-  margin-bottom: 1.4rem;
-  white-space: nowrap;
-}
-.hero-bio{
-  font-family: var(--font-body);
-  font-size: 1.05rem;
-  color: var(--muted);
-  line-height: 1.8;
-  max-width: 620px;
-  margin-bottom: 2.4rem;
-  font-weight: 400;
-  text-wrap: balance;
-}
-.mobile-br{display:none}
-.hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
-.btn-primary{
-  display: inline-flex;
-  align-items:center;
-  padding: .9rem 2.1rem;
-  background: var(--accent);
-  color: #ffffff;
-  text-decoration: none;
-  font-family: var(--font-body);
-  font-size: .85rem;
-  font-weight: 600;
-  border-radius: 10px;
-  box-shadow: 0 10px 24px var(--accent-glow);
-  transition: background .2s,transform .15s,box-shadow .2s;
-}
-.btn-primary:hover{background:var(--accent-hover);transform:translateY(-2px);box-shadow:0 14px 30px var(--accent-glow)}
-.btn-primary:active,.btn-primary:focus,.btn-primary:visited{color:#ffffff;transform:none}
-.btn-outline{
-  display: inline-flex;
-  align-items: center;
-  gap: .55rem;
-  padding: .9rem 2.1rem;
-  background: var(--surface);
-  color: var(--text);
-  text-decoration: none;
-  font-family: var(--font-body);
-  font-size: .85rem;
-  font-weight: 600;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-card);
-  transition: all .3s cubic-bezier(.16,1,.3,1);
-}
-.btn-outline:hover{color:var(--accent);transform:translateY(-2px);box-shadow:var(--shadow-card)}
-.btn-outline:active,.btn-outline:focus,.btn-outline:visited{color:var(--text);transform:none;box-shadow:var(--shadow-card)}
+  var half = 0;          // width of one full (non-duplicated) set of cards
+  var pos = 0;            // current scroll offset in px
+  var dragging = false;
+  var moved = false;      // did the pointer travel far enough to count as a drag (vs a tap)
+  var startX = 0;
+  var startPos = 0;
+  var speed = 0;          // px per second, auto-scroll rate
+  var activePointerId = null;
 
-/* HERO RIGHT — floating badge photo layout */
-.hero-right{display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative}
-.photo-orbit{position:relative;width:100%;max-width:440px;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center}
-.photo-frame{position:relative;display:inline-block;z-index:2}
-.photo-wrap{width:260px;height:260px;border-radius:50%;overflow:hidden;position:relative;z-index:1;border:6px solid var(--bg);box-shadow:var(--shadow-card)}
-.photo-wrap img{width:100%;height:100%;object-fit:cover}
+  /* momentum tracking — lets a released swipe glide and decelerate on its
+     own, the same "flick" feel as native touch scrolling (like the
+     Technical Stack cards), instead of stopping dead the instant the
+     finger lifts. */
+  var momentumVelocity = 0;  // px/sec, active right after release
+  var momentumActive = false;
+  var lastMoveTime = 0;
+  var lastMovePos = 0;
+  var MAX_VELOCITY = 4200;   // px/sec cap so a hard flick doesn't fling too far
+  var FRICTION = 3.2;        // higher = stops sooner
 
-/* TECH STACK — icon-only badges floating around the profile photo.
-   Fixed positions (angle set once per item via --angle), no orbit spin —
-   each badge just bobs gently up and down at its own place. */
-.orbit-ring{
-  position:absolute;
-  inset:0;
-  z-index:2;
-  pointer-events:none;
-  --radius:192px;
-}
-
-.orbit-item{
-  position:absolute;
-  top:50%;
-  left:50%;
-  width:0;
-  height:0;
-  transform:rotate(var(--angle)) translate(var(--radius));
-}
-.orbit-counter{
-  position:absolute;
-  top:0;
-  left:0;
-  pointer-events:auto;
-  animation-name: floatBob;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-}
-.photo-orbit:hover .orbit-counter{animation-play-state:paused}
-
-@keyframes floatBob{
-  0%,100%{transform:translate(-50%,-50%) rotate(calc(var(--angle) * -1)) translateY(0)}
-  50%{transform:translate(-50%,-50%) rotate(calc(var(--angle) * -1)) translateY(-8px)}
-}
-
-/* stagger delay/duration per icon so they don't all bob in unison —
-   gives a natural, organic "floating" feel like the reference site */
-.orbit-item.oi-0 .orbit-counter{animation-delay:0s;animation-duration:3s}
-.orbit-item.oi-1 .orbit-counter{animation-delay:.2s;animation-duration:3.4s}
-.orbit-item.oi-2 .orbit-counter{animation-delay:.4s;animation-duration:2.8s}
-.orbit-item.oi-3 .orbit-counter{animation-delay:.1s;animation-duration:3.6s}
-.orbit-item.oi-4 .orbit-counter{animation-delay:.5s;animation-duration:3.1s}
-.orbit-item.oi-5 .orbit-counter{animation-delay:.3s;animation-duration:2.9s}
-.orbit-item.oi-6 .orbit-counter{animation-delay:.6s;animation-duration:3.5s}
-.orbit-item.oi-7 .orbit-counter{animation-delay:.15s;animation-duration:3.2s}
-.orbit-item.oi-8 .orbit-counter{animation-delay:.45s;animation-duration:2.7s}
-.orbit-item.oi-9 .orbit-counter{animation-delay:.25s;animation-duration:3.7s}
-.orbit-item.oi-10 .orbit-counter{animation-delay:.55s;animation-duration:3.3s}
-.orbit-item.oi-11 .orbit-counter{animation-delay:.35s;animation-duration:2.85s}
-.orbit-item.oi-12 .orbit-counter{animation-delay:.05s;animation-duration:3.45s}
-.orbit-item.oi-13 .orbit-counter{animation-delay:.5s;animation-duration:3.05s}
-.orbit-item.oi-14 .orbit-counter{animation-delay:.3s;animation-duration:3.3s}
-.orbit-item.oi-15 .orbit-counter{animation-delay:.55s;animation-duration:3.9s}
-
-/* icon-only circular badge (no text) */
-.stack-badge{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  width:42px;
-  height:42px;
-  background:transparent;
-  border:none;
-  border-radius:50%;
-  transition:transform .2s;
-}
-/* single-layer, full-bleed brand-colored circle — same bold treatment as
-   the Technical Stack tiles, instead of a small icon in a pale ring */
-.stack-badge > .fb-icon{width:100%;height:100%;border-radius:50%;box-shadow:var(--shadow-card)}
-.stack-badge:hover{transform:scale(1.1)}
-.stack-badge:hover > .fb-icon{box-shadow:var(--shadow-card-hover)}
-.stack-badge .fb-icon{display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.stack-badge .fb-icon img,
-.stack-badge .fb-icon svg{width:20px;height:20px;object-fit:contain;display:block}
-
-/* Force every orbiting hero badge onto the same neutral chip instead of
-   the mismatched per-icon inline background colors (some brand-colored,
-   some plain white that nearly vanishes against the light page bg). */
-.stack-badge > .fb-icon{
-  background: var(--accent-soft) !important;
-  border: 1px solid var(--border);
-}
-
-/* shared "colored chip" icon used both in the hero orbit badges and the
-   Technical Stack grid below — one true brand-colored logo per chip */
-.fb-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.fb-icon img,
-.fb-icon svg{width:15px;height:15px;object-fit:contain;display:block}
-
-/* SERVICES */
-.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
-.service-card{
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:2.5rem 2rem;
-  display:flex;flex-direction:column;gap:0;
-  transition:box-shadow .3s,transform .3s;
-  position:relative;overflow:hidden;
-  box-shadow:var(--shadow-card);
-}
-.service-card:hover{
-  transform:translateY(-6px);
-  box-shadow:var(--shadow-card-hover);
-}
-.service-icon-wrap{width:48px;height:48px;border-radius:13px;display:flex;align-items:center;justify-content:center;margin-bottom:1.4rem;background:var(--accent-soft);transition:background .3s,transform .3s}
-.service-card:hover .service-icon-wrap{background:var(--accent);transform:scale(1.06)}
-.service-card:hover .service-icon-wrap svg{stroke:#ffffff}
-.service-icon-wrap svg{width:20px;height:20px;stroke:var(--accent);stroke-width:1.6;fill:none}
-.service-card h3{
-  font-family: var(--font-heading);
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: .65rem;
-  line-height: 1.3;
-}
-.service-card p{
-  font-family: var(--font-body);
-  font-size: .9rem;
-  color: var(--muted);
-  line-height: 1.75;
-}
-.service-num{display:none}
-
-/* PROJECTS — draggable/auto-scrolling marquee (same engine as Certificates):
-   fixed-size cards in a straight single row. Cards are sized down from the
-   original and the whole screenshot is always visible (object-fit:contain)
-   instead of being cropped into a square. Since .project-track is a flex
-   row with the default align-items:stretch, every card in the row is
-   automatically the same height as the tallest one — so once the bio text
-   isn't clamped anymore, all bios show in full AND stay lined up evenly. */
-.projects-marquee{
-  width:100%;
-  overflow:hidden;
-  -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
-  mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
-}
-.project-track{
-  display:flex;
-  align-items:stretch;
-  gap:2.75rem;
-  width:max-content;
-  cursor:grab;
-  touch-action:pan-y;
-}
-.project-track.dragging{cursor:grabbing}
-
-.project-card{
-  width:338px;
-  flex:0 0 auto;
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:26px;
-  overflow:hidden;
-  display:flex;
-  flex-direction:column;
-  box-shadow:var(--shadow-card);
-  transition:box-shadow .3s ease, transform .3s ease;
-}
-.project-card:hover{
-  transform:translateY(-6px);
-  box-shadow:var(--shadow-card-hover);
-}
-
-.project-img-wrap{
-  width:100%;
-  aspect-ratio:16/9;
-  overflow:hidden;
-  padding:.7rem .7rem 0;
-  background:var(--bg);
-}
-.project-img-wrap img{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  object-position:center;
-  display:block;
-  border-radius:18px;
-  transition:transform .5s ease;
-  -webkit-user-drag:none;
-  user-drag:none;
-}
-.project-card:hover .project-img-wrap img{transform:scale(1.03)}
-
-.project-body{padding:1.35rem 1.5rem 1.6rem;display:flex;flex-direction:column;gap:.5rem;flex:1}
-
-.project-title-row{
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:.75rem;
-}
-
-.project-card-title{
-  font-family: var(--font-heading);
-  font-size: 1.08rem;
-  font-weight: 700;
-  color: var(--text);
-  line-height: 1.3;
-  letter-spacing: -.01em;
-}
-
-.project-link-icon{
-  flex-shrink:0;
-  width:32px;
-  height:32px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:var(--accent-soft);
-  color:var(--accent);
-  text-decoration:none;
-  transition:background .2s ease, color .2s ease, transform .2s ease;
-}
-.project-link-icon svg{width:14px;height:14px;stroke:currentColor;stroke-width:2;fill:none}
-.project-link-icon:hover{background:var(--accent);color:#ffffff;transform:translateY(-2px)}
-.project-link-locked{color:var(--dim)}
-.project-link-locked:hover{background:var(--dim);color:#ffffff}
-
-.project-sub-label{
-  font-family: var(--font-body);
-  font-size: .78rem;
-  color: var(--accent);
-  font-weight: 600;
-  letter-spacing: .02em;
-}
-
-.project-card-desc{
-  font-family: var(--font-body);
-  font-size: .87rem;
-  color: var(--muted);
-  line-height: 1.65;
-}
-
-/* SKILLS — light "tech panel" card matching the site's surface style,
-   holding a single flat grid of icon chips with a hover tooltip. */
-.tech-panel{
-  background:transparent;
-  border:none;
-  border-radius:22px;
-  padding:2.75rem 2.25rem;
-  box-shadow:none;
-}
-.tech-icon-grid{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:1rem;
-}
-.tech-icon-box{
-  position:relative;
-  width:72px;
-  height:72px;
-  border-radius:16px;
-  background:transparent;
-  border:none;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  transition:transform .2s ease, box-shadow .2s ease;
-}
-/* the colored badge now fills almost the entire tile — bold, single-layer,
-   true-to-brand square instead of a small icon floating in a pale box */
-.tech-icon-box > .fb-icon{width:100%;height:100%;border-radius:16px;box-shadow:var(--shadow-card)}
-.tech-icon-box > .fb-icon img,
-.tech-icon-box > .fb-icon svg{width:34px;height:34px}
-.tech-icon-box:hover{
-  transform:translateY(-5px);
-  box-shadow:0 14px 28px -8px rgba(18,22,43,.22);
-  z-index:5;
-}
-.tech-icon-box:hover > .fb-icon{box-shadow:var(--shadow-card-hover)}
-
-/* Force every Technical Stack tile (and its tooltip icon) onto the same
-   neutral chip, instead of the mismatched per-icon inline background
-   colors (some brand-colored, some plain white) set in the HTML. */
-.tech-icon-box > .fb-icon{
-  background: var(--accent-soft) !important;
-  border: 1px solid var(--border);
-}
-
-/* simplified tooltip — name-only dark pill, no icon/tag/description */
-.tech-tip{
-  position:absolute;
-  bottom:calc(100% + 12px);
-  left:50%;
-  --tip-shift:0px;
-  transform:translateX(calc(-50% + var(--tip-shift, 0px))) translateY(6px);
-  width:max-content;
-  max-width:200px;
-  background:#ffffff;
-  border:1px solid var(--border);
-  border-radius:8px;
-  padding:.5rem .9rem;
-  box-shadow:0 8px 20px -6px rgba(18,22,43,.35);
-  opacity:0;
-  visibility:hidden;
-  pointer-events:none;
-  transition:opacity .18s ease, transform .18s ease, visibility .18s;
-  z-index:20;
-  text-align:center;
-}
-.tech-icon-box:hover .tech-tip{
-  opacity:1;
-  visibility:visible;
-  transform:translateX(calc(-50% + var(--tip-shift, 0px))) translateY(0);
-}
-.tech-tip-head{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:.5rem;
-}
-.tech-tip-icon{
-  width:20px;
-  height:20px;
-  border-radius:6px;
-  flex-shrink:0;
-  background:none !important;
-  border:none !important;
-}
-.tech-tip-tag, .tech-tip-desc{
-  display:none;
-}
-.tech-tip-name{
-  font-family: var(--font-body);
-  font-size:.8rem;
-  font-weight:600;
-  color:#12162b;
-  line-height:1.2;
-  white-space:nowrap;
-}
-.tech-tip::after{
-  content:'';
-  position:absolute;
-  top:100%;
-  left:50%;
-  transform:translateX(calc(-50% - var(--tip-shift, 0px)));
-  border:6px solid transparent;
-  border-top-color:#ffffff;
-}
-.tech-icon-box.tip-flip .tech-tip{
-  bottom:auto;
-  top:calc(100% + 12px);
-  transform:translateX(calc(-50% + var(--tip-shift, 0px))) translateY(-6px);
-}
-.tech-icon-box.tip-flip:hover .tech-tip{
-  transform:translateX(calc(-50% + var(--tip-shift, 0px))) translateY(0);
-}
-.tech-icon-box.tip-flip .tech-tip::after{
-  top:auto;
-  bottom:100%;
-  border-top-color:transparent;
-  border-bottom-color:#ffffff;
-}
-
-/* SKILLS — DESKTOP: give the grid a little more breathing room, lock the
-   icons to a fixed 9-per-row layout so they don't reflow, and shrink the
-   panel itself to hug that fixed-width grid instead of stretching full width */
-@media(min-width:961px){
-  .tech-icon-grid{
-    gap:1.15rem;
-    width: calc(9 * 72px + 8 * 1.15rem);
-    margin: 0 auto;
+  function measure(){
+    half = track.scrollWidth / 2;
+    speed = half / loopSeconds;
   }
-  .tech-panel{
-    width: fit-content;
-    margin: 0 auto;
+
+  function wrap360(p){
+    if(half<=0) return 0;
+    p = p % half;
+    if(p<0) p += half;
+    return p;
   }
-}
 
-/* EDUCATION — code-editor styled panel, title centered on top */
-.edu-section{background:transparent;padding:6rem 0;position:relative;z-index:1}
-
-.edu-header{
-  text-align:center;
-  max-width:700px;
-  margin:0 auto 2.5rem;
-}
-.edu-eyebrow{
-  display:inline-block;
-  font-family: var(--font-mono);
-  font-size:.78rem;
-  font-weight:500;
-  color:var(--accent);
-  background:var(--accent-soft);
-  border:1px solid var(--border);
-  border-radius:100px;
-  padding:.35rem 1rem;
-  margin-bottom:1rem;
-  letter-spacing:.02em;
-}
-.education-title{
-  font-family: var(--font-heading);
-  color: var(--text);
-  font-size: clamp(1.7rem,3.5vw,2.4rem);
-  font-weight: 700;
-  letter-spacing: -.03em;
-}
-
-/* Code editor card */
-.code-card{
-  max-width:820px;
-  margin:0 auto;
-  background:#0d0f18;
-  border-radius:18px;
-  overflow:hidden;
-  box-shadow:var(--shadow-card-hover);
-  border:1px solid #1f2333;
-}
-.code-titlebar{
-  display:flex;
-  align-items:center;
-  gap:1rem;
-  padding:.85rem 1.2rem;
-  background:#141726;
-  border-bottom:1px solid #1f2333;
-}
-.code-dots{display:flex;gap:.45rem;flex-shrink:0}
-.dot{width:11px;height:11px;border-radius:50%;display:block}
-.dot-r{background:#ff5f56}
-.dot-y{background:#ffbd2e}
-.dot-g{background:#27c93f}
-.code-filename{
-  font-family: var(--font-mono);
-  font-size:.75rem;
-  color:#8890a8;
-  background:#0d0f18;
-  border:1px solid #1f2333;
-  border-radius:6px;
-  padding:.3rem .8rem;
-}
-
-.code-body{
-  counter-reset: codeline;
-  padding:1.5rem 0;
-  overflow-y:auto;
-  overflow-x:hidden;
-  scrollbar-width:none;
-  height:360px;
-}
-.code-body::-webkit-scrollbar{display:none}
-
-.code-line{
-  counter-increment: codeline;
-  display:flex;
-  align-items:flex-start;
-  gap:1.2rem;
-  padding:.2rem 1.5rem;
-  font-family: var(--font-mono);
-  font-size:.82rem;
-  line-height:1.9;
-  white-space:pre-wrap;
-  word-break:break-word;
-  transition:background .15s ease;
-  min-height:1.9em;
-}
-.code-line::before{
-  content: counter(codeline);
-  flex:0 0 22px;
-  text-align:right;
-  color:#3d4155;
-  user-select:none;
-}
-.code-line:hover{background:rgba(255,255,255,.03)}
-
-/* indentation lives on an inner wrapper (not the row) so the line
-   number column always stays in a straight vertical line */
-.code-content{display:inline}
-
-.code-punct{color:#6b7280}
-.code-key{color:#7dd3fc}
-.code-string{color:#c9b3ff}
-.code-string.code-current{color:#8fa8ff;font-weight:600}
-
-/* real-HTML syntax palette used by the typed education snippet */
-.code-tag{color:#7dd3fc}
-.code-attr{color:#facc15}
-.code-attr-val{color:#c9b3ff}
-.code-comment{color:#4ade80}
-.code-text{color:#e5e7eb}
-.code-text.code-current{color:#8fa8ff;font-weight:600}
-
-/* description text inside the typed <desc> tag — green, same as code-comment */
-.code-desc{color:#4ade80}
-
-/* blinking typing cursor, shown only on the actively-typed line */
-.code-caret{
-  display:inline-block;
-  width:7px;
-  height:1.1em;
-  background:var(--accent);
-  margin-left:2px;
-  vertical-align:-2px;
-  animation:blinkCursor 1s step-end infinite;
-}
-@keyframes blinkCursor{50%{opacity:0}}
-
-/* CERTS */
-.cert-section{background:transparent;position:relative;z-index:1}
-.cert-marquee{
-  width:100%;
-  overflow:hidden;
-  -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
-  mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
-}
-.cert-track{
-  display:flex;
-  gap:1.5rem;
-  width:max-content;
-  cursor:grab;
-  touch-action:pan-y;
-}
-.cert-track.dragging{cursor:grabbing}
-.cert-img-wrap img{-webkit-user-drag:none;user-drag:none}
-.cert-item{
-  width:360px;
-  flex:0 0 auto;
-  display:flex;flex-direction:column;
-  background:var(--surface);border:1px solid var(--border);border-radius:22px;overflow:hidden;
-  box-shadow:var(--shadow-card);
-  transition:box-shadow .3s,transform .3s;
-}
-.cert-item:hover{transform:translateY(-5px);box-shadow:var(--shadow-card-hover)}
-.cert-img-wrap{width:calc(100% - 24px);margin:12px 12px 0;aspect-ratio:16/10;overflow:hidden;background:var(--bg);border-radius:14px;border:1px solid var(--border)}
-.cert-img-wrap img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;transition:transform .4s ease}
-.cert-item:hover .cert-img-wrap img{transform:scale(1.04)}
-.cert-info{padding:1rem 1.35rem 1.5rem}
-.cert-info h4{
-  font-family: var(--font-heading);
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: .35rem;
-  line-height: 1.3;
-}
-.cert-info p{
-  font-family: var(--font-body);
-  font-size: .88rem;
-  color: var(--dim);
-  font-weight: 500;
-}
-
-/* CONTACT SECTION */
-.contact-section{background:transparent;padding:5rem 0 6rem;position:relative;z-index:1}
-.contact-top{text-align:center;margin-bottom:2.5rem}
-.contact-label-top{
-  font-family: var(--font-body);
-  font-size: .7rem;
-  font-weight: 700;
-  letter-spacing: .2em;
-  color: var(--accent);
-  text-transform: uppercase;
-  margin-bottom: .75rem;
-}
-.contact-heading{
-  font-family: var(--font-heading);
-  font-size: clamp(1.7rem,3vw,2.3rem);
-  font-weight: 700;
-  color: var(--text);
-  letter-spacing: -.03em;
-  line-height: 1.1;
-}
-.contact-heading span{color:var(--accent)}
-.contact-icon-row{display:flex;justify-content:center;gap:1.2rem}
-.contact-round{
-  width:54px;height:54px;
-  border:1px solid var(--border);
-  border-radius:50%;
-  color:var(--muted);
-  background:var(--surface);
-  display:inline-flex;align-items:center;justify-content:center;
-  text-decoration:none;
-  box-shadow:var(--shadow-card);
-  transition:color .2s,transform .15s,box-shadow .2s;
-}
-.contact-round svg{width:19px;height:19px;stroke:currentColor;stroke-width:1.6;fill:none}
-.contact-round:hover{color:var(--accent);transform:translateY(-3px);box-shadow:var(--shadow-card-hover)}
-
-/* CONTACT PAGE */
-.contact-page-main{min-height:calc(100vh - var(--nav-h));padding-top:calc(var(--nav-h) + 1rem);position:relative;z-index:1}
-.contact-page-section{padding:1rem 0 2.25rem}
-.contact-page-head{max-width:600px;margin:0 auto 3.5rem;text-align:center}
-.contact-page-head h1{
-  font-family: var(--font-heading);
-  color: var(--text);
-  font-size: clamp(2.2rem,5vw,3.4rem);
-  font-weight: 700;
-  letter-spacing: -.04em;
-  line-height: 1;
-  margin-bottom: 1.4rem;
-}
-.contact-page-head p{
-  font-family: var(--font-body);
-  color: var(--muted);
-  font-size: 1rem;
-  line-height: 1.75;
-}
-.contact-page-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;max-width:1050px;margin:0 auto}
-.contact-panel{background:var(--surface);border:1px solid var(--border);border-radius:22px;min-height:520px;padding:3rem 2.25rem;box-shadow:var(--shadow-card)}
-.contact-col-title{
-  font-family: var(--font-body);
-  font-size: .72rem;
-  font-weight: 700;
-  letter-spacing: .18em;
-  color: var(--accent);
-  text-transform: uppercase;
-  margin-bottom: 2.25rem;
-}
-.contact-info-list{display:flex;flex-direction:column}
-.contact-info-sep{height:1px;background:rgba(163,177,198,.35);display:block}
-.contact-info-item{display:flex;align-items:center;gap:1.25rem;padding:1.1rem 0}
-.contact-info-icon{width:36px;height:36px;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:var(--accent);border-radius:10px;background:var(--accent-soft);transition:background .2s,color .2s}
-.contact-info-icon svg{width:15px;height:15px;stroke:currentColor;stroke-width:1.6;fill:none}
-.contact-info-item:hover .contact-info-icon{background:var(--accent);color:#ffffff}
-.contact-info-text{display:flex;flex-direction:column;gap:.15rem}
-.contact-info-label{
-  font-family: var(--font-body);
-  font-size: .62rem;
-  font-weight: 700;
-  letter-spacing: .16em;
-  color: var(--dim);
-  text-transform: uppercase;
-}
-.contact-info-value{
-  font-family: var(--font-body);
-  font-size: .9rem;
-  color: var(--text);
-  font-weight: 500;
-}
-.contact-form{display:flex;flex-direction:column;gap:1.15rem}
-.form-row{display:flex;flex-direction:column;gap:.4rem}
-.form-row label{
-  font-family: var(--font-body);
-  font-size: .62rem;
-  font-weight: 700;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--dim);
-}
-.form-row input,.form-row textarea{
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  color: var(--text);
-  font-family: var(--font-body);
-  font-size: .92rem;
-  padding: .9rem 1.1rem;
-  outline: none;
-  transition: border-color .2s,box-shadow .2s;
-  resize: vertical;
-  width: 100%;
-}
-.form-row input:focus,.form-row textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
-.form-row input::placeholder,.form-row textarea::placeholder{color:var(--dim)}
-textarea{min-height:120px}
-.contact-form button{
-  padding: .9rem 2rem;
-  background: var(--accent);
-  color: #ffffff;
-  border: none;
-  border-radius: 10px;
-  font-family: var(--font-body);
-  font-size: .85rem;
-  font-weight: 600;
-  cursor: pointer;
-  width: 100%;
-  transition: background .2s,transform .15s,box-shadow .2s;
-  margin-top: .35rem;
-  box-shadow: 0 10px 24px var(--accent-glow);
-}
-.contact-form button:hover{background:var(--accent-hover);transform:translateY(-2px);box-shadow:0 14px 30px var(--accent-glow)}
-.contact-form button:active,.contact-form button:focus{transform:translateY(0)}
-.contact-form button:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
-#cf-status{font-size:.82rem;min-height:1.2em;color:var(--muted)}
-.back-home{
-  font-family: var(--font-body);
-  color: var(--muted);
-  display: block;
-  font-size: .85rem;
-  font-weight:500;
-  margin: 3rem auto 1.5rem;
-  text-align: center;
-  text-decoration: none;
-  transition: color .2s;
-}
-.back-home:hover{color:var(--accent)}
-
-/* FOOTER — layout unchanged, just restyled */
-footer{background:transparent;border-top:1px solid rgba(163,177,198,.35);padding:2rem 0;position:relative;z-index:1}
-.footer-inner{display:flex;align-items:center;justify-content:space-between}
-footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
-.footer-logo{font-family: var(--font-heading); font-size:.95rem;font-weight:700;color:var(--dim);letter-spacing:.02em}
-
-/* REVEAL */
-.reveal{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease}
-.reveal.visible{opacity:1;transform:none}
-
-/* TESTIMONIALS — fanned card deck, cycles through with clicks/dots */
-.testimonial-deck-wrap{max-width:460px;margin:0 auto;position:relative}
-.testimonial-deck{position:relative;min-height:170px;transition:height .3s ease}
-.testi-card{
-  position:absolute;
-  inset:0;
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:1.75rem 1.75rem 1.5rem;
-  box-shadow:var(--shadow-card);
-  display:flex;
-  flex-direction:column;
-  gap:1rem;
-  cursor:pointer;
-  overflow:hidden;
-  transition:transform .5s cubic-bezier(.16,1,.3,1),opacity .5s ease,box-shadow .3s ease;
-}
-
-.testi-card.testi-active{transform:translateY(0) scale(1) rotate(0deg);z-index:3;opacity:1;box-shadow:var(--shadow-card-hover);cursor:default}
-.testi-card.testi-behind-1{transform:translateY(16px) scale(.96) rotate(-3deg);z-index:2;opacity:.85}
-.testi-card.testi-behind-2{transform:translateY(30px) scale(.92) rotate(3deg);z-index:1;opacity:.55}
-.testi-card.testi-hidden{opacity:0;pointer-events:none;transform:translateY(36px) scale(.88)}
-
-.testi-card-top{
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:.75rem;
-}
-.testi-quote-icon{
-  font-family:var(--font-heading);
-  font-size:2.1rem;
-  line-height:1;
-  color:var(--accent);
-  font-weight:800;
-}
-/* rating pill — matches the "10/10" badge shown next to the reviewer name
-   on the reference site, restyled to the portfolio's blue accent theme */
-.testi-rating{
-  display:inline-flex;
-  align-items:center;
-  gap:.35rem;
-  flex-shrink:0;
-  background:var(--accent-soft);
-  color:var(--accent);
-  border-radius:100px;
-  padding:.32rem .75rem;
-  font-family: var(--font-body);
-  font-size:.75rem;
-  font-weight:700;
-  margin-top:.2rem;
-}
-.testi-rating svg{width:13px;height:13px;flex-shrink:0;fill:#FFC107}
-.testi-text{
-  font-family:var(--font-body);
-  font-size:.88rem;
-  font-style:italic;
-  color:var(--muted);
-  line-height:1.65;
-}
-.testi-footer{display:flex;align-items:center;gap:.7rem;margin-top:auto}
-.testi-avatar{
-  width:36px;height:36px;flex-shrink:0;
-  border-radius:50%;
-  background:var(--accent-soft);
-  color:var(--accent);
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--font-heading);
-  font-weight:700;
-  font-size:.95rem;
-}
-.testi-name{
-  font-family:var(--font-heading);
-  font-weight:700;
-  color:var(--text);
-  font-size:.88rem;
-}
-
-.testi-dots{display:flex;justify-content:center;gap:.5rem;margin-top:2rem}
-.testi-dot{
-  width:8px;height:8px;border-radius:50%;
-  background:var(--border);
-  border:none;
-  cursor:pointer;
-  transition:background .2s ease,transform .2s ease;
-}
-.testi-dot.testi-dot-active{background:var(--accent);transform:scale(1.35)}
-
-@media(max-width:700px){
-  .testimonial-deck-wrap{max-width:340px}
-  .testimonial-deck{min-height:200px}
-  .testi-card{padding:1.5rem 1.25rem 1.25rem;gap:.85rem}
-  .testi-quote-icon{font-size:1.8rem}
-  .testi-rating{font-size:.68rem;padding:.28rem .6rem}
-  .testi-rating svg{width:11px;height:11px}
-  .testi-text{font-size:.82rem;line-height:1.6}
-  .testi-avatar{width:32px;height:32px;font-size:.85rem}
-  .testi-name{font-size:.82rem}
-}
-/* RESPONSIVE */
-@media(max-width:960px){
-  #nav{display:none}
-  .nav-cta{display:none}
-  .hamburger{display:flex}
-
-  .hero{padding-top:calc(var(--nav-h) + 3rem);padding-bottom:2rem;min-height:auto}
-  .hero-grid{grid-template-columns:1fr;text-align:center;gap:3.5rem}
-  .hero-actions{flex-direction:row;align-items:center;justify-content:center;width:100%;gap:.75rem;max-width:420px;margin:0 auto}
-  .btn-primary,.btn-outline{flex:1 1 0;width:auto;max-width:none;padding-left:1rem;padding-right:1rem;justify-content:center}
-  .hero-bio{margin-left:0;margin-right:0;text-align:left;max-width:100%;font-size:13px;line-height:1.7}
-  .mobile-br{display:inline}
-  .photo-orbit{max-width:370px;margin:0 auto}
-  .photo-wrap{width:220px;height:220px}
-  .stack-badge{width:37px;height:37px}
-  .stack-badge .fb-icon img,
-  .stack-badge .fb-icon svg{width:17px;height:17px}
-  .orbit-ring{--radius:162px}
-  .contact-page-grid{grid-template-columns:1fr}
-  .footer-inner{flex-direction:column;gap:.5rem;text-align:center}
-.tech-icon-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:.85rem}
-.tech-icon-box{width:calc(25% - .64rem);max-width:72px;aspect-ratio:1/1;height:auto}
-}
-@media(max-width:700px){
-  .section-header{align-items:center}
-  .section-big-heading{font-size:1.5rem;white-space:nowrap}
-  .section-label-right{padding-top:0;text-align:right;white-space:nowrap}
-  .section{padding:4.5rem 0}
-  .services-grid{
-    display:flex;
-    flex-wrap:nowrap;
-    grid-template-columns:none;
-    overflow-x:auto;
-    scroll-snap-type:x mandatory;
-    gap:1rem;
-    padding:0 5% 1.25rem;
-    margin:0 -5%;
-    -webkit-overflow-scrolling:touch;
-    scrollbar-width:none;
+  function render(){
+    track.style.transform = 'translateX(' + (-pos) + 'px)';
   }
-  .services-grid::-webkit-scrollbar{display:none}
-  .service-card{flex:0 0 82%;scroll-snap-align:center;padding:2rem 1.5rem}
-  .cert-item{width:300px}
-  .hero-name{font-size:2.1rem;white-space:normal}
-  .contact-icon-row{gap:.85rem}
-  .contact-panel{padding:1.75rem 1.25rem}
-  .mobile-nav a{font-size:1rem;padding:.95rem 1.25rem}
-  .contact-page-main{padding-top:calc(var(--nav-h) - .5rem)}
-  .contact-page-head{margin-bottom:2rem}
 
-  .edu-header{margin-bottom:1.75rem}
-  .code-titlebar{padding:.7rem 1rem;gap:.75rem}
-  .code-filename{font-size:.68rem;padding:.25rem .6rem}
-  .code-body{padding:1.1rem 0;height:300px}
-  .code-line{font-size:.72rem;padding:.15rem 1rem;gap:.7rem;line-height:1.75}
-  .code-line::before{flex:0 0 16px}
-}
-@media(max-width:480px){
-  .photo-orbit{max-width:310px}
-  .photo-wrap{width:185px;height:185px}
-  .orbit-ring{--radius:130px}
-  .stack-badge{width:32px;height:32px}
-  .stack-badge .fb-icon img,
-  .stack-badge .fb-icon svg{width:15px;height:15px}
-  .hero-name{font-size:2.1rem}
-  .section-big-heading{font-size:1.25rem}
-  .cert-item{width:250px}
-  .project-img-wrap{aspect-ratio:21/9}
-  .project-body{padding:1rem 1.25rem 1.2rem;gap:.35rem}
-  .project-card-title{font-size:1rem}
-  .project-card-desc{font-size:.82rem;line-height:1.55}
-  .hero-actions{gap:.5rem}
-  .btn-primary,.btn-outline{font-size:.68rem;padding-left:.9rem;padding-right:.9rem;gap:.35rem}
+  var lastTime = null;
+  function tick(t){
+    if(lastTime===null) lastTime = t;
+    var dt = (t - lastTime) / 1000;
+    lastTime = t;
+    if(!dragging){
+      if(momentumActive){
+        pos = wrap360(pos + momentumVelocity*dt);
+        /* exponential decay, frame-rate independent */
+        momentumVelocity *= Math.pow(1/(1+FRICTION), dt);
+        if(Math.abs(momentumVelocity) < 40){
+          momentumActive = false;
+        }
+      } else {
+        pos = wrap360(pos + speed*dt);
+      }
+      render();
+    }
+    requestAnimationFrame(tick);
+  }
 
-  .code-line{font-size:.66rem}
-  .code-body{height:260px}
+  function pointerDown(e){
+    dragging = true;
+    moved = false;
+    momentumActive = false;
+    momentumVelocity = 0;
+    startX = e.clientX;
+    startPos = pos;
+    lastMoveTime = performance.now();
+    lastMovePos = pos;
+    activePointerId = e.pointerId;
+    /* NOTE: we deliberately do NOT call setPointerCapture here. Capturing on
+       every pointerdown — even a plain click on a link — makes the browser
+       redirect the resulting mouseup/click to this track element instead of
+       the link that was actually pressed, so the click silently never fires
+       on the <a> tag. We only capture once we've confirmed a real drag
+       (see pointerMove below), so ordinary clicks pass straight through. */
+  }
+
+  function pointerMove(e){
+    if(!dragging) return;
+    var dx = e.clientX - startX;
+    if(!moved && Math.abs(dx) > 15){
+      moved = true;
+      track.classList.add('dragging');
+      if(track.setPointerCapture){
+        try{ track.setPointerCapture(activePointerId); }catch(err){}
+      }
+    }
+    if(moved){
+      pos = wrap360(startPos - dx);
+      render();
+
+      /* sample velocity from the last little stretch of movement so
+         release can carry that speed into the momentum glide */
+      var now = performance.now();
+      var dt = now - lastMoveTime;
+      if(dt > 0){
+        var rawVelocity = (pos - lastMovePos) / dt * 1000; // px/sec
+        momentumVelocity = Math.max(-MAX_VELOCITY, Math.min(MAX_VELOCITY, rawVelocity));
+        lastMoveTime = now;
+        lastMovePos = pos;
+      }
+    }
+  }
+
+  function pointerUp(){
+    if(!dragging) return;
+    dragging = false;
+    track.classList.remove('dragging');
+    if(moved && track.releasePointerCapture){
+      try{ track.releasePointerCapture(activePointerId); }catch(err){}
+    }
+    /* hand off to momentum glide if the release was a real flick */
+    if(moved && Math.abs(momentumVelocity) > 40){
+      momentumActive = true;
+    }
+  }
+
+  track.style.animation = 'none';
+  track.addEventListener('pointerdown', pointerDown);
+  track.addEventListener('pointermove', pointerMove);
+  track.addEventListener('pointerup', pointerUp);
+  track.addEventListener('pointercancel', pointerUp);
+  track.addEventListener('pointerleave', function(){ if(dragging) pointerUp(); });
+
+  /* prevent a dragged swipe from also firing a link/card click underneath it */
+  track.addEventListener('click', function(e){
+    if(moved){ e.preventDefault(); e.stopPropagation(); }
+  }, true);
+
+  window.addEventListener('resize', measure);
+  window.addEventListener('load', measure);
+  measure();
+  requestAnimationFrame(tick);
 }
+
+initSwipeMarquee('projectTrack', 90);  // slow, gentle auto-scroll for Projects
+initSwipeMarquee('certTrack', 75);     // ~75s per loop, same pace as before
+
+/* CONTACT FORM — now using Google Apps Script (free, no submission limits) */
+function sendMsg(){
+  var name=document.getElementById('cf-name')?document.getElementById('cf-name').value.trim():'';
+  var email=document.getElementById('cf-email')?document.getElementById('cf-email').value.trim():'';
+  var subject=document.getElementById('cf-subject')?document.getElementById('cf-subject').value.trim():'';
+  var msg=document.getElementById('cf-msg')?document.getElementById('cf-msg').value.trim():'';
+  var status=document.getElementById('cf-status');
+  var btn=document.getElementById('cf-btn');
+  if(!status||!btn) return;
+  if(!name||!email||!msg){ status.style.color='#ff6b6b'; status.textContent='Please fill in all required fields.'; return; }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ status.style.color='#ff6b6b'; status.textContent='Please enter a valid email address.'; return; }
+  btn.disabled=true; btn.textContent='Sending...';
+  status.style.color='#666'; status.textContent='Sending your message\u2026';
+
+  var formData = new URLSearchParams();
+  formData.append('name', name);
+  formData.append('email', email);
+  formData.append('subject', subject || 'New message from Portfolio');
+  formData.append('message', msg);
+
+  fetch('https://script.google.com/macros/s/AKfycbx9vIB7FvB0Inv97LWBio3U4_XNGmVLPlAvZxJ7cBNQN2xtIIwkqEW9GzRj9yIxYCd7/exec',{
+    method:'POST',
+    body: formData
+  }).then(function(res){ return res.json(); }).then(function(data){
+    if(data.ok){
+      status.style.color='#22c55e'; status.textContent='Message Sent!';
+      document.getElementById('cf-name').value='';
+      document.getElementById('cf-email').value='';
+      if(document.getElementById('cf-subject')) document.getElementById('cf-subject').value='';
+      document.getElementById('cf-msg').value='';
+    } else { status.style.color='#ff6b6b'; status.textContent='Failed to send. Please try again.'; }
+    btn.textContent='SEND MESSAGE'; btn.disabled=false;
+  }).catch(function(){
+    status.style.color='#ff6b6b'; status.textContent='Failed to send. Please try again.';
+    btn.textContent='SEND MESSAGE'; btn.disabled=false;
+  });
+}
+
+/* COPY PROTECTION */
+document.addEventListener('copy',function(e){ e.preventDefault(); });
+document.addEventListener('cut',function(e){ e.preventDefault(); });
+document.addEventListener('contextmenu',function(e){ e.preventDefault(); });
+document.addEventListener('keydown',function(e){
+  if((e.ctrlKey||e.metaKey)&&['c','x','u','s','a'].includes(e.key.toLowerCase())) e.preventDefault();
+  if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&['i','j'].includes(e.key.toLowerCase()))) e.preventDefault();
+});
+
+/* ---------- EDUCATION CARD: auto-typing "real HTML" effect ---------- */
+(function () {
+  var mount = document.getElementById('eduCode');
+  if (!mount) return;
+
+  var BLANK = { indent: 0, blank: true };
+
+  /* Plain-text version — no <school year="...">, no <desc>/</desc>,
+     no </school>. Just the year, the school name, and the description,
+     styled the same as before (year highlighted, current school bold/blue,
+     description in green). */
+  function entry(year, current, school, desc) {
+    var lines = [
+      { indent: 0, segs: [
+          { c: 'code-attr-val', t: year }
+        ] },
+      { indent: 1, segs: [{ c: current ? 'code-text code-current' : 'code-text', t: school }] }
+    ];
+
+    if (desc) {
+      lines.push({ indent: 1, segs: [
+          { c: 'code-desc', t: desc }
+        ] });
+    }
+
+    lines.push(BLANK);
+    return lines;
+  }
+
+  var lines = []
+    .concat(entry(
+      '2026 - Present',
+      true,
+      'Technological University of the Philippines Manila',
+      'BTVTED Compro - Bachelor of Technical-Vocational Teacher Education, major in Computer Programming.'
+    ))
+    .concat(entry(
+      '2024 - 2026',
+      false,
+      'STI College Bacoor',
+      'TVL Track - ICT. Yearly Awarded With Honors in Grade 12. Focused on Web & Mobile Application Development.'
+    ))
+    .concat(entry(
+      '2021 - 2024',
+      false,
+      'Bacoor National High School Molino Main',
+      'Specialized in Technical Drafting, 2D/3D modeling, and digital blueprinting using AutoCAD.'
+    ));
+
+  // drop the trailing blank line after the last entry
+  lines.pop();
+
+  var CHAR_DELAY = 30;   // ms per character — slower, easier to read
+  var LINE_DELAY = 140;  // ms pause between lines
+  var typed = false;
+
+  function scrollToBottom() {
+    mount.scrollTop = mount.scrollHeight;
+  }
+
+  function typeLine(lineIndex) {
+    if (lineIndex >= lines.length) return;
+    var def = lines[lineIndex];
+
+    var row = document.createElement('div');
+    row.className = 'code-line';
+    mount.appendChild(row);
+
+    if (def.blank) {
+      row.innerHTML = '&nbsp;';
+      scrollToBottom();
+      setTimeout(function () { typeLine(lineIndex + 1); }, LINE_DELAY);
+      return;
+    }
+
+    var content = document.createElement('span');
+    content.className = 'code-content';
+    if (def.indent) content.style.marginLeft = (def.indent * 1.6) + 'rem';
+    row.appendChild(content);
+
+    var caret = document.createElement('span');
+    caret.className = 'code-caret';
+    content.appendChild(caret);
+
+    var segIndex = 0, charIndex = 0;
+
+    function typeChar() {
+      if (segIndex >= def.segs.length) {
+        caret.remove();
+        setTimeout(function () { typeLine(lineIndex + 1); }, LINE_DELAY);
+        return;
+      }
+      var seg = def.segs[segIndex];
+      if (charIndex === 0) {
+        var span = document.createElement('span');
+        span.className = seg.c;
+        content.insertBefore(span, caret);
+      }
+      var span = caret.previousSibling;
+      span.textContent += seg.t[charIndex];
+      charIndex++;
+      if (charIndex >= seg.t.length) {
+        segIndex++;
+        charIndex = 0;
+      }
+      scrollToBottom();
+      setTimeout(typeChar, CHAR_DELAY);
+    }
+    typeChar();
+  }
+
+  function startTyping() {
+    if (typed) return;
+    typed = true;
+    mount.innerHTML = '';
+    typeLine(0);
+  }
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        startTyping();
+        observer.disconnect();
+      }
+    });
+  }, { threshold: 0.25 });
+
+  observer.observe(mount);
+})();
+
+/* ---------- TESTIMONIALS: fanned deck cycler ---------- */
+(function () {
+  var deck = document.getElementById('testiDeck');
+  var dotsWrap = document.getElementById('testiDots');
+  if (!deck || !dotsWrap) return;
+
+  var cards = Array.prototype.slice.call(deck.querySelectorAll('.testi-card'));
+  if (!cards.length) return;
+
+  var active = 0;
+  var AUTOPLAY_MS = 6000;
+  var timer = null;
+
+  /* Cards are stacked with position:absolute so the deck wrapper doesn't
+     naturally grow to fit them. Measure the tallest card's real content
+     height (scrollHeight still reports full content even when a card's
+     own box is being stretched to inset:0) and size the deck to match,
+     so a longer quote never pushes the avatar/name below the card. */
+  function sizeDeck() {
+    var maxH = 0;
+    cards.forEach(function (c) {
+      maxH = Math.max(maxH, c.scrollHeight);
+    });
+    if (maxH > 0) deck.style.height = maxH + 'px';
+  }
+  sizeDeck();
+  window.addEventListener('resize', sizeDeck);
+  window.addEventListener('load', sizeDeck);
+
+  cards.forEach(function (_, i) {
+    var dot = document.createElement('button');
+    dot.className = 'testi-dot';
+    dot.setAttribute('aria-label', 'Show testimonial ' + (i + 1));
+    dot.addEventListener('click', function () { goTo(i); });
+    dotsWrap.appendChild(dot);
+  });
+  var dots = Array.prototype.slice.call(dotsWrap.querySelectorAll('.testi-dot'));
+
+  function render() {
+    cards.forEach(function (card, i) {
+      card.classList.remove('testi-active', 'testi-behind-1', 'testi-behind-2', 'testi-hidden');
+      var offset = (i - active + cards.length) % cards.length;
+      if (offset === 0) card.classList.add('testi-active');
+      else if (offset === 1) card.classList.add('testi-behind-1');
+      else if (offset === 2) card.classList.add('testi-behind-2');
+      else card.classList.add('testi-hidden');
+    });
+    dots.forEach(function (d, i) { d.classList.toggle('testi-dot-active', i === active); });
+  }
+
+  function goTo(i) {
+    active = i % cards.length;
+    render();
+    restartAutoplay();
+  }
+
+  function next() { goTo((active + 1) % cards.length); }
+
+  function restartAutoplay() {
+    if (timer) clearInterval(timer);
+    if (cards.length > 1) timer = setInterval(next, AUTOPLAY_MS);
+  }
+
+  cards.forEach(function (card, i) {
+    card.addEventListener('click', function () {
+      if (i !== active) goTo(i);
+    });
+  });
+
+  render();
+  restartAutoplay();
+})();
+
+/* TECH TIP EDGE GUARD — keeps the Technical Stack description card from
+   spilling off the left/right edge of the screen on mobile. The card is
+   centered on its icon by default; this measures how far it would
+   overflow the viewport and pushes it back in by setting --tip-shift,
+   which .tech-tip (and its pointer arrow) already read from the CSS.
+   Recalculated right as each tooltip is about to show (hover/touch/focus)
+   rather than only once at page load, so it can never go stale if the
+   layout shifts after load (font reflow, scroll, browser UI collapsing). */
+function computeTipShift(box){
+  var tip = box.querySelector('.tech-tip');
+  if(!tip) return;
+  var margin = 12;
+
+  box.classList.remove('tip-flip');
+  box.style.setProperty('--tip-shift','0px'); // reset before measuring
+
+  var boxRect = box.getBoundingClientRect();
+
+  // vertical flip: not enough room above -> show tooltip below instead
+  var tipHeight = tip.offsetHeight;
+  var spaceAbove = boxRect.top;
+  if (spaceAbove < tipHeight + 14 + 20) {
+    box.classList.add('tip-flip');
+  }
+
+  var tipWidth = tip.offsetWidth;
+  var vw = (window.visualViewport && window.visualViewport.width) || window.innerWidth;
+  var centerX = boxRect.left + boxRect.width / 2;
+  var tipLeft = centerX - tipWidth / 2;
+  var tipRight = centerX + tipWidth / 2;
+
+  var shift = 0;
+  if (tipLeft < margin) {
+    shift = margin - tipLeft;
+  } else if (tipRight > vw - margin) {
+    shift = (vw - margin) - tipRight;
+  }
+  box.style.setProperty('--tip-shift', shift + 'px');
+}
+
+document.querySelectorAll('.tech-icon-box').forEach(function(box){
+  box.addEventListener('mouseenter', function(){ computeTipShift(box); });
+  box.addEventListener('touchstart', function(){ computeTipShift(box); }, { passive:true });
+  box.addEventListener('focus', function(){ computeTipShift(box); }, true);
+});
+
+function adjustAllTechTips(){
+  document.querySelectorAll('.tech-icon-box').forEach(computeTipShift);
+}
+window.addEventListener('load', adjustAllTechTips);
+window.addEventListener('resize', adjustAllTechTips);
+window.addEventListener('orientationchange', adjustAllTechTips);
