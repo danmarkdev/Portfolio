@@ -1147,7 +1147,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 /* RESPONSIVE */
 @media(max-width:960px){
   #nav{display:none}
-  .nav-cta{display:none}
+  #header .nav-cta{display:none}
   .hamburger{display:flex}
 
   .hero{padding-top:calc(var(--nav-h) + 3rem);padding-bottom:2rem;min-height:auto}
