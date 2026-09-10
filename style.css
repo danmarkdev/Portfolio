@@ -235,37 +235,30 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 .mobile-nav a.active{color:var(--accent)}
 
 /* Contact — same pill card as the rest, but blue text instead of a filled button.
-   position:relative so the arrow icon (see .mnav-cta-arrow) can be pinned to
-   the right edge of the pill, independently of the centered label. */
+   display:flex + justify-content:center keeps the label and arrow sitting
+   right next to each other (like the desktop "Let's Talk" pill) instead of
+   the label being centered alone with the arrow off on the far edge. */
 .mobile-nav a.mnav-cta{
   background:var(--surface);
   color:var(--text);
   font-weight:700;
-  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:.5rem;
 }
 .mobile-nav a.mnav-cta:hover{
   color:var(--accent-hover);
   background:var(--surface);
 }
-/* The label is its own block, centered on its own — independent of the
-   arrow icon next to it. This is what makes the middle of the "Let's
-   Talk" letters land on the exact same center line as "Certifications"
-   and the other plain-text pills, instead of the arrow's width pulling
-   the whole "Let's Talk ↗" string off-center. */
 .mnav-cta-label{
-  display:block;
-  width:100%;
-  text-align:center;
+  display:inline;
 }
-/* Taken out of flow and pinned to the right edge of the pill so it never
-   affects the label's centering above. Also fixes the old unicode arrow
-   rendering as a colorful emoji glyph on iOS — this is a plain vector
-   icon, so it looks identical to the desktop "Let's Talk" arrow. */
+/* Sits directly after the label text now (normal flow, small gap) instead
+   of being pinned to the pill's right edge. Still a plain vector icon
+   rather than the old unicode "↗" character, so it renders identically on
+   every platform instead of iOS swapping it for a colorful emoji glyph. */
 .mnav-cta-arrow{
-  position:absolute;
-  top:50%;
-  right:1.6rem;
-  transform:translateY(-50%);
   flex-shrink:0;
 }
 
