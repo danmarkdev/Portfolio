@@ -53,6 +53,25 @@ function closeMenu(){
   if(hbg) hbg.setAttribute('aria-expanded','false');
 }
 
+/* KEEP THE MOBILE MENU IN SYNC WITH VIEWPORT WIDTH
+   The mobile nav overlay is only ever opened/closed by JS (the
+   ".open" class) — it has no CSS media query of its own that hides it
+   above the mobile breakpoint. So if it's left open and the window
+   crosses back above 960px (closing DevTools' device toolbar,
+   rotating a tablet, resizing the browser, etc.) it stayed stuck open,
+   full-screen, on top of the desktop layout. This listener closes it
+   automatically the moment the viewport is no longer "mobile" width,
+   matching the same 960px breakpoint used in style.css. */
+var MOBILE_BREAKPOINT = window.matchMedia('(max-width: 960px)');
+function handleBreakpointChange(e){
+  if(!e.matches) closeMenu();
+}
+if (MOBILE_BREAKPOINT.addEventListener) {
+  MOBILE_BREAKPOINT.addEventListener('change', handleBreakpointChange);
+} else if (MOBILE_BREAKPOINT.addListener) {
+  MOBILE_BREAKPOINT.addListener(handleBreakpointChange); // older Safari fallback
+}
+
 /* ACTIVE NAV */
 var sections=document.querySelectorAll('section[id]');
 var navLinks=document.querySelectorAll('#nav a:not(.nav-cta)');
