@@ -366,15 +366,21 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .photo-wrap{width:260px;height:260px;border-radius:50%;overflow:hidden;position:relative;z-index:1;border:6px solid var(--bg);box-shadow:var(--shadow-card)}
 .photo-wrap img{width:100%;height:100%;object-fit:cover}
 
-/* TECH STACK — icon-only badges floating around the profile photo.
-   Fixed positions (angle set once per item via --angle), no orbit spin —
-   each badge just bobs gently up and down at its own place. */
+/* TECH STACK — icons orbit continuously around the profile photo, staying
+   upright the whole way round (ring rotates, icon counter-rotates by the
+   same amount so it never spins/tumbles), plus a gentle bob on top. */
 .orbit-ring{
   position:absolute;
   inset:0;
   z-index:2;
   pointer-events:none;
   --radius:192px;
+  --orbit-duration:32s;
+  animation: orbitSpin var(--orbit-duration) linear infinite;
+}
+@keyframes orbitSpin{
+  from{ rotate:0deg; }
+  to{ rotate:360deg; }
 }
 
 .orbit-item{
@@ -390,36 +396,46 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   top:0;
   left:0;
   pointer-events:auto;
-  animation-name: floatBob;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
+  transform:translate(-50%,-50%);
+  animation-name: floatBob, counterSpin;
+  animation-timing-function: ease-in-out, linear;
+  animation-iteration-count: infinite, infinite;
+  animation-duration: 3s, var(--orbit-duration, 32s);
+  animation-delay: 0s, 0s;
 }
+.photo-orbit:hover .orbit-ring,
 .photo-orbit:hover .orbit-counter{animation-play-state:paused}
 
 @keyframes floatBob{
-  0%,100%{transform:translate(-50%,-50%) rotate(calc(var(--angle) * -1)) translateY(0)}
-  50%{transform:translate(-50%,-50%) rotate(calc(var(--angle) * -1)) translateY(-8px)}
+  0%,100%{transform:translate(-50%,-50%) translateY(0)}
+  50%{transform:translate(-50%,-50%) translateY(-8px)}
+}
+/* cancels the ring's rotation so each icon stays upright as it orbits;
+   starts from its own fixed angle offset, then sweeps a full -360deg
+   in lockstep with the ring's +360deg */
+@keyframes counterSpin{
+  from{ rotate: calc(var(--angle) * -1); }
+  to{ rotate: calc(var(--angle) * -1 - 360deg); }
 }
 
-/* stagger delay/duration per icon so they don't all bob in unison —
-   gives a natural, organic "floating" feel like the reference site */
-.orbit-item.oi-0 .orbit-counter{animation-delay:0s;animation-duration:3s}
-.orbit-item.oi-1 .orbit-counter{animation-delay:.2s;animation-duration:3.4s}
-.orbit-item.oi-2 .orbit-counter{animation-delay:.4s;animation-duration:2.8s}
-.orbit-item.oi-3 .orbit-counter{animation-delay:.1s;animation-duration:3.6s}
-.orbit-item.oi-4 .orbit-counter{animation-delay:.5s;animation-duration:3.1s}
-.orbit-item.oi-5 .orbit-counter{animation-delay:.3s;animation-duration:2.9s}
-.orbit-item.oi-6 .orbit-counter{animation-delay:.6s;animation-duration:3.5s}
-.orbit-item.oi-7 .orbit-counter{animation-delay:.15s;animation-duration:3.2s}
-.orbit-item.oi-8 .orbit-counter{animation-delay:.45s;animation-duration:2.7s}
-.orbit-item.oi-9 .orbit-counter{animation-delay:.25s;animation-duration:3.7s}
-.orbit-item.oi-10 .orbit-counter{animation-delay:.55s;animation-duration:3.3s}
-.orbit-item.oi-11 .orbit-counter{animation-delay:.35s;animation-duration:2.85s}
-.orbit-item.oi-12 .orbit-counter{animation-delay:.05s;animation-duration:3.45s}
-.orbit-item.oi-13 .orbit-counter{animation-delay:.5s;animation-duration:3.05s}
-.orbit-item.oi-14 .orbit-counter{animation-delay:.3s;animation-duration:3.3s}
-.orbit-item.oi-15 .orbit-counter{animation-delay:.55s;animation-duration:3.9s}
-
+/* stagger the BOB only — the orbit itself must stay perfectly in sync
+   across every icon, so only the first value (floatBob) changes here */
+.orbit-item.oi-0 .orbit-counter{animation-duration:3s, var(--orbit-duration,32s);animation-delay:0s, 0s}
+.orbit-item.oi-1 .orbit-counter{animation-duration:3.4s, var(--orbit-duration,32s);animation-delay:.2s, 0s}
+.orbit-item.oi-2 .orbit-counter{animation-duration:2.8s, var(--orbit-duration,32s);animation-delay:.4s, 0s}
+.orbit-item.oi-3 .orbit-counter{animation-duration:3.6s, var(--orbit-duration,32s);animation-delay:.1s, 0s}
+.orbit-item.oi-4 .orbit-counter{animation-duration:3.1s, var(--orbit-duration,32s);animation-delay:.5s, 0s}
+.orbit-item.oi-5 .orbit-counter{animation-duration:2.9s, var(--orbit-duration,32s);animation-delay:.3s, 0s}
+.orbit-item.oi-6 .orbit-counter{animation-duration:3.5s, var(--orbit-duration,32s);animation-delay:.6s, 0s}
+.orbit-item.oi-7 .orbit-counter{animation-duration:3.2s, var(--orbit-duration,32s);animation-delay:.15s, 0s}
+.orbit-item.oi-8 .orbit-counter{animation-duration:2.7s, var(--orbit-duration,32s);animation-delay:.45s, 0s}
+.orbit-item.oi-9 .orbit-counter{animation-duration:3.7s, var(--orbit-duration,32s);animation-delay:.25s, 0s}
+.orbit-item.oi-10 .orbit-counter{animation-duration:3.3s, var(--orbit-duration,32s);animation-delay:.55s, 0s}
+.orbit-item.oi-11 .orbit-counter{animation-duration:2.85s, var(--orbit-duration,32s);animation-delay:.35s, 0s}
+.orbit-item.oi-12 .orbit-counter{animation-duration:3.45s, var(--orbit-duration,32s);animation-delay:.05s, 0s}
+.orbit-item.oi-13 .orbit-counter{animation-duration:3.05s, var(--orbit-duration,32s);animation-delay:.5s, 0s}
+.orbit-item.oi-14 .orbit-counter{animation-duration:3.3s, var(--orbit-duration,32s);animation-delay:.3s, 0s}
+.orbit-item.oi-15 .orbit-counter{animation-duration:3.9s, var(--orbit-duration,32s);animation-delay:.55s, 0s}
 /* icon-only circular badge (no text) */
 .stack-badge{
   display:flex;
