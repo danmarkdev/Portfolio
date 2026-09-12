@@ -7,7 +7,7 @@
   --bg:#f7f8fb;
   --surface:#ffffff;
   --accent:#3355FF;
-  --accent-glow:rgba(51,85,255,.24);
+  --accent-glow:rgba(51,85,255,.24); 
   --accent-hover:#2543D6;
   --accent-soft:#eef1ff;
   --text:#12162b;
@@ -399,10 +399,11 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .photo-orbit:hover .orbit-counter{animation-play-state:paused}
 
 @keyframes floatBob{
-  0%,100%{transform:translate(-50%,-50%) rotate(calc(var(--angle) * -1)) translateY(0)}
-  50%{transform:translate(-50%,-50%) rotate(calc(var(--angle) * -1)) translateY(-8px)}
+  0%,100%{transform:translate(-50%,-50%) rotate(calc(var(--angle) * -1)) translate(0,0) scale(1)}
+  25%{transform:translate(-50%,-50%) rotate(calc(var(--angle) * -1)) translate(5px,-12px) scale(1.05)}
+  50%{transform:translate(-50%,-50%) rotate(calc(var(--angle) * -1)) translate(-4px,-18px) scale(1)}
+  75%{transform:translate(-50%,-50%) rotate(calc(var(--angle) * -1)) translate(-6px,-8px) scale(0.96)}
 }
-
 /* stagger delay/duration per icon so they don't all bob in unison —
    gives a natural, organic "floating" feel like the reference site */
 .orbit-item.oi-0 .orbit-counter{animation-delay:0s;animation-duration:3s}
