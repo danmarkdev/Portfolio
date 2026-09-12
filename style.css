@@ -3,11 +3,11 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 
 :root{
-  /* Flat modern palette — clean cards, single soft drop-shadow, no inset/emboss */  
+  /* Flat modern palette — clean cards, single soft drop-shadow, no inset/emboss */ 
   --bg:#f7f8fb;
   --surface:#ffffff;
   --accent:#3355FF;
-  --accent-glow:rgba(51,85,255,.24); 
+  --accent-glow:rgba(51,85,255,.24);
   --accent-hover:#2543D6;
   --accent-soft:#eef1ff;
   --text:#12162b;
@@ -377,11 +377,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   z-index:2;
   pointer-events:none;
   --radius:192px;
-  animation: ringSpin 40s linear infinite;
-}
-@keyframes ringSpin{
-  from{transform:rotate(0deg)}
-  to{transform:rotate(360deg)}
 }
 
 .orbit-item{
@@ -397,7 +392,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   top:0;
   left:0;
   pointer-events:auto;
-  animation-name: floatBob, counterSpin;
+  animation-name: floatBob;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
 }
@@ -411,10 +406,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   70%{transform:translate(-50%,-50%) rotate(calc(var(--angle) * -1)) translate(20px,-40px) scale(1.06) rotate(-10deg)}
   85%{transform:translate(-50%,-50%) rotate(calc(var(--angle) * -1)) translate(10px,-10px) scale(1.03) rotate(4deg)}
 }
-@keyframes counterSpin{
-  from{transform:rotate(0deg)}
-  to{transform:rotate(-360deg)}
-}
+
 /* stagger delay/duration per icon so they don't all bob in unison —
    gives a natural, organic "floating" feel like the reference site */
 .orbit-item.oi-0 .orbit-counter{animation-delay:0s;animation-duration:3s}
