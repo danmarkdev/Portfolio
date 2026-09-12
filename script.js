@@ -127,10 +127,13 @@ document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
    (Pointer Events cover both), and keeps auto-scrolling on its own
    whenever the person isn't actively dragging it. loopSeconds controls
    how long one full auto-scroll loop takes, same as the old CSS
-   animation did. */
-function initSwipeMarquee(trackId, loopSeconds){
+   animation did. direction controls which way the row drifts on its
+   own (1 = normal, -1 = reversed) — used so the two Certificates rows
+   scroll opposite ways instead of both sliding the same direction. */
+function initSwipeMarquee(trackId, loopSeconds, direction){
+  direction = direction || 1;
   var track = document.getElementById(trackId);
-  var wrap = track ? track.closest('.projects-marquee, .cert-marquee') : null;
+  var wrap = track ? track.closest('.projects-marquee, .cert-marquee-row') : null;
   if(!track || !wrap) return;
 
   var half = 0;          // width of one full (non-duplicated) set of cards
@@ -155,7 +158,7 @@ function initSwipeMarquee(trackId, loopSeconds){
 
   function measure(){
     half = track.scrollWidth / 2;
-    speed = half / loopSeconds;
+    speed = (half / loopSeconds) * direction;
   }
 
   function wrap360(p){
@@ -266,8 +269,9 @@ function initSwipeMarquee(trackId, loopSeconds){
   requestAnimationFrame(tick);
 }
 
-initSwipeMarquee('projectTrack', 90);  // slow, gentle auto-scroll for Projects
-initSwipeMarquee('certTrack', 75);     // ~75s per loop, same pace as before
+initSwipeMarquee('projectTrack', 90, 1);  // slow, gentle auto-scroll for Projects
+initSwipeMarquee('certTrack', 75, 1);     // ~75s per loop, same pace as before
+initSwipeMarquee('certTrack2', 75, -1);   // second row, scrolls the opposite way
 
 /* CONTACT FORM — now using Google Apps Script (free, no submission limits) */
 function sendMsg(){
