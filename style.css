@@ -160,9 +160,11 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 #header .nav-cta:active,
 #header .nav-cta.active,
 #header .nav-cta:visited{
-  background:var(--surface);
-  border-color:var(--border);
-  color:var(--text);
+  background:var(--surface) !important;
+  border-color:var(--border) !important;
+  color:var(--text) !important;
+  font-family:var(--font-body) !important;
+  font-weight:600 !important;
 }
 /* keep a light lift/shadow so it still feels interactive, without any
    color or background change on hover/click */
