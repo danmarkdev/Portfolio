@@ -5,7 +5,7 @@
 :root{
   /* Flat modern palette — clean cards, single soft drop-shadow, no inset/emboss */ 
   --bg:#f7f8fb;
-  --surface:#ffffff;
+  --surface:#fafbfc;
   --accent:#3355FF;
   --accent-glow:rgba(51,85,255,.24);
   --accent-hover:#2543D6;
@@ -120,8 +120,8 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   position: relative;
   transition: color .2s ease, background .2s ease;
 }
-#nav a:hover{color:var(--text);background:var(--accent-soft)}
-#nav a.active{color:var(--accent);font-weight:600;background:var(--accent-soft)}
+#nav a:hover{color:var(--text);background:transparent}
+#nav a.active{color:var(--accent);font-weight:700;background:transparent}
 
 .nav-cta{
   display:inline-flex;
