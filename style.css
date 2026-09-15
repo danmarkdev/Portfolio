@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Sora:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box} 
 
 :root{
   /* Flat modern palette — clean cards, single soft drop-shadow, no inset/emboss */ 
@@ -72,7 +72,7 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   width:calc(100% - 2.5rem);
   max-width:900px;
   height:auto;
-  background:rgba(255,255,255,.78);
+  background:rgba(244,247,252,.78);
   backdrop-filter:blur(16px);
   -webkit-backdrop-filter:blur(16px);
   border:1px solid var(--border);
@@ -86,7 +86,7 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   box-shadow:var(--shadow-card);
   transition:box-shadow .3s ease, background .3s ease, border-color .3s ease;
 }
-#header.scrolled{background:rgba(255,255,255,.94);box-shadow:var(--shadow-card-hover);border-color:rgba(230,232,240,.9)}
+#header.scrolled{background:rgba(244,247,252,.94);box-shadow:var(--shadow-card-hover);border-color:rgba(230,232,240,.9)}
 .logo{
   font-family: var(--font-heading);
   font-size: 1.05rem;
@@ -652,7 +652,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   transform:translateX(calc(-50% + var(--tip-shift, 0px))) translateY(6px);
   width:max-content;
   max-width:200px;
-  background:#ffffff;
+  background:var(--surface);
   border:1px solid var(--border);
   border-radius:8px;
   padding:.5rem .9rem;
@@ -701,7 +701,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   left:50%;
   transform:translateX(calc(-50% - var(--tip-shift, 0px)));
   border:6px solid transparent;
-  border-top-color:#ffffff;
+  border-top-color:var(--surface)
 }
 .tech-icon-box.tip-flip .tech-tip{
   bottom:auto;
@@ -715,7 +715,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   top:auto;
   bottom:100%;
   border-top-color:transparent;
-  border-bottom-color:#ffffff;
+  border-bottom-color:var(--surface)
 }
 
 /* SKILLS — DESKTOP: give the grid a little more breathing room, lock the
