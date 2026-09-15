@@ -644,7 +644,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
    neutral chip, instead of the mismatched per-icon inline background
    colors (some brand-colored, some plain white) set in the HTML. */
 .tech-icon-box > .fb-icon{
-  background: var(--accent-soft) !important;
+  background: var(--surface) !important;
   border: 1px solid var(--border);
 }
 /* simplified tooltip — name-only dark pill, no icon/tag/description */
@@ -979,7 +979,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 .contact-info-list{display:flex;flex-direction:column}
 .contact-info-sep{height:1px;background:rgba(163,177,198,.35);display:block}
-.contact-info-item{display:flex;align-items:center;gap:1.25rem;padding:1.1rem 0}
+.contact-info-item{display:flex;align-items:center;gap:1.25rem;padding:1.1rem 0;text-decoration:none;cursor:pointer}
 .contact-info-icon{width:44px;height:44px;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:var(--accent);border-radius:50%;background:var(--accent-soft);transition:background .2s,color .2s}
 .contact-info-icon svg{width:17px;height:17px;stroke:currentColor;stroke-width:1.6;fill:none}
 .contact-info-item:hover .contact-info-icon{background:var(--accent);color:#ffffff}
