@@ -4,8 +4,8 @@
 
 :root{
   /* Flat modern palette — clean cards, single soft drop-shadow, no inset/emboss */ 
-  --bg:#e8edf5;
-  --surface:#f4f7fc;
+  --bg:#e4e9f5;
+  --surface:#e4e9f5;
   --accent:#3355FF;
   --accent-glow:rgba(51,85,255,.24);
   --accent-hover:#2543D6;
