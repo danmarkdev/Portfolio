@@ -72,7 +72,7 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   width:calc(100% - 2.5rem);
   max-width:900px;
   height:auto;
-  background:rgba(244,247,252,.78);
+  background:var(--surface);
   backdrop-filter:blur(16px);
   -webkit-backdrop-filter:blur(16px);
   border:1px solid var(--border);
@@ -86,8 +86,7 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   box-shadow:var(--shadow-card);
   transition:box-shadow .3s ease, background .3s ease, border-color .3s ease;
 }
-#header.scrolled{background:rgba(244,247,252,.94);box-shadow:var(--shadow-card-hover);border-color:rgba(230,232,240,.9)}
-.logo{
+  #header.scrolled{background:var(--surface);box-shadow:var(--shadow-card-hover);border-color:rgba(230,232,240,.9)}
   font-family: var(--font-heading);
   font-size: 1.05rem;
   font-weight: 700;
