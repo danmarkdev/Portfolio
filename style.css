@@ -647,7 +647,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   background: var(--accent-soft) !important;
   border: 1px solid var(--border);
 }
-
 /* simplified tooltip — name-only dark pill, no icon/tag/description */
 .tech-tip{
   position:absolute;
