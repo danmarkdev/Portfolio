@@ -13,7 +13,7 @@
   --text:#12162b;
   --muted:#565f7a;
   --dim:#8890a8;
-  --border:#e6e8f0;
+  --border:#c3cde3;
   --nav-h:96px;
   --max-w:1140px;
   --font-heading:'Sora', sans-serif;
@@ -101,6 +101,12 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   gap:.4rem;
 }
 .logo-dot{color:var(--text)}
+#header .logo,
+#header .logo:visited,
+#header .logo:hover{
+  color:var(--text) !important;
+  font-weight:700;
+}
 
 #nav{
   display:flex;
@@ -120,7 +126,7 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   transition: color .2s ease, background .2s ease;
 }
 #nav a:hover,
-#nav a.active{color:var(--accent);font-weight:600;background:var(--accent-soft)}
+#nav a.active{color:var(--accent);font-weight:600}
 
 .nav-cta{
   display:inline-flex;
