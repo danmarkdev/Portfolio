@@ -532,7 +532,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 
 .project-img-wrap{
   width:100%;
-  aspect-ratio:16/9;
+  aspect-ratio:21/9;
   overflow:hidden;
   padding:.7rem .7rem 0;
   background:var(--bg);
@@ -550,7 +550,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 .project-card:hover .project-img-wrap img{transform:scale(1.03)}
 
-.project-body{padding:1.35rem 1.5rem 1.6rem;display:flex;flex-direction:column;gap:.5rem;flex:1}
+.project-body{padding:1rem 1.25rem 1.2rem;display:flex;flex-direction:column;gap:.35rem;flex:1}
 
 .project-title-row{
   display:flex;
@@ -561,7 +561,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 
 .project-card-title{
   font-family: var(--font-heading);
-  font-size: 1.08rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--text);
   line-height: 1.3;
@@ -595,9 +595,9 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 
 .project-card-desc{
   font-family: var(--font-body);
-  font-size: .87rem;
+  font-size: .82rem;
   color: var(--muted);
-  line-height: 1.65;
+  line-height: 1.55;
 }
 
 /* SKILLS — light "tech panel" card matching the site's surface style,
