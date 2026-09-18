@@ -402,12 +402,14 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   width:28px;
   height:28px;
   border-radius:8px;
-  background:var(--accent);
-  color:#ffffff;
+  background:var(--surface);
+  border:1px solid var(--border);
+  color:var(--accent);
   display:flex;
   align-items:center;
   justify-content:center;
   flex-shrink:0;
+}
 }
 .years-badge-icon svg{width:16px;height:16px;stroke:currentColor;fill:none}
 .years-badge-text{display:flex;flex-direction:column;gap:.05rem;line-height:1.2}
