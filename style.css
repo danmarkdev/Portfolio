@@ -383,8 +383,9 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .years-badge{
   position:absolute;
   bottom:-12px;
-  left:20%;
+  left:50%;
   right:auto;
+  transform:translateX(-50%);
   z-index:3;
   display:flex;
   align-items:center;
@@ -396,11 +397,11 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   box-shadow:var(--shadow-card-hover);
   max-width:150px;
 }
-/* Icon chip now matches the reference site's solid filled-circle style */
+/* Icon chip now matches Reb's rounded-square filled style (not a circle) */
 .years-badge-icon{
   width:28px;
   height:28px;
-  border-radius:100px;
+  border-radius:8px;
   background:var(--accent);
   color:#ffffff;
   display:flex;
@@ -1229,8 +1230,8 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .mobile-br{display:inline}
   .photo-orbit{max-width:370px;margin:0 auto}
   .photo-wrap{width:220px;height:220px}
-  .years-badge{left:14%;right:auto;bottom:-10px;padding:.4rem .65rem;gap:.4rem;max-width:130px}
-  .years-badge-icon{width:24px;height:24px;border-radius:100px}
+  .years-badge{left:50%;right:auto;transform:translateX(-50%);bottom:-10px;padding:.4rem .65rem;gap:.4rem;max-width:130px}
+  .years-badge-icon{width:24px;height:24px;border-radius:7px}
   .years-badge-icon svg{width:11px;height:11px}
   .years-badge-num{font-size:.68rem}
   .years-badge-sub{font-size:.52rem}
@@ -1296,8 +1297,8 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 
   .code-line{font-size:.66rem}
   .code-body{height:260px}
-  .years-badge{left:10%;right:auto;bottom:-8px;padding:.35rem .55rem;gap:.35rem;max-width:120px;border-radius:10px}
-  .years-badge-icon{width:20px;height:20px;border-radius:100px}
+  .years-badge{left:50%;right:auto;transform:translateX(-50%);bottom:-8px;padding:.35rem .55rem;gap:.35rem;max-width:120px;border-radius:10px}
+  .years-badge-icon{width:20px;height:20px;border-radius:6px}
   .years-badge-icon svg{width:10px;height:10px}
   .years-badge-num{font-size:.62rem}
   .years-badge-sub{font-size:.48rem}
