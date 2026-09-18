@@ -1229,11 +1229,11 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .mobile-br{display:inline}
   .photo-orbit{max-width:370px;margin:0 auto}
   .photo-wrap{width:220px;height:220px}
-  .years-badge{left:14%;right:auto;bottom:-14px;padding:.6rem .85rem;gap:.55rem;max-width:170px}
-  .years-badge-icon{width:32px;height:32px;border-radius:100px}
-  .years-badge-icon svg{width:15px;height:15px}
-  .years-badge-num{font-size:.85rem}
-  .years-badge-sub{font-size:.62rem}
+  .years-badge{left:14%;right:auto;bottom:-10px;padding:.4rem .65rem;gap:.4rem;max-width:130px}
+  .years-badge-icon{width:24px;height:24px;border-radius:100px}
+  .years-badge-icon svg{width:11px;height:11px}
+  .years-badge-num{font-size:.68rem}
+  .years-badge-sub{font-size:.52rem}
   .stack-badge{width:48px;height:48px}
   .stack-badge .fb-icon img,
   .stack-badge .fb-icon svg{width:28px;height:28px}
