@@ -86,12 +86,7 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   box-shadow:var(--shadow-card);
   transition:box-shadow .3s ease, background .3s ease, border-color .3s ease;
 }
-#header.scrolled{background:var(--surface);box-shadow:var(--shadow-card-hover);border-color:rgba(230,232,240,.9)}
-
-/* NOTE: this ".logo" selector was missing in the previous version of the
-   file — the properties below were sitting loose right after the
-   "#header.scrolled" rule, which made the browser throw them away. */
-.logo{
+  #header.scrolled{background:var(--surface);box-shadow:var(--shadow-card-hover);border-color:rgba(230,232,240,.9)}
   font-family: var(--font-heading);
   font-size: 1.05rem;
   font-weight: 700;
@@ -207,8 +202,10 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   visibility:hidden;
   transform:scale(.97);
   transition:opacity .3s ease,transform .3s ease,visibility .3s;
+  padding:calc(var(--nav-h) - .5rem) 1.5rem 1.5rem;
   overflow-y:auto;
   -webkit-overflow-scrolling:touch;
+  z-index:998;
 }
 .mobile-nav::before,
 .mobile-nav::after{
@@ -375,56 +372,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .photo-frame{position:relative;display:inline-block;z-index:2}
 .photo-wrap{width:260px;height:260px;border-radius:50%;overflow:hidden;position:relative;z-index:1;border:6px solid var(--bg);box-shadow:var(--shadow-card)}
 .photo-wrap img{width:100%;height:100%;object-fit:cover}
-
-/* YEARS-OF-EXPERIENCE BADGE — floating card that overlaps the bottom of
-   the profile photo, matching the reference site's "5 Years" badge.
-   Anchored from the LEFT (not the right) so it sits under the photo and
-   overhangs to the right, instead of hanging off the circle's edge. */
-.years-badge{
-  position:absolute;
-  bottom:-12px;
-  left:50%;
-  right:auto;
-  transform:translateX(-50%);
-  z-index:3;
-  display:flex;
-  align-items:center;
-  gap:.5rem;
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:.45rem .75rem;
-  box-shadow:var(--shadow-card-hover);
-  max-width:150px;
-}
-/* Icon chip now matches Reb's rounded-square filled style (not a circle) */
-.years-badge-icon{
-  width:28px;
-  height:28px;
-  border-radius:8px;
-  background:var(--surface);
-  border:1px solid var(--border);
-  color:var(--accent);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-shrink:0;
-}
-}
-.years-badge-icon svg{width:16px;height:16px;stroke:currentColor;fill:none}
-.years-badge-text{display:flex;flex-direction:column;gap:.05rem;line-height:1.2}
-.years-badge-num{
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: .74rem;
-  color: var(--text);
-}
-.years-badge-sub{
-  font-family: var(--font-body);
-  font-size: .56rem;
-  font-weight: 500;
-  color: var(--muted);
-}
 
 /* TECH STACK — icon-only badges floating around the profile photo.
    Fixed positions (angle set once per item via --angle), no orbit spin —
@@ -1232,19 +1179,14 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .mobile-br{display:inline}
   .photo-orbit{max-width:370px;margin:0 auto}
   .photo-wrap{width:220px;height:220px}
-  .years-badge{left:50%;right:auto;transform:translateX(-50%);bottom:-10px;padding:.4rem .65rem;gap:.4rem;max-width:130px}
-  .years-badge-icon{width:24px;height:24px;border-radius:7px}
-  .years-badge-icon svg{width:13px;height:13px}
-  .years-badge-num{font-size:.68rem}
-  .years-badge-sub{font-size:.52rem}
   .stack-badge{width:48px;height:48px}
   .stack-badge .fb-icon img,
   .stack-badge .fb-icon svg{width:28px;height:28px}
   .orbit-ring{--radius:162px}
   .contact-page-grid{grid-template-columns:1fr}
   .footer-inner{flex-direction:column;gap:.5rem;text-align:center}
-  .tech-icon-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:.85rem}
-  .tech-icon-box{width:calc(25% - .64rem);max-width:72px;aspect-ratio:1/1;height:auto}
+.tech-icon-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:.85rem}
+.tech-icon-box{width:calc(25% - .64rem);max-width:72px;aspect-ratio:1/1;height:auto}
 }
 @media(max-width:700px){
   .section-header{align-items:center}
@@ -1299,9 +1241,4 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 
   .code-line{font-size:.66rem}
   .code-body{height:260px}
-  .years-badge{left:50%;right:auto;transform:translateX(-50%);bottom:-8px;padding:.35rem .55rem;gap:.35rem;max-width:120px;border-radius:10px}
-  .years-badge-icon{width:20px;height:20px;border-radius:6px}
-  .years-badge-icon svg{width:12px;height:12px}
-  .years-badge-num{font-size:.62rem}
-  .years-badge-sub{font-size:.48rem}
 }
