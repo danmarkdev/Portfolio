@@ -575,3 +575,85 @@ function adjustAllTechTips(){
 window.addEventListener('load', adjustAllTechTips);
 window.addEventListener('resize', adjustAllTechTips);
 window.addEventListener('orientationchange', adjustAllTechTips);
+
+/* FEEDBACK MODAL */
+(function(){
+  var FEEDBACK_SCRIPT_URL = 'PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
+
+  var openBtn = document.getElementById('feedbackOpenBtn');
+  var overlay = document.getElementById('feedbackOverlay');
+  var closeBtn = document.getElementById('feedbackCloseBtn');
+  var starsWrap = document.getElementById('fb-stars');
+  var submitBtn = document.getElementById('fb-submit');
+  var submitLabel = document.getElementById('fb-submit-label');
+  var statusEl = document.getElementById('fb-status');
+  if(!openBtn || !overlay) return;
+
+  var rating = 0;
+
+  function openModal(){ overlay.classList.add('open'); document.body.classList.add('menu-open'); }
+  function closeModal(){ overlay.classList.remove('open'); document.body.classList.remove('menu-open'); }
+
+  openBtn.addEventListener('click', openModal);
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', function(e){ if(e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+
+  var stars = starsWrap.querySelectorAll('.fb-star');
+  function paintStars(n){
+    stars.forEach(function(s){ s.classList.toggle('filled', parseInt(s.getAttribute('data-star'),10) <= n); });
+  }
+  stars.forEach(function(s){
+    s.addEventListener('click', function(){
+      rating = parseInt(s.getAttribute('data-star'),10);
+      paintStars(rating);
+    });
+  });
+
+  submitBtn.addEventListener('click', function(){
+    var name = document.getElementById('fb-name').value.trim();
+    var affiliation = document.getElementById('fb-affiliation').value.trim();
+    var message = document.getElementById('fb-message').value.trim();
+
+    if(!name || !message || rating === 0){
+      statusEl.style.color = '#ff6b6b';
+      statusEl.textContent = 'Please fill in your name, a rating, and your message.';
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitLabel.textContent = 'Sending...';
+    statusEl.style.color = 'var(--muted)';
+    statusEl.textContent = 'Sending your feedback\u2026';
+
+    var formData = new URLSearchParams();
+    formData.append('name', name);
+    formData.append('affiliation', affiliation);
+    formData.append('rating', rating);
+    formData.append('message', message);
+
+    fetch(FEEDBACK_SCRIPT_URL, { method:'POST', body: formData })
+      .then(function(res){ return res.json(); })
+      .then(function(data){
+        if(data.ok){
+          statusEl.style.color = '#22c55e';
+          statusEl.textContent = "Thanks! I'll review it shortly.";
+          document.getElementById('fb-name').value = '';
+          document.getElementById('fb-affiliation').value = '';
+          document.getElementById('fb-message').value = '';
+          rating = 0; paintStars(0);
+        } else {
+          statusEl.style.color = '#ff6b6b';
+          statusEl.textContent = 'Failed to send. Please try again.';
+        }
+        submitLabel.textContent = 'Post Endorsement';
+        submitBtn.disabled = false;
+      })
+      .catch(function(){
+        statusEl.style.color = '#ff6b6b';
+        statusEl.textContent = 'Failed to send. Please try again.';
+        submitLabel.textContent = 'Post Endorsement';
+        submitBtn.disabled = false;
+      });
+  });
+})();
