@@ -7,7 +7,7 @@
   --bg:#e4e9f5;
   --surface:#e4e9f5;
   --accent:#3355FF;
-  --accent-glow:rgba(51,85,255,.24);
+  --accent-glow:rgba(51,85,255,.24); 
   --accent-hover:#2543D6;
   --accent-soft:#eef1ff;
   --text:#12162b;
@@ -944,7 +944,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   box-shadow:var(--shadow-card);
   transition:color .2s,transform .15s,box-shadow .2s;
 }
-.contact-round svg{width:19px;height:19px;stroke:currentColor;stroke-width:1.6;fill:none}
+.contact-round svg{width:20px;height:20px;fill:currentColor;stroke:none}
 .contact-round:hover{color:var(--accent);transform:translateY(-3px);box-shadow:var(--shadow-card-hover)}
 
 /* CONTACT PAGE */
