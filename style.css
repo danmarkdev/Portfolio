@@ -933,7 +933,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 .contact-heading span{color:var(--accent)}
 .contact-icon-row{display:flex;justify-content:center;gap:1.2rem}
-.contact-round{
+.color:var(--accent);
   width:54px;height:54px;
   border:1px solid var(--border);
   border-radius:50%;
