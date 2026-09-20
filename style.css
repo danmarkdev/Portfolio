@@ -933,11 +933,11 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 .contact-heading span{color:var(--accent)}
 .contact-icon-row{display:flex;justify-content:center;gap:1.2rem}
-.color:var(--accent);
+.contact-round{
   width:54px;height:54px;
   border:1px solid var(--border);
   border-radius:50%;
-  color:var(--muted);
+  color:var(--accent);
   background:var(--surface);
   display:inline-flex;align-items:center;justify-content:center;
   text-decoration:none;
