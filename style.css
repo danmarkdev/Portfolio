@@ -1242,3 +1242,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .code-line{font-size:.66rem}
   .code-body{height:260px}
 }
+@media(min-width:961px){
+  .project-card{width:460px}
+  .project-img-wrap{aspect-ratio:16/9}
+}
