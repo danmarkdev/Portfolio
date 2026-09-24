@@ -1242,3 +1242,9 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .code-line{font-size:.66rem}
   .code-body{height:260px}
 }
+/* PROJECT CARDS  desktop + mobile */
+.project-card{width:340px;border-radius:28px}
+.project-img-wrap{aspect-ratio:1.85/1;padding:.95rem .95rem 0}
+.project-img-wrap img{object-fit:cover;object-position:top center;border-radius:14px}
+.project-card-title{font-size:1.05rem}
+.project-card-desc{font-size:.88rem;line-height:1.55}
