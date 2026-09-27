@@ -339,8 +339,7 @@ document.addEventListener('keydown',function(e){
       range: '2024 - 2026',
       current: false,
       title: 'STI College Bacoor',
-      org: 'TVL Track - ICT',
-      desc: 'Yearly Awarded With Honors in Grade 12. Focused on Web & Mobile Application Development.',
+      org: 'TVL Track - ICT Major in Mobile Application & Web Development',
       icon: 'monitor'
     },
     {
@@ -349,8 +348,7 @@ document.addEventListener('keydown',function(e){
       range: '2021 - 2024',
       current: false,
       title: 'Bacoor National High School Molino Main',
-      org: '',
-      desc: 'Specialized in Technical Drafting, 2D/3D modeling, and digital blueprinting using AutoCAD.',
+      org: 'Technical Drafting, 2D/3D modeling, and digital blueprinting using AutoCAD.',
       icon: 'chip'
     }
   ];
