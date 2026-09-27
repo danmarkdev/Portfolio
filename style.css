@@ -144,22 +144,7 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   flex-shrink:0;
   transition:all .25s cubic-bezier(.16,1,.3,1);
 }
-/* Arrow icon used inside the "Let's Talk" pill (desktop nav). Using an
-   inline SVG here (instead of the old "↗" unicode character) means the
-   icon renders identically everywhere — some mobile browsers (notably
-   iOS Safari) swap that unicode arrow for a colorful emoji-style glyph,
-   which looked out of place next to the plain text label. */
 .cta-arrow{flex-shrink:0}
-/* The "#header" prefix on every state below is required, not decorative:
-   ".nav-cta" alone (0 IDs, 1 class) loses a specificity fight against the
-   broader "#nav a" / "#nav a:hover" rules above (1 ID, 1 type), because an
-   ID always outweighs any number of classes. That mismatch was why the
-   "Let's Talk" pill only rendered correctly (black, no hover halo) on
-   contact.html — where an extra ".active" class happened to win — and
-   fell back to the muted grey text / light-blue hover background
-   everywhere else. Scoping with "#header" gives these rules an ID of
-   their own so they always win, regardless of ".active".
-*/
 #header .nav-cta,
 #header .nav-cta:hover,
 #header .nav-cta:active,
@@ -171,8 +156,6 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   font-family:var(--font-body) !important;
   font-weight:600 !important;
 }
-/* keep a light lift/shadow so it still feels interactive, without any
-   color or background change on hover/click */
 #header .nav-cta:hover{transform:translateY(-1px);box-shadow:var(--shadow-card-hover)}
 #header .nav-cta:active{transform:translateY(0);box-shadow:var(--shadow-card)}
 
@@ -185,9 +168,6 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 .hamburger.open span:nth-child(2){opacity:0}
 .hamburger.open span:nth-child(3){transform:translate(-50%,-50%) translateY(0) rotate(-45deg)}
 
-/* MOBILE NAV — stacked pill cards, matching the reference screenshot.
-   Each link is its own rounded card; Contact keeps the same card style
-   but with blue text instead of a solid filled button. */
 .mobile-nav{
   display:flex;
   position:fixed;
@@ -202,10 +182,8 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   visibility:hidden;
   transform:scale(.97);
   transition:opacity .3s ease,transform .3s ease,visibility .3s;
-  padding:calc(var(--nav-h) - .5rem) 1.5rem 1.5rem;
   overflow-y:auto;
   -webkit-overflow-scrolling:touch;
-  z-index:998;
 }
 .mobile-nav::before,
 .mobile-nav::after{
@@ -231,20 +209,11 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   transition:color .2s ease, box-shadow .2s ease, transform .15s ease;
   opacity: 0;
   transform: translateY(12px);
-  /* without this, a short viewport (like a squeezed DevTools device
-     panel) can flex-shrink these pills down to nothing instead of
-     letting the menu scroll — this forces every pill, including the
-     last "Let's Talk" one, to keep its full size and just scroll into
-     view via .mobile-nav's own overflow-y:auto instead of vanishing */
   flex-shrink:0;
 }
 .mobile-nav a:hover{color:var(--accent);box-shadow:var(--shadow-card-hover)}
 .mobile-nav a.active{color:var(--accent)}
 
-/* Contact — same pill card as the rest, but blue text instead of a filled button.
-   display:flex + justify-content:center keeps the label and arrow sitting
-   right next to each other (like the desktop "Let's Talk" pill) instead of
-   the label being centered alone with the arrow off on the far edge. */
 .mobile-nav a.mnav-cta{
   background:var(--surface);
   color:var(--text);
@@ -261,10 +230,6 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 .mnav-cta-label{
   display:inline;
 }
-/* Sits directly after the label text now (normal flow, small gap) instead
-   of being pinned to the pill's right edge. Still a plain vector icon
-   rather than the old unicode "↗" character, so it renders identically on
-   every platform instead of iOS swapping it for a colorful emoji glyph. */
 .mnav-cta-arrow{
   flex-shrink:0;
 }
@@ -278,10 +243,6 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
 .mobile-nav.open a:nth-child(6){transition-delay:.32s}
 .mobile-nav.open a:nth-child(7){transition-delay:.37s}
 
-/* SECTIONS */
-/* scroll-margin-top reserves space for the floating fixed nav pill so
-   jumping to any #anchor (via nav click or a direct URL hash) never
-   scrolls a section's heading underneath the header. */
 .section,
 section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .section{padding:7rem 0;position:relative;z-index:1}
@@ -306,7 +267,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 .section-divider{width:100%;height:1px;background:rgba(163,177,198,.4);margin-bottom:3.5rem}
 
-/* HERO */
 .hero{min-height:100vh;padding-top:calc(var(--nav-h) + 2rem);display:flex;align-items:center;position:relative;overflow:hidden;z-index:1}
 .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:3rem;position:relative;z-index:1}
 .hero-name{
@@ -366,16 +326,12 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .btn-outline:hover{color:var(--accent);transform:translateY(-2px);box-shadow:var(--shadow-card)}
 .btn-outline:active,.btn-outline:focus,.btn-outline:visited{color:var(--text);transform:none;box-shadow:var(--shadow-card)}
 
-/* HERO RIGHT — floating badge photo layout */
 .hero-right{display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative}
 .photo-orbit{position:relative;width:100%;max-width:440px;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center}
 .photo-frame{position:relative;display:inline-block;z-index:2}
 .photo-wrap{width:260px;height:260px;border-radius:50%;overflow:hidden;position:relative;z-index:1;border:6px solid var(--bg);box-shadow:var(--shadow-card)}
 .photo-wrap img{width:100%;height:100%;object-fit:cover}
 
-/* TECH STACK — icon-only badges floating around the profile photo.
-   Fixed positions (angle set once per item via --angle), no orbit spin —
-   each badge just bobs gently up and down at its own place. */
 .orbit-ring{
   position:absolute;
   inset:0;
@@ -411,8 +367,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   80%{transform:translate(-50%,-50%) rotate(calc(var(--angle) * -1)) translate(6px,-6px) scale(1.02) rotate(-3deg)}
 }
 
-/* stagger delay/duration per icon so they don't all bob in unison —
-   gives a natural, organic "floating" feel like the reference site */
 .orbit-item.oi-0 .orbit-counter{animation-delay:0s;animation-duration:3s}
 .orbit-item.oi-1 .orbit-counter{animation-delay:.2s;animation-duration:3.4s}
 .orbit-item.oi-2 .orbit-counter{animation-delay:.4s;animation-duration:2.8s}
@@ -430,7 +384,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .orbit-item.oi-14 .orbit-counter{animation-delay:.3s;animation-duration:3.3s}
 .orbit-item.oi-15 .orbit-counter{animation-delay:.55s;animation-duration:3.9s}
 
-/* icon-only circular badge (no text) */
 .stack-badge{
   display:flex;
   align-items:center;
@@ -441,20 +394,16 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   border:none;
   transition:transform .2s;
 }
-/* bare icon, no circle/background/border/shadow — just the logo floating */
 .stack-badge > .fb-icon{width:100%;height:100%;background:transparent !important;border:none !important;box-shadow:none !important}
 .stack-badge:hover{transform:scale(1.1)}
 .stack-badge .fb-icon{display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .stack-badge .fb-icon img,
 .stack-badge .fb-icon svg{width:34px;height:34px;object-fit:contain;display:block}
 
-/* shared "colored chip" icon used both in the hero orbit badges and the
-   Technical Stack grid below — one true brand-colored logo per chip */
 .fb-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .fb-icon img,
 .fb-icon svg{width:15px;height:15px;object-fit:contain;display:block}
 
-/* SERVICES */
 .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
 .service-card{
   background:var(--surface);
@@ -490,13 +439,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 .service-num{display:none}
 
-/* PROJECTS — draggable/auto-scrolling marquee (same engine as Certificates):
-   fixed-size cards in a straight single row. Cards are sized down from the
-   original and the whole screenshot is always visible (object-fit:contain)
-   instead of being cropped into a square. Since .project-track is a flex
-   row with the default align-items:stretch, every card in the row is
-   automatically the same height as the tallest one — so once the bio text
-   isn't clamped anymore, all bios show in full AND stay lined up evenly. */
 .projects-marquee{
   width:100%;
   overflow:hidden;
@@ -600,8 +542,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   line-height: 1.55;
 }
 
-/* SKILLS — light "tech panel" card matching the site's surface style,
-   holding a single flat grid of icon chips with a hover tooltip. */
 .tech-panel{
   background:transparent;
   border:none;
@@ -628,8 +568,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   cursor:pointer;
   transition:transform .2s ease, box-shadow .2s ease;
 }
-/* the colored badge now fills almost the entire tile — bold, single-layer,
-   true-to-brand square instead of a small icon floating in a pale box */
 .tech-icon-box > .fb-icon{width:100%;height:100%;border-radius:16px;box-shadow:var(--shadow-card)}
 .tech-icon-box > .fb-icon img,
 .tech-icon-box > .fb-icon svg{width:34px;height:34px}
@@ -640,14 +578,10 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 .tech-icon-box:hover > .fb-icon{box-shadow:var(--shadow-card-hover)}
 
-/* Force every Technical Stack tile (and its tooltip icon) onto the same
-   neutral chip, instead of the mismatched per-icon inline background
-   colors (some brand-colored, some plain white) set in the HTML. */
 .tech-icon-box > .fb-icon{
   background: var(--surface) !important;
   border: 1px solid var(--border);
 }
-/* simplified tooltip — name-only dark pill, no icon/tag/description */
 .tech-tip{
   position:absolute;
   bottom:calc(100% + 12px);
@@ -722,9 +656,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   border-bottom-color:var(--surface)
 }
 
-/* SKILLS — DESKTOP: give the grid a little more breathing room, lock the
-   icons to a fixed 9-per-row layout so they don't reflow, and shrink the
-   panel itself to hug that fixed-width grid instead of stretching full width */
 @media(min-width:961px){
   .tech-icon-grid{
     gap:1.15rem;
@@ -764,6 +695,28 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   font-size: clamp(1.7rem,3.5vw,2.4rem);
   font-weight: 700;
   letter-spacing: -.03em;
+}
+
+/* Two code-card panels side by side, equal width/height, instead of
+   one stacked below the other. Falls back to a single stacked column
+   on narrower screens (see media query below). */
+.edu-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1.5rem;
+  align-items:stretch;
+  max-width:1100px;
+  margin:0 auto;
+}
+.edu-grid .code-card{
+  max-width:none;
+  width:100%;
+  margin:0;
+  display:flex;
+  flex-direction:column;
+}
+.edu-grid .code-body{
+  flex:1;
 }
 
 /* Code editor card */
@@ -832,8 +785,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 .code-line:hover{background:rgba(255,255,255,.03)}
 
-/* indentation lives on an inner wrapper (not the row) so the line
-   number column always stays in a straight vertical line */
 .code-content{display:inline}
 
 .code-punct{color:#6b7280}
@@ -841,7 +792,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .code-string{color:#c9b3ff}
 .code-string.code-current{color:#8fa8ff;font-weight:600}
 
-/* real-HTML syntax palette used by the typed education snippet */
 .code-tag{color:#7dd3fc}
 .code-attr{color:#facc15}
 .code-attr-val{color:#c9b3ff}
@@ -849,10 +799,8 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .code-text{color:#e5e7eb}
 .code-text.code-current{color:#8fa8ff;font-weight:600}
 
-/* description text inside the typed <desc> tag — green, same as code-comment */
 .code-desc{color:#4ade80}
 
-/* blinking typing cursor, shown only on the actively-typed line */
 .code-caret{
   display:inline-block;
   width:7px;
@@ -1055,7 +1003,7 @@ textarea{min-height:120px}
 }
 .back-home:hover{color:var(--accent)}
 
-/* FOOTER — layout unchanged, just restyled */
+/* FOOTER */
 footer{background:transparent;border-top:1px solid rgba(163,177,198,.35);padding:2rem 0;position:relative;z-index:1}
 .footer-inner{display:flex;align-items:center;justify-content:space-between}
 footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
@@ -1102,8 +1050,6 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   color:var(--accent);
   font-weight:800;
 }
-/* rating pill — matches the "10/10" badge shown next to the reviewer name
-   on the reference site, restyled to the portfolio's blue accent theme */
 .testi-rating{
   display:inline-flex;
   align-items:center;
@@ -1187,6 +1133,9 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .footer-inner{flex-direction:column;gap:.5rem;text-align:center}
 .tech-icon-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:.85rem}
 .tech-icon-box{width:calc(25% - .64rem);max-width:72px;aspect-ratio:1/1;height:auto}
+  /* stack the two Education/Milestones panels on tablets & below,
+     instead of squeezing them side by side */
+  .edu-grid{grid-template-columns:1fr}
 }
 @media(max-width:700px){
   .section-header{align-items:center}
@@ -1216,6 +1165,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .contact-page-head{margin-bottom:2rem}
 
   .edu-header{margin-bottom:1.75rem}
+  .edu-grid{gap:1.1rem}
   .code-titlebar{padding:.7rem 1rem;gap:.75rem}
   .code-filename{font-size:.68rem;padding:.25rem .6rem}
   .code-body{padding:1.1rem 0;height:300px}
