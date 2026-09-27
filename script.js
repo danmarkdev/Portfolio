@@ -383,13 +383,13 @@ document.addEventListener('keydown',function(e){
       'Sept 26, 2026',
       'AI Store Visualizer \u2014 7th Place',
       'AWS Student Builder Group Ideathon - TUP Manila',
-      'Built an AI tool that turns text descriptions into storefront visuals, using AWS Step Functions, Amazon Bedrock, S3, and DynamoDB.'
+      'Built an AI tool that turns text descriptions into storefront visuals, using AWS Step Functions.'
     ))
     .concat(milestoneEntry(
       'Sept 26, 2026',
       'UI/UX & Web Development Associate',
       'AWS Student Builder Group - TUP-Manila',
-      'Officially appointed to the role. Responsible for UI/UX design and web development initiatives within the student builder community.'
+      'Officially appointed to the role responsible of UI/UX design and web development in the student builder community.'
     ));
 
   // drop the trailing blank line after the last entry
