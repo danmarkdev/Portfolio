@@ -330,7 +330,7 @@ document.addEventListener('keydown',function(e){
       current: true,
       title: 'Technological University of the Philippines Manila',
       org: '',
-      desc: 'BTVTED Compro - Bachelor of Technical-Vocational Teacher Education, major in Computer Programming.',
+      desc: 'Bachelor of Technical-Vocational Teacher Education, Major in Computer Programming.',
       icon: 'cap'
     },
     {
