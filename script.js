@@ -362,8 +362,8 @@ document.addEventListener('keydown',function(e){
       label: 'Ideathon',
       range: 'Sept 26, 2026',
       current: true,
-      title: 'AI Store Visualizer - 7th Place',
-      org: 'AWS Student Builder Group Ideathon - TUP Manila',
+      title: 'AI Visualizer - 7th Place',
+      org: 'AWS Student Builder Group - TUP Manila',
       desc: 'An AI concept idea that would generate storefront visuals from text descriptions, using AWS Step Functions.',
       icon: 'trophy'
     },
