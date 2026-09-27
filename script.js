@@ -326,27 +326,27 @@ document.addEventListener('keydown',function(e){
     {
       year: '2026',
       label: 'TUP',
-      range: '2026 \u2013 Present',
+      range: '2026 - Present',
       current: true,
       title: 'Technological University of the Philippines Manila',
       org: '',
-      desc: 'BTVTED Compro \u2014 Bachelor of Technical-Vocational Teacher Education, major in Computer Programming.',
+      desc: 'BTVTED Compro - Bachelor of Technical-Vocational Teacher Education, major in Computer Programming.',
       icon: 'cap'
     },
     {
       year: '2024',
       label: 'STI',
-      range: '2024 \u2013 2026',
+      range: '2024 - 2026',
       current: false,
       title: 'STI College Bacoor',
-      org: 'TVL Track \u2014 ICT',
+      org: 'TVL Track - ICT',
       desc: 'Yearly Awarded With Honors in Grade 12. Focused on Web & Mobile Application Development.',
       icon: 'monitor'
     },
     {
       year: '2021',
       label: 'BNHS',
-      range: '2021 \u2013 2024',
+      range: '2021 - 2024',
       current: false,
       title: 'Bacoor National High School Molino Main',
       org: '',
@@ -364,8 +364,8 @@ document.addEventListener('keydown',function(e){
       label: 'AI Visualizer',
       range: 'Sept 26, 2026',
       current: true,
-      title: 'AI Store Visualizer \u2014 7th Place',
-      org: 'AWS Student Builder Group Ideathon \u2014 TUP Manila',
+      title: 'AI Store Visualizer - 7th Place',
+      org: 'AWS Student Builder Group Ideathon - TUP Manila',
       desc: 'An AI concept idea that would generate storefront visuals from text descriptions, using AWS Step Functions.',
       icon: 'trophy'
     },
@@ -375,7 +375,7 @@ document.addEventListener('keydown',function(e){
       range: 'Sept 26, 2026',
       current: false,
       title: 'UI/UX & Web Development Associate',
-      org: 'AWS Student Builder Group \u2014 TUP Manila',
+      org: 'AWS Student Builder Group - TUP Manila',
       desc: 'Officially appointed to the role responsible for UI/UX design and web development in the student builder community.',
       icon: 'badge'
     }
