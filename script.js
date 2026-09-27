@@ -359,7 +359,7 @@ document.addEventListener('keydown',function(e){
   var recognitionData = [
     {
       year: 'Sept 2026',
-      label: 'AI Visualizer',
+      label: 'Ideathon',
       range: 'Sept 26, 2026',
       current: true,
       title: 'AI Store Visualizer - 7th Place',
