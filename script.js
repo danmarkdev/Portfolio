@@ -320,165 +320,144 @@ document.addEventListener('keydown',function(e){
   if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&['i','j'].includes(e.key.toLowerCase()))) e.preventDefault();
 });
 
-/* ---------- EDUCATION & MILESTONES: auto-typing "real HTML" effect ---------- */
+/* ---------- EDUCATION & MILESTONES: interactive timeline ---------- */
 (function () {
-  var BLANK = { indent: 0, blank: true };
-
-  function entry(year, current, school, desc) {
-    var lines = [
-      { indent: 0, segs: [
-          { c: 'code-attr-val', t: year }
-        ] },
-      { indent: 1, segs: [{ c: current ? 'code-text code-current' : 'code-text', t: school }] }
-    ];
-
-    if (desc) {
-      lines.push({ indent: 1, segs: [
-          { c: 'code-desc', t: desc }
-        ] });
+  var academicData = [
+    {
+      year: '2026',
+      label: 'TUP',
+      range: '2026 \u2013 Present',
+      current: true,
+      title: 'Technological University of the Philippines Manila',
+      org: '',
+      desc: 'BTVTED Compro \u2014 Bachelor of Technical-Vocational Teacher Education, major in Computer Programming.',
+      icon: 'cap'
+    },
+    {
+      year: '2024',
+      label: 'STI',
+      range: '2024 \u2013 2026',
+      current: false,
+      title: 'STI College Bacoor',
+      org: 'TVL Track \u2014 ICT',
+      desc: 'Yearly Awarded With Honors in Grade 12. Focused on Web & Mobile Application Development.',
+      icon: 'monitor'
+    },
+    {
+      year: '2021',
+      label: 'BNHS',
+      range: '2021 \u2013 2024',
+      current: false,
+      title: 'Bacoor National High School Molino Main',
+      org: '',
+      desc: 'Specialized in Technical Drafting, 2D/3D modeling, and digital blueprinting using AutoCAD.',
+      icon: 'chip'
     }
+  ];
 
-    lines.push(BLANK);
-    return lines;
-  }
-
-  var eduLines = []
-    .concat(entry(
-      '2026 - Present',
-      true,
-      'Technological University of the Philippines Manila',
-      'BTVTED Compro - Bachelor of Technical-Vocational Teacher Education, major in Computer Programming.'
-    ))
-    .concat(entry(
-      '2024 - 2026',
-      false,
-      'STI College Bacoor',
-      'TVL Track - ICT. Yearly Awarded With Honors in Grade 12. Focused on Web & Mobile Application Development.'
-    ))
-    .concat(entry(
-      '2021 - 2024',
-      false,
-      'Bacoor National High School Molino Main',
-      'Specialized in Technical Drafting, 2D/3D modeling, and digital blueprinting using AutoCAD.'
-    ));
-
-  // drop the trailing blank line after the last entry
-  eduLines.pop();
-
-  function milestoneEntry(date, title, org, desc) {
-    var lines = [
-      { indent: 0, segs: [{ c: 'code-attr-val', t: date }] },
-      { indent: 1, segs: [{ c: 'code-text code-current', t: title }] },
-      { indent: 1, segs: [{ c: 'code-text', t: org }] }
-    ];
-    if (desc) {
-      lines.push({ indent: 1, segs: [{ c: 'code-desc', t: desc }] });
+  /* NOTE: the AI Store Visualizer is an idea/concept only — it has not
+     been built. The copy below is written to make that clear rather
+     than implying a finished, working tool. */
+  var recognitionData = [
+    {
+      year: 'Sept 2026',
+      label: 'AI Visualizer',
+      range: 'Sept 26, 2026',
+      current: true,
+      title: 'AI Store Visualizer \u2014 7th Place (Concept)',
+      org: 'AWS Student Builder Group Ideathon \u2014 TUP Manila',
+      desc: 'A concept only, not yet built: an idea for an AI tool that would turn text descriptions into storefront visuals using AWS Step Functions. Placed 7th at the ideathon.',
+      icon: 'trophy'
+    },
+    {
+      year: 'Sept 2026',
+      label: 'UI/UX Role',
+      range: 'Sept 26, 2026',
+      current: false,
+      title: 'UI/UX & Web Development Associate',
+      org: 'AWS Student Builder Group \u2014 TUP Manila',
+      desc: 'Officially appointed to the role responsible for UI/UX design and web development in the student builder community.',
+      icon: 'badge'
     }
-    lines.push(BLANK);
-    return lines;
-  }
+  ];
 
-  var milestoneLines = []
-    .concat(milestoneEntry(
-      'Sept 26, 2026',
-      'AI Store Visualizer \u2014 7th Place',
-      'AWS Student Builder Group Ideathon - TUP Manila',
-      'Built an AI tool that turns text descriptions into storefront visuals, using AWS Step Functions.'
-    ))
-    .concat(milestoneEntry(
-      'Sept 26, 2026',
-      'UI/UX & Web Development Associate',
-      'AWS Student Builder Group - TUP-Manila',
-      'Officially appointed to the role responsible of UI/UX design and web development in the student builder community.'
-    ));
+  var ICONS = {
+    cap: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1 3 3 6 3s6-2 6-3v-5"/></svg>',
+    monitor: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>',
+    chip: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>',
+    trophy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M7 5H4a2 2 0 0 0 0 4h2"/><path d="M17 5h3a2 2 0 0 1 0 4h-2"/></svg>',
+    badge: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15 8.5 22 9.3 17 14.1 18.2 21 12 17.6 5.8 21 7 14.1 2 9.3 9 8.5 12 2"/></svg>'
+  };
 
-  // drop the trailing blank line after the last entry
-  milestoneLines.pop();
-
-  var CHAR_DELAY = 30;   // ms per character — slower, easier to read
-  var LINE_DELAY = 140;  // ms pause between lines
-
-  function makeTyper(mountId, lines) {
+  function buildTimeline(mountId, data) {
     var mount = document.getElementById(mountId);
-    if (!mount) return;
-    var typed = false;
+    if (!mount) return null;
+    mount.innerHTML = '';
 
-    function scrollToBottom() {
-      mount.scrollTop = mount.scrollHeight;
-    }
+    var line = document.createElement('div');
+    line.className = 'edu-timeline-line';
+    mount.appendChild(line);
 
-    function typeLine(lineIndex) {
-      if (lineIndex >= lines.length) return;
-      var def = lines[lineIndex];
+    var nodes = data.map(function (item, i) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'edu-node' + (i === 0 ? ' active' : '');
+      btn.setAttribute('data-index', i);
+      btn.innerHTML =
+        '<span class="edu-node-year">' + item.year + '</span>' +
+        '<span class="edu-node-circle">' + ICONS[item.icon] + '</span>' +
+        '<span class="edu-node-label">' + item.label + '</span>';
+      mount.appendChild(btn);
+      return btn;
+    });
 
-      var row = document.createElement('div');
-      row.className = 'code-line';
-      mount.appendChild(row);
-
-      if (def.blank) {
-        row.innerHTML = '&nbsp;';
-        scrollToBottom();
-        setTimeout(function () { typeLine(lineIndex + 1); }, LINE_DELAY);
-        return;
-      }
-
-      var content = document.createElement('span');
-      content.className = 'code-content';
-      if (def.indent) content.style.marginLeft = (def.indent * 1.6) + 'rem';
-      row.appendChild(content);
-
-      var caret = document.createElement('span');
-      caret.className = 'code-caret';
-      content.appendChild(caret);
-
-      var segIndex = 0, charIndex = 0;
-
-      function typeChar() {
-        if (segIndex >= def.segs.length) {
-          caret.remove();
-          setTimeout(function () { typeLine(lineIndex + 1); }, LINE_DELAY);
-          return;
-        }
-        var seg = def.segs[segIndex];
-        if (charIndex === 0) {
-          var span = document.createElement('span');
-          span.className = seg.c;
-          content.insertBefore(span, caret);
-        }
-        var span = caret.previousSibling;
-        span.textContent += seg.t[charIndex];
-        charIndex++;
-        if (charIndex >= seg.t.length) {
-          segIndex++;
-          charIndex = 0;
-        }
-        scrollToBottom();
-        setTimeout(typeChar, CHAR_DELAY);
-      }
-      typeChar();
-    }
-
-    function startTyping() {
-      if (typed) return;
-      typed = true;
-      mount.innerHTML = '';
-      typeLine(0);
-    }
-
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) {
-          startTyping();
-          observer.disconnect();
-        }
-      });
-    }, { threshold: 0.25 });
-
-    observer.observe(mount);
+    return nodes;
   }
 
-  makeTyper('eduCode', eduLines);
-  makeTyper('milestoneCode', milestoneLines);
+  function renderDetail(detailId, item) {
+    var detail = document.getElementById(detailId);
+    if (!detail) return;
+    detail.innerHTML =
+      '<div class="edu-detail-date' + (item.current ? ' edu-detail-current' : '') + '">' +
+        '<span class="edu-detail-dot"></span>' + item.range +
+      '</div>' +
+      '<h3 class="edu-detail-title">' + item.title + '</h3>' +
+      (item.org ? '<p class="edu-detail-org">' + item.org + '</p>' : '') +
+      (item.desc ? '<p class="edu-detail-desc">' + item.desc + '</p>' : '');
+  }
+
+  function initTimeline(mountId, detailId, data) {
+    var nodes = buildTimeline(mountId, data);
+    if (!nodes || !nodes.length) return;
+    renderDetail(detailId, data[0]);
+    nodes.forEach(function (btn, i) {
+      btn.addEventListener('click', function () {
+        nodes.forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        renderDetail(detailId, data[i]);
+      });
+    });
+  }
+
+  initTimeline('academicTimeline', 'academicDetail', academicData);
+  initTimeline('recognitionTimeline', 'recognitionDetail', recognitionData);
+
+  /* toggle between Academic Path / Recognition Log */
+  var eduToggle = document.getElementById('eduToggle');
+  var eduViews = document.querySelectorAll('.edu-timeline-view');
+  if (eduToggle) {
+    eduToggle.addEventListener('click', function (e) {
+      var btn = e.target.closest('.edu-toggle-btn');
+      if (!btn) return;
+      var target = btn.getAttribute('data-view');
+      eduToggle.querySelectorAll('.edu-toggle-btn').forEach(function (b) {
+        b.classList.toggle('active', b === btn);
+      });
+      eduViews.forEach(function (v) {
+        v.classList.toggle('active', v.getAttribute('data-panel') === target);
+      });
+    });
+  }
 })();
 
 /* ---------- TESTIMONIALS: fanned deck cycler ---------- */
