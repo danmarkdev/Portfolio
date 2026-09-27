@@ -320,17 +320,10 @@ document.addEventListener('keydown',function(e){
   if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&['i','j'].includes(e.key.toLowerCase()))) e.preventDefault();
 });
 
-/* ---------- EDUCATION CARD: auto-typing "real HTML" effect ---------- */
+/* ---------- EDUCATION & MILESTONES: auto-typing "real HTML" effect ---------- */
 (function () {
-  var mount = document.getElementById('eduCode');
-  if (!mount) return;
-
   var BLANK = { indent: 0, blank: true };
 
-  /* Plain-text version — no <school year="...">, no <desc>/</desc>,
-     no </school>. Just the year, the school name, and the description,
-     styled the same as before (year highlighted, current school bold/blue,
-     description in green). */
   function entry(year, current, school, desc) {
     var lines = [
       { indent: 0, segs: [
@@ -349,7 +342,7 @@ document.addEventListener('keydown',function(e){
     return lines;
   }
 
-  var lines = []
+  var eduLines = []
     .concat(entry(
       '2026 - Present',
       true,
@@ -370,84 +363,109 @@ document.addEventListener('keydown',function(e){
     ));
 
   // drop the trailing blank line after the last entry
-  lines.pop();
+  eduLines.pop();
+
+  var milestoneLines = []
+    .concat(entry(
+      'Sept 2026',
+      false,
+      'UI/UX & Web Dev Associate - AWS SBG TUP Manila',
+      'Officially appointed to the role.'
+    ))
+    .concat(entry(
+      '2026',
+      false,
+      'AWS SBG Ideathon - TUP Manila',
+      '7th Place - AI store visual generator.'
+    ));
+
+  // drop the trailing blank line after the last entry
+  milestoneLines.pop();
 
   var CHAR_DELAY = 30;   // ms per character — slower, easier to read
   var LINE_DELAY = 140;  // ms pause between lines
-  var typed = false;
 
-  function scrollToBottom() {
-    mount.scrollTop = mount.scrollHeight;
-  }
+  function makeTyper(mountId, lines) {
+    var mount = document.getElementById(mountId);
+    if (!mount) return;
+    var typed = false;
 
-  function typeLine(lineIndex) {
-    if (lineIndex >= lines.length) return;
-    var def = lines[lineIndex];
-
-    var row = document.createElement('div');
-    row.className = 'code-line';
-    mount.appendChild(row);
-
-    if (def.blank) {
-      row.innerHTML = '&nbsp;';
-      scrollToBottom();
-      setTimeout(function () { typeLine(lineIndex + 1); }, LINE_DELAY);
-      return;
+    function scrollToBottom() {
+      mount.scrollTop = mount.scrollHeight;
     }
 
-    var content = document.createElement('span');
-    content.className = 'code-content';
-    if (def.indent) content.style.marginLeft = (def.indent * 1.6) + 'rem';
-    row.appendChild(content);
+    function typeLine(lineIndex) {
+      if (lineIndex >= lines.length) return;
+      var def = lines[lineIndex];
 
-    var caret = document.createElement('span');
-    caret.className = 'code-caret';
-    content.appendChild(caret);
+      var row = document.createElement('div');
+      row.className = 'code-line';
+      mount.appendChild(row);
 
-    var segIndex = 0, charIndex = 0;
-
-    function typeChar() {
-      if (segIndex >= def.segs.length) {
-        caret.remove();
+      if (def.blank) {
+        row.innerHTML = '&nbsp;';
+        scrollToBottom();
         setTimeout(function () { typeLine(lineIndex + 1); }, LINE_DELAY);
         return;
       }
-      var seg = def.segs[segIndex];
-      if (charIndex === 0) {
-        var span = document.createElement('span');
-        span.className = seg.c;
-        content.insertBefore(span, caret);
+
+      var content = document.createElement('span');
+      content.className = 'code-content';
+      if (def.indent) content.style.marginLeft = (def.indent * 1.6) + 'rem';
+      row.appendChild(content);
+
+      var caret = document.createElement('span');
+      caret.className = 'code-caret';
+      content.appendChild(caret);
+
+      var segIndex = 0, charIndex = 0;
+
+      function typeChar() {
+        if (segIndex >= def.segs.length) {
+          caret.remove();
+          setTimeout(function () { typeLine(lineIndex + 1); }, LINE_DELAY);
+          return;
+        }
+        var seg = def.segs[segIndex];
+        if (charIndex === 0) {
+          var span = document.createElement('span');
+          span.className = seg.c;
+          content.insertBefore(span, caret);
+        }
+        var span = caret.previousSibling;
+        span.textContent += seg.t[charIndex];
+        charIndex++;
+        if (charIndex >= seg.t.length) {
+          segIndex++;
+          charIndex = 0;
+        }
+        scrollToBottom();
+        setTimeout(typeChar, CHAR_DELAY);
       }
-      var span = caret.previousSibling;
-      span.textContent += seg.t[charIndex];
-      charIndex++;
-      if (charIndex >= seg.t.length) {
-        segIndex++;
-        charIndex = 0;
-      }
-      scrollToBottom();
-      setTimeout(typeChar, CHAR_DELAY);
+      typeChar();
     }
-    typeChar();
+
+    function startTyping() {
+      if (typed) return;
+      typed = true;
+      mount.innerHTML = '';
+      typeLine(0);
+    }
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          startTyping();
+          observer.disconnect();
+        }
+      });
+    }, { threshold: 0.25 });
+
+    observer.observe(mount);
   }
 
-  function startTyping() {
-    if (typed) return;
-    typed = true;
-    mount.innerHTML = '';
-    typeLine(0);
-  }
-
-  var observer = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (e.isIntersecting) {
-        startTyping();
-        observer.disconnect();
-      }
-    });
-  }, { threshold: 0.25 });
-
-  observer.observe(mount);
+  makeTyper('eduCode', eduLines);
+  makeTyper('milestoneCode', milestoneLines);
 })();
 
 /* ---------- TESTIMONIALS: fanned deck cycler ---------- */
