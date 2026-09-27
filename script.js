@@ -365,18 +365,31 @@ document.addEventListener('keydown',function(e){
   // drop the trailing blank line after the last entry
   eduLines.pop();
 
+  function milestoneEntry(date, title, org, desc) {
+    var lines = [
+      { indent: 0, segs: [{ c: 'code-attr-val', t: date }] },
+      { indent: 1, segs: [{ c: 'code-text code-current', t: title }] },
+      { indent: 1, segs: [{ c: 'code-text', t: org }] }
+    ];
+    if (desc) {
+      lines.push({ indent: 1, segs: [{ c: 'code-desc', t: desc }] });
+    }
+    lines.push(BLANK);
+    return lines;
+  }
+
   var milestoneLines = []
-    .concat(entry(
+    .concat(milestoneEntry(
+      'Sept 26, 2026',
       'AI Store Visualizer \u2014 7th Place',
-      false,
       'AWS Student Builder Group Ideathon - TUP Manila',
-      'Built an AI-powered tool that generates storefront visuals from natural language descriptions, allowing users to preview a business concept purely from a text prompt. Developed using AWS cloud services as part of the AWS Student Builder Group Ideathon at TUP Manila.'
+      'Built an AI-powered tool that generates storefront visuals from natural language descriptions. Used AWS Step Functions to orchestrate the workflow, Amazon Bedrock for AI generation, and Amazon S3 with DynamoDB for storage, letting users preview a business concept purely from a text prompt.'
     ))
-    .concat(entry(
+    .concat(milestoneEntry(
+      'Sept 26, 2026',
       'UI/UX & Web Development Associate',
-      false,
       'AWS Student Builder Group - Technological University of the Philippines Manila',
-      'Appointed September 2026. Responsible for UI/UX design and web development initiatives within the student builder community.'
+      'Officially appointed to the role. Responsible for UI/UX design and web development initiatives within the student builder community.'
     ));
 
   // drop the trailing blank line after the last entry
