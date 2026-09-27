@@ -803,32 +803,31 @@
   <div class="container">
     <div class="edu-header reveal">
       <h2 class="education-title">Education &amp; Milestones</h2>
+      <p class="edu-subtitle">Interactive milestone trajectory &amp; recognition log.</p>
     </div>
 
-    <div class="edu-grid">
-      <div class="code-card reveal">
-        <div class="code-titlebar">
-          <div class="code-dots">
-            <span class="dot dot-r"></span>
-            <span class="dot dot-y"></span>
-            <span class="dot dot-g"></span>
-          </div>
-        </div>
-
-        <div class="code-body" id="eduCode"></div>
+    <div class="edu-toggle-wrap reveal">
+      <div class="edu-toggle" id="eduToggle">
+        <button type="button" class="edu-toggle-btn active" data-view="academic">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1 3 3 6 3s6-2 6-3v-5"/></svg>
+          Academic Path
+        </button>
+        <button type="button" class="edu-toggle-btn" data-view="recognition">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M7 5H4a2 2 0 0 0 0 4h2"/><path d="M17 5h3a2 2 0 0 1 0 4h-2"/></svg>
+          Recognition Log
+        </button>
       </div>
+      <p class="edu-hint">&#128070; Click any node to view details</p>
+    </div>
 
-      <div class="code-card reveal">
-        <div class="code-titlebar">
-          <div class="code-dots">
-            <span class="dot dot-r"></span>
-            <span class="dot dot-y"></span>
-            <span class="dot dot-g"></span>
-          </div>
-        </div>
+    <div class="edu-timeline-view active reveal" data-panel="academic">
+      <div class="edu-timeline" id="academicTimeline"></div>
+      <div class="edu-detail" id="academicDetail"></div>
+    </div>
 
-        <div class="code-body" id="milestoneCode"></div>
-      </div>
+    <div class="edu-timeline-view reveal" data-panel="recognition">
+      <div class="edu-timeline" id="recognitionTimeline"></div>
+      <div class="edu-detail" id="recognitionDetail"></div>
     </div>
   </div>
 </section>
