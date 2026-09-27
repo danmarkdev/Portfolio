@@ -366,7 +366,7 @@ document.addEventListener('keydown',function(e){
       current: true,
       title: 'AI Store Visualizer \u2014 7th Place (Concept)',
       org: 'AWS Student Builder Group Ideathon \u2014 TUP Manila',
-      desc: 'A concept only, not yet built: an idea for an AI tool that would turn text descriptions into storefront visuals using AWS Step Functions. Placed 7th at the ideathon.',
+      desc: 'Came up with the idea at the ideathon \u2014 an AI concept that would generate storefront visuals from text descriptions, using AWS Step Functions to orchestrate the workflow. No system was built; it was purely a pitched idea, and it placed 7th out of all entries.',
       icon: 'trophy'
     },
     {
