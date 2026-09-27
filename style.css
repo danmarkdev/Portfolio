@@ -849,13 +849,13 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   font-family: var(--font-body);
   font-size:.88rem;
   font-weight:600;
-  color:var(--accent);
+  color:var(--muted);
   margin-bottom:.6rem;
 }
 .edu-detail-desc{
   font-family: var(--font-body);
   font-size:.92rem;
-  color:var(--accent);
+  color:var(--muted);
   line-height:1.7;
 }
 
