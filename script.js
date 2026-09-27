@@ -383,12 +383,12 @@ document.addEventListener('keydown',function(e){
       'Sept 26, 2026',
       'AI Store Visualizer \u2014 7th Place',
       'AWS Student Builder Group Ideathon - TUP Manila',
-      'Built an AI-powered tool that generates storefront visuals from natural language descriptions. Used AWS Step Functions to orchestrate the workflow, Amazon Bedrock for AI generation, and Amazon S3 with DynamoDB for storage, letting users preview a business concept purely from a text prompt.'
+      'Built an AI tool that turns text descriptions into storefront visuals, using AWS Step Functions, Amazon Bedrock, S3, and DynamoDB.'
     ))
     .concat(milestoneEntry(
       'Sept 26, 2026',
       'UI/UX & Web Development Associate',
-      'AWS Student Builder Group - Technological University of the Philippines Manila',
+      'AWS Student Builder Group - TUP-Manila',
       'Officially appointed to the role. Responsible for UI/UX design and web development initiatives within the student builder community.'
     ));
 
