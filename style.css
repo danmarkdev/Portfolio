@@ -729,6 +729,9 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   border-color:var(--accent);
 }
 .edu-hint{
+  display:inline-flex;
+  align-items:center;
+  gap:.5rem;
   font-family: var(--font-body);
   font-size:.78rem;
   font-weight:500;
@@ -737,6 +740,12 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   border:1px solid var(--border);
   border-radius:100px;
   padding:.5rem 1.1rem;
+}
+.edu-hint-icon{
+  width:15px;
+  height:15px;
+  flex-shrink:0;
+  color:var(--accent);
 }
 
 /* Panels: only the active view (Academic / Recognition) is shown */
