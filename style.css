@@ -738,8 +738,8 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   padding:.5rem 1.1rem;
 }
 .edu-hint-icon{
-  width:15px;
-  height:16px;
+  width:17px;
+  height:17px;
   flex-shrink:0;
   color:var(--accent);
 }
