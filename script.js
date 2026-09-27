@@ -367,16 +367,16 @@ document.addEventListener('keydown',function(e){
 
   var milestoneLines = []
     .concat(entry(
-      'Sept 2026',
+      'AI Store Visualizer \u2014 7th Place',
       false,
-      'UI/UX & Web Dev Associate - AWS SBG TUP Manila',
-      'Officially appointed to the role.'
+      'AWS Student Builder Group Ideathon - TUP Manila',
+      'Built an AI-powered tool that generates storefront visuals from natural language descriptions, allowing users to preview a business concept purely from a text prompt. Developed using AWS cloud services as part of the AWS Student Builder Group Ideathon at TUP Manila.'
     ))
     .concat(entry(
-      '2026',
+      'UI/UX & Web Development Associate',
       false,
-      'AWS SBG Ideathon - TUP Manila',
-      '7th Place - AI store visual generator.'
+      'AWS Student Builder Group - Technological University of the Philippines Manila',
+      'Appointed September 2026. Responsible for UI/UX design and web development initiatives within the student builder community.'
     ));
 
   // drop the trailing blank line after the last entry
