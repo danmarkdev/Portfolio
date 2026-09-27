@@ -796,7 +796,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   justify-content:center;
   color:var(--accent);
   box-shadow:var(--shadow-card);
-  transition:border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+  transition:background .2s ease, border-color .2s ease, box-shadow .2s ease, transform .2s ease;
 }
 .edu-node-circle svg{width:26px;height:26px}
 .edu-node-label{
@@ -805,11 +805,12 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   color:var(--accent);
   transition:color .2s ease;
 }
-/* Active state only changes the border/glow/lift — the year, icon, and
-   label stay blue whether a node is active or not. */
+/* Active state: filled background, stronger halo/glow, and a lift —
+   the year, icon, and label stay blue whether a node is active or not. */
 .edu-node.active .edu-node-circle{
+  background:var(--accent-soft);
   border-color:var(--accent);
-  box-shadow:0 0 0 5px var(--accent-soft), 0 0 22px 4px var(--accent-glow);
+  box-shadow:0 0 0 6px var(--accent-soft), 0 0 32px 10px var(--accent-glow);
   transform:translateY(-2px);
 }
 
