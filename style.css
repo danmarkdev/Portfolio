@@ -59,7 +59,22 @@ html{scrollbar-width:none}
   letter-spacing: -.03em;
   line-height: 1.2;
 }
-@media(max-width:700px){ .sec-header{margin-bottom:2.25rem} }
+/* Testimonials header: small label on top, slightly larger title below (like Reb's) */
+.sec-eyebrow{
+  font-family: var(--font-body);
+  font-size: .85rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: .7rem;
+}
+.sec-title-lg{font-size:clamp(2rem,4.5vw,3.1rem)}
+@media(max-width:700px){
+  .sec-header{margin-bottom:2.25rem}
+  .sec-eyebrow{font-size:.7rem;letter-spacing:.14em}
+  .sec-title-lg{font-size:2rem}
+}
 
 /* Background canvas must be taken out of normal document flow,
    otherwise its JS-set width/height reserves real space on the page
