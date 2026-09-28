@@ -73,11 +73,6 @@ html{scrollbar-width:none}
 /* Technical Stacks: pull the icons closer to the title */
 #skills .sec-header{margin-bottom:1.25rem}
 #skills .tech-panel{padding-top:1rem}
-@media(max-width:700px){
-  .sec-header{margin-bottom:2.25rem}
-  .sec-eyebrow{font-size:.7rem;letter-spacing:.14em}
-  .sec-title-lg{font-size:2rem}
-}
 
 /* Background canvas must be taken out of normal document flow,
    otherwise its JS-set width/height reserves real space on the page
@@ -1281,4 +1276,16 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .project-card-desc{font-size:.82rem;line-height:1.55}
   .hero-actions{gap:.5rem}
   .btn-primary,.btn-outline{font-size:.68rem;padding-left:.9rem;padding-right:.9rem;gap:.35rem}
+}
+
+/* MOBILE HEADERS — every section title is centered and smaller on phones (like Reb's).
+   Kept at the very end so it overrides the desktop sizes above. */
+@media(max-width:700px){
+  .sec-header{margin-bottom:2rem;text-align:center}
+  .sec-title,
+  .sec-title-lg,
+  .education-title{font-size:1.4rem;line-height:1.25;letter-spacing:-.02em}
+  .sec-eyebrow{font-size:.65rem;letter-spacing:.12em;margin-bottom:.5rem}
+  .edu-header{text-align:center;margin-bottom:1.5rem}
+  .edu-subtitle{font-size:.85rem}
 }
