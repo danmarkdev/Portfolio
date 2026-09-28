@@ -364,7 +364,7 @@ document.addEventListener('keydown',function(e){
       current: true,
       title: 'AI Visualizer - 7th Place',
       org: 'AWS Student Builder Group - TUP Manila',
-      desc: 'An AI concept idea that would generate storefront visuals from text descriptions, using AWS Step Functions.',
+      desc: 'An AI system concept for generating storefront visuals from text descriptions using AWS Step Functions.',
       icon: 'trophy'
     },
     {
