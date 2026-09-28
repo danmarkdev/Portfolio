@@ -394,19 +394,17 @@ document.addEventListener('keydown',function(e){
     if (!mount) return null;
     mount.innerHTML = '';
 
-    var line = document.createElement('div');
-    line.className = 'edu-timeline-line';
-    mount.appendChild(line);
-
+    /* The connecting line is now drawn in CSS by each node (.edu-node::before),
+       so no separate line element is needed here. */
     var nodes = data.map(function (item, i) {
       var btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'edu-node' + (i === 0 ? ' active' : '');
       btn.setAttribute('data-index', i);
       btn.innerHTML =
-        '<span class="edu-node-year">' + item.year + '</span>' +
+        '<span class="edu-node-label">' + item.label + '</span>' +
         '<span class="edu-node-circle">' + ICONS[item.icon] + '</span>' +
-        '<span class="edu-node-label">' + item.label + '</span>';
+        '<span class="edu-node-year">' + item.year + '</span>';
       mount.appendChild(btn);
       return btn;
     });
