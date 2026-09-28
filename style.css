@@ -48,6 +48,19 @@ html{scrollbar-width:none}
 
 .container{width:90%;max-width:var(--max-w);margin:0 auto}
 
+/* SECTION HEADERS — every section title (Testimonials, Projects, Technical Stacks,
+   Programming Certifications) uses the exact same look as "Education & Milestones" */
+.sec-header{text-align:center;margin-bottom:3rem}
+.sec-title{
+  font-family: var(--font-heading);
+  color: var(--text);
+  font-size: clamp(1.7rem,3.5vw,2.4rem);
+  font-weight: 700;
+  letter-spacing: -.03em;
+  line-height: 1.2;
+}
+@media(max-width:700px){ .sec-header{margin-bottom:2.25rem} }
+
 /* Background canvas must be taken out of normal document flow,
    otherwise its JS-set width/height reserves real space on the page
    and pushes all content below it down. */
