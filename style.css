@@ -59,7 +59,7 @@ html{scrollbar-width:none}
   letter-spacing: -.03em;
   line-height: 1.2;
 }
-/* Testimonials header: small label on top, slightly larger title below (like Reb's) */
+/* Testimonials header: small label on top, slightly larger title below*/
 .sec-eyebrow{
   font-family: var(--font-body);
   font-size: .85rem;
