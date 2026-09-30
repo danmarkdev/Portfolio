@@ -1177,6 +1177,9 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 .testi-footer{display:flex;align-items:center;gap:.7rem;margin-top:auto}
 /* Clark Zablan's (2nd) testimonial: center the quote between the header and the name (vertically and horizontally) */
 .testimonial-deck .testi-card:nth-child(2) .testi-text{flex:1;display:flex;align-items:center;justify-content:center;text-align:center}
+/* ...and put the blue quote mark in the middle of the top row, with 10/10 staying on the right */
+.testimonial-deck .testi-card:nth-child(2) .testi-card-top{position:relative;min-height:2.1rem}
+.testimonial-deck .testi-card:nth-child(2) .testi-quote-icon{position:absolute;left:50%;top:0;transform:translateX(-50%)}
 .testi-avatar{
   width:36px;height:36px;flex-shrink:0;
   border-radius:50%;
