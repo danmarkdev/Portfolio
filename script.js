@@ -461,7 +461,7 @@ document.addEventListener('keydown',function(e){
 /* ---------- TESTIMONIALS: 3D fan (desktop) / stacked deck (mobile) ----------
    Works with the ORIGINAL testimonial HTML — no HTML edits needed.
    - Rearranges each card: [avatar name rating] / quote icon / text
-   - Repeats the cards up to 7 slots so the fan looks full on desktop
+   - Repeats the cards up to 8 slots so the fan looks full on desktop
    - No dots, no autoplay: click a card (or swipe) to bring it to the front
    Per card it sets --o (signed offset), --a (|offset|), --r (rank). */
 (function () {
@@ -497,11 +497,13 @@ document.addEventListener('keydown',function(e){
     if (text) c.appendChild(text);
   });
 
-  /* 2) fill the fan: repeat the real testimonials until there are 7 slots */
+  /* 2) fill the fan: repeat the real testimonials until there are at least 8
+     slots. The total is always a multiple of the real count, so the cards
+     next to the center are always DIFFERENT testimonials
+     (3 real -> 9 slots, 4 real -> 8 slots, 5 real -> 10 slots). */
   var realCount = cards.length;
-  /* total slots must be a multiple of the real count, so the cards next to the
-     center are always DIFFERENT testimonials (3 real -> 9 slots, 7 visible) */
-  var TARGET = realCount; // no repeats: show only the real testimonials
+  var MIN_SLOTS = 8;
+  var TARGET = realCount * Math.ceil(MIN_SLOTS / realCount);
   for (var k = realCount; k < TARGET; k++) {
     var clone = cards[k % realCount].cloneNode(true);
     clone.setAttribute('aria-hidden', 'true');
@@ -521,7 +523,9 @@ document.addEventListener('keydown',function(e){
     cards.forEach(function (c) { c.style.height = 'auto'; });
     cards.forEach(function (c) { max = Math.max(max, c.offsetHeight); });
     cards.forEach(function (c) { c.style.height = max + 'px'; });
-    var extra = isMobile() ? 2 * 26 + 14 : 22 + 40;
+    /* mobile: room for the two peeking cards (34px each) + shadow;
+       desktop: room for the dropped side cards */
+    var extra = isMobile() ? 2 * 34 + 18 : 3 * 26 + 30;
     deck.style.height = (max + extra) + 'px';
   }
 
