@@ -409,6 +409,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .orbit-item.oi-13 .orbit-counter{animation-delay:.5s;animation-duration:3.05s}
 .orbit-item.oi-14 .orbit-counter{animation-delay:.3s;animation-duration:3.3s}
 .orbit-item.oi-15 .orbit-counter{animation-delay:.55s;animation-duration:3.9s}
+.orbit-item.oi-16 .orbit-counter{animation-delay:.4s;animation-duration:3.2s}
 
 .stack-badge{
   display:flex;
