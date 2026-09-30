@@ -499,7 +499,9 @@ document.addEventListener('keydown',function(e){
 
   /* 2) fill the fan: repeat the real testimonials until there are 7 slots */
   var realCount = cards.length;
-  var TARGET = 7;
+  /* total slots must be a multiple of the real count, so the cards next to the
+     center are always DIFFERENT testimonials (3 real -> 9 slots, 7 visible) */
+  var TARGET = realCount * Math.ceil(7 / realCount);
   for (var k = realCount; k < TARGET; k++) {
     var clone = cards[k % realCount].cloneNode(true);
     clone.setAttribute('aria-hidden', 'true');
@@ -532,7 +534,8 @@ document.addEventListener('keydown',function(e){
       c.style.setProperty('--a', Math.abs(o));
       c.style.setProperty('--r', r);
       c.classList.toggle('testi-active', i === active);
-      c.classList.toggle('testi-far', r > 2); // mobile: only 3 cards in the stack
+      c.classList.toggle('testi-far', r > 2);          // mobile: only 3 cards in the stack
+      c.classList.toggle('testi-out', Math.abs(o) > 3); // desktop: 7 visible cards
     });
   }
 
