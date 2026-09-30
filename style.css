@@ -1290,3 +1290,10 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .edu-header{text-align:center;margin-bottom:1.5rem}
   .edu-subtitle{font-size:.85rem}
 }
+
+/* MOBILE HERO ORDER — profile photo + orbit icons first, then name and bio.
+   Kept at the very end so it overrides the rules above. Desktop is untouched. */
+@media(max-width:960px){
+  .hero-right{order:-1}
+  .hero-grid{gap:1.5rem}
+}
