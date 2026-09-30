@@ -458,75 +458,136 @@ document.addEventListener('keydown',function(e){
   }
 })();
 
-/* ---------- TESTIMONIALS: fanned deck cycler ---------- */
+/* ---------- TESTIMONIALS: 3D fan (desktop) / stacked deck (mobile) ----------
+   Works with the ORIGINAL testimonial HTML — no HTML edits needed.
+   On load it rearranges each card so the avatar + name + rating sit in a
+   header row on top, followed by the quote icon and the text.
+   For every card it sets three CSS variables that style.css reads:
+     --o  signed offset from the active card (-1, 0, 1 ...)   -> desktop fan
+     --a  absolute offset |o|                                 -> desktop depth
+     --r  rank behind the active card (0 = front)             -> mobile stack */
 (function () {
   var deck = document.getElementById('testiDeck');
   var dotsWrap = document.getElementById('testiDots');
   if (!deck || !dotsWrap) return;
 
   var cards = Array.prototype.slice.call(deck.querySelectorAll('.testi-card'));
-  if (!cards.length) return;
+  var n = cards.length;
+  if (!n) return;
 
   var active = 0;
   var AUTOPLAY_MS = 6000;
   var timer = null;
 
-  /* Cards are stacked with position:absolute so the deck wrapper doesn't
-     naturally grow to fit them. Measure the tallest card's real content
-     height (scrollHeight still reports full content even when a card's
-     own box is being stretched to inset:0) and size the deck to match,
-     so a longer quote never pushes the avatar/name below the card. */
-  function sizeDeck() {
-    var maxH = 0;
-    cards.forEach(function (c) {
-      maxH = Math.max(maxH, c.scrollHeight);
-    });
-    if (maxH > 0) deck.style.height = maxH + 'px';
-  }
-  sizeDeck();
-  window.addEventListener('resize', sizeDeck);
-  window.addEventListener('load', sizeDeck);
+  /* 1) restructure each card: [avatar name rating] / quote icon / text */
+  cards.forEach(function (c) {
+    if (c.querySelector('.testi-head')) return;
+    var top = c.querySelector('.testi-card-top');
+    var footer = c.querySelector('.testi-footer');
+    var text = c.querySelector('.testi-text');
+    var quote = top && top.querySelector('.testi-quote-icon');
+    var rating = top && top.querySelector('.testi-rating');
+    var avatar = footer && footer.querySelector('.testi-avatar');
+    var name = footer && footer.querySelector('.testi-name');
 
+    var head = document.createElement('div');
+    head.className = 'testi-head';
+    if (avatar) head.appendChild(avatar);
+    if (name) head.appendChild(name);
+    if (rating) head.appendChild(rating);
+
+    c.innerHTML = '';
+    c.appendChild(head);
+    if (quote) c.appendChild(quote);
+    if (text) c.appendChild(text);
+  });
+
+  /* 2) dots */
+  var dots = [];
+  dotsWrap.innerHTML = '';
   cards.forEach(function (_, i) {
     var dot = document.createElement('button');
+    dot.type = 'button';
     dot.className = 'testi-dot';
     dot.setAttribute('aria-label', 'Show testimonial ' + (i + 1));
     dot.addEventListener('click', function () { goTo(i); });
     dotsWrap.appendChild(dot);
+    dots.push(dot);
   });
-  var dots = Array.prototype.slice.call(dotsWrap.querySelectorAll('.testi-dot'));
+
+  function isMobile() {
+    return window.matchMedia('(max-width:700px)').matches;
+  }
+
+  /* 3) cards are position:absolute, so size the deck to the tallest card
+        and make every card the same height */
+  function sizeDeck() {
+    var max = 0;
+    cards.forEach(function (c) { c.style.height = 'auto'; });
+    cards.forEach(function (c) { max = Math.max(max, c.offsetHeight); });
+    cards.forEach(function (c) { c.style.height = max + 'px'; });
+    var extra = isMobile() ? (n - 1) * 16 + 12 : 24;
+    deck.style.height = (max + extra) + 'px';
+  }
 
   function render() {
-    cards.forEach(function (card, i) {
-      card.classList.remove('testi-active', 'testi-behind-1', 'testi-behind-2', 'testi-hidden');
-      var offset = (i - active + cards.length) % cards.length;
-      if (offset === 0) card.classList.add('testi-active');
-      else if (offset === 1) card.classList.add('testi-behind-1');
-      else if (offset === 2) card.classList.add('testi-behind-2');
-      else card.classList.add('testi-hidden');
+    var half = Math.floor(n / 2);
+    cards.forEach(function (c, i) {
+      var o = ((i - active + n + half) % n) - half;
+      var r = (i - active + n) % n;
+      c.style.setProperty('--o', o);
+      c.style.setProperty('--a', Math.abs(o));
+      c.style.setProperty('--r', r);
+      c.classList.toggle('testi-active', i === active);
     });
     dots.forEach(function (d, i) { d.classList.toggle('testi-dot-active', i === active); });
   }
 
   function goTo(i) {
-    active = i % cards.length;
+    active = (i + n) % n;
     render();
     restartAutoplay();
   }
 
-  function next() { goTo((active + 1) % cards.length); }
+  function next() { goTo(active + 1); }
 
   function restartAutoplay() {
     if (timer) clearInterval(timer);
-    if (cards.length > 1) timer = setInterval(next, AUTOPLAY_MS);
+    if (n > 1) timer = setInterval(next, AUTOPLAY_MS);
   }
 
+  /* click a side / back card to bring it to the front */
   cards.forEach(function (card, i) {
     card.addEventListener('click', function () {
       if (i !== active) goTo(i);
     });
   });
 
+  /* swipe left / right */
+  var sx = null, sy = null;
+  deck.addEventListener('touchstart', function (e) {
+    sx = e.touches[0].clientX;
+    sy = e.touches[0].clientY;
+  }, { passive: true });
+  deck.addEventListener('touchend', function (e) {
+    if (sx === null) return;
+    var dx = e.changedTouches[0].clientX - sx;
+    var dy = e.changedTouches[0].clientY - sy;
+    sx = sy = null;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+      goTo(active + (dx < 0 ? 1 : -1));
+    }
+  }, { passive: true });
+
+  var resizeT;
+  window.addEventListener('resize', function () {
+    clearTimeout(resizeT);
+    resizeT = setTimeout(sizeDeck, 120);
+  });
+  window.addEventListener('load', sizeDeck);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(sizeDeck);
+
+  sizeDeck();
   render();
   restartAutoplay();
 })();
