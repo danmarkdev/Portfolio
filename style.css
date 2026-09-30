@@ -1128,7 +1128,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   position:relative;
   padding-bottom:1rem;
   --card-w:340px;
-  --gap:170px;
+  --gap:205px;
 }
 .testimonial-deck{
   position:relative;
@@ -1136,7 +1136,6 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   height:340px;              /* JS overwrites this with the real height */
   perspective:1300px;
   perspective-origin:50% 30%;
-  transform-style:preserve-3d;
   touch-action:pan-y;
 }
 .testi-card{
@@ -1159,17 +1158,17 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   transform:
     translateX(-50%)
     translateX(calc(var(--o, 0) * var(--gap)))
-    translateY(calc(var(--a, 0) * 14px))
-    translateZ(calc(var(--a, 0) * -45px))
-    rotateY(calc(var(--o, 0) * -26deg))
+    translateY(calc(var(--a, 0) * 22px))
+    translateZ(calc(var(--a, 0) * -90px))
+    rotateY(calc(var(--o, 0) * -38deg))
     rotateZ(calc(var(--o, 0) * 1deg));
-  opacity:calc(1 - var(--a, 0) * .07);
+  opacity:1;
   z-index:calc(10 - var(--a, 0));
   transition:transform .6s cubic-bezier(.16,1,.3,1), opacity .5s ease, box-shadow .3s ease;
   will-change:transform;
 }
 .testi-card > *{
-  opacity:calc(1 - var(--a, 0) * .1);
+  opacity:calc(1 - var(--a, 0) * .15);
   transition:opacity .5s ease;
 }
 .testi-card.testi-active{
@@ -1241,22 +1240,19 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 
 /* Tablet: pull the side cards in a little */
 @media(max-width:960px){
-  .testimonial-deck-wrap{--card-w:320px;--gap:125px}
+  .testimonial-deck-wrap{--card-w:320px;--gap:170px}
 }
 
 /* Phone: stacked deck — active card in front, the others peek out underneath */
 @media(max-width:700px){
   .testimonial-deck-wrap{--card-w:320px;padding-bottom:.5rem}
-  .testimonial-deck{perspective:900px;perspective-origin:50% 0%}
   .testi-card{
     padding:1.05rem 1.1rem 1.15rem;
     gap:.6rem;
     transform-origin:50% 100%;
     transform:
       translateX(-50%)
-      translateY(calc(var(--r, 0) * 16px))
-      translateZ(calc(var(--r, 0) * -50px))
-      rotateX(calc(var(--r, 0) * 2deg))
+      translateY(calc(var(--r, 0) * 26px))
       scale(calc(1 - var(--r, 0) * .05));
     opacity:calc(1 - var(--r, 0) * .22);
     z-index:calc(10 - var(--r, 0));
