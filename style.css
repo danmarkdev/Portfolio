@@ -1219,7 +1219,8 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   font-size:1.6rem;
   line-height:.6;
   height:.9rem;
-  margin-top:.45rem;   /* space between the avatar row and the blue quote mark */
+  margin-top:.6rem;    /* space between the avatar row and the blue quote mark */
+  margin-bottom:.3rem; /* space between the blue quote mark and the text */
   color:var(--accent);
   font-weight:800;
 }
