@@ -460,26 +460,21 @@ document.addEventListener('keydown',function(e){
 
 /* ---------- TESTIMONIALS: 3D fan (desktop) / stacked deck (mobile) ----------
    Works with the ORIGINAL testimonial HTML — no HTML edits needed.
-   On load it rearranges each card so the avatar + name + rating sit in a
-   header row on top, followed by the quote icon and the text.
-   For every card it sets three CSS variables that style.css reads:
-     --o  signed offset from the active card (-1, 0, 1 ...)   -> desktop fan
-     --a  absolute offset |o|                                 -> desktop depth
-     --r  rank behind the active card (0 = front)             -> mobile stack */
+   - Rearranges each card: [avatar name rating] / quote icon / text
+   - Repeats the cards up to 7 slots so the fan looks full on desktop
+   - No dots, no autoplay: click a card (or swipe) to bring it to the front
+   Per card it sets --o (signed offset), --a (|offset|), --r (rank). */
 (function () {
   var deck = document.getElementById('testiDeck');
-  var dotsWrap = document.getElementById('testiDots');
-  if (!deck || !dotsWrap) return;
+  if (!deck) return;
 
   var cards = Array.prototype.slice.call(deck.querySelectorAll('.testi-card'));
-  var n = cards.length;
-  if (!n) return;
+  if (!cards.length) return;
 
-  var active = 0;
-  var AUTOPLAY_MS = 6000;
-  var timer = null;
+  var dotsWrap = document.getElementById('testiDots');
+  if (dotsWrap) dotsWrap.style.display = 'none';
 
-  /* 1) restructure each card: [avatar name rating] / quote icon / text */
+  /* 1) restructure each card */
   cards.forEach(function (c) {
     if (c.querySelector('.testi-head')) return;
     var top = c.querySelector('.testi-card-top');
@@ -502,31 +497,29 @@ document.addEventListener('keydown',function(e){
     if (text) c.appendChild(text);
   });
 
-  /* 2) dots */
-  var dots = [];
-  dotsWrap.innerHTML = '';
-  cards.forEach(function (_, i) {
-    var dot = document.createElement('button');
-    dot.type = 'button';
-    dot.className = 'testi-dot';
-    dot.setAttribute('aria-label', 'Show testimonial ' + (i + 1));
-    dot.addEventListener('click', function () { goTo(i); });
-    dotsWrap.appendChild(dot);
-    dots.push(dot);
-  });
+  /* 2) fill the fan: repeat the real testimonials until there are 7 slots */
+  var realCount = cards.length;
+  var TARGET = 7;
+  for (var k = realCount; k < TARGET; k++) {
+    var clone = cards[k % realCount].cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    deck.appendChild(clone);
+    cards.push(clone);
+  }
+  var n = cards.length;
+  var active = 0;
 
   function isMobile() {
     return window.matchMedia('(max-width:700px)').matches;
   }
 
-  /* 3) cards are position:absolute, so size the deck to the tallest card
-        and make every card the same height */
+  /* 3) cards are position:absolute: make them equal height, size the deck */
   function sizeDeck() {
     var max = 0;
     cards.forEach(function (c) { c.style.height = 'auto'; });
     cards.forEach(function (c) { max = Math.max(max, c.offsetHeight); });
     cards.forEach(function (c) { c.style.height = max + 'px'; });
-    var extra = isMobile() ? (n - 1) * 16 + 12 : 24;
+    var extra = isMobile() ? 2 * 16 + 12 : 3 * 16 + 30;
     deck.style.height = (max + extra) + 'px';
   }
 
@@ -539,24 +532,16 @@ document.addEventListener('keydown',function(e){
       c.style.setProperty('--a', Math.abs(o));
       c.style.setProperty('--r', r);
       c.classList.toggle('testi-active', i === active);
+      c.classList.toggle('testi-far', r > 2); // mobile: only 3 cards in the stack
     });
-    dots.forEach(function (d, i) { d.classList.toggle('testi-dot-active', i === active); });
   }
 
   function goTo(i) {
     active = (i + n) % n;
     render();
-    restartAutoplay();
   }
 
-  function next() { goTo(active + 1); }
-
-  function restartAutoplay() {
-    if (timer) clearInterval(timer);
-    if (n > 1) timer = setInterval(next, AUTOPLAY_MS);
-  }
-
-  /* click a side / back card to bring it to the front */
+  /* click any side / back card to bring it to the front */
   cards.forEach(function (card, i) {
     card.addEventListener('click', function () {
       if (i !== active) goTo(i);
@@ -589,7 +574,6 @@ document.addEventListener('keydown',function(e){
 
   sizeDeck();
   render();
-  restartAutoplay();
 })();
 
 /* TECH TIP EDGE GUARD — keeps the Technical Stack description card from
