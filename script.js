@@ -501,15 +501,8 @@ document.addEventListener('keydown',function(e){
      slots. The total is always a multiple of the real count, so the cards
      next to the center are always DIFFERENT testimonials
      (3 real -> 9 slots, 4 real -> 8 slots, 5 real -> 10 slots). */
-  var realCount = cards.length;
-  var MIN_SLOTS = 8;
-  var TARGET = realCount * Math.ceil(MIN_SLOTS / realCount);
-  for (var k = realCount; k < TARGET; k++) {
-    var clone = cards[k % realCount].cloneNode(true);
-    clone.setAttribute('aria-hidden', 'true');
-    deck.appendChild(clone);
-    cards.push(clone);
-  }
+  /* NO duplicates: only the real testimonials are shown
+     (5 testimonials = 5 cards in the fan). */
   var n = cards.length;
   var active = 0;
 
