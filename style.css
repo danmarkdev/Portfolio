@@ -1,1306 +1,1035 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Sora:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+  <meta charset="UTF-8"/> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Discover the portfolio of Danmark Rosalejos, with 2 years of experience in building full-stack web application development webhooks to deployment and AI-powered systems."/>
+  <meta name="keywords" content="Krysler Danmark S. Rosalejos, Danmark S. Rosalejos, Danmark Rosalejos, Dan.Dev, Web App Developer, Web Developer, Web Design, Portfolio, Developer Cavite, Philippines, Frontend Developer, Backend Developer, Software Developer"/>
+  <meta name="author" content="Danmark Rosalejos"/>
+  <meta property="og:title" content="Danmark Rosalejos | Software Developer"/>
+  <meta property="og:description" content="Official Portfolio of Danmark Rosalejos, A Software Developer with 2 years of experience in building full-stack web application development webhooks to deployment and AI-powered systems."/>
+  <meta property="og:type" content="Portfolio"/>
+  <title>Danmark Rosalejos</title>
+  <link rel="icon" type="image/png" href="logo.PNG"/>
+  <link rel="shortcut icon" href="logo.PNG"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css?v=19"/>
+</head>
+<body>
 
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box} 
+<!-- NAV — floating pill -->
+<header id="header">
+  <a href="#home" class="logo">Dan.Dev</a>
+  <nav id="nav">
+    <a href="#home">Home</a>
+    <a href="#testimonials">Testimonials</a>
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#education">About</a>
+    <a href="#certificates">Certificates</a>
+    <a href="contact.html" class="nav-cta">Let's Talk<svg class="cta-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+  </nav>
+  <button class="hamburger" id="hbg" aria-label="Toggle menu" aria-expanded="false"> 
+    <span></span><span></span><span></span>
+  </button>
+</header>
 
-:root{
-  /* Flat modern palette — clean cards, single soft drop-shadow, no inset/emboss */ 
-  --bg:#e4e9f5;
-  --surface:#e4e9f5;
-  --accent:#3355FF;
-  --accent-glow:rgba(51,85,255,.24); 
-  --accent-hover:#2543D6;
-  --accent-soft:#eef1ff;
-  --text:#12162b;
-  --muted:#565f7a;
-  --dim:#8890a8;
-  --border:#ffffff;
-  --nav-h:96px;
-  --max-w:1140px;
-  --font-heading:'Sora', sans-serif;
-  --font-body:'Plus Jakarta Sans', sans-serif;
-  --font-mono:'JetBrains Mono', monospace;
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mnav">
+  <a href="#home" onclick="closeMenu()">Home</a>
+  <a href="#testimonials" onclick="closeMenu()">Testimonials</a>
+  <a href="#projects" onclick="closeMenu()">Projects</a>
+  <a href="#skills" onclick="closeMenu()">Skills</a>
+  <a href="#education" onclick="closeMenu()">About</a>
+  <a href="#certificates" onclick="closeMenu()">Certificates</a>
+  <a href="contact.html" onclick="closeMenu()" class="nav-cta mnav-cta">
+    <span class="mnav-cta-label">Let's Talk</span>
+    <svg class="mnav-cta-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+  </a>
+</div>
 
-  --shadow-card: 0 1px 2px rgba(18,22,43,.04), 0 10px 28px -10px rgba(18,22,43,.10);
-  --shadow-card-hover: 0 4px 10px rgba(18,22,43,.05), 0 22px 44px -12px rgba(18,22,43,.16);
-  --shadow-pop: 0 14px 34px -10px var(--accent-glow);
-}
+<!-- HERO -->
+<section id="home" class="hero">
+  <div class="container hero-grid">
+    <div class="hero-left reveal">
+      <h1 class="hero-name">Danmark Rosalejos</h1>
+      <p class="hero-bio">Computer Programming Student at Technological University of the Philippines in Manila with 2 years of experience in building full-stack web application development, webhooks to deployment and AI-powered systems.</p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn-primary">VIEW PROJECTS</a>
+        <a href="Rosalejos Danmark CV.pdf" download class="btn-outline">
+          DOWNLOAD CV
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M12 3v12"/><polyline points="7 10 12 15 17 10"/><path d="M5 21h14"/></svg>
+        </a>
+      </div>
+    </div>
 
-html{scroll-behavior:smooth}
-*{-webkit-tap-highlight-color:transparent}
-html,body{max-width:100%;overflow-x:hidden}
-body{
-  font-family: var(--font-body);
-  font-size: 1rem;
-  line-height: 1.6;
-  background: var(--bg);
-  color: var(--muted);
-  -webkit-user-select: none;
-  user-select: none;
-}
-a,button{outline:none;-webkit-tap-highlight-color:transparent}
-a:focus,button:focus{outline:none}
-a:focus-visible,button:focus-visible{outline:none}
-a{text-decoration:none}
-input,textarea{font-family: var(--font-body); user-select:text!important;-webkit-user-select:text!important}
-body.menu-open{overflow:hidden}
-::-webkit-scrollbar{width:0;background:transparent}
-html{scrollbar-width:none}
+    <div class="hero-right reveal">
+      <div class="photo-orbit" id="photoOrbit">
 
-.container{width:90%;max-width:var(--max-w);margin:0 auto}
+        <div class="photo-frame">
+          <div class="photo-wrap">
+            <img src="newpfp.jpg" alt="Danmark Rosalejos"/>
+          </div>
+        </div>
 
-/* SECTION HEADERS — every section title (Testimonials, Projects, Technical Stacks,
-   Programming Certifications) uses the exact same look as "Education & Milestones" */
-.sec-header{text-align:center;margin-bottom:3rem}
-.sec-title{
-  font-family: var(--font-heading);
-  color: var(--text);
-  font-size: clamp(1.7rem,3.5vw,2.4rem);
-  font-weight: 700;
-  letter-spacing: -.03em;
-  line-height: 1.2;
-}
-/* Testimonials header: small label on top, slightly larger title below*/
-.sec-eyebrow{
-  font-family: var(--font-body);
-  font-size: .85rem;
-  font-weight: 700;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: .7rem;
-}
-.sec-title-lg{font-size:clamp(2rem,4.5vw,3.1rem)}
-/* Technical Stacks: pull the icons closer to the title */
-#skills .sec-header{margin-bottom:1.25rem}
-#skills .tech-panel{padding-top:1rem}
+        <!-- Tech stack — icon-only badges floating around the profile photo (fixed positions, subtle bob) -->
+        <div class="orbit-ring" id="orbitRing">
 
-/* Background canvas must be taken out of normal document flow,
-   otherwise its JS-set width/height reserves real space on the page
-   and pushes all content below it down. */
-#bg-canvas{
-  position:fixed;
-  inset:0;
-  width:100%;
-  height:100%;
-  z-index:-1;
-  pointer-events:none;
-  display:block;
-}
+          <div class="orbit-item oi-0" style="--angle:0deg">
+            <div class="orbit-counter">
+              <div class="stack-badge">
+                <span class="fb-icon" style="background:#E34F26"><img src="https://cdn.simpleicons.org/html5" alt="HTML5" loading="lazy"/></span>
+              </div>
+            </div>
+          </div>
 
-h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.02em}
+          <div class="orbit-item oi-1" style="--angle:21.18deg">
+            <div class="orbit-counter">
+              <div class="stack-badge">
+                <span class="fb-icon" style="background:#F7DF1E"><img src="https://cdn.simpleicons.org/javascript" alt="JavaScript" loading="lazy"/></span>
+              </div>
+            </div>
+          </div>
 
-/* NAV — floating centered pill, detached from the top edge */
-#header{
-  position:fixed;
-  top:1.1rem;
-  left:50%;
-  transform:translateX(-50%);
-  width:calc(100% - 2.5rem);
-  max-width:900px;
-  height:auto;
-  background:var(--surface);
-  backdrop-filter:blur(16px);
-  -webkit-backdrop-filter:blur(16px);
-  border:1px solid var(--border);
-  border-radius:100px;
-  padding:.6rem 1.4rem;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:1.5rem;
-  z-index:1000;
-  box-shadow:var(--shadow-card);
-  transition:box-shadow .3s ease, background .3s ease, border-color .3s ease;
-}
-  #header.scrolled{background:var(--surface);box-shadow:var(--shadow-card-hover);border-color:rgba(230,232,240,.9)}
-  font-family: var(--font-heading);
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--text);
-  text-decoration: none;
-  letter-spacing: -.01em;
-  position: relative;
-  z-index: 1001;
-  flex-shrink:0;
-  display:inline-flex;
-  align-items:center;
-  gap:.4rem;
-}
-.logo-dot{color:var(--text)}
-#header .logo,
-#header .logo:visited,
-#header .logo:hover{
-  color:var(--text) !important;
-  font-weight:700;
-}
+          <div class="orbit-item oi-2" style="--angle:42.35deg">
+            <div class="orbit-counter">
+              <div class="stack-badge">
+                <span class="fb-icon" style="background:#4479A1"><img src="https://cdn.simpleicons.org/mysql" alt="MySQL" loading="lazy"/></span>
+              </div>
+            </div>
+          </div>
 
-#nav{
-  display:flex;
-  align-items:center;
-  gap:1.7rem;
-  margin:0 auto;
-}
-#nav a{
-  font-family: var(--font-body);
-  font-size: .85rem;
-  font-weight: 500;
-  color: var(--muted);
-  text-decoration: none;
-  padding: .4rem .85rem;
-  border-radius:100px;
-  position: relative;
-  transition: color .2s ease, background .2s ease;
-}
-#nav a:hover,
-#nav a.active{color:var(--accent);font-weight:600;background:var(--accent-soft)}
+          <div class="orbit-item oi-3" style="--angle:63.53deg">
+            <div class="orbit-counter">
+              <div class="stack-badge">
+                <span class="fb-icon" style="background:#1e1e1e"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" alt="VS Code" loading="lazy"/></span>
+              </div>
+            </div>
+          </div>
 
-.nav-cta{
-  display:inline-flex;
-  align-items:center;
-  gap:.4rem;
-  background:var(--surface);
-  border:1px solid var(--border);
-  color:var(--text);
-  padding:.6rem 1.3rem;
-  border-radius:100px;
-  font-family:var(--font-body);
-  font-size:.82rem;
-  font-weight:600;
-  text-decoration:none;
-  flex-shrink:0;
-  transition:all .25s cubic-bezier(.16,1,.3,1);
-}
-.cta-arrow{flex-shrink:0}
-#header .nav-cta,
-#header .nav-cta:hover,
-#header .nav-cta:active,
-#header .nav-cta.active,
-#header .nav-cta:visited{
-  background:var(--surface) !important;
-  border-color:var(--border) !important;
-  color:var(--text) !important;
-  font-family:var(--font-body) !important;
-  font-weight:600 !important;
-}
-#header .nav-cta:hover{transform:translateY(-1px);box-shadow:var(--shadow-card-hover)}
-#header .nav-cta:active{transform:translateY(0);box-shadow:var(--shadow-card)}
+          <div class="orbit-item oi-4" style="--angle:84.71deg">
+            <div class="orbit-counter">
+              <div class="stack-badge">
+                <span class="fb-icon" style="background:#FF2D20"><img src="https://cdn.simpleicons.org/laravel" alt="Laravel" loading="lazy"/></span>
+              </div>
+            </div>
+          </div>
 
-.hamburger{display:none;background:none;border:none;cursor:pointer;position:relative;z-index:1001;width:38px;height:38px;flex-shrink:0;border-radius:50%;transition:background .2s ease}
-.hamburger:hover{background:var(--accent-soft)}
-.hamburger span{position:absolute;left:50%;top:50%;width:18px;height:2px;background:var(--text);border-radius:2px;transition:transform .3s ease,opacity .3s ease;transform:translate(-50%,-50%) translateY(0) rotate(0)}
-.hamburger span:nth-child(1){transform:translate(-50%,-50%) translateY(-6px) rotate(0)}
-.hamburger span:nth-child(3){transform:translate(-50%,-50%) translateY(6px) rotate(0)}
-.hamburger.open span:nth-child(1){transform:translate(-50%,-50%) translateY(0) rotate(45deg)}
-.hamburger.open span:nth-child(2){opacity:0}
-.hamburger.open span:nth-child(3){transform:translate(-50%,-50%) translateY(0) rotate(-45deg)}
+          <div class="orbit-item oi-5" style="--angle:105.88deg">
+            <div class="orbit-counter">
+              <div class="stack-badge">
+                <span class="fb-icon" style="background:#181717"><img src="https://cdn.simpleicons.org/github" alt="GitHub" loading="lazy"/></span>
+              </div>
+            </div>
+          </div>
 
-.mobile-nav{
-  display:flex;
-  position:fixed;
-  inset:0;
-  background:var(--bg);
-  flex-direction:column;
-  align-items:center;
-  gap:1rem;
-  padding:calc(var(--nav-h) - .5rem) 1.5rem 1.5rem;
-  z-index:998;
-  opacity:0;
-  visibility:hidden;
-  transform:scale(.97);
-  transition:opacity .3s ease,transform .3s ease,visibility .3s;
-  overflow-y:auto;
-  -webkit-overflow-scrolling:touch;
-}
-.mobile-nav::before,
-.mobile-nav::after{
-  content:"";
-  margin:auto 0;
-}
-.mobile-nav.open{opacity:1;visibility:visible;transform:scale(1)}
+          <div class="orbit-item oi-6" style="--angle:127.06deg">
+            <div class="orbit-counter">
+              <div class="stack-badge">
+                <span class="fb-icon" style="background:#7952B3"><img src="https://cdn.simpleicons.org/bootstrap" alt="Bootstrap" loading="lazy"/></span>
+              </div>
+            </div>
+          </div>
 
-.mobile-nav a{
-  width:100%;
-  max-width:380px;
-  text-align:center;
-  font-family: var(--font-body);
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--text);
-  text-decoration: none;
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:100px;
-  padding:1.05rem 1.5rem;
-  box-shadow:var(--shadow-card);
-  transition:color .2s ease, box-shadow .2s ease, transform .15s ease;
-  opacity: 0;
-  transform: translateY(12px);
-  flex-shrink:0;
-}
-.mobile-nav a:hover{color:var(--accent);box-shadow:var(--shadow-card-hover)}
-.mobile-nav a.active{color:var(--accent)}
+          <div class="orbit-item oi-7" style="--angle:148.24deg">
+            <div class="orbit-counter">
+              <div class="stack-badge">
+                <span class="fb-icon" style="background:#777BB4"><img src="https://cdn.simpleicons.org/php" alt="PHP" loading="lazy"/></span>
+              </div>
+            </div>
+          </div>
 
-.mobile-nav a.mnav-cta{
-  background:var(--surface);
-  color:var(--text);
-  font-weight:700;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:.5rem;
-}
-.mobile-nav a.mnav-cta:hover{
-  color:var(--accent-hover);
-  background:var(--surface);
-}
-.mnav-cta-label{
-  display:inline;
-}
-.mnav-cta-arrow{
-  flex-shrink:0;
-}
+          <div class="orbit-item oi-8" style="--angle:169.41deg">
+            <div class="orbit-counter">
+              <div class="stack-badge">
+                <span class="fb-icon" style="background:#339933"><img src="https://cdn.simpleicons.org/nodedotjs" alt="Node.js" loading="lazy"/></span>
+              </div>
+            </div>
+          </div>
 
-.mobile-nav.open a{opacity:1;transform:translateY(0);transition:opacity .35s ease,transform .35s ease}
-.mobile-nav.open a:nth-child(1){transition-delay:.07s}
-.mobile-nav.open a:nth-child(2){transition-delay:.12s}
-.mobile-nav.open a:nth-child(3){transition-delay:.17s}
-.mobile-nav.open a:nth-child(4){transition-delay:.22s}
-.mobile-nav.open a:nth-child(5){transition-delay:.27s}
-.mobile-nav.open a:nth-child(6){transition-delay:.32s}
-.mobile-nav.open a:nth-child(7){transition-delay:.37s}
+          <div class="orbit-item oi-9" style="--angle:190.59deg">
+            <div class="orbit-counter">
+              <div class="stack-badge">
+                <span class="fb-icon" style="background:#ffffff"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" loading="lazy"/></span>
+              </div>
+            </div>
+          </div>
 
-.section,
-section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
-.section{padding:7rem 0;position:relative;z-index:1}
-.section-alt{background:transparent}
-.section-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.25rem}
-.section-big-heading{
-  font-family: var(--font-heading);
-  font-size: clamp(2rem,4.5vw,3.2rem);
-  font-weight: 700;
-  color: var(--text);
-  letter-spacing: -.03em;
-  line-height: 1;
-}
-.section-label-right{
-  font-family: var(--font-body);
-  font-size: .72rem;
-  font-weight: 700;
-  letter-spacing: .18em;
-  color: var(--accent);
-  text-transform: uppercase;
-  padding-top: .5rem;
-}
-.section-divider{width:100%;height:1px;background:rgba(163,177,198,.4);margin-bottom:3.5rem}
+          <div class="orbit-item oi-10" style="--angle:211.76deg">
+            <div class="orbit-counter">
+              <div class="stack-badge">
+                <span class="fb-icon" style="background:#ffffff"><svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><path fill="#9B4F96" d="M115.4 30.7L67.1 2.9c-.8-.5-1.9-.7-3.1-.7-1.2 0-2.3.3-3.1.7l-48 27.9c-1.7 1-2.9 3.5-2.9 5.4v55.7c0 1.1.2 2.4 1 3.5l106.8-62c-.6-1.2-1.5-2.1-2.4-2.7z"/><path fill="#68217A" d="M10.7 95.3c.5.8 1.2 1.5 1.9 1.9l48.2 27.9c.8.5 1.9.7 3.1.7 1.2 0 2.3-.3 3.1-.7l48-27.9c1.7-1 2.9-3.5 2.9-5.4V36.1c0-.9-.1-1.9-.6-2.8l-106.6 62z"/><path fill="#fff" d="M85.3 76.1C81.1 83.5 73.1 88.5 64 88.5c-13.5 0-24.5-11-24.5-24.5s11-24.5 24.5-24.5c9.1 0 17.1 5 21.3 12.5l13-7.5c-6.8-11.9-19.6-20-34.3-20-21.8 0-39.5 17.7-39.5 39.5s17.7 39.5 39.5 39.5c14.6 0 27.4-8 34.2-19.8l-12.9-7.6zM97 66.2l.9-4.3h-4.2v-4.7h5.1L100 51h4.9l-1.2 6.1h3.8l1.2-6.1h4.8l-1.2 6.1h2.4v4.7h-3.3l-.9 4.3h4.2v4.7h-5.1l-1.2 6h-4.9l1.2-6h-3.8l-1.2 6h-4.8l1.2-6h-2.4v-4.7H97zm4.8 0h3.8l.9-4.3h-3.8l-.9 4.3z"/></svg></span>
+              </div>
+            </div>
+          </div>
 
-.hero{min-height:100vh;padding-top:calc(var(--nav-h) + 2rem);display:flex;align-items:center;position:relative;overflow:hidden;z-index:1}
-.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:3rem;position:relative;z-index:1}
-.hero-name{
-  font-family: var(--font-heading);
-  font-size: clamp(2rem,4vw,3.4rem);
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -.01em;
-  color: var(--text);
-  margin-bottom: 1.4rem;
-  white-space: nowrap;
-}
-.hero-bio{
-  font-family: var(--font-body);
-  font-size: 1.05rem;
-  color: var(--muted);
-  line-height: 1.8;
-  max-width: 620px;
-  margin-bottom: 2.4rem;
-  font-weight: 400;
-  text-wrap: balance;
-}
-.mobile-br{display:none}
-.hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
-.btn-primary{
-  display: inline-flex;
-  align-items:center;
-  padding: .9rem 2.1rem;
-  background: var(--accent);
-  color: #ffffff;
-  text-decoration: none;
-  font-family: var(--font-body);
-  font-size: .85rem;
-  font-weight: 600;
-  border-radius: 10px;
-  box-shadow: 0 10px 24px var(--accent-glow);
-  transition: background .2s,transform .15s,box-shadow .2s;
-}
-.btn-primary:hover{background:var(--accent-hover);transform:translateY(-2px);box-shadow:0 14px 30px var(--accent-glow)}
-.btn-primary:active,.btn-primary:focus,.btn-primary:visited{color:#ffffff;transform:none}
-.btn-outline{
-  display: inline-flex;
-  align-items: center;
-  gap: .55rem;
-  padding: .9rem 2.1rem;
-  background: var(--surface);
-  color: var(--text);
-  text-decoration: none;
-  font-family: var(--font-body);
-  font-size: .85rem;
-  font-weight: 600;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-card);
-  transition: all .3s cubic-bezier(.16,1,.3,1);
-}
-.btn-outline:hover{color:var(--accent);transform:translateY(-2px);box-shadow:var(--shadow-card)}
-.btn-outline:active,.btn-outline:focus,.btn-outline:visited{color:var(--text);transform:none;box-shadow:var(--shadow-card)}
+          <div class="orbit-item oi-11" style="--angle:232.94deg">
+            <div class="orbit-counter">
+              <div class="stack-badge">
+                <span class="fb-icon" style="background:#ffffff"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg" alt="SQLite" loading="lazy"/></span>
+              </div>
+            </div>
+          </div>
 
-.hero-right{display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative}
-.photo-orbit{position:relative;width:100%;max-width:440px;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center}
-.photo-frame{position:relative;display:inline-block;z-index:2}
-.photo-wrap{width:260px;height:260px;border-radius:50%;overflow:hidden;position:relative;z-index:1;border:6px solid var(--bg);box-shadow:var(--shadow-card)}
-.photo-wrap img{width:100%;height:100%;object-fit:cover}
+          <div class="orbit-item oi-12" style="--angle:254.12deg">
+            <div class="orbit-counter">
+              <div class="stack-badge">
+                <span class="fb-icon" style="background:#ffffff"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/netbeans/netbeans-original.svg" alt="NetBeans" loading="lazy"/></span>
+              </div>
+            </div>
+          </div>
 
-.orbit-ring{
-  position:absolute;
-  inset:0;
-  z-index:2;
-  pointer-events:none;
-  --radius:192px;
-}
+          <div class="orbit-item oi-13" style="--angle:275.29deg">
+            <div class="orbit-counter">
+              <div class="stack-badge">
+                <span class="fb-icon" style="background:#ffffff"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/visualstudio/visualstudio-plain.svg" alt="Visual Studio" loading="lazy"/></span>
+              </div>
+            </div>
+          </div>
 
-.orbit-item{
-  position:absolute;
-  top:50%;
-  left:50%;
-  width:0;
-  height:0;
-  transform:rotate(var(--angle)) translate(var(--radius));
-}
-.orbit-counter{
-  position:absolute;
-  top:0;
-  left:0;
-  pointer-events:auto;
-  animation-name: floatBob;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-}
-.photo-orbit:hover .orbit-counter{animation-play-state:paused}
+          <div class="orbit-item oi-14" style="--angle:296.47deg">
+            <div class="orbit-counter">
+              <div class="stack-badge">
+                <span class="fb-icon" style="background:#ffffff"><svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><g fill="#623697"><path d="M61.195 0h4.953c12.918.535 25.688 4.89 36.043 12.676 9.809 7.289 17.473 17.437 21.727 28.906 2.441 6.387 3.664 13.18 4.082 19.992v4.211c-.414 11.293-3.664 22.52-9.73 32.082-6.801 10.895-16.922 19.73-28.727 24.828A64.399 64.399 0 0165.082 128h-2.144c-11.735-.191-23.41-3.66-33.297-9.992-11.196-7.113-20.114-17.785-25.028-30.117C1.891 81.19.441 74.02 0 66.812v-4.957c.504-14.39 5.953-28.609 15.41-39.496C23.168 13.31 33.5 6.48 44.887 2.937 50.172 1.27 55.676.41 61.195 0M25.191 37.523c-.03 12.153-.011 24.305-.011 36.454 1.43.011 2.86.011 4.293.011-.075-10.433.101-20.863-.106-31.293.48.907.918 1.84 1.465 2.707C37.035 54.91 43.105 64.5 49.309 74c1.738-.023 3.476-.023 5.214.004-.003-12.16-.007-24.32.004-36.48a308.076 308.076 0 00-4.25-.012c.075 10.32-.136 20.64.125 30.949-6.507-10.352-13.101-20.645-19.695-30.945a370.85 370.85 0 00-5.516.007m38.844-.011c-.129 12.16-.004 24.32-.047 36.476 6.469-.015 12.938.024 19.41-.02a83.36 83.36 0 01.024-3.952c-5.012-.016-10.027.007-15.043-.02-.074-4.21-.004-8.426-.04-12.637 4.395-.078 8.79.012 13.18-.047-.011-1.277-.011-2.554-.019-3.832-4.387.141-8.773-.054-13.164.012.012-4.023.02-8.05.02-12.078 4.699 0 9.398-.02 14.093.012-.008-1.301 0-2.606.016-3.906-6.145-.016-12.29-.008-18.43-.008m22.602.054c.004 1.266.004 2.528.008 3.79 3.488-.04 6.972.109 10.46.035-.023 10.863.004 21.718-.011 32.574 1.46.043 2.93.035 4.39-.09-.12-5.992.118-11.988-.156-17.977.067-2.699-.07-5.394.117-8.09.106-2.14-.277-4.277-.035-6.417 3.516.047 7.035.015 10.55.015a59.774 59.774 0 01.075-3.832c-8.469-.105-16.937-.094-25.398-.008M13.55 69.094c-1.977.91-2.106 4.023-.149 5.027 1.72 1.18 4.305-.371 4.227-2.41.133-2.004-2.29-3.688-4.078-2.617m29.23 15.289c-4.277 3.469-4.226 11.195.5 14.25 2.668 1.695 6.102 1.344 8.922.215.012-.621.027-1.239.05-1.86-2.671 1.395-6.41 1.68-8.675-.61-2.965-3.237-2.297-9.269 1.613-11.476 2.211-1.164 4.907-.824 7.086.239-.007-.66-.004-1.32 0-1.98-3.097-1.099-6.922-1.04-9.496 1.222m17.207 2.71c-1.89.22-3.758 1.22-4.633 2.966-1.253 2.496-1.109 5.867.864 7.96 2.035 2.297 5.945 2.32 8.18.297 2.425-2.308 2.699-6.468.757-9.164-1.148-1.629-3.273-2.183-5.168-2.058m17.887 2.722c-1.66 2.883-1.332 7.25 1.598 9.211 2.183 1.22 4.933.832 7.074-.308-.004-.617.004-1.235.031-1.848-1.687 1.07-3.937 1.856-5.812.777-1.309-.722-1.704-2.257-1.914-3.625 2.875-.039 5.746-.082 8.625-.074-.075-1.828-.118-3.894-1.45-5.308-2.199-2.43-6.644-1.657-8.152 1.175m-8.414-2.336v12.008c.652 0 1.312 0 1.973.004.023-2.195-.04-4.394.023-6.594.016-1.27.527-2.558 1.484-3.414.801-.605 1.883-.27 2.801-.246-.012-.636-.02-1.27-.023-1.902-1.793-.398-3.336.652-4.242 2.117-.02-.633-.04-1.266-.051-1.894-.656-.024-1.313-.051-1.965-.079zm0 0"/><path d="M58.758 89.223c1.652-.805 4.023-.41 4.945 1.3 1.05 1.887 1.027 4.383-.137 6.211-1.52 2.286-5.527 1.786-6.523-.742-1.008-2.258-.617-5.484 1.715-6.77zm0 0M79.04 92.414c.046-1.574 1.144-3.137 2.726-3.48.976-.164 2.097.007 2.773.793.672.714.813 1.714.98 2.64-2.16.012-4.32-.031-6.48.047zm0 0"/></g></svg></span>
+              </div>
+            </div>
+          </div>
 
-@keyframes floatBob{
-  0%,100%{transform:translate(-50%,-50%) rotate(calc(var(--angle) * -1)) translate(0,0) scale(1) rotate(0deg)}
-  20%{transform:translate(-50%,-50%) rotate(calc(var(--angle) * -1)) translate(10px,-20px) scale(1.12) rotate(6deg)}
-  40%{transform:translate(-50%,-50%) rotate(calc(var(--angle) * -1)) translate(-8px,-32px) scale(1.05) rotate(-4deg)}
-  60%{transform:translate(-50%,-50%) rotate(calc(var(--angle) * -1)) translate(-14px,-16px) scale(0.94) rotate(5deg)}
-  80%{transform:translate(-50%,-50%) rotate(calc(var(--angle) * -1)) translate(6px,-6px) scale(1.02) rotate(-3deg)}
-}
+          <div class="orbit-item oi-15" style="--angle:317.65deg">
+            <div class="orbit-counter">
+              <div class="stack-badge">
+                <span class="fb-icon" style="background:#512BD4"><svg viewBox="0 0 24 24" fill="#512BD4" xmlns="http://www.w3.org/2000/svg"><path d="M24 8.77h-2.468v7.565h-1.425V8.77h-2.462V7.53H24zm-6.852 7.565h-4.821V7.53h4.63v1.24h-3.205v2.494h2.953v1.234h-2.953v2.604h3.396zm-6.708 0H8.882L4.78 9.863a2.896 2.896 0 0 1-.258-.51h-.036c.032.189.048.592.048 1.21v5.772H3.157V7.53h1.659l3.965 6.32c.167.261.275.442.323.54h.024c-.04-.233-.06-.629-.06-1.185V7.529h1.372zm-8.703-.693a.868.829 0 0 1-.869.829.868.829 0 0 1-.868-.83.868.829 0 0 1 .868-.828.868.829 0 0 1 .869.829Z"/></svg></span>
+              </div>
+            </div>
+          </div>
 
-.orbit-item.oi-0 .orbit-counter{animation-delay:0s;animation-duration:3s}
-.orbit-item.oi-1 .orbit-counter{animation-delay:.2s;animation-duration:3.4s}
-.orbit-item.oi-2 .orbit-counter{animation-delay:.4s;animation-duration:2.8s}
-.orbit-item.oi-3 .orbit-counter{animation-delay:.1s;animation-duration:3.6s}
-.orbit-item.oi-4 .orbit-counter{animation-delay:.5s;animation-duration:3.1s}
-.orbit-item.oi-5 .orbit-counter{animation-delay:.3s;animation-duration:2.9s}
-.orbit-item.oi-6 .orbit-counter{animation-delay:.6s;animation-duration:3.5s}
-.orbit-item.oi-7 .orbit-counter{animation-delay:.15s;animation-duration:3.2s}
-.orbit-item.oi-8 .orbit-counter{animation-delay:.45s;animation-duration:2.7s}
-.orbit-item.oi-9 .orbit-counter{animation-delay:.25s;animation-duration:3.7s}
-.orbit-item.oi-10 .orbit-counter{animation-delay:.55s;animation-duration:3.3s}
-.orbit-item.oi-11 .orbit-counter{animation-delay:.35s;animation-duration:2.85s}
-.orbit-item.oi-12 .orbit-counter{animation-delay:.05s;animation-duration:3.45s}
-.orbit-item.oi-13 .orbit-counter{animation-delay:.5s;animation-duration:3.05s}
-.orbit-item.oi-14 .orbit-counter{animation-delay:.3s;animation-duration:3.3s}
-.orbit-item.oi-15 .orbit-counter{animation-delay:.55s;animation-duration:3.9s}
-.orbit-item.oi-16 .orbit-counter{animation-delay:.4s;animation-duration:3.2s}
+          <div class="orbit-item oi-16" style="--angle:338.82deg">
+            <div class="orbit-counter">
+              <div class="stack-badge">
+                <span class="fb-icon" style="background:#20232A"><img src="https://cdn.simpleicons.org/react" alt="React" loading="lazy"/></span>
+              </div>
+            </div>
+          </div>
 
-.stack-badge{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  width:56px;
-  height:56px;
-  background:transparent;
-  border:none;
-  transition:transform .2s;
-}
-.stack-badge > .fb-icon{width:100%;height:100%;background:transparent !important;border:none !important;box-shadow:none !important}
-.stack-badge:hover{transform:scale(1.1)}
-.stack-badge .fb-icon{display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.stack-badge .fb-icon img,
-.stack-badge .fb-icon svg{width:34px;height:34px;object-fit:contain;display:block}
+        </div>
 
-.fb-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.fb-icon img,
-.fb-icon svg{width:15px;height:15px;object-fit:contain;display:block}
+      </div>
 
-.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
-.service-card{
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:2.5rem 2rem;
-  display:flex;flex-direction:column;gap:0;
-  transition:box-shadow .3s,transform .3s;
-  position:relative;overflow:hidden;
-  box-shadow:var(--shadow-card);
-}
-.service-card:hover{
-  transform:translateY(-6px);
-  box-shadow:var(--shadow-card-hover);
-}
-.service-icon-wrap{width:48px;height:48px;border-radius:13px;display:flex;align-items:center;justify-content:center;margin-bottom:1.4rem;background:var(--accent-soft);transition:background .3s,transform .3s}
-.service-card:hover .service-icon-wrap{background:var(--accent);transform:scale(1.06)}
-.service-card:hover .service-icon-wrap svg{stroke:#ffffff}
-.service-icon-wrap svg{width:20px;height:20px;stroke:var(--accent);stroke-width:1.6;fill:none}
-.service-card h3{
-  font-family: var(--font-heading);
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: .65rem;
-  line-height: 1.3;
-}
-.service-card p{
-  font-family: var(--font-body);
-  font-size: .9rem;
-  color: var(--muted);
-  line-height: 1.75;
-}
-.service-num{display:none}
+    </div>
+  </div>
+</section>
 
-.projects-marquee{
-  width:100%;
-  overflow:hidden;
-  -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
-  mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
-}
-.project-track{
-  display:flex;
-  align-items:stretch;
-  gap:2.75rem;
-  width:max-content;
-  cursor:grab;
-  touch-action:pan-y;
-}
-.project-track.dragging{cursor:grabbing}
+<!-- TESTIMONIALS -->
+<section id="testimonials" class="section section-alt">
+  <div class="container">
+    <div class="sec-header reveal">
+      <p class="sec-eyebrow">What people or clients say</p>
+      <h2 class="sec-title sec-title-lg">Testimonials</h2>
+    </div>
 
-.project-card{
-  width:338px;
-  flex:0 0 auto;
-  background:var(--surface);
-  border:1px solid #ffffff;
-  border-radius:28px;
-  padding:.9rem;
-  overflow:hidden;
-  display:flex;
-  flex-direction:column;
-  gap:.9rem;
-  box-shadow:var(--shadow-card);
-  transition:box-shadow .3s ease, transform .3s ease;
-}
-.project-card:hover{
-  transform:translateY(-6px);
-  box-shadow:var(--shadow-card-hover);
-}
+    <div class="testimonial-deck-wrap reveal">
+      <div class="testimonial-deck" id="testiDeck">
 
-.project-img-wrap{
-  width:100%;
-  aspect-ratio:16/8.6;
-  overflow:hidden;
-  padding:.5rem;
-  background:transparent;
-  border:none;
-  border-radius:20px;
-}
-.project-img-wrap img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center;
-  display:block;
-  border-radius:13px;
-  transition:transform .5s ease;
-  -webkit-user-drag:none;
-  user-drag:none;
-}
-.project-card:hover .project-img-wrap img{transform:scale(1.03)}
+        <div class="testi-card">
+          <div class="testi-card-top">
+            <div class="testi-quote-icon">&ldquo;</div>
+            <div class="testi-rating" aria-label="Rated 10 out of 10">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>
+              <span>10/10</span>
+            </div>
+          </div>
+          <p class="testi-text">Danmark did a great job on developing the HealthSync Clinic Management System. I really appreciate the effort and dedication you put into creating a web app that is simple, organized, and easy to use. I found the features helpful and practical for managing clinic information and daily tasks. Overall, I'm very satisfied with your work, and I can see the time and effort you put into making the system functional and useful.</p>
+          <div class="testi-footer">
+            <div class="testi-avatar">J</div>
+            <div class="testi-name">Josh Aguilera</div>
+          </div>
+        </div>
 
-.project-body{padding:0 .4rem .35rem;display:flex;flex-direction:column;gap:.45rem;flex:1}
+        <div class="testi-card">
+          <div class="testi-card-top">
+            <div class="testi-quote-icon">&ldquo;</div>
+            <div class="testi-rating" aria-label="Rated 10 out of 10">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>
+              <span>10/10</span>
+            </div>
+          </div>
+          <p class="testi-text">I can say that his development was quite fast, even remarkable, because from the days when he was still learning the basic concepts, he has now gained a lot of knowledge and solved many problems.</p>
+          <div class="testi-footer">
+            <div class="testi-avatar">C</div>
+            <div class="testi-name">Clark Zablan</div>
+          </div>
+        </div>
 
-.project-title-row{
-  display:flex;
-  align-items:center;
-  justify-content:flex-start;
-  gap:.5rem;
-}
+      </div>
+      <div class="testi-dots" id="testiDots"></div>
+    </div>
+  </div>
+</section>
 
-.project-card-title{
-  font-family: var(--font-heading);
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--text);
-  line-height: 1.3;
-  letter-spacing: -.01em;
-}
+<!-- PROJECTS -->
+<section id="projects" class="section">
+  <div class="container">
+    <div class="sec-header reveal">
+      <h2 class="sec-title sec-title-lg">Selected Works</h2>
+    </div>
+  </div>
 
-.project-link-icon{
-  flex-shrink:0;
-  width:22px;
-  height:22px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:var(--accent);
-  text-decoration:none;
-  transition:background .2s ease, color .2s ease, transform .2s ease;
-}
-.project-link-icon svg{width:15px;height:15px;stroke:currentColor;stroke-width:2;fill:none}
-.project-link-icon:hover{color:var(--accent-hover);transform:translateY(-2px)}
-.project-link-locked{color:var(--dim)}
-.project-link-locked:hover{color:var(--text)}
+  <div class="projects-marquee reveal">
+    <div class="project-track" id="projectTrack">
 
-.project-sub-label{
-  font-family: var(--font-body);
-  font-size: .78rem;
-  color: var(--accent);
-  font-weight: 600;
-  letter-spacing: .02em;
-}
+      <!-- PROJECT 1 -->
+      <div class="project-card">
+        <div class="project-img-wrap">
+          <img src="Projects/HealthSync.png" alt="HealthSync Clinic Management System screenshot"/>
+        </div>
+        <div class="project-body">
+          <div class="project-title-row">
+            <h3 class="project-card-title">HealthSync Clinic Management System</h3>
+            <a href="https://healthsync.hstn.me" target="_blank" class="project-link-icon" aria-label="View live site">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          </div>
+          <p class="project-sub-label">For STI College Bacoor</p>
+          <p class="project-card-desc">A web based system simplifying the school nurse's workflow, digital records, real-time communication tools and streamlined healthcare processes.</p>
+        </div>
+      </div>
 
-.project-card-desc{
-  font-family: var(--font-body);
-  font-size: .8rem;
-  color: var(--muted);
-  line-height: 1.5;
-  text-align: justify;
-  hyphens: auto;
-  -webkit-hyphens: auto;
-}
+      <!-- PROJECT 2 -->
+      <div class="project-card">
+        <div class="project-img-wrap">
+          <img src="Projects/Julia AI.JPG" alt="JuliaAI screenshot"/>
+        </div>
+        <div class="project-body">
+          <div class="project-title-row">
+            <h3 class="project-card-title">Julia AI</h3>
+            <a href="#" class="project-link-icon project-link-locked" aria-label="Private system" onclick="event.preventDefault(); alert('This is a private system and is not publicly accessible.');">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+            </a>
+          </div>
+          <p class="project-card-desc">Developed in September 2026. Danmark's most challenging and best AI project. A Hello Kitty-themed AI companion that chats naturally, generates images from your ideas, reads photos, PDFs and shared links, and formats answers clearly, from step-by-step lists to tables.</p>
+        </div>
+      </div>
 
-.tech-panel{
-  background:transparent;
-  border:none;
-  border-radius:22px;
-  padding:2.75rem 2.25rem;
-  box-shadow:none;
-}
-.tech-icon-grid{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:1rem;
-}
-.tech-icon-box{
-  position:relative;
-  width:72px;
-  height:72px;
-  border-radius:16px;
-  background:transparent;
-  border:none;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  transition:transform .2s ease, box-shadow .2s ease;
-}
-.tech-icon-box > .fb-icon{width:100%;height:100%;border-radius:16px;box-shadow:var(--shadow-card)}
-.tech-icon-box > .fb-icon img,
-.tech-icon-box > .fb-icon svg{width:34px;height:34px}
-.tech-icon-box:hover{
-  transform:translateY(-5px);
-  box-shadow:0 14px 28px -8px rgba(18,22,43,.22);
-  z-index:5;
-}
-.tech-icon-box:hover > .fb-icon{box-shadow:var(--shadow-card-hover)}
+      <!-- PROJECT 3 -->
+      <div class="project-card">
+        <div class="project-img-wrap">
+          <img src="Projects/Resume Analyzer.JPG" alt="Resume Analyzer screenshot"/>
+        </div>
+        <div class="project-body">
+          <div class="project-title-row">
+            <h3 class="project-card-title">Resume Analyzer</h3>
+            <a href="https://resumeanalyzer-kutc.onrender.com/" target="_blank" class="project-link-icon" aria-label="View live site">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          </div>
+          <p class="project-card-desc">A web-based resume review system built with Node.js and Tailwind CSS featuring PDF and DOCX upload, rule-based ATS checks, AI-generated feedback, keyword matching against job postings, and section-by-section improvement suggestions for job seekers.</p>
+        </div>
+      </div>
 
-.tech-icon-box > .fb-icon{
-  background: var(--surface) !important;
-  border: 1px solid var(--border);
-}
-.tech-tip{
-  position:absolute;
-  bottom:calc(100% + 12px);
-  left:50%;
-  --tip-shift:0px;
-  transform:translateX(calc(-50% + var(--tip-shift, 0px))) translateY(6px);
-  width:max-content;
-  max-width:200px;
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:8px;
-  padding:.5rem .9rem;
-  box-shadow:0 8px 20px -6px rgba(18,22,43,.35);
-  opacity:0;
-  visibility:hidden;
-  pointer-events:none;
-  transition:opacity .18s ease, transform .18s ease, visibility .18s;
-  z-index:20;
-  text-align:center;
-}
-.tech-icon-box:hover .tech-tip{
-  opacity:1;
-  visibility:visible;
-  transform:translateX(calc(-50% + var(--tip-shift, 0px))) translateY(0);
-}
-.tech-tip-head{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:.5rem;
-}
-.tech-tip-icon{
-  width:20px;
-  height:20px;
-  border-radius:6px;
-  flex-shrink:0;
-  background:none !important;
-  border:none !important;
-}
-.tech-tip-tag, .tech-tip-desc{
-  display:none;
-}
-.tech-tip-name{
-  font-family: var(--font-body);
-  font-size:.8rem;
-  font-weight:600;
-  color:#12162b;
-  line-height:1.2;
-  white-space:nowrap;
-}
-.tech-tip::after{
-  content:'';
-  position:absolute;
-  top:100%;
-  left:50%;
-  transform:translateX(calc(-50% - var(--tip-shift, 0px)));
-  border:6px solid transparent;
-  border-top-color:var(--surface)
-}
-.tech-icon-box.tip-flip .tech-tip{
-  bottom:auto;
-  top:calc(100% + 12px);
-  transform:translateX(calc(-50% + var(--tip-shift, 0px))) translateY(-6px);
-}
-.tech-icon-box.tip-flip:hover .tech-tip{
-  transform:translateX(calc(-50% + var(--tip-shift, 0px))) translateY(0);
-}
-.tech-icon-box.tip-flip .tech-tip::after{
-  top:auto;
-  bottom:100%;
-  border-top-color:transparent;
-  border-bottom-color:var(--surface)
-}
+      <!-- PROJECT 4 -->
+      <div class="project-card">
+        <div class="project-img-wrap">
+          <img src="Projects/CupOfCafe.PNG" alt="Cup of Cafe screenshot"/>
+        </div>
+        <div class="project-body">
+          <div class="project-title-row">
+            <h3 class="project-card-title">Cup of Cafe</h3>
+            <a href="https://cupofcafe.hstn.me/" target="_blank" class="project-link-icon" aria-label="View live site">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          </div>
+          <p class="project-card-desc">A sophisticated digital storefront demonstrating modern frontend design, elegant interactions, and a refined user experience.</p>
+        </div>
+      </div>
 
-@media(min-width:961px){
-  .tech-icon-grid{
-    gap:1.15rem;
-    width: calc(9 * 72px + 8 * 1.15rem);
-    margin: 0 auto;
-  }
-  .tech-panel{
-    width: fit-content;
-    margin: 0 auto;
-  }
-}
+      <!-- PROJECT 5 -->
+      <div class="project-card">
+        <div class="project-img-wrap">
+          <img src="Projects/LBFF.png" alt="Digital Father's Day Letter screenshot"/>
+        </div>
+        <div class="project-body">
+          <div class="project-title-row">
+            <h3 class="project-card-title">Digital Father's Day Letter</h3>
+            <a href="https://lbff.hstn.me/" target="_blank" class="project-link-icon" aria-label="View live site">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          </div>
+          <p class="project-sub-label">For Lorimi Bacoor Faith Family (LBFF)</p>
+          <p class="project-card-desc">An interactive tap to open envelope revealing a scripture rooted tribute to the two church pastors, personalized letters, a scroll-triggered reveal and a closing message of gratitude from the congregation.</p>
+        </div>
+      </div>
 
-/* EDUCATION — interactive milestone timeline, title centered on top */
-.edu-section{background:transparent;padding:6rem 0;position:relative;z-index:1}
+      <!-- duplicate set for seamless infinite loop -->
+      <div class="project-card" aria-hidden="true">
+        <div class="project-img-wrap">
+          <img src="Projects/HealthSync.png" alt=""/>
+        </div>
+        <div class="project-body">
+          <div class="project-title-row">
+            <h3 class="project-card-title">HealthSync Clinic Management System</h3>
+            <a href="https://healthsync.hstn.me" target="_blank" class="project-link-icon" tabindex="-1" aria-label="View live site">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          </div>
+          <p class="project-sub-label">For STI College Bacoor</p>
+          <p class="project-card-desc">A web based system simplifying the school nurse's workflow, digital records, real-time communication tools and streamlined healthcare processes.</p>
+        </div>
+      </div>
 
-.edu-header{
-  text-align:center;
-  max-width:700px;
-  margin:0 auto 2rem;
-}
-.education-title{
-  font-family: var(--font-heading);
-  color: var(--text);
-  font-size: clamp(1.7rem,3.5vw,2.4rem);
-  font-weight: 700;
-  letter-spacing: -.03em;
-  margin-bottom:.6rem;
-}
-.edu-subtitle{
-  font-family: var(--font-body);
-  font-size:.95rem;
-  color:var(--muted);
-}
+      <div class="project-card" aria-hidden="true">
+        <div class="project-img-wrap">
+          <img src="Projects/Julia AI.JPG" alt=""/>
+        </div>
+        <div class="project-body">
+          <div class="project-title-row">
+            <h3 class="project-card-title">Julia AI</h3>
+            <a href="#" class="project-link-icon project-link-locked" tabindex="-1" aria-label="Private system" onclick="event.preventDefault();">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+            </a>
+          </div>
+          <p class="project-card-desc">Developed in September 2026. Danmark's most challenging and best AI project. A Hello Kitty-themed AI companion that chats naturally, generates images from your ideas, reads photos, PDFs and shared links, and formats answers clearly, from step-by-step lists to tables.</p>
+        </div>
+      </div>
 
-/* Toggle pill: Academic Path / Recognition Log */
-.edu-toggle-wrap{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:1rem;
-  margin-bottom:3rem;
-}
-.edu-toggle{
-  display:inline-flex;
-  gap:.85rem;
-}
-.edu-toggle-btn{
-  display:inline-flex;
-  align-items:center;
-  gap:.6rem;
-  font-family: var(--font-body);
-  font-size:.85rem;
-  font-weight:600;
-  color:var(--muted);
-  background:var(--surface);
-  border:2px solid transparent;
-  border-radius:100px;
-  padding:.7rem 1.4rem;
-  box-shadow:0 10px 24px -8px rgba(18,22,43,.18), 0 2px 4px rgba(18,22,43,.04);
-  cursor:pointer;
-  transition:color .2s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
-}
-.edu-toggle-btn svg{width:18px;height:18px;flex-shrink:0;fill:currentColor;stroke:none}
-.edu-toggle-btn svg [stroke]{stroke:currentColor}
-.edu-toggle-btn.active{
-  color:var(--accent);
-  background:var(--surface);
-  border-color:var(--accent);
-}
-.edu-hint{
-  display:inline-flex;
-  align-items:center;
-  gap:.5rem;
-  font-family: var(--font-body);
-  font-size:.78rem;
-  font-weight:500;
-  color:var(--dim);
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:100px;
-  padding:.5rem 1.1rem;
-}
-.edu-hint-icon{
-  width:17px;
-  height:17px;
-  flex-shrink:0;
-  color:var(--accent);
-}
+      <div class="project-card" aria-hidden="true">
+        <div class="project-img-wrap">
+          <img src="Projects/Resume Analyzer.JPG" alt=""/>
+        </div>
+        <div class="project-body">
+          <div class="project-title-row">
+            <h3 class="project-card-title">Resume Analyzer</h3>
+            <a href="https://resumeanalyzer-kutc.onrender.com/" target="_blank" class="project-link-icon" tabindex="-1" aria-label="View live site">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          </div>
+          <p class="project-card-desc">A web-based resume review system built with Node.js and Tailwind CSS featuring PDF and DOCX upload, rule-based ATS checks, AI-generated feedback, keyword matching against job postings, and section-by-section improvement suggestions for job seekers.</p>
+        </div>
+      </div>
 
-/* Panels: only the active view (Academic / Recognition) is shown */
-.edu-timeline-view{display:none;max-width:900px;margin:0 auto}
-.edu-timeline-view.active{display:block}
+      <div class="project-card" aria-hidden="true">
+        <div class="project-img-wrap">
+          <img src="Projects/CupOfCafe.PNG" alt=""/>
+        </div>
+        <div class="project-body">
+          <div class="project-title-row">
+            <h3 class="project-card-title">Cup of Cafe</h3>
+            <a href="https://cupofcafe.hstn.me/" target="_blank" class="project-link-icon" tabindex="-1" aria-label="View live site">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          </div>
+          <p class="project-card-desc">A sophisticated digital storefront demonstrating modern frontend design, elegant interactions, and a refined user experience.</p>
+        </div>
+      </div>
 
-/* Timeline row: equal columns, the line runs through every node
-   (same layout on desktop and mobile) */
-.edu-timeline{
-  --c:68px;
-  position:relative;
-  display:grid;
-  grid-auto-flow:column;
-  grid-auto-columns:1fr;
-  padding-top:.5rem;
-  margin-bottom:3rem;
-}
-.edu-node{
-  position:relative;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:.6rem;
-  width:100%;
-  background:none;
-  border:none;
-  cursor:pointer;
-  font-family:var(--font-body);
-}
-/* the line: each node draws its own segment across its column,
-   so the line is continuous and works with any number of nodes */
-.edu-node::before{
-  content:"";
-  position:absolute;
-  left:0;
-  right:0;
-  top:calc(1.2rem + .6rem + var(--c) / 2 - 1.5px);
-  height:3px;
-  border-radius:3px;
-  background:rgba(163,177,198,.45);
-  z-index:0;
-}
-.edu-node-label{
-  height:1.2rem;
-  line-height:1.2rem;
-  font-size:.82rem;
-  font-weight:700;
-  color:var(--dim);
-  transition:color .2s ease;
-  position:relative;
-  z-index:1;
-}
-.edu-node-circle{
-  position:relative;
-  z-index:1;
-  width:var(--c);
-  height:var(--c);
-  border-radius:50%;
-  background:var(--surface);
-  border:2px solid var(--border);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:var(--dim);
-  box-shadow:var(--shadow-card);
-  transform:scale(.82);
-  transition:transform .25s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease, color .2s ease;
-}
-.edu-node-circle svg{width:28px;height:28px}
-.edu-node-year{
-  position:relative;
-  z-index:1;
-  font-size:.78rem;
-  font-weight:600;
-  color:var(--dim);
-  transition:color .2s ease;
-}
+      <div class="project-card" aria-hidden="true">
+        <div class="project-img-wrap">
+          <img src="Projects/LBFF.png" alt=""/>
+        </div>
+        <div class="project-body">
+          <div class="project-title-row">
+            <h3 class="project-card-title">Digital Father's Day Letter</h3>
+            <a href="https://lbff.hstn.me/" target="_blank" class="project-link-icon" tabindex="-1" aria-label="View live site">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          </div>
+          <p class="project-sub-label">For Lorimi Bacoor Faith Family (LBFF)</p>
+          <p class="project-card-desc">An interactive tap to open envelope revealing a scripture rooted tribute to the two church pastors, personalized letters, a scroll-triggered reveal and a closing message of gratitude from the congregation.</p>
+        </div>
+      </div>
 
-/* Active node: bigger, blue, glowing */
-.edu-node.active .edu-node-label{color:var(--accent)}
-.edu-node.active .edu-node-year{color:var(--text);font-weight:700}
-.edu-node.active .edu-node-circle{
-  transform:scale(1.08);
-  color:var(--accent);
-  background:var(--accent-soft);
-  border-color:transparent;
-  box-shadow:0 0 0 7px rgba(51,85,255,.08), 0 0 36px 10px var(--accent-glow);
-}
+    </div>
+  </div>
+</section>
 
-/* Detail: plain text, no box */
-.edu-detail{
-  max-width:none;
-  margin:0;
-  background:none;
-  border:none;
-  box-shadow:none;
-  border-radius:0;
-  padding:0 .5rem;
-  text-align:left;
-}
-.edu-detail-date{
-  display:inline-flex;
-  align-items:center;
-  gap:.5rem;
-  font-family: var(--font-body);
-  font-size:.78rem;
-  font-weight:700;
-  letter-spacing:.06em;
-  color:var(--accent);
-  text-transform:uppercase;
-  margin-bottom:.75rem;
-}
-.edu-detail-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);flex-shrink:0}
-.edu-detail-title{
-  font-family: var(--font-heading);
-  font-size:clamp(1.5rem,3vw,2rem);
-  font-weight:700;
-  color:var(--text);
-  margin-bottom:.5rem;
-  line-height:1.25;
-}
-.edu-detail-org{
-  font-family: var(--font-body);
-  font-size:1rem;
-  font-weight:500;
-  color:var(--muted);
-  margin-bottom:.6rem;
-}
-.edu-detail-desc{
-  font-family: var(--font-body);
-  font-size:.95rem;
-  color:var(--muted);
-  line-height:1.7;
-}
+<!-- SKILLS -->
+<section id="skills" class="section section-alt">
+  <div class="container">
+    <div class="sec-header reveal">
+      <h2 class="sec-title sec-title-lg">Technical Stacks</h2>
+    </div>
 
-/* CERTS */
-.cert-section{background:transparent;position:relative;z-index:1}
-.cert-marquee-row{
-  width:100%;
-  overflow:hidden;
-  -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
-  mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
-  margin-bottom:1.5rem;
-}
-.cert-marquee-row:last-child{margin-bottom:0}
-.cert-track{
-  display:flex;
-  gap:1.5rem;
-  width:max-content;
-  cursor:grab;
-  touch-action:pan-y;
-}
-.cert-track.dragging{cursor:grabbing}
-.cert-img-wrap img{-webkit-user-drag:none;user-drag:none}
-.cert-item{
-  width:360px;
-  flex:0 0 auto;
-  display:flex;flex-direction:column;
-  background:var(--surface);border:1px solid var(--border);border-radius:22px;overflow:hidden;
-  box-shadow:var(--shadow-card);
-  transition:box-shadow .3s,transform .3s;
-}
-.cert-item:hover{transform:translateY(-5px);box-shadow:var(--shadow-card-hover)}
-.cert-img-wrap{width:calc(100% - 24px);margin:12px 12px 0;aspect-ratio:16/10;overflow:hidden;background:var(--bg);border-radius:14px;border:1px solid var(--border)}
-.cert-img-wrap img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;transition:transform .4s ease}
-.cert-item:hover .cert-img-wrap img{transform:scale(1.04)}
-.cert-info{padding:1rem 1.35rem 1.5rem}
-.cert-info h4{
-  font-family: var(--font-heading);
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: .35rem;
-  line-height: 1.3;
-}
-.cert-info p{
-  font-family: var(--font-body);
-  font-size: .88rem;
-  color: var(--dim);
-  font-weight: 500;
-}
+    <div class="tech-panel reveal">
+      <div class="tech-icon-grid">
 
-/* CONTACT SECTION */
-.contact-section{background:transparent;padding:5rem 0 6rem;position:relative;z-index:1}
-.contact-top{text-align:center;margin-bottom:2.5rem}
-.contact-label-top{
-  font-family: var(--font-body);
-  font-size: .7rem;
-  font-weight: 700;
-  letter-spacing: .2em;
-  color: var(--accent);
-  text-transform: uppercase;
-  margin-bottom: .75rem;
-}
-.contact-heading{
-  font-family: var(--font-heading);
-  font-size: clamp(1.7rem,3vw,2.3rem);
-  font-weight: 700;
-  color: var(--text);
-  letter-spacing: -.03em;
-  line-height: 1.1;
-}
-.contact-heading span{color:var(--accent)}
-.contact-icon-row{display:flex;justify-content:center;gap:1.2rem}
-.contact-round{
-  width:54px;height:54px;
-  border:1px solid var(--border);
-  border-radius:50%;
-  color:var(--accent);
-  background:var(--surface);
-  display:inline-flex;align-items:center;justify-content:center;
-  text-decoration:none;
-  box-shadow:var(--shadow-card);
-  transition:color .2s,transform .15s,box-shadow .2s;
-}
-.contact-round svg{width:20px;height:20px;fill:currentColor;stroke:none}
-.contact-round:hover{color:var(--accent);transform:translateY(-3px);box-shadow:var(--shadow-card-hover)}
+        <div class="tech-icon-box">
+          <span class="fb-icon" style="background:#E34F26"><img src="https://cdn.simpleicons.org/html5" alt="HTML5" loading="lazy"/></span>
+          <div class="tech-tip">
+            <div class="tech-tip-head">
+              <span class="tech-tip-icon fb-icon" style="background:#E34F26"><img src="https://cdn.simpleicons.org/html5" alt="HTML5" loading="lazy"/></span>
+              <div class="tech-tip-titles">
+                <span class="tech-tip-name">HTML5</span>
+                <span class="tech-tip-tag">MARKUP LANGUAGE</span>
+              </div>
+            </div>
+            <p class="tech-tip-desc">Structures web page content.</p>
+          </div>
+        </div>
+        <div class="tech-icon-box">
+          <span class="fb-icon" style="background:#ffffff"><svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><path fill="#1572B6" d="M18.814 114.123L8.76 1.352h110.48l-10.064 112.754-45.243 12.543-45.119-12.526z"/><path fill="#33A9DC" d="M64.001 117.062l36.559-10.136 8.601-96.354h-45.16v106.49z"/><path fill="#fff" d="M64.001 51.429h18.302l1.264-14.163H64.001V23.435h34.682l-.332 3.711-3.4 38.114h-30.95V51.429z"/><path fill="#EBEBEB" d="M64.083 87.349l-.061.018-15.403-4.159-.985-11.031H33.752l1.937 21.717 28.331 7.863.063-.018v-14.39z"/><path fill="#fff" d="M81.127 64.675l-1.666 18.522-15.426 4.164v14.39l28.354-7.858.208-2.337 2.406-26.881H81.127z"/><path fill="#EBEBEB" d="M64.048 23.435v13.831H30.64l-.277-3.108-.63-7.012-.331-3.711h34.646zm-.047 27.996v13.831H48.792l-.277-3.108-.631-7.012-.33-3.711h16.447z"/></svg></span>
+          <div class="tech-tip">
+            <div class="tech-tip-head">
+              <span class="tech-tip-icon fb-icon" style="background:#ffffff"><svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><path fill="#1572B6" d="M18.814 114.123L8.76 1.352h110.48l-10.064 112.754-45.243 12.543-45.119-12.526z"/><path fill="#33A9DC" d="M64.001 117.062l36.559-10.136 8.601-96.354h-45.16v106.49z"/><path fill="#fff" d="M64.001 51.429h18.302l1.264-14.163H64.001V23.435h34.682l-.332 3.711-3.4 38.114h-30.95V51.429z"/><path fill="#EBEBEB" d="M64.083 87.349l-.061.018-15.403-4.159-.985-11.031H33.752l1.937 21.717 28.331 7.863.063-.018v-14.39z"/><path fill="#fff" d="M81.127 64.675l-1.666 18.522-15.426 4.164v14.39l28.354-7.858.208-2.337 2.406-26.881H81.127z"/><path fill="#EBEBEB" d="M64.048 23.435v13.831H30.64l-.277-3.108-.63-7.012-.331-3.711h34.646zm-.047 27.996v13.831H48.792l-.277-3.108-.631-7.012-.33-3.711h16.447z"/></svg></span>
+              <div class="tech-tip-titles">
+                <span class="tech-tip-name">CSS3</span>
+                <span class="tech-tip-tag">STYLESHEET LANGUAGE</span>
+              </div>
+            </div>
+            <p class="tech-tip-desc">Styles and lays out web pages.</p>
+          </div>
+        </div>
+        <div class="tech-icon-box">
+          <span class="fb-icon" style="background:#F7DF1E"><img src="https://cdn.simpleicons.org/javascript" alt="JavaScript" loading="lazy"/></span>
+          <div class="tech-tip">
+            <div class="tech-tip-head">
+              <span class="tech-tip-icon fb-icon" style="background:#F7DF1E"><img src="https://cdn.simpleicons.org/javascript" alt="JavaScript" loading="lazy"/></span>
+              <div class="tech-tip-titles">
+                <span class="tech-tip-name">JavaScript</span>
+                <span class="tech-tip-tag">PROGRAMMING LANGUAGE</span>
+              </div>
+            </div>
+            <p class="tech-tip-desc">Adds interactivity to the browser.</p>
+          </div>
+        </div>
+        <div class="tech-icon-box">
+          <span class="fb-icon" style="background:#7952B3"><img src="https://cdn.simpleicons.org/bootstrap" alt="Bootstrap" loading="lazy"/></span>
+          <div class="tech-tip">
+            <div class="tech-tip-head">
+              <span class="tech-tip-icon fb-icon" style="background:#7952B3"><img src="https://cdn.simpleicons.org/bootstrap" alt="Bootstrap" loading="lazy"/></span>
+              <div class="tech-tip-titles">
+                <span class="tech-tip-name">Bootstrap</span>
+                <span class="tech-tip-tag">CSS FRAMEWORK</span>
+              </div>
+            </div>
+            <p class="tech-tip-desc">CSS framework for responsive layouts.</p>
+          </div>
+        </div>
+        <div class="tech-icon-box">
+          <span class="fb-icon" style="background:#06B6D4"><img src="https://cdn.simpleicons.org/tailwindcss" alt="Tailwind CSS" loading="lazy"/></span>
+          <div class="tech-tip">
+            <div class="tech-tip-head">
+              <span class="tech-tip-icon fb-icon" style="background:#06B6D4"><img src="https://cdn.simpleicons.org/tailwindcss" alt="Tailwind CSS" loading="lazy"/></span>
+              <div class="tech-tip-titles">
+                <span class="tech-tip-name">Tailwind CSS</span>
+                <span class="tech-tip-tag">CSS FRAMEWORK</span>
+              </div>
+            </div>
+            <p class="tech-tip-desc">Utility-first CSS framework.</p>
+          </div>
+        </div>
+        <div class="tech-icon-box">
+          <span class="fb-icon" style="background:#20232A"><img src="https://cdn.simpleicons.org/react" alt="React" loading="lazy"/></span>
+          <div class="tech-tip">
+            <div class="tech-tip-head">
+              <span class="tech-tip-icon fb-icon" style="background:#20232A"><img src="https://cdn.simpleicons.org/react" alt="React" loading="lazy"/></span>
+              <div class="tech-tip-titles">
+                <span class="tech-tip-name">React</span>
+                <span class="tech-tip-tag">JAVASCRIPT LIBRARY</span>
+              </div>
+            </div>
+            <p class="tech-tip-desc">Library for building user interfaces.</p>
+          </div>
+        </div>
 
-/* CONTACT PAGE */
-.contact-page-main{min-height:calc(100vh - var(--nav-h));padding-top:calc(var(--nav-h) + 1rem);position:relative;z-index:1}
-.contact-page-section{padding:1rem 0 2.25rem}
-.contact-page-head{max-width:600px;margin:0 auto 3.5rem;text-align:center}
-.contact-page-head h1{
-  font-family: var(--font-heading);
-  color: var(--text);
-  font-size: clamp(2.2rem,5vw,3.4rem);
-  font-weight: 700;
-  letter-spacing: -.04em;
-  line-height: 1;
-  margin-bottom: 1.4rem;
-}
-.contact-page-head p{
-  font-family: var(--font-body);
-  color: var(--muted);
-  font-size: 1rem;
-  line-height: 1.75;
-}
-.contact-page-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;max-width:1050px;margin:0 auto}
-.contact-panel{background:var(--surface);border:1px solid var(--border);border-radius:22px;min-height:520px;padding:3rem 2.25rem;box-shadow:var(--shadow-card)}
-.contact-col-title{
-  font-family: var(--font-body);
-  font-size: .72rem;
-  font-weight: 700;
-  letter-spacing: .18em;
-  color: var(--text);
-  text-transform: uppercase;
-  margin-bottom: 2.25rem;
-}
-.contact-info-list{display:flex;flex-direction:column}
-.contact-info-sep{height:1px;background:rgba(163,177,198,.35);display:block}
-.contact-info-item{display:flex;align-items:center;gap:1.25rem;padding:1.1rem 0}
-.contact-info-icon{width:44px;height:44px;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:var(--accent);border-radius:50%;background:var(--accent-soft);transition:background .2s,color .2s}
-.contact-info-icon svg{width:18px;height:18px;fill:currentColor;stroke:none}
-.contact-info-text{display:flex;flex-direction:column;gap:.15rem}
-.contact-info-label{
-  font-family: var(--font-body);
-  font-size: .62rem;
-  font-weight: 700;
-  letter-spacing: .16em;
-  color: var(--dim);
-  text-transform: uppercase;
-}
-.contact-info-value{
-  font-family: var(--font-body);
-  font-size: .9rem;
-  color: var(--text);
-  font-weight: 500;
-}
-.contact-form{display:flex;flex-direction:column;gap:1.15rem}
-.form-row{display:flex;flex-direction:column;gap:.4rem}
-.form-row label{
-  font-family: var(--font-body);
-  font-size: .62rem;
-  font-weight: 700;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--dim);
-}
-.form-row input,.form-row textarea{
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  color: var(--text);
-  font-family: var(--font-body);
-  font-size: .92rem;
-  padding: .9rem 1.1rem;
-  outline: none;
-  transition: border-color .2s,box-shadow .2s;
-  resize: vertical;
-  width: 100%;
-}
-.form-row input:focus,.form-row textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
-.form-row input::placeholder,.form-row textarea::placeholder{color:var(--dim)}
-textarea{min-height:120px}
-.contact-form button{
-  padding: .9rem 2rem;
-  background: var(--accent);
-  color: #ffffff;
-  border: none;
-  border-radius: 10px;
-  font-family: var(--font-body);
-  font-size: .85rem;
-  font-weight: 600;
-  cursor: pointer;
-  width: 100%;
-  transition: background .2s,transform .15s,box-shadow .2s;
-  margin-top: .35rem;
-  box-shadow: 0 10px 24px var(--accent-glow);
-}
-.contact-form button:hover{background:var(--accent-hover);transform:translateY(-2px);box-shadow:0 14px 30px var(--accent-glow)}
-.contact-form button:active,.contact-form button:focus{transform:translateY(0)}
-.contact-form button:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
-#cf-status{font-size:.82rem;min-height:1.2em;color:var(--muted)}
-.back-home{
-  font-family: var(--font-body);
-  color: var(--muted);
-  display: block;
-  font-size: .85rem;
-  font-weight:500;
-  margin: 3rem auto 1.5rem;
-  text-align: center;
-  text-decoration: none;
-  transition: color .2s;
-}
-.back-home:hover{color:var(--accent)}
+        <div class="tech-icon-box">
+          <span class="fb-icon" style="background:#777BB4"><img src="https://cdn.simpleicons.org/php" alt="PHP" loading="lazy"/></span>
+          <div class="tech-tip">
+            <div class="tech-tip-head">
+              <span class="tech-tip-icon fb-icon" style="background:#777BB4"><img src="https://cdn.simpleicons.org/php" alt="PHP" loading="lazy"/></span>
+              <div class="tech-tip-titles">
+                <span class="tech-tip-name">PHP</span>
+                <span class="tech-tip-tag">PROGRAMMING LANGUAGE</span>
+              </div>
+            </div>
+            <p class="tech-tip-desc">Server-side scripting language.</p>
+          </div>
+        </div>
+        <div class="tech-icon-box">
+          <span class="fb-icon" style="background:#FF2D20"><img src="https://cdn.simpleicons.org/laravel" alt="Laravel" loading="lazy"/></span>
+          <div class="tech-tip">
+            <div class="tech-tip-head">
+              <span class="tech-tip-icon fb-icon" style="background:#FF2D20"><img src="https://cdn.simpleicons.org/laravel" alt="Laravel" loading="lazy"/></span>
+              <div class="tech-tip-titles">
+                <span class="tech-tip-name">Laravel</span>
+                <span class="tech-tip-tag">PHP FRAMEWORK</span>
+              </div>
+            </div>
+            <p class="tech-tip-desc">PHP framework for web apps.</p>
+          </div>
+        </div>
+        <div class="tech-icon-box">
+          <span class="fb-icon" style="background:#339933"><img src="https://cdn.simpleicons.org/nodedotjs" alt="Node.js" loading="lazy"/></span>
+          <div class="tech-tip">
+            <div class="tech-tip-head">
+              <span class="tech-tip-icon fb-icon" style="background:#339933"><img src="https://cdn.simpleicons.org/nodedotjs" alt="Node.js" loading="lazy"/></span>
+              <div class="tech-tip-titles">
+                <span class="tech-tip-name">Node.js</span>
+                <span class="tech-tip-tag">RUNTIME ENVIRONMENT</span>
+              </div>
+            </div>
+            <p class="tech-tip-desc">JavaScript runtime for the backend.</p>
+          </div>
+        </div>
+        <div class="tech-icon-box">
+          <span class="fb-icon" style="background:#ffffff"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" loading="lazy"/></span>
+          <div class="tech-tip">
+            <div class="tech-tip-head">
+              <span class="tech-tip-icon fb-icon" style="background:#ffffff"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" loading="lazy"/></span>
+              <div class="tech-tip-titles">
+                <span class="tech-tip-name">Java</span>
+                <span class="tech-tip-tag">PROGRAMMING LANGUAGE</span>
+              </div>
+            </div>
+            <p class="tech-tip-desc">General-purpose OOP language.</p>
+          </div>
+        </div>
+        <div class="tech-icon-box">
+          <span class="fb-icon" style="background:#ffffff"><svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><path fill="#9B4F96" d="M115.4 30.7L67.1 2.9c-.8-.5-1.9-.7-3.1-.7-1.2 0-2.3.3-3.1.7l-48 27.9c-1.7 1-2.9 3.5-2.9 5.4v55.7c0 1.1.2 2.4 1 3.5l106.8-62c-.6-1.2-1.5-2.1-2.4-2.7z"/><path fill="#68217A" d="M10.7 95.3c.5.8 1.2 1.5 1.9 1.9l48.2 27.9c.8.5 1.9.7 3.1.7 1.2 0 2.3-.3 3.1-.7l48-27.9c1.7-1 2.9-3.5 2.9-5.4V36.1c0-.9-.1-1.9-.6-2.8l-106.6 62z"/><path fill="#fff" d="M85.3 76.1C81.1 83.5 73.1 88.5 64 88.5c-13.5 0-24.5-11-24.5-24.5s11-24.5 24.5-24.5c9.1 0 17.1 5 21.3 12.5l13-7.5c-6.8-11.9-19.6-20-34.3-20-21.8 0-39.5 17.7-39.5 39.5s17.7 39.5 39.5 39.5c14.6 0 27.4-8 34.2-19.8l-12.9-7.6zM97 66.2l.9-4.3h-4.2v-4.7h5.1L100 51h4.9l-1.2 6.1h3.8l1.2-6.1h4.8l-1.2 6.1h2.4v4.7h-3.3l-.9 4.3h4.2v4.7h-5.1l-1.2 6h-4.9l1.2-6h-3.8l-1.2 6h-4.8l1.2-6h-2.4v-4.7H97zm4.8 0h3.8l.9-4.3h-3.8l-.9 4.3z"/></svg></span>
+          <div class="tech-tip">
+            <div class="tech-tip-head">
+              <span class="tech-tip-icon fb-icon" style="background:#ffffff"><svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><path fill="#9B4F96" d="M115.4 30.7L67.1 2.9c-.8-.5-1.9-.7-3.1-.7-1.2 0-2.3.3-3.1.7l-48 27.9c-1.7 1-2.9 3.5-2.9 5.4v55.7c0 1.1.2 2.4 1 3.5l106.8-62c-.6-1.2-1.5-2.1-2.4-2.7z"/><path fill="#68217A" d="M10.7 95.3c.5.8 1.2 1.5 1.9 1.9l48.2 27.9c.8.5 1.9.7 3.1.7 1.2 0 2.3-.3 3.1-.7l48-27.9c1.7-1 2.9-3.5 2.9-5.4V36.1c0-.9-.1-1.9-.6-2.8l-106.6 62z"/><path fill="#fff" d="M85.3 76.1C81.1 83.5 73.1 88.5 64 88.5c-13.5 0-24.5-11-24.5-24.5s11-24.5 24.5-24.5c9.1 0 17.1 5 21.3 12.5l13-7.5c-6.8-11.9-19.6-20-34.3-20-21.8 0-39.5 17.7-39.5 39.5s17.7 39.5 39.5 39.5c14.6 0 27.4-8 34.2-19.8l-12.9-7.6zM97 66.2l.9-4.3h-4.2v-4.7h5.1L100 51h4.9l-1.2 6.1h3.8l1.2-6.1h4.8l-1.2 6.1h2.4v4.7h-3.3l-.9 4.3h4.2v4.7h-5.1l-1.2 6h-4.9l1.2-6h-3.8l-1.2 6h-4.8l1.2-6h-2.4v-4.7H97zm4.8 0h3.8l.9-4.3h-3.8l-.9 4.3z"/></svg></span>
+              <div class="tech-tip-titles">
+                <span class="tech-tip-name">C#</span>
+                <span class="tech-tip-tag">PROGRAMMING LANGUAGE</span>
+              </div>
+            </div>
+            <p class="tech-tip-desc">Language for building .NET apps.</p>
+          </div>
+        </div>
+        <div class="tech-icon-box">
+          <span class="fb-icon" style="background:#ffffff"><svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><g fill="#623697"><path d="M61.195 0h4.953c12.918.535 25.688 4.89 36.043 12.676 9.809 7.289 17.473 17.437 21.727 28.906 2.441 6.387 3.664 13.18 4.082 19.992v4.211c-.414 11.293-3.664 22.52-9.73 32.082-6.801 10.895-16.922 19.73-28.727 24.828A64.399 64.399 0 0165.082 128h-2.144c-11.735-.191-23.41-3.66-33.297-9.992-11.196-7.113-20.114-17.785-25.028-30.117C1.891 81.19.441 74.02 0 66.812v-4.957c.504-14.39 5.953-28.609 15.41-39.496C23.168 13.31 33.5 6.48 44.887 2.937 50.172 1.27 55.676.41 61.195 0M25.191 37.523c-.03 12.153-.011 24.305-.011 36.454 1.43.011 2.86.011 4.293.011-.075-10.433.101-20.863-.106-31.293.48.907.918 1.84 1.465 2.707C37.035 54.91 43.105 64.5 49.309 74c1.738-.023 3.476-.023 5.214.004-.003-12.16-.007-24.32.004-36.48a308.076 308.076 0 00-4.25-.012c.075 10.32-.136 20.64.125 30.949-6.507-10.352-13.101-20.645-19.695-30.945a370.85 370.85 0 00-5.516.007m38.844-.011c-.129 12.16-.004 24.32-.047 36.476 6.469-.015 12.938.024 19.41-.02a83.36 83.36 0 01.024-3.952c-5.012-.016-10.027.007-15.043-.02-.074-4.21-.004-8.426-.04-12.637 4.395-.078 8.79.012 13.18-.047-.011-1.277-.011-2.554-.019-3.832-4.387.141-8.773-.054-13.164.012.012-4.023.02-8.05.02-12.078 4.699 0 9.398-.02 14.093.012-.008-1.301 0-2.606.016-3.906-6.145-.016-12.29-.008-18.43-.008m22.602.054c.004 1.266.004 2.528.008 3.79 3.488-.04 6.972.109 10.46.035-.023 10.863.004 21.718-.011 32.574 1.46.043 2.93.035 4.39-.09-.12-5.992.118-11.988-.156-17.977.067-2.699-.07-5.394.117-8.09.106-2.14-.277-4.277-.035-6.417 3.516.047 7.035.015 10.55.015a59.774 59.774 0 01.075-3.832c-8.469-.105-16.937-.094-25.398-.008M13.55 69.094c-1.977.91-2.106 4.023-.149 5.027 1.72 1.18 4.305-.371 4.227-2.41.133-2.004-2.29-3.688-4.078-2.617m29.23 15.289c-4.277 3.469-4.226 11.195.5 14.25 2.668 1.695 6.102 1.344 8.922.215.012-.621.027-1.239.05-1.86-2.671 1.395-6.41 1.68-8.675-.61-2.965-3.237-2.297-9.269 1.613-11.476 2.211-1.164 4.907-.824 7.086.239-.007-.66-.004-1.32 0-1.98-3.097-1.099-6.922-1.04-9.496 1.222m17.207 2.71c-1.89.22-3.758 1.22-4.633 2.966-1.253 2.496-1.109 5.867.864 7.96 2.035 2.297 5.945 2.32 8.18.297 2.425-2.308 2.699-6.468.757-9.164-1.148-1.629-3.273-2.183-5.168-2.058m17.887 2.722c-1.66 2.883-1.332 7.25 1.598 9.211 2.183 1.22 4.933.832 7.074-.308-.004-.617.004-1.235.031-1.848-1.687 1.07-3.937 1.856-5.812.777-1.309-.722-1.704-2.257-1.914-3.625 2.875-.039 5.746-.082 8.625-.074-.075-1.828-.118-3.894-1.45-5.308-2.199-2.43-6.644-1.657-8.152 1.175m-8.414-2.336v12.008c.652 0 1.312 0 1.973.004.023-2.195-.04-4.394.023-6.594.016-1.27.527-2.558 1.484-3.414.801-.605 1.883-.27 2.801-.246-.012-.636-.02-1.27-.023-1.902-1.793-.398-3.336.652-4.242 2.117-.02-.633-.04-1.266-.051-1.894-.656-.024-1.313-.051-1.965-.079zm0 0"/><path d="M58.758 89.223c1.652-.805 4.023-.41 4.945 1.3 1.05 1.887 1.027 4.383-.137 6.211-1.52 2.286-5.527 1.786-6.523-.742-1.008-2.258-.617-5.484 1.715-6.77zm0 0M79.04 92.414c.046-1.574 1.144-3.137 2.726-3.48.976-.164 2.097.007 2.773.793.672.714.813 1.714.98 2.64-2.16.012-4.32-.031-6.48.047zm0 0"/></g></svg></span>
+          <div class="tech-tip">
+            <div class="tech-tip-head">
+              <span class="tech-tip-icon fb-icon" style="background:#ffffff"><svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><g fill="#623697"><path d="M61.195 0h4.953c12.918.535 25.688 4.89 36.043 12.676 9.809 7.289 17.473 17.437 21.727 28.906 2.441 6.387 3.664 13.18 4.082 19.992v4.211c-.414 11.293-3.664 22.52-9.73 32.082-6.801 10.895-16.922 19.73-28.727 24.828A64.399 64.399 0 0165.082 128h-2.144c-11.735-.191-23.41-3.66-33.297-9.992-11.196-7.113-20.114-17.785-25.028-30.117C1.891 81.19.441 74.02 0 66.812v-4.957c.504-14.39 5.953-28.609 15.41-39.496C23.168 13.31 33.5 6.48 44.887 2.937 50.172 1.27 55.676.41 61.195 0M25.191 37.523c-.03 12.153-.011 24.305-.011 36.454 1.43.011 2.86.011 4.293.011-.075-10.433.101-20.863-.106-31.293.48.907.918 1.84 1.465 2.707C37.035 54.91 43.105 64.5 49.309 74c1.738-.023 3.476-.023 5.214.004-.003-12.16-.007-24.32.004-36.48a308.076 308.076 0 00-4.25-.012c.075 10.32-.136 20.64.125 30.949-6.507-10.352-13.101-20.645-19.695-30.945a370.85 370.85 0 00-5.516.007m38.844-.011c-.129 12.16-.004 24.32-.047 36.476 6.469-.015 12.938.024 19.41-.02a83.36 83.36 0 01.024-3.952c-5.012-.016-10.027.007-15.043-.02-.074-4.21-.004-8.426-.04-12.637 4.395-.078 8.79.012 13.18-.047-.011-1.277-.011-2.554-.019-3.832-4.387.141-8.773-.054-13.164.012.012-4.023.02-8.05.02-12.078 4.699 0 9.398-.02 14.093.012-.008-1.301 0-2.606.016-3.906-6.145-.016-12.29-.008-18.43-.008m22.602.054c.004 1.266.004 2.528.008 3.79 3.488-.04 6.972.109 10.46.035-.023 10.863.004 21.718-.011 32.574 1.46.043 2.93.035 4.39-.09-.12-5.992.118-11.988-.156-17.977.067-2.699-.07-5.394.117-8.09.106-2.14-.277-4.277-.035-6.417 3.516.047 7.035.015 10.55.015a59.774 59.774 0 01.075-3.832c-8.469-.105-16.937-.094-25.398-.008M13.55 69.094c-1.977.91-2.106 4.023-.149 5.027 1.72 1.18 4.305-.371 4.227-2.41.133-2.004-2.29-3.688-4.078-2.617m29.23 15.289c-4.277 3.469-4.226 11.195.5 14.25 2.668 1.695 6.102 1.344 8.922.215.012-.621.027-1.239.05-1.86-2.671 1.395-6.41 1.68-8.675-.61-2.965-3.237-2.297-9.269 1.613-11.476 2.211-1.164 4.907-.824 7.086.239-.007-.66-.004-1.32 0-1.98-3.097-1.099-6.922-1.04-9.496 1.222m17.207 2.71c-1.89.22-3.758 1.22-4.633 2.966-1.253 2.496-1.109 5.867.864 7.96 2.035 2.297 5.945 2.32 8.18.297 2.425-2.308 2.699-6.468.757-9.164-1.148-1.629-3.273-2.183-5.168-2.058m17.887 2.722c-1.66 2.883-1.332 7.25 1.598 9.211 2.183 1.22 4.933.832 7.074-.308-.004-.617.004-1.235.031-1.848-1.687 1.07-3.937 1.856-5.812.777-1.309-.722-1.704-2.257-1.914-3.625 2.875-.039 5.746-.082 8.625-.074-.075-1.828-.118-3.894-1.45-5.308-2.199-2.43-6.644-1.657-8.152 1.175m-8.414-2.336v12.008c.652 0 1.312 0 1.973.004.023-2.195-.04-4.394.023-6.594.016-1.27.527-2.558 1.484-3.414.801-.605 1.883-.27 2.801-.246-.012-.636-.02-1.27-.023-1.902-1.793-.398-3.336.652-4.242 2.117-.02-.633-.04-1.266-.051-1.894-.656-.024-1.313-.051-1.965-.079zm0 0"/><path d="M58.758 89.223c1.652-.805 4.023-.41 4.945 1.3 1.05 1.887 1.027 4.383-.137 6.211-1.52 2.286-5.527 1.786-6.523-.742-1.008-2.258-.617-5.484 1.715-6.77zm0 0M79.04 92.414c.046-1.574 1.144-3.137 2.726-3.48.976-.164 2.097.007 2.773.793.672.714.813 1.714.98 2.64-2.16.012-4.32-.031-6.48.047zm0 0"/></g></svg></span>
+              <div class="tech-tip-titles">
+                <span class="tech-tip-name">.NET MAUI</span>
+                <span class="tech-tip-tag">APP FRAMEWORK</span>
+              </div>
+            </div>
+            <p class="tech-tip-desc">Framework for cross-platform apps.</p>
+          </div>
+        </div>
+        <div class="tech-icon-box">
+          <span class="fb-icon" style="background:#512BD4"><svg viewBox="0 0 24 24" fill="#512BD4" xmlns="http://www.w3.org/2000/svg"><path d="M24 8.77h-2.468v7.565h-1.425V8.77h-2.462V7.53H24zm-6.852 7.565h-4.821V7.53h4.63v1.24h-3.205v2.494h2.953v1.234h-2.953v2.604h3.396zm-6.708 0H8.882L4.78 9.863a2.896 2.896 0 0 1-.258-.51h-.036c.032.189.048.592.048 1.21v5.772H3.157V7.53h1.659l3.965 6.32c.167.261.275.442.323.54h.024c-.04-.233-.06-.629-.06-1.185V7.529h1.372zm-8.703-.693a.868.829 0 0 1-.869.829.868.829 0 0 1-.868-.83.868.829 0 0 1 .868-.828.868.829 0 0 1 .869.829Z"/></svg></span>
+          <div class="tech-tip">
+            <div class="tech-tip-head">
+              <span class="tech-tip-icon fb-icon" style="background:#512BD4"><svg viewBox="0 0 24 24" fill="#512BD4" xmlns="http://www.w3.org/2000/svg"><path d="M24 8.77h-2.468v7.565h-1.425V8.77h-2.462V7.53H24zm-6.852 7.565h-4.821V7.53h4.63v1.24h-3.205v2.494h2.953v1.234h-2.953v2.604h3.396zm-6.708 0H8.882L4.78 9.863a2.896 2.896 0 0 1-.258-.51h-.036c.032.189.048.592.048 1.21v5.772H3.157V7.53h1.659l3.965 6.32c.167.261.275.442.323.54h.024c-.04-.233-.06-.629-.06-1.185V7.529h1.372zm-8.703-.693a.868.829 0 0 1-.869.829.868.829 0 0 1-.868-.83.868.829 0 0 1 .868-.828.868.829 0 0 1 .869.829Z"/></svg></span>
+              <div class="tech-tip-titles">
+                <span class="tech-tip-name">ASP.NET</span>
+                <span class="tech-tip-tag">WEB FRAMEWORK</span>
+              </div>
+            </div>
+            <p class="tech-tip-desc">.NET framework for web apps.</p>
+          </div>
+        </div>
 
-/* FOOTER */
-footer{background:transparent;border-top:1px solid rgba(163,177,198,.35);padding:2rem 0;position:relative;z-index:1}
-.footer-inner{display:flex;align-items:center;justify-content:space-between}
-footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
-.footer-logo{font-family: var(--font-heading); font-size:.95rem;font-weight:700;color:var(--dim);letter-spacing:.02em}
+        <div class="tech-icon-box">
+          <span class="fb-icon" style="background:#4479A1"><img src="https://cdn.simpleicons.org/mysql" alt="MySQL" loading="lazy"/></span>
+          <div class="tech-tip">
+            <div class="tech-tip-head">
+              <span class="tech-tip-icon fb-icon" style="background:#4479A1"><img src="https://cdn.simpleicons.org/mysql" alt="MySQL" loading="lazy"/></span>
+              <div class="tech-tip-titles">
+                <span class="tech-tip-name">MySQL</span>
+                <span class="tech-tip-tag">DATABASE</span>
+              </div>
+            </div>
+            <p class="tech-tip-desc">Relational database management system.</p>
+          </div>
+        </div>
+        <div class="tech-icon-box">
+          <span class="fb-icon" style="background:#ffffff"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg" alt="SQLite" loading="lazy"/></span>
+          <div class="tech-tip">
+            <div class="tech-tip-head">
+              <span class="tech-tip-icon fb-icon" style="background:#ffffff"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg" alt="SQLite" loading="lazy"/></span>
+              <div class="tech-tip-titles">
+                <span class="tech-tip-name">SQLite</span>
+                <span class="tech-tip-tag">DATABASE</span>
+              </div>
+            </div>
+            <p class="tech-tip-desc">Lightweight embedded database.</p>
+          </div>
+        </div>
 
-/* REVEAL */
-.reveal{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease}
-.reveal.visible{opacity:1;transform:none}
+        <div class="tech-icon-box">
+          <span class="fb-icon" style="background:#181717"><img src="https://cdn.simpleicons.org/github" alt="GitHub" loading="lazy"/></span>
+          <div class="tech-tip">
+            <div class="tech-tip-head">
+              <span class="tech-tip-icon fb-icon" style="background:#181717"><img src="https://cdn.simpleicons.org/github" alt="GitHub" loading="lazy"/></span>
+              <div class="tech-tip-titles">
+                <span class="tech-tip-name">GitHub</span>
+                <span class="tech-tip-tag">VERSION CONTROL</span>
+              </div>
+            </div>
+            <p class="tech-tip-desc">Code hosting and version control.</p>
+          </div>
+        </div>
+        <div class="tech-icon-box">
+          <span class="fb-icon" style="background:#000000"><img src="https://cdn.simpleicons.org/vercel" alt="Vercel" loading="lazy"/></span>
+          <div class="tech-tip">
+            <div class="tech-tip-head">
+              <span class="tech-tip-icon fb-icon" style="background:#000000"><img src="https://cdn.simpleicons.org/vercel" alt="Vercel" loading="lazy"/></span>
+              <div class="tech-tip-titles">
+                <span class="tech-tip-name">Vercel</span>
+                <span class="tech-tip-tag">DEPLOYMENT PLATFORM</span>
+              </div>
+            </div>
+            <p class="tech-tip-desc">Deployment platform for web apps.</p>
+          </div>
+        </div>
+        <div class="tech-icon-box">
+          <span class="fb-icon" style="background:#00C7B7"><img src="https://cdn.simpleicons.org/netlify" alt="Netlify" loading="lazy"/></span>
+          <div class="tech-tip">
+            <div class="tech-tip-head">
+              <span class="tech-tip-icon fb-icon" style="background:#00C7B7"><img src="https://cdn.simpleicons.org/netlify" alt="Netlify" loading="lazy"/></span>
+              <div class="tech-tip-titles">
+                <span class="tech-tip-name">Netlify</span>
+                <span class="tech-tip-tag">DEPLOYMENT PLATFORM</span>
+              </div>
+            </div>
+            <p class="tech-tip-desc">Hosting and deployment platform.</p>
+          </div>
+        </div>
+        <div class="tech-icon-box">
+          <span class="fb-icon" style="background:#000000"><img src="https://cdn.simpleicons.org/render" alt="Render" loading="lazy"/></span>
+          <div class="tech-tip">
+            <div class="tech-tip-head">
+              <span class="tech-tip-icon fb-icon" style="background:#000000"><img src="https://cdn.simpleicons.org/render" alt="Render" loading="lazy"/></span>
+              <div class="tech-tip-titles">
+                <span class="tech-tip-name">Render</span>
+                <span class="tech-tip-tag">CLOUD HOSTING</span>
+              </div>
+            </div>
+            <p class="tech-tip-desc">Cloud hosting platform.</p>
+          </div>
+        </div>
+        <div class="tech-icon-box">
+          <span class="fb-icon" style="background:#7738C8"><img src="https://cdn.simpleicons.org/infinityfree" alt="InfinityFree" loading="lazy"/></span>
+          <div class="tech-tip">
+            <div class="tech-tip-head">
+              <span class="tech-tip-icon fb-icon" style="background:#7738C8"><img src="https://cdn.simpleicons.org/infinityfree" alt="InfinityFree" loading="lazy"/></span>
+              <div class="tech-tip-titles">
+                <span class="tech-tip-name">InfinityFree</span>
+                <span class="tech-tip-tag">WEB HOSTING</span>
+              </div>
+            </div>
+            <p class="tech-tip-desc">Free web hosting service.</p>
+          </div>
+        </div>
+        <div class="tech-icon-box">
+          <span class="fb-icon" style="background:#ffffff"><img src="https://www.google.com/s2/favicons?domain=aeonfree.com&sz=128" alt="AeonFree" loading="lazy"/></span>
+          <div class="tech-tip">
+            <div class="tech-tip-head">
+              <span class="tech-tip-icon fb-icon" style="background:#ffffff"><img src="https://www.google.com/s2/favicons?domain=aeonfree.com&sz=128" alt="AeonFree" loading="lazy"/></span>
+              <div class="tech-tip-titles">
+                <span class="tech-tip-name">AeonFree</span>
+                <span class="tech-tip-tag">WEB HOSTING</span>
+              </div>
+            </div>
+            <p class="tech-tip-desc">Free web hosting service.</p>
+          </div>
+        </div>
+        <div class="tech-icon-box">
+          <span class="fb-icon" style="background:#FB7A24"><img src="https://cdn.simpleicons.org/xampp" alt="XAMPP" loading="lazy"/></span>
+          <div class="tech-tip">
+            <div class="tech-tip-head">
+              <span class="tech-tip-icon fb-icon" style="background:#FB7A24"><img src="https://cdn.simpleicons.org/xampp" alt="XAMPP" loading="lazy"/></span>
+              <div class="tech-tip-titles">
+                <span class="tech-tip-name">XAMPP</span>
+                <span class="tech-tip-tag">DEV ENVIRONMENT</span>
+              </div>
+            </div>
+            <p class="tech-tip-desc">Local development server stack.</p>
+          </div>
+        </div>
 
-/* TESTIMONIALS — fanned card deck, cycles through with clicks/dots */
-.testimonial-deck-wrap{max-width:460px;margin:0 auto;position:relative}
-.testimonial-deck{position:relative;min-height:170px;transition:height .3s ease}
-.testi-card{
-  position:absolute;
-  inset:0;
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:1.75rem 1.75rem 1.5rem;
-  box-shadow:var(--shadow-card);
-  display:flex;
-  flex-direction:column;
-  gap:1rem;
-  cursor:pointer;
-  overflow:hidden;
-  transition:transform .5s cubic-bezier(.16,1,.3,1),opacity .5s ease,box-shadow .3s ease;
-}
+        <div class="tech-icon-box">
+          <span class="fb-icon" style="background:#1e1e1e"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" alt="VS Code" loading="lazy"/></span>
+          <div class="tech-tip">
+            <div class="tech-tip-head">
+              <span class="tech-tip-icon fb-icon" style="background:#1e1e1e"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" alt="VS Code" loading="lazy"/></span>
+              <div class="tech-tip-titles">
+                <span class="tech-tip-name">VS Code</span>
+                <span class="tech-tip-tag">CODE EDITOR</span>
+              </div>
+            </div>
+            <p class="tech-tip-desc">Lightweight code editor.</p>
+          </div>
+        </div>
+        <div class="tech-icon-box">
+          <span class="fb-icon" style="background:#0078D6"><svg viewBox="0 0 24 24" width="15" height="15"><path fill="#0078D6" d="M3 3.5L10.4 2.5V11.2H3V3.5M11.3 2.4L21 1V11.1H11.3V2.4M3 12.1H10.4V20.8L3 19.8V12.1M11.3 12.1H21V22.3L11.3 20.9V12.1Z"/></svg></span>
+          <div class="tech-tip">
+            <div class="tech-tip-head">
+              <span class="tech-tip-icon fb-icon" style="background:#0078D6"><svg viewBox="0 0 24 24" width="15" height="15"><path fill="#0078D6" d="M3 3.5L10.4 2.5V11.2H3V3.5M11.3 2.4L21 1V11.1H11.3V2.4M3 12.1H10.4V20.8L3 19.8V12.1M11.3 12.1H21V22.3L11.3 20.9V12.1Z"/></svg></span>
+              <div class="tech-tip-titles">
+                <span class="tech-tip-name">Windows 10</span>
+                <span class="tech-tip-tag">OPERATING SYSTEM</span>
+              </div>
+            </div>
+            <p class="tech-tip-desc">Desktop operating system.</p>
+          </div>
+        </div>
+        <div class="tech-icon-box">
+          <span class="fb-icon" style="background:#000000"><img src="https://cdn.simpleicons.org/mxlinux" alt="MX Linux" loading="lazy"/></span>
+          <div class="tech-tip">
+            <div class="tech-tip-head">
+              <span class="tech-tip-icon fb-icon" style="background:#000000"><img src="https://cdn.simpleicons.org/mxlinux" alt="MX Linux" loading="lazy"/></span>
+              <div class="tech-tip-titles">
+                <span class="tech-tip-name">MX Linux</span>
+                <span class="tech-tip-tag">OPERATING SYSTEM</span>
+              </div>
+            </div>
+            <p class="tech-tip-desc">Linux-based operating system.</p>
+          </div>
+        </div>
+        <div class="tech-icon-box">
+          <span class="fb-icon" style="background:#ffffff"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/netbeans/netbeans-original.svg" alt="NetBeans" loading="lazy"/></span>
+          <div class="tech-tip">
+            <div class="tech-tip-head">
+              <span class="tech-tip-icon fb-icon" style="background:#ffffff"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/netbeans/netbeans-original.svg" alt="NetBeans" loading="lazy"/></span>
+              <div class="tech-tip-titles">
+                <span class="tech-tip-name">NetBeans</span>
+                <span class="tech-tip-tag">IDE</span>
+              </div>
+            </div>
+            <p class="tech-tip-desc">Java IDE.</p>
+          </div>
+        </div>
+        <div class="tech-icon-box">
+          <span class="fb-icon" style="background:#ffffff"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/visualstudio/visualstudio-plain.svg" alt="Visual Studio" loading="lazy"/></span>
+          <div class="tech-tip">
+            <div class="tech-tip-head">
+              <span class="tech-tip-icon fb-icon" style="background:#ffffff"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/visualstudio/visualstudio-plain.svg" alt="Visual Studio" loading="lazy"/></span>
+              <div class="tech-tip-titles">
+                <span class="tech-tip-name">Visual Studio</span>
+                <span class="tech-tip-tag">IDE</span>
+              </div>
+            </div>
+            <p class="tech-tip-desc">IDE for .NET development.</p>
+          </div>
+        </div>
 
-.testi-card.testi-active{transform:translateY(0) scale(1) rotate(0deg);z-index:3;opacity:1;box-shadow:var(--shadow-card-hover);cursor:default}
-.testi-card.testi-behind-1{transform:translateY(16px) scale(.96) rotate(-3deg);z-index:2;opacity:.85}
-.testi-card.testi-behind-2{transform:translateY(30px) scale(.92) rotate(3deg);z-index:1;opacity:.55}
-.testi-card.testi-hidden{opacity:0;pointer-events:none;transform:translateY(36px) scale(.88)}
+      </div>
+    </div>
+  </div>
+</section>
 
-.testi-card-top{
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:.75rem;
-}
-.testi-quote-icon{
-  font-family:var(--font-heading);
-  font-size:2.1rem;
-  line-height:1;
-  color:var(--accent);
-  font-weight:800;
-}
-.testi-rating{
-  display:inline-flex;
-  align-items:center;
-  gap:.35rem;
-  flex-shrink:0;
-  background:var(--accent-soft);
-  color:var(--accent);
-  border-radius:100px;
-  padding:.32rem .75rem;
-  font-family: var(--font-body);
-  font-size:.75rem;
-  font-weight:700;
-  margin-top:.2rem;
-}
-.testi-rating svg{width:13px;height:13px;flex-shrink:0;fill:#FFC107}
-.testi-text{
-  font-family:var(--font-body);
-  font-size:.88rem;
-  font-style:italic;
-  color:var(--muted);
-  line-height:1.65;
-}
-.testi-footer{display:flex;align-items:center;gap:.7rem;margin-top:auto}
-.testi-avatar{
-  width:36px;height:36px;flex-shrink:0;
-  border-radius:50%;
-  background:var(--accent-soft);
-  color:var(--accent);
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--font-heading);
-  font-weight:700;
-  font-size:.95rem;
-}
-.testi-name{
-  font-family:var(--font-heading);
-  font-weight:700;
-  color:var(--text);
-  font-size:.88rem;
-}
+<!-- EDUCATION -->
+<section id="education" class="section edu-section">
+  <div class="container">
+    <div class="edu-header reveal">
+      <h2 class="education-title">Education &amp; Milestones</h2>
+      <p class="edu-subtitle">Interactive milestone trajectory &amp; recognition log.</p>
+    </div>
 
-.testi-dots{display:flex;justify-content:center;gap:.5rem;margin-top:2rem}
-.testi-dot{
-  width:8px;height:8px;border-radius:50%;
-  background:var(--border);
-  border:none;
-  cursor:pointer;
-  transition:background .2s ease,transform .2s ease;
-}
-.testi-dot.testi-dot-active{background:var(--accent);transform:scale(1.35)}
+    <div class="edu-toggle-wrap reveal">
+      <div class="edu-toggle" id="eduToggle">
+        <button type="button" class="edu-toggle-btn active" data-view="academic">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 1 9l11 6 9-4.9V17h2V9L12 3z"/><path d="M5 13.2V17c0 1.7 3.1 3 7 3s7-1.3 7-3v-3.8l-7 3.8-7-3.8z"/></svg>
+          Academic Path
+        </button>
+        <button type="button" class="edu-toggle-btn" data-view="recognition">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h12v6a6 6 0 0 1-12 0V3z"/><path d="M6 5H3v2a3 3 0 0 0 3 3M18 5h3v2a3 3 0 0 1-3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="11" y="14" width="2" height="4"/><rect x="7" y="18" width="10" height="3" rx="1"/></svg>
+          Recognition Log
+        </button>
+      </div>
+      <p class="edu-hint">
+        <svg class="edu-hint-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3.688 3.037a.497.497 0 0 0-.651.651l6.5 15.999a.501.501 0 0 0 .947-.062l1.569-6.083a2 2 0 0 1 1.448-1.479l6.124-1.579a.5.5 0 0 0 .063-.947z" fill="currentColor" stroke="none"/>
+          <path d="M12.586 12.586 19 19"/>
+        </svg>
+        Click any node to view details
+      </p>
+    </div>
 
-@media(max-width:700px){
-  .testimonial-deck-wrap{max-width:340px}
-  .testimonial-deck{min-height:200px}
-  .testi-card{padding:1.5rem 1.25rem 1.25rem;gap:.85rem}
-  .testi-quote-icon{font-size:1.8rem}
-  .testi-rating{font-size:.68rem;padding:.28rem .6rem}
-  .testi-rating svg{width:11px;height:11px}
-  .testi-text{font-size:.82rem;line-height:1.6}
-  .testi-avatar{width:32px;height:32px;font-size:.85rem}
-  .testi-name{font-size:.82rem}
-}
-/* RESPONSIVE */
-@media(max-width:960px){
-  #nav{display:none}
-  #header .nav-cta{display:none}
-  .hamburger{display:flex}
+    <div class="edu-timeline-view active reveal" data-panel="academic">
+      <div class="edu-timeline" id="academicTimeline"></div>
+      <div class="edu-detail" id="academicDetail"></div>
+    </div>
 
-  .hero{padding-top:calc(var(--nav-h) + 3rem);padding-bottom:2rem;min-height:auto}
-  .hero-grid{grid-template-columns:1fr;text-align:center;gap:3.5rem}
-  .hero-actions{flex-direction:row;align-items:center;justify-content:center;width:100%;gap:.75rem;max-width:420px;margin:0 auto}
-  .btn-primary,.btn-outline{flex:1 1 0;width:auto;max-width:none;padding-left:1rem;padding-right:1rem;justify-content:center}
-  .hero-bio{margin-left:0;margin-right:0;text-align:left;max-width:100%;font-size:13px;line-height:1.7}
-  .mobile-br{display:inline}
-  .photo-orbit{max-width:370px;margin:0 auto}
-  .photo-wrap{width:220px;height:220px}
-  .stack-badge{width:48px;height:48px}
-  .stack-badge .fb-icon img,
-  .stack-badge .fb-icon svg{width:28px;height:28px}
-  .orbit-ring{--radius:162px}
-  .contact-page-grid{grid-template-columns:1fr}
-  .footer-inner{flex-direction:column;gap:.5rem;text-align:center}
-.tech-icon-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:.85rem}
-.tech-icon-box{width:calc(25% - .64rem);max-width:72px;aspect-ratio:1/1;height:auto}
-}
-@media(max-width:700px){
-  .section-header{align-items:center}
-  .section-big-heading{font-size:1.5rem;white-space:nowrap}
-  .section-label-right{padding-top:0;text-align:right;white-space:nowrap}
-  .section{padding:4.5rem 0}
-  .services-grid{
-    display:flex;
-    flex-wrap:nowrap;
-    grid-template-columns:none;
-    overflow-x:auto;
-    scroll-snap-type:x mandatory;
-    gap:1rem;
-    padding:0 5% 1.25rem;
-    margin:0 -5%;
-    -webkit-overflow-scrolling:touch;
-    scrollbar-width:none;
-  }
-  .services-grid::-webkit-scrollbar{display:none}
-  .service-card{flex:0 0 82%;scroll-snap-align:center;padding:2rem 1.5rem}
-  .cert-item{width:300px}
-  .hero-name{font-size:2.1rem;white-space:normal}
-  .contact-icon-row{gap:.85rem}
-  .contact-panel{padding:1.75rem 1.25rem}
-  .mobile-nav a{font-size:1rem;padding:.95rem 1.25rem}
-  .contact-page-main{padding-top:calc(var(--nav-h) - .5rem)}
-  .contact-page-head{margin-bottom:2rem}
+    <div class="edu-timeline-view reveal" data-panel="recognition">
+      <div class="edu-timeline" id="recognitionTimeline"></div>
+      <div class="edu-detail" id="recognitionDetail"></div>
+    </div>
+  </div>
+</section>
 
-  .edu-header{margin-bottom:1.5rem}
-  .edu-toggle-wrap{margin-bottom:2.25rem}
-  .edu-toggle-btn{font-size:.78rem;padding:.6rem 1rem}
-  .edu-timeline{--c:56px;margin-bottom:2rem}
-  .edu-node-circle svg{width:22px;height:22px}
-  .edu-detail{padding:0 .25rem}
-  .edu-detail-title{font-size:1.3rem}
-}
-@media(max-width:480px){
-  .photo-orbit{max-width:310px}
-  .photo-wrap{width:185px;height:185px}
-  .orbit-ring{--radius:130px}
-  .stack-badge{width:40px;height:40px}
-  .stack-badge .fb-icon img,
-  .stack-badge .fb-icon svg{width:24px;height:24px}
-  .hero-name{font-size:2.1rem}
-  .section-big-heading{font-size:1.25rem}
-  .cert-item{width:250px}
-  .project-card{width:300px;padding:.8rem;gap:.8rem}
-  .project-card-title{font-size:1rem}
-  .project-card-desc{font-size:.78rem;line-height:1.5}
-  .hero-actions{gap:.5rem}
-  .btn-primary,.btn-outline{font-size:.68rem;padding-left:.9rem;padding-right:.9rem;gap:.35rem}
-}
+<!-- CERTIFICATIONS — auto-scrolling marquee, two independent rows -->
+<section id="certificates" class="section cert-section">
+  <div class="container">
+    <div class="sec-header reveal">
+      <h2 class="sec-title">Programming Certifications</h2>
+    </div>
+  </div>
 
-/* MOBILE HEADERS — every section title is centered and smaller on phones (like Reb's).
-   Kept at the very end so it overrides the desktop sizes above. */
-@media(max-width:700px){
-  .sec-header{margin-bottom:2rem;text-align:center}
-  .sec-title,
-  .sec-title-lg,
-  .education-title{font-size:1.4rem;line-height:1.25;letter-spacing:-.02em}
-  .sec-eyebrow{font-size:.65rem;letter-spacing:.12em;margin-bottom:.5rem}
-  .edu-header{text-align:center;margin-bottom:1.5rem}
-  .edu-subtitle{font-size:.85rem}
-}
+  <!-- ROW 1 -->
+  <div class="cert-marquee-row reveal">
+    <div class="cert-track" id="certTrack">
 
-/* MOBILE HERO ORDER — profile photo + orbit icons first, then name and bio.
-   Kept at the very end so it overrides the rules above. Desktop is untouched. */
-@media(max-width:960px){
-  .hero-right{order:-1}
-  .hero-grid{gap:1.5rem}
-}
+      <div class="cert-item">
+        <div class="cert-img-wrap"><img src="Certificates/java hackerank.png" alt="Javas Certificate"/></div>
+        <div class="cert-info"><h4>JAVA Certificate</h4><p>HackerRank</p></div>
+      </div>
+
+      <div class="cert-item">
+        <div class="cert-img-wrap"><img src="Certificates/Javascript basic hackerrank.png" alt="Javascript Certificate"/></div>
+        <div class="cert-info"><h4>JS Basic</h4><p>HackerRank</p></div>
+      </div>
+
+      <div class="cert-item">
+        <div class="cert-img-wrap"><img src="Certificates/Javascript intermediate hackerrank.png" alt="Javascript Certificate"/></div>
+        <div class="cert-info"><h4>JS Intermediate</h4><p>HackerRank</p></div>
+      </div>
+
+      <div class="cert-item">
+        <div class="cert-img-wrap"><img src="Certificates/css basic hackerrank.png" alt="CSS Certificate"/></div>
+        <div class="cert-info"><h4>CSS Basic</h4><p>HackerRank</p></div>
+      </div>
+
+      <div class="cert-item">
+        <div class="cert-img-wrap"><img src="Certificates/web development simplilearn.jpg" alt="Web Development for Beginners Certificate"/></div>
+        <div class="cert-info"><h4>Web Development</h4><p>Simplilearn</p></div>
+      </div>
+
+      <div class="cert-item">
+        <div class="cert-img-wrap"><img src="Certificates/JavaScript simplilearn.jpg" alt="JavaScript for Beginners Certificate"/></div>
+        <div class="cert-info"><h4>JS Certificate</h4><p>Simplilearn</p></div>
+      </div>
+
+      <!-- duplicate set for seamless infinite loop -->
+      <div class="cert-item" aria-hidden="true">
+        <div class="cert-img-wrap"><img src="Certificates/java hackerank.png" alt=""/></div>
+        <div class="cert-info"><h4>JAVA Certificate</h4><p>HackerRank</p></div>
+      </div>
+
+      <div class="cert-item" aria-hidden="true">
+        <div class="cert-img-wrap"><img src="Certificates/Javascript basic hackerrank.png" alt=""/></div>
+        <div class="cert-info"><h4>JS Basic</h4><p>HackerRank</p></div>
+      </div>
+
+      <div class="cert-item" aria-hidden="true">
+        <div class="cert-img-wrap"><img src="Certificates/Javascript intermediate hackerrank.png" alt=""/></div>
+        <div class="cert-info"><h4>JS Intermediate</h4><p>HackerRank</p></div>
+      </div>
+
+      <div class="cert-item" aria-hidden="true">
+        <div class="cert-img-wrap"><img src="Certificates/css basic hackerrank.png" alt=""/></div>
+        <div class="cert-info"><h4>CSS Basic</h4><p>HackerRank</p></div>
+      </div>
+
+      <div class="cert-item" aria-hidden="true">
+        <div class="cert-img-wrap"><img src="Certificates/web development simplilearn.jpg" alt=""/></div>
+        <div class="cert-info"><h4>Web Development</h4><p>Simplilearn</p></div>
+      </div>
+
+      <div class="cert-item" aria-hidden="true">
+        <div class="cert-img-wrap"><img src="Certificates/JavaScript simplilearn.jpg" alt=""/></div>
+        <div class="cert-info"><h4>JS Certificate</h4><p>Simplilearn</p></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ROW 2 -->
+  <div class="cert-marquee-row reveal">
+    <div class="cert-track" id="certTrack2">
+
+      <div class="cert-item">
+        <div class="cert-img-wrap"><img src="Certificates/CSS fundamentals simplilearn.jpg" alt="Introduction to CSS Certificate"/></div>
+        <div class="cert-info"><h4>CSS Fundamentals</h4><p>Simplilearn</p></div>
+      </div>
+
+      <div class="cert-item">
+        <div class="cert-img-wrap"><img src="Certificates/html fundamentals simplilearn.jpg" alt="Introduction to HTML Certificate"/></div>
+        <div class="cert-info"><h4>HTML Fundamentals</h4><p>Simplilearn</p></div>
+      </div>
+
+      <div class="cert-item">
+        <div class="cert-img-wrap"><img src="Certificates/Legacy responsive web design freecodecamp.png" alt="Freecodecamp Certificate"/></div>
+        <div class="cert-info"><h4>Legacy Responsive Web Design</h4><p>FreeCodeCamp</p></div>
+      </div>
+
+      <div class="cert-item">
+        <div class="cert-img-wrap"><img src="Certificates/Legacy JavaScript freecodecamp.png" alt="Freecodecamp Certificate"/></div>
+        <div class="cert-info"><h4>JS Algorithms &amp; Data Structures</h4><p>FreeCodeCamp</p></div>
+      </div>
+
+      <div class="cert-item">
+        <div class="cert-img-wrap"><img src="Certificates/responsive web design freecodecamp.png" alt="Freecodecamp Certificate"/></div>
+        <div class="cert-info"><h4>Responsive Web Design</h4><p>FreeCodeCamp</p></div>
+      </div>
+
+      <div class="cert-item">
+        <div class="cert-img-wrap"><img src="Certificates/Build Website Cognitive AI Class.png" alt="Cognitive Class Certificate"/></div>
+        <div class="cert-info"><h4>Build Website</h4><p>Cognitive Class</p></div>
+      </div>
+
+      <div class="cert-item">
+        <div class="cert-img-wrap"><img src="Certificates/AWS Certificate.JPG" alt="Certificate of Appointment - AWS Student Builder Group"/></div>
+        <div class="cert-info"><h4>Web Development Associate</h4><p>AWS Student Builder Group</p></div>
+      </div>
+
+      <!-- duplicate set for seamless infinite loop -->
+      <div class="cert-item" aria-hidden="true">
+        <div class="cert-img-wrap"><img src="Certificates/CSS fundamentals simplilearn.jpg" alt=""/></div>
+        <div class="cert-info"><h4>CSS Fundamentals</h4><p>Simplilearn</p></div>
+      </div>
+
+      <div class="cert-item" aria-hidden="true">
+        <div class="cert-img-wrap"><img src="Certificates/html fundamentals simplilearn.jpg" alt=""/></div>
+        <div class="cert-info"><h4>HTML Fundamentals</h4><p>Simplilearn</p></div>
+      </div>
+
+      <div class="cert-item" aria-hidden="true">
+        <div class="cert-img-wrap"><img src="Certificates/Legacy responsive web design freecodecamp.png" alt=""/></div>
+        <div class="cert-info"><h4>Legacy Responsive Web Design</h4><p>FreeCodeCamp</p></div>
+      </div>
+
+      <div class="cert-item" aria-hidden="true">
+        <div class="cert-img-wrap"><img src="Certificates/Legacy JavaScript freecodecamp.png" alt=""/></div>
+        <div class="cert-info"><h4>JS Algorithms &amp; Data Structures</h4><p>FreeCodeCamp</p></div>
+      </div>
+
+      <div class="cert-item" aria-hidden="true">
+        <div class="cert-img-wrap"><img src="Certificates/responsive web design freecodecamp.png" alt=""/></div>
+        <div class="cert-info"><h4>Responsive Web Design</h4><p>FreeCodeCamp</p></div>
+      </div>
+
+      <div class="cert-item" aria-hidden="true">
+        <div class="cert-img-wrap"><img src="Certificates/Build Website Cognitive AI Class.png" alt=""/></div>
+        <div class="cert-info"><h4>Build Website</h4><p>Cognitive Class</p></div>
+      </div>
+
+      <div class="cert-item" aria-hidden="true">
+        <div class="cert-img-wrap"><img src="Certificates/AWS Certificate.JPG" alt=""/></div>
+        <div class="cert-info"><h4>Web Development Associate</h4><p>AWS Student Builder Group</p></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section contact-section">
+  <div class="container">
+    <div class="contact-icon-row reveal">
+      <a href="contact.html" class="contact-round" aria-label="Email contact form">
+        <svg viewBox="0 0 512 512" aria-hidden="true"><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/in/danmark-rosalejos-2b89503b1/" target="_blank" rel="noopener" class="contact-round" aria-label="LinkedIn profile">
+        <svg viewBox="0 0 448 512" aria-hidden="true"><path d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container footer-inner">
+    <p>&copy; 2025 Danmark Rosalejos. All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
