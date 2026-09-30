@@ -518,7 +518,7 @@ document.addEventListener('keydown',function(e){
     cards.forEach(function (c) { c.style.height = max + 'px'; });
     /* mobile: room for the two peeking cards (34px each) + shadow;
        desktop: room for the dropped side cards */
-    var extra = isMobile() ? 2 * 34 + 18 : 3 * 26 + 30;
+    var extra = isMobile() ? 2 * 46 + 24 : 3 * 26 + 30;
     deck.style.height = (max + extra) + 'px';
   }
 
