@@ -1175,8 +1175,8 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   line-height:1.65;
 }
 .testi-footer{display:flex;align-items:center;gap:.7rem;margin-top:auto}
-/* Clark Zablan's (2nd) testimonial: vertically center the quote between the header and the name */
-.testimonial-deck .testi-card:nth-child(2) .testi-text{flex:1;display:flex;align-items:center}
+/* Clark Zablan's (2nd) testimonial: center the quote between the header and the name (vertically and horizontally) */
+.testimonial-deck .testi-card:nth-child(2) .testi-text{flex:1;display:flex;align-items:center;justify-content:center;text-align:center}
 .testi-avatar{
   width:36px;height:36px;flex-shrink:0;
   border-radius:50%;
