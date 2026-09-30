@@ -1214,6 +1214,14 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .testi-text{font-size:.82rem;line-height:1.6}
   .testi-avatar{width:32px;height:32px;font-size:.85rem}
   .testi-name{font-size:.82rem}
+
+  /* Mobile fan: side cards only peek out from behind the center card, with faded content,
+     so no clipped text is shown at the screen edges */
+  .testi-card.testi-behind-1{transform:translate(14%,16px) rotate(6deg) scale(.93);opacity:.9}
+  .testi-card.testi-behind-2{transform:translate(-14%,16px) rotate(-6deg) scale(.93);opacity:.9}
+  .testi-card.testi-behind-1 > *,
+  .testi-card.testi-behind-2 > *{opacity:.2}
+  .testimonial-deck-wrap{padding-bottom:2rem}
 }
 /* RESPONSIVE */
 @media(max-width:960px){
