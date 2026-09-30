@@ -506,8 +506,8 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   aspect-ratio:16/8.6;
   overflow:hidden;
   padding:.5rem;
-  background:var(--bg);
-  border:1px solid rgba(18,22,43,.14);
+  background:transparent;
+  border:none;
   border-radius:20px;
 }
 .project-img-wrap img{
