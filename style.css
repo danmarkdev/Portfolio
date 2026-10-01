@@ -1115,27 +1115,29 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 .reveal.visible{opacity:1;transform:none}
 
 /* ==========================================================
-   TESTIMONIALS — 3D fanned carousel (desktop) / stacked deck (mobile)
-   JS (script.js) sets these custom properties per card:
-     --o  signed offset from the active card (-3 ... 0 ... 3)
-     --a  absolute offset |o|
-     --r  rank behind the active card (0 = front)
+   TESTIMONIALS — one stacked deck on desktop AND mobile
+   (same formation as the Reb.Dev reference: the active card sits in
+   front, the other cards peek out underneath it, leaning back and
+   slightly rotated).
+   Every card has the SAME width and height on every screen size:
+   script.js measures the tallest card and gives all cards that height.
+   JS sets these custom properties per card:
+     --r  rank behind the active card (0 = front, 1 = next, ...)
+     --o / --a  (still set by JS, no longer needed by the stack layout)
    ========================================================== */
 .testimonial-deck-wrap{
   width:100%;
   max-width:1140px;
   margin:0 auto;
   position:relative;
-  padding-bottom:1rem;
-  --card-w:340px;
-  --gap:200px;
+  padding-bottom:1.5rem;
+  --card-w:470px;        /* desktop card width: wide + short = a neat landscape card */
+  --peek:40px;           /* how far each card behind sticks out below the one in front */
 }
 .testimonial-deck{
   position:relative;
   width:100%;
-  height:340px;              /* JS overwrites this with the real height */
-  perspective:1000px;
-  perspective-origin:50% 25%;
+  height:340px;          /* JS overwrites this with the real height */
   touch-action:pan-y;
 }
 .testi-card{
@@ -1146,65 +1148,73 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   max-width:92vw;
   background:#d3d6dd;
   border:1px solid #e6e8ed;
-  border-radius:18px;
-  padding:1.15rem 1.3rem 1.3rem;
+  border-radius:22px;
+  padding:1.35rem 1.6rem 1.5rem;
   box-shadow:var(--shadow-card);
   display:flex;
   flex-direction:column;
-  gap:.7rem;
+  gap:.8rem;
   cursor:pointer;
   overflow:hidden;
-  transform-origin:50% 50%;
-  /* fan: side cards swing inward (rotateY), tilt (rotateZ) and drop down + back */
+  transform-origin:50% 0%;
+  /* stack: each card behind drops down by --peek, leans back (rotateZ) and shrinks a little */
   transform:
     translateX(-50%)
-    translateX(calc(var(--o, 0) * var(--gap)))
-    translateY(calc(var(--a, 0) * 16px))
-    translateZ(calc(var(--a, 0) * -110px))
-    rotateY(calc(var(--o, 0) * -10deg))
-    rotateZ(calc(var(--o, 0) * 6deg));
+    translateY(calc(var(--r, 0) * var(--peek)))
+    rotateZ(calc(var(--r, 0) * -3deg))
+    scale(calc(1 - var(--r, 0) * .05));
   opacity:1;
-  z-index:calc(10 - var(--a, 0));
+  z-index:calc(10 - var(--r, 0));
   transition:transform .6s cubic-bezier(.16,1,.3,1), opacity .5s ease, box-shadow .3s ease;
   will-change:transform;
 }
-.testi-card > *{
-  opacity:calc(1 - var(--a, 0) * .18);
-  transition:opacity .5s ease;
+/* the cards underneath get a clear edge so the stack layers are visible */
+.testi-card:not(.testi-active){
+  border-color:#c2c6cf;
+  box-shadow:0 10px 20px -8px rgba(18,22,43,.30);
 }
 .testi-card.testi-active{
   cursor:default;
   box-shadow:var(--shadow-card-hover);
 }
+/* only the front card + 2 behind it are shown, the rest fade out */
+.testi-card.testi-far{opacity:0;pointer-events:none}
+
+/* cards behind only show as a peeking edge, with faded content */
+.testi-card > *{
+  opacity:1;
+  transition:opacity .5s ease;
+}
+.testi-card:not(.testi-active) > *{opacity:calc(.8 - var(--r, 0) * .3)}
 
 /* header row: avatar + name on the left, rating pill on the right */
 .testi-head{
   display:flex;
   align-items:center;
-  gap:.65rem;
+  gap:.8rem;
 }
 .testi-avatar{
-  width:34px;height:34px;flex-shrink:0;
+  width:42px;height:42px;flex-shrink:0;
   border-radius:50%;
   background:#aeb3c0;
   color:#1f2330;
   display:flex;align-items:center;justify-content:center;
   font-family:var(--font-heading);
   font-weight:700;
-  font-size:.9rem;
+  font-size:1rem;
 }
 .testi-name{
   font-family:var(--font-heading);
   font-weight:700;
   color:#1f2330;
-  font-size:.88rem;
+  font-size:1rem;
   line-height:1.2;
   margin-right:auto;
 }
 
 /* RATING PILL — bigger, clearer star.
    - lighter pill background so the gold star stands out
-   - star is 18px (was 12px), richer gold fill + dark-gold outline
+   - star is 18px, richer gold fill + dark-gold outline
    - rating text is slightly bigger and darker */
 .testi-rating{
   display:inline-flex;
@@ -1214,7 +1224,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   background:#eceef3;
   color:#1f2330;
   border-radius:100px;
-  padding:.32rem .8rem .32rem .6rem;
+  padding:.34rem .85rem .34rem .62rem;
   font-family:var(--font-body);
   font-size:.82rem;
   font-weight:800;
@@ -1232,75 +1242,50 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 }
 .testi-quote-icon{
   font-family:var(--font-heading);
-  font-size:1.6rem;
+  font-size:1.9rem;
   line-height:.6;
   height:.9rem;
-  margin-top:.6rem;    /* space between the avatar row and the blue quote mark */
-  margin-bottom:.3rem; /* space between the blue quote mark and the text */
+  margin-top:.5rem;    /* space between the avatar row and the quote mark */
+  margin-bottom:.2rem; /* space between the quote mark and the text */
   color:#5a6072;
   font-weight:800;
 }
 .testi-text{
   font-family:var(--font-body);
-  font-size:.8rem;
+  font-size:.86rem;
   font-style:italic;
   color:#3b4050;
-  line-height:1.6;
-}
-
-/* desktop: hide cards more than 3 steps from the center */
-@media(min-width:701px){
-  .testi-card.testi-out{opacity:0;pointer-events:none}
+  line-height:1.65;
 }
 
 /* dots are no longer used */
 .testi-dots{display:none}
 
-/* Tablet: pull the side cards in a little */
+/* Tablet: slightly narrower card */
 @media(max-width:960px){
-  .testimonial-deck-wrap{--card-w:320px;--gap:170px}
+  .testimonial-deck-wrap{--card-w:430px}
 }
 
-/* Phone: stacked deck — active card in front, the others peek out underneath,
-   leaning back and slightly rotated (like the Reb.Dev reference).
-   Every card gets the same min-height so the cards behind actually stick out
-   below the front card instead of hiding behind it. */
+/* Phone: narrower card, taller proportions, a bit more room for the peeking cards.
+   Same card size for every card — raise --card-h if text ever gets cut off. */
 @media(max-width:700px){
   .testimonial-deck-wrap{
     --card-w:310px;
-    --card-h:21rem;        /* equal height for all cards — raise if text gets cut off */
-    --peek:42px;           /* how far each card behind sticks out below the one in front */
+    --card-h:21rem;
+    --peek:42px;
     padding-bottom:5rem;   /* room for the peeking cards so they don't touch the next section */
   }
-  .testimonial-deck{perspective:none}
-
   .testi-card{
     min-height:var(--card-h);
     padding:1.05rem 1.1rem 1.15rem;
     gap:.6rem;
-    transform-origin:50% 0%;
-    transform:
-      translateX(-50%)
-      translateY(calc(var(--r, 0) * var(--peek)))
-      rotateZ(calc(var(--r, 0) * -3.5deg))
-      scale(calc(1 - var(--r, 0) * .05));
-    opacity:1;
-    z-index:calc(10 - var(--r, 0));
   }
-  /* the cards underneath get a clear edge so the stack layers are visible */
-  .testi-card:not(.testi-active){
-    border-color:#c2c6cf;
-    box-shadow:0 10px 20px -8px rgba(18,22,43,.30);
-  }
-  .testi-card.testi-far{opacity:0;pointer-events:none}
-  .testi-avatar{width:30px;height:30px;font-size:.82rem}
-  .testi-name{font-size:.82rem}
+  .testi-avatar{width:36px;height:36px;font-size:.9rem}
+  .testi-name{font-size:.9rem}
   .testi-rating{font-size:.74rem;padding:.28rem .7rem .28rem .5rem;gap:.35rem}
   .testi-rating svg{width:16px;height:16px}
+  .testi-quote-icon{font-size:1.6rem}
   .testi-text{font-size:.76rem;line-height:1.55}
-  /* cards behind only show as a peeking edge, with faded content */
-  .testi-card:not(.testi-active) > *{opacity:calc(.8 - var(--r, 0) * .3)}
-  .testi-card.testi-active > *{opacity:1}
 }
 
 /* RESPONSIVE */
