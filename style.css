@@ -1265,7 +1265,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 @media(max-width:700px){
   .testimonial-deck-wrap{
     --card-w:430px;
-    --peek20px;
+    --peek10px;
     zoom:.8;
     padding-bottom:2rem;
   }
