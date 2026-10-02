@@ -368,6 +368,8 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 
 /* SOLAR SYSTEM ORBITS */
+.orbit-ring{--r1:195px;--r2:240px;--r3:285px} 
+
 /* ORBIT LINES */
 .orbit-ring::before{
   content:"";
