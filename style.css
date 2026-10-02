@@ -1384,11 +1384,11 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 }
 @media(max-width:480px){
   .photo-orbit{max-width:310px}
-  .photo-wrap{width:160px;height:160px}
-  .orbit-ring{--r1:104px;--r2:126px;--r3:148px}
-  .stack-badge{width:38px;height:38px}
+  .photo-wrap{width:175px;height:175px}
+  .orbit-ring{--r1:112px;--r2:134px;--r3:156px}
+  .stack-badge{width:40px;height:40px}
   .stack-badge .fb-icon img,
-  .stack-badge .fb-icon svg{width:22px;height:22px}
+  .stack-badge .fb-icon svg{width:24px;height:24px}
   .hero-name{font-size:2.1rem}
   .section-big-heading{font-size:1.25rem}
   .cert-item{width:250px}
