@@ -1261,47 +1261,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
     .testimonial-deck-wrap{--card-w:360px;--gap:120px} 
 }
 
-/* Phone: stacked deck — active card in front, the others peek out underneath,
-   leaning back and slightly rotated (like the Reb.Dev reference).
-   Every card gets the same min-height so the cards behind actually stick out
-   below the front card instead of hiding behind it. */
-@media(max-width:700px){
-  .testimonial-deck-wrap{
-    --card-w:310px;
-    --card-h:21rem;        /* equal height for all cards — raise if text gets cut off */
-    --peek:42px;           /* how far each card behind sticks out below the one in front */
-    padding-bottom:5rem;   /* room for the peeking cards so they don't touch the next section */
-  }
-  .testimonial-deck{perspective:none}
 
-  .testi-card{
-    min-height:var(--card-h);
-    padding:1.05rem 1.1rem 1.15rem;
-    gap:.6rem;
-    transform-origin:50% 0%;
-    transform:
-      translateX(-50%)
-      translateY(calc(var(--r, 0) * var(--peek)))
-      rotateZ(calc(var(--r, 0) * -3.5deg))
-      scale(calc(1 - var(--r, 0) * .05));
-    opacity:1;
-    z-index:calc(10 - var(--r, 0));
-  }
-  /* the cards underneath get a clear edge so the stack layers are visible */
-  .testi-card:not(.testi-active){
-    border-color:#c2c6cf;
-    box-shadow:0 10px 20px -8px rgba(18,22,43,.30);
-  }
-  .testi-card.testi-far{opacity:0;pointer-events:none}
-  .testi-avatar{width:30px;height:30px;font-size:.82rem} 
-  .testi-name{font-size:.82rem}
-  .testi-rating{font-size:.74rem;padding:.28rem .7rem .28rem .5rem;gap:.35rem}
-  .testi-rating svg{width:16px;height:16px}
-  .testi-text{font-size:.76rem;line-height:1.55}
-  /* cards behind only show as a peeking edge, with faded content */
-  .testi-card:not(.testi-active) > *{opacity:calc(.8 - var(--r, 0) * .3)}
-  .testi-card.testi-active > *{opacity:1}
-}
 
 /* RESPONSIVE */
 @media(max-width:960px){
