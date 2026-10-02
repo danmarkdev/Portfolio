@@ -367,6 +367,9 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   --radius:235px;
 }
 
+/* SOLAR SYSTEM ORBITS */
+.orbit-ring{--r1:195px;--r2:240px;--r3:285px}
+
 .orbit-item{
   position:absolute;
   top:50%;
@@ -374,44 +377,53 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   width:0;
   height:0;
   transform:rotate(var(--angle)) translate(var(--radius));
+  animation:orbitSpin var(--dur) linear infinite;
 }
 .orbit-counter{
   position:absolute;
   top:0;
   left:0;
   pointer-events:auto;
-  animation-name: floatBob;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
+  transform:translate(-50%,-50%) rotate(calc(var(--angle) * -1));
+  animation:orbitCounter var(--dur) linear infinite;
 }
+.photo-orbit:hover .orbit-item,
 .photo-orbit:hover .orbit-counter{animation-play-state:paused}
 
-@keyframes floatBob{
-  0%,100%{transform:translate(-50%,-50%) rotate(calc(var(--angle) * -1)) translate(0,0) scale(1) rotate(0deg)}
-  20%{transform:translate(-50%,-50%) rotate(calc(var(--angle) * -1)) translate(10px,-20px) scale(1.12) rotate(6deg)}
-  40%{transform:translate(-50%,-50%) rotate(calc(var(--angle) * -1)) translate(-8px,-32px) scale(1.05) rotate(-4deg)}
-  60%{transform:translate(-50%,-50%) rotate(calc(var(--angle) * -1)) translate(-14px,-16px) scale(0.94) rotate(5deg)}
-  80%{transform:translate(-50%,-50%) rotate(calc(var(--angle) * -1)) translate(6px,-6px) scale(1.02) rotate(-3deg)}
+@keyframes orbitSpin{
+  from{transform:rotate(var(--angle)) translate(var(--radius))}
+  to{transform:rotate(calc(var(--angle) + 360deg)) translate(var(--radius))}
+}
+@keyframes orbitCounter{
+  from{transform:translate(-50%,-50%) rotate(calc(var(--angle) * -1))}
+  to{transform:translate(-50%,-50%) rotate(calc(var(--angle) * -1 - 360deg))}
 }
 
-.orbit-item.oi-0 .orbit-counter{animation-delay:0s;animation-duration:3s}
-.orbit-item.oi-1 .orbit-counter{animation-delay:.2s;animation-duration:3.4s}
-.orbit-item.oi-2 .orbit-counter{animation-delay:.4s;animation-duration:2.8s}
-.orbit-item.oi-3 .orbit-counter{animation-delay:.1s;animation-duration:3.6s}
-.orbit-item.oi-4 .orbit-counter{animation-delay:.5s;animation-duration:3.1s}
-.orbit-item.oi-5 .orbit-counter{animation-delay:.3s;animation-duration:2.9s}
-.orbit-item.oi-6 .orbit-counter{animation-delay:.6s;animation-duration:3.5s}
-.orbit-item.oi-7 .orbit-counter{animation-delay:.15s;animation-duration:3.2s}
-.orbit-item.oi-8 .orbit-counter{animation-delay:.45s;animation-duration:2.7s}
-.orbit-item.oi-9 .orbit-counter{animation-delay:.25s;animation-duration:3.7s}
-.orbit-item.oi-10 .orbit-counter{animation-delay:.55s;animation-duration:3.3s}
-.orbit-item.oi-11 .orbit-counter{animation-delay:.35s;animation-duration:2.85s}
-.orbit-item.oi-12 .orbit-counter{animation-delay:.05s;animation-duration:3.45s}
-.orbit-item.oi-13 .orbit-counter{animation-delay:.5s;animation-duration:3.05s}
-.orbit-item.oi-14 .orbit-counter{animation-delay:.3s;animation-duration:3.3s}
-.orbit-item.oi-15 .orbit-counter{animation-delay:.55s;animation-duration:3.9s}
-.orbit-item.oi-16 .orbit-counter{animation-delay:.4s;animation-duration:3.2s}
+/* Orbit 1 (inner, 5 icons, pinakamabilis) */
+.orbit-item.oi-2,.orbit-item.oi-5,.orbit-item.oi-8,.orbit-item.oi-11,.orbit-item.oi-14{--radius:var(--r1);--dur:30s}
+.orbit-item.oi-2{--angle:0deg!important}
+.orbit-item.oi-5{--angle:72deg!important}
+.orbit-item.oi-8{--angle:144deg!important}
+.orbit-item.oi-11{--angle:216deg!important}
+.orbit-item.oi-14{--angle:288deg!important}
 
+/* Orbit 2 (middle, 6 icons) */
+.orbit-item.oi-1,.orbit-item.oi-4,.orbit-item.oi-7,.orbit-item.oi-10,.orbit-item.oi-13,.orbit-item.oi-16{--radius:var(--r2);--dur:45s}
+.orbit-item.oi-1{--angle:20deg!important}
+.orbit-item.oi-4{--angle:80deg!important}
+.orbit-item.oi-7{--angle:140deg!important}
+.orbit-item.oi-10{--angle:200deg!important}
+.orbit-item.oi-13{--angle:260deg!important}
+.orbit-item.oi-16{--angle:320deg!important} 
+
+/* Orbit 3 (outer, 6 icons, pinakamabagal) */
+.orbit-item.oi-0,.orbit-item.oi-3,.orbit-item.oi-6,.orbit-item.oi-9,.orbit-item.oi-12,.orbit-item.oi-15{--radius:var(--r3);--dur:65s}
+.orbit-item.oi-0{--angle:40deg!important}
+.orbit-item.oi-3{--angle:100deg!important}
+.orbit-item.oi-6{--angle:160deg!important}
+.orbit-item.oi-9{--angle:220deg!important}
+.orbit-item.oi-12{--angle:280deg!important}
+.orbit-item.oi-15{--angle:340deg!important}
 .stack-badge{
   display:flex;
   align-items:center;
@@ -1313,8 +1325,8 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .photo-wrap{width:225px;height:225px}
   .stack-badge{width:48px;height:48px}
   .stack-badge .fb-icon img,
-  .stack-badge .fb-icon svg{width:28px;height:28px}
-  .orbit-ring{--radius:170px}
+  .stack-badge .fb-icon svg{width:28px;height:28px} 
+  .orbit-ring{--r1:150px;--r2:185px;--r3:220px}
   .contact-page-grid{grid-template-columns:1fr}
   .footer-inner{flex-direction:column;gap:.5rem;text-align:center}
 .tech-icon-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:.85rem}
@@ -1358,7 +1370,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 @media(max-width:480px){
   .photo-orbit{max-width:310px}
   .photo-wrap{width:195px;height:195px}
-  .orbit-ring{--radius:150px}
+  .orbit-ring{--r1:120px;--r2:150px;--r3:180px}
   .stack-badge{width:40px;height:40px}
   .stack-badge .fb-icon img,
   .stack-badge .fb-icon svg{width:24px;height:24px}
