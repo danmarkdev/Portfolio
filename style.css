@@ -1261,13 +1261,13 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
     .testimonial-deck-wrap{--card-w:360px;--gap:120px} 
 }
 
-/* Phone: same card shape as desktop (zoomed), stacked formation*/
+/* Phone: same card shape as desktop (zoomed), tight stack showing all cards */
 @media(max-width:700px){
   .testimonial-deck-wrap{
     --card-w:430px;
-    --peek:44px;
+    --peek:20px;
     zoom:.8;
-    padding-bottom:1rem;
+    padding-bottom:2rem;
   }
   .testimonial-deck{perspective:none}
   .testi-card{
@@ -1276,18 +1276,19 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
     transform:
       translateX(-50%)
       translateY(calc(var(--r, 0) * var(--peek)))
-      rotateZ(calc(var(--r, 0) * -2.5deg))
-      scale(calc(1 - var(--r, 0) * .05));
+      rotateZ(calc(var(--r, 0) * -1.2deg))
+      scale(calc(1 - var(--r, 0) * .035));
     opacity:1;
+    pointer-events:auto;
     z-index:calc(10 - var(--r, 0));
   }
   .testi-card:not(.testi-active){
     border-color:#c2c6cf;
-    box-shadow:0 10px 20px -8px rgba(18,22,43,.30);
+    box-shadow:0 8px 16px -8px rgba(18,22,43,.30);
   }
-  .testi-card.testi-far{opacity:0;pointer-events:none}
-  .testi-card.testi-out{opacity:1}
-  .testi-card:not(.testi-active) > *{opacity:calc(.8 - var(--r, 0) * .3)}
+  .testi-card.testi-far,
+  .testi-card.testi-out{opacity:1;pointer-events:auto}
+  .testi-card:not(.testi-active) > *{opacity:calc(.7 - var(--r, 0) * .15)}
   .testi-card.testi-active > *{opacity:1}
 }
 @media(max-width:480px){
