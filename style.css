@@ -368,7 +368,19 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 
 /* SOLAR SYSTEM ORBITS */
-.orbit-ring{--r1:195px;--r2:240px;--r3:285px}
+/* ORBIT LINES */
+.orbit-ring::before{
+  content:"";
+  position:absolute;
+  inset:-320px;
+  z-index:-1;
+  pointer-events:none;
+  --ring:rgba(51,85,255,.28);
+  background:radial-gradient(circle at 50% 50%,
+    transparent calc(var(--r1) - 1px), var(--ring) calc(var(--r1) - 1px), var(--ring) var(--r1), transparent var(--r1),
+    transparent calc(var(--r2) - 1px), var(--ring) calc(var(--r2) - 1px), var(--ring) var(--r2), transparent var(--r2),
+    transparent calc(var(--r3) - 1px), var(--ring) calc(var(--r3) - 1px), var(--ring) var(--r3), transparent var(--r3));
+}
 
 .orbit-item{
   position:absolute;
