@@ -1126,9 +1126,9 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   max-width:1140px;
   margin:0 auto;
   position:relative;
-  padding-bottom:1rem;
-  --card-w:340px;
-  --gap:200px;
+  padding-bottom:1rem; 
+  --card-w:430px;
+  --gap:140px;
 }
 .testimonial-deck{
   position:relative;
@@ -1161,7 +1161,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
     translateX(calc(var(--o, 0) * var(--gap)))
     translateY(calc(var(--a, 0) * 16px))
     translateZ(calc(var(--a, 0) * -110px))
-    rotateY(calc(var(--o, 0) * -10deg))
+    rotateY(calc(var(--o, 0) * -14deg)) 
     rotateZ(calc(var(--o, 0) * 6deg));
   opacity:1;
   z-index:calc(10 - var(--a, 0));
@@ -1242,7 +1242,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 }
 .testi-text{
   font-family:var(--font-body);
-  font-size:.8rem;
+  font-size:.78rem;
   font-style:italic;
   color:#3b4050;
   line-height:1.6;
@@ -1258,7 +1258,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 
 /* Tablet: pull the side cards in a little */
 @media(max-width:960px){
-  .testimonial-deck-wrap{--card-w:320px;--gap:170px}
+    .testimonial-deck-wrap{--card-w:360px;--gap:120px} 
 }
 
 /* Phone: stacked deck — active card in front, the others peek out underneath,
@@ -1293,7 +1293,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
     box-shadow:0 10px 20px -8px rgba(18,22,43,.30);
   }
   .testi-card.testi-far{opacity:0;pointer-events:none}
-  .testi-avatar{width:30px;height:30px;font-size:.82rem}
+  .testi-avatar{width:30px;height:30px;font-size:.82rem} 
   .testi-name{font-size:.82rem}
   .testi-rating{font-size:.74rem;padding:.28rem .7rem .28rem .5rem;gap:.35rem}
   .testi-rating svg{width:16px;height:16px}
