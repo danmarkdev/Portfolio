@@ -1261,24 +1261,21 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
     .testimonial-deck-wrap{--card-w:360px;--gap:120px} 
 }
 
-/* Phone: same 3D fan as desktop, just smaller */
+/* Phone: exact same fan and card shape as desktop, scaled down to fit */
 @media(max-width:700px){
   .testimonial-deck-wrap{
-    --card-w:270px;
-    --gap:75px;
-    padding-bottom:1.5rem;
+    --card-w:430px;
+    --gap:140px;
+    zoom:.8;
+    padding-bottom:1rem;
   }
-  .testimonial-deck{perspective:800px}
-  .testi-card{
-    padding:1rem 1rem 1.1rem;
-    gap:.55rem;
-  }
-  .testi-card.testi-out{opacity:0;pointer-events:none}
-  .testi-avatar{width:30px;height:30px;font-size:.82rem}
-  .testi-name{font-size:.82rem}
-  .testi-rating{font-size:.74rem;padding:.28rem .7rem .28rem .5rem;gap:.35rem}
-  .testi-rating svg{width:16px;height:16px}
-  .testi-text{font-size:.72rem;line-height:1.5}
+  .testi-card{max-width:none}
+}
+@media(max-width:480px){
+  .testimonial-deck-wrap{zoom:.72}
+}
+@media(max-width:400px){
+  .testimonial-deck-wrap{zoom:.62}
 }
 
 /* RESPONSIVE */
