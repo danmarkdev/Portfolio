@@ -630,8 +630,9 @@ window.addEventListener('resize', adjustAllTechTips);
 window.addEventListener('orientationchange', adjustAllTechTips);
 
 /* ORBIT DOTS (scattered, STILL — they do not move, like Reb's portfolio)
-   Creates 7 blue dots placed at different spots around the profile photo.
-   The faint dashed rings stay visible. The old straight dots are removed. */
+   Creates 7 blue dots placed ON the ring lines at different spots around the
+   profile photo. The dots are drawn BEHIND the orbiting tech icons, so an icon
+   always passes in front of a dot (the dot never sits on top of an icon). */
 (function () {
   var ring = document.getElementById('orbitRing');
   if (!ring) return;
@@ -656,12 +657,14 @@ window.addEventListener('orientationchange', adjustAllTechTips);
 
   var dots = cfg.map(function (c) {
     var el = document.createElement('div');
+    /* z-index:0 = lower than the icons (.orbit-item has z-index:2 in style.css) */
     el.style.cssText =
-      'position:absolute;top:50%;left:50%;border-radius:50%;pointer-events:none;z-index:1;' +
+      'position:absolute;top:50%;left:50%;border-radius:50%;pointer-events:none;z-index:0;' +
       'width:' + c.s + 'px;height:' + c.s + 'px;' +
       'margin:' + (-c.s / 2) + 'px 0 0 ' + (-c.s / 2) + 'px;' +
       'background:var(--accent);box-shadow:0 0 10px 2px var(--accent-glow);';
-    ring.appendChild(el);
+    /* insert BEFORE the icons in the DOM so the icons are painted on top */
+    ring.insertBefore(el, ring.firstChild);
     return { el: el, c: c };
   });
 
