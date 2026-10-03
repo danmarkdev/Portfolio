@@ -629,29 +629,28 @@ window.addEventListener('load', adjustAllTechTips);
 window.addEventListener('resize', adjustAllTechTips);
 window.addEventListener('orientationchange', adjustAllTechTips);
 
-/* ORBIT DOTS (scattered, like Reb's portfolio)
-   Creates 7 blue dots at different distances from the profile photo.
-   Each one circles the photo at its own speed. The orbit rings and the
-   old straight dots are hidden (they are also hidden in style.css). */
+/* ORBIT DOTS (scattered, STILL — they do not move, like Reb's portfolio)
+   Creates 7 blue dots placed at different spots around the profile photo.
+   The faint dashed rings stay visible. The old straight dots are removed. */
 (function () {
   var ring = document.getElementById('orbitRing');
   if (!ring) return;
 
-  /* hide the old rings + old straight dots */
-  ring.querySelectorAll('.orbit-line, .orbit-dot').forEach(function (el) {
-    el.parentNode.removeChild(el);   // remove them completely
+  /* remove only the old straight dots (the rings are kept) */
+  ring.querySelectorAll('.orbit-dot').forEach(function (el) {
+    el.parentNode.removeChild(el);
   });
 
-  /* a = starting angle (deg), k = distance from the photo (bigger = farther),
-     p = seconds for one full turn (smaller = faster), s = dot size in px */
+  /* a = angle around the photo (deg), k = distance from the photo
+     (bigger = farther), s = dot size in px */
   var cfg = [
-    { a: 20,  k: 1.12, p: 9,  s: 9 },
-    { a: 75,  k: 1.45, p: 14, s: 8 },
-    { a: 130, k: 1.10, p: 11, s: 9 },
-    { a: 190, k: 1.38, p: 16, s: 10 },
-    { a: 245, k: 1.18, p: 12, s: 8 },
-    { a: 300, k: 1.50, p: 15, s: 9 },
-    { a: 345, k: 1.28, p: 10, s: 8 }
+    { a: 20,  k: 1.12, s: 8 },
+    { a: 75,  k: 1.45, s: 7 },
+    { a: 130, k: 1.10, s: 8 },
+    { a: 190, k: 1.38, s: 9 },
+    { a: 245, k: 1.18, s: 7 },
+    { a: 300, k: 1.50, s: 8 },
+    { a: 345, k: 1.28, s: 7 }
   ];
 
   var dots = cfg.map(function (c) {
@@ -665,24 +664,16 @@ window.addEventListener('orientationchange', adjustAllTechTips);
     return { el: el, c: c };
   });
 
-  var base = 180;
-  function measure() {
-    var v = parseFloat(getComputedStyle(ring).getPropertyValue('--r1'));
-    base = v || 180;
-  }
-  measure();
-  window.addEventListener('resize', measure);
-
-  function tick(t) {
-    var sec = t / 1000;
+  /* place each dot once (and again if the screen size changes) */
+  function place() {
+    var base = parseFloat(getComputedStyle(ring).getPropertyValue('--r1')) || 180;
     dots.forEach(function (d) {
-      var deg = d.c.a + (sec / d.c.p) * 360;
-      var rad = deg * Math.PI / 180;
+      var rad = d.c.a * Math.PI / 180;
       var r = base * d.c.k;
       d.el.style.transform =
         'translate(' + (Math.cos(rad) * r) + 'px,' + (Math.sin(rad) * r) + 'px)';
     });
-    requestAnimationFrame(tick);
   }
-  requestAnimationFrame(tick);
+  place();
+  window.addEventListener('resize', place);
 })();
