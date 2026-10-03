@@ -371,7 +371,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .orbit-ring{--r1:180px;--r2:220px;--r3:260px}
 
 /* ==========================================================
-   ORBIT LINES — now VISIBLE: gray, dashed ( - - - - ) rings
+   ORBIT LINES — faint blue accent dashed ( - - - - ) rings
    (same look as the dashed orbit in the reference portfolio)
    ========================================================== */
 .orbit-line{
@@ -379,7 +379,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   top:50%;
   left:50%;
   border-radius:50%;
-  border:1.5px dashed rgba(110,120,145,.40);
+  border:1.5px dashed rgba(51,85,255,.30);
   pointer-events:none;
   z-index:-1;
   transform:translate(-50%,-50%);
