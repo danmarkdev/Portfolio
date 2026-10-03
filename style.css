@@ -370,7 +370,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 /* SOLAR SYSTEM ORBITS */
 .orbit-ring{--r1:180px;--r2:220px;--r3:260px}
 
-/* ORBIT LINES — almost invisible thin rings + small glowing dots that travel around them */
+/* ORBIT LINES — almost invisible thin rings (static) */
 .orbit-line{
   position:absolute;
   top:50%;
@@ -380,32 +380,44 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   pointer-events:none;
   z-index:-1;
   transform:translate(-50%,-50%);
-  animation:ringSpin var(--spin) linear infinite;
 }
-.orbit-line::before,
-.orbit-line::after{
+.ol-1{width:calc(var(--r1) * 2);height:calc(var(--r1) * 2)}
+.ol-2{width:calc(var(--r2) * 2);height:calc(var(--r2) * 2)}
+.ol-3{width:calc(var(--r3) * 2);height:calc(var(--r3) * 2)}
+
+/* ORBIT DOTS — small blue dots that travel around the rings.
+   Same spinning method as the tech icons (.orbit-item), so they always move. */
+.orbit-dot{
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:0;
+  height:0;
+  z-index:1;
+  pointer-events:none;
+  transform:rotate(var(--a)) translate(var(--r));
+  animation:dotSpin var(--dur) linear infinite;
+}
+.orbit-dot::before{
   content:"";
   position:absolute;
-  left:50%;
-  width:7px;
-  height:7px;
-  margin-left:-3.5px;
+  width:8px;
+  height:8px;
+  top:-4px;
+  left:-4px;
   border-radius:50%;
   background:var(--accent);
   box-shadow:0 0 10px 2px var(--accent-glow);
 }
-.orbit-line::before{top:-4px}
-.orbit-line::after{bottom:-4px}
-/* middle ring keeps just one dot so the dots look scattered, not mirrored */
-.ol-2::after{display:none}
+.od-1{--r:var(--r1);--a:0deg;--dur:12s}
+.od-2{--r:var(--r1);--a:180deg;--dur:12s}
+.od-3{--r:var(--r2);--a:70deg;--dur:18s;animation-direction:reverse}
+.od-4{--r:var(--r3);--a:20deg;--dur:26s}
+.od-5{--r:var(--r3);--a:200deg;--dur:26s}
 
-.ol-1{width:calc(var(--r1) * 2);height:calc(var(--r1) * 2);--spin:16s}
-.ol-2{width:calc(var(--r2) * 2);height:calc(var(--r2) * 2);--spin:24s;animation-direction:reverse}
-.ol-3{width:calc(var(--r3) * 2);height:calc(var(--r3) * 2);--spin:34s}
-
-@keyframes ringSpin{
-  from{transform:translate(-50%,-50%) rotate(0deg)}
-  to{transform:translate(-50%,-50%) rotate(360deg)}
+@keyframes dotSpin{
+  from{transform:rotate(var(--a)) translate(var(--r))}
+  to{transform:rotate(calc(var(--a) + 360deg)) translate(var(--r))}
 }
 
 .orbit-item{
