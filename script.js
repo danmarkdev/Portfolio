@@ -629,11 +629,9 @@ window.addEventListener('load', adjustAllTechTips);
 window.addEventListener('resize', adjustAllTechTips);
 window.addEventListener('orientationchange', adjustAllTechTips);
 
-/* ORBIT DOTS (scattered, STILL — they do not move)
-   The tech icons orbit through all 3 rings, so any dot ON or BETWEEN the
-   rings would get run over by an icon sooner or later. To prevent that, the
-   dots live OUTSIDE the outer ring (where no icon ever goes), scattered at
-   different angles and distances, and they are drawn BEHIND the icons. */
+/* ORBIT DOTS (scattered, STILL — they do not move, like Reb's portfolio)
+   Creates 7 blue dots placed at different spots around the profile photo.
+   The faint dashed rings stay visible. The old straight dots are removed. */
 (function () {
   var ring = document.getElementById('orbitRing');
   if (!ring) return;
@@ -643,39 +641,41 @@ window.addEventListener('orientationchange', adjustAllTechTips);
     el.parentNode.removeChild(el);
   });
 
-  /* a = angle around the photo (deg): 0 = right, 90 = down, -90 = up
-     k = distance as a multiple of the OUTER ring radius (1.0 = on the outer
-         ring, so use 1.14 or more to stay clear of the icons)
-     s = dot size in px
-     The angles skip the left side (hero text) and the top (nav bar). */
+  /* ring = which ring the dot sits on (1 = inner, 2 = middle, 3 = outer).
+     The dot is placed exactly on that ring's line (centered on it).
+     a = angle around the photo (deg), s = dot size in px */
   var cfg = [
-    { a: -55, k: 1.20, s: 8 },
-    { a: -30, k: 1.14, s: 7 },
-    { a: 10,  k: 1.24, s: 8 },
-    { a: 45,  k: 1.15, s: 9 },
-    { a: 80,  k: 1.21, s: 7 },
-    { a: 115, k: 1.15, s: 8 },
-    { a: 150, k: 1.22, s: 7 }
+    { a: 20,  ring: 3, s: 8 },
+    { a: 75,  ring: 1, s: 7 },
+    { a: 130, ring: 2, s: 8 },
+    { a: 190, ring: 3, s: 9 },
+    { a: 245, ring: 1, s: 7 },
+    { a: 300, ring: 2, s: 8 },
+    { a: 345, ring: 1, s: 7 }
   ];
 
   var dots = cfg.map(function (c) {
     var el = document.createElement('div');
     el.style.cssText =
-      'position:absolute;top:50%;left:50%;border-radius:50%;pointer-events:none;z-index:0;' +
+      'position:absolute;top:50%;left:50%;border-radius:50%;pointer-events:none;z-index:1;' +
       'width:' + c.s + 'px;height:' + c.s + 'px;' +
       'margin:' + (-c.s / 2) + 'px 0 0 ' + (-c.s / 2) + 'px;' +
       'background:var(--accent);box-shadow:0 0 10px 2px var(--accent-glow);';
-    /* insert BEFORE the icons so the icons are always drawn on top */
-    ring.insertBefore(el, ring.firstChild);
+    ring.appendChild(el);
     return { el: el, c: c };
   });
 
   /* place each dot once (and again if the screen size changes) */
   function place() {
-    var r3 = parseFloat(getComputedStyle(ring).getPropertyValue('--r3')) || 260;
+    var cs = getComputedStyle(ring);
+    var radii = {
+      1: parseFloat(cs.getPropertyValue('--r1')) || 180,
+      2: parseFloat(cs.getPropertyValue('--r2')) || 220,
+      3: parseFloat(cs.getPropertyValue('--r3')) || 260
+    };
     dots.forEach(function (d) {
       var rad = d.c.a * Math.PI / 180;
-      var r = r3 * d.c.k;
+      var r = radii[d.c.ring];
       d.el.style.transform =
         'translate(' + (Math.cos(rad) * r) + 'px,' + (Math.sin(rad) * r) + 'px)';
     });
