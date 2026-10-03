@@ -441,6 +441,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   left:50%;
   width:0;
   height:0;
+  z-index:2;                 /* icons are always drawn ABOVE the dots */
   transform:rotate(var(--angle)) translate(var(--radius));
   animation:orbitSpin var(--dur) linear infinite;
 }
