@@ -379,7 +379,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   top:50%;
   left:50%;
   border-radius:50%;
-  border:1.5px dashed rgba(51,85,255,.08);
+  border:1.5px dashed rgba(51,85,255,.10);
   pointer-events:none;
   z-index:-1;
   transform:translate(-50%,-50%);
