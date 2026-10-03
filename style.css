@@ -370,13 +370,16 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 /* SOLAR SYSTEM ORBITS */
 .orbit-ring{--r1:180px;--r2:220px;--r3:260px}
 
-/* ORBIT LINES — almost invisible thin rings (static) */
+/* ==========================================================
+   ORBIT LINES — now VISIBLE: gray, dashed ( - - - - ) rings
+   (same look as the dashed orbit in the reference portfolio)
+   ========================================================== */
 .orbit-line{
   position:absolute;
   top:50%;
   left:50%;
   border-radius:50%;
-  border:1px solid rgba(51,85,255,.08);
+  border:1.5px dashed rgba(110,120,145,.55);
   pointer-events:none;
   z-index:-1;
   transform:translate(-50%,-50%);
@@ -385,39 +388,55 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .ol-2{width:calc(var(--r2) * 2);height:calc(var(--r2) * 2)}
 .ol-3{width:calc(var(--r3) * 2);height:calc(var(--r3) * 2)}
 
-/* ORBIT DOTS — small blue dots that travel around the rings.
-   Same spinning method as the tech icons (.orbit-item), so they always move. */
+/* ==========================================================
+   ORBIT DOTS — FIXED so they really move.
+   New method: each dot is a ring-sized, invisible box that simply
+   spins 360deg around the center (plain rotate keyframes, no CSS
+   variables inside the keyframes). The blue dot sits on the edge
+   of that box, so it travels exactly along its ring.
+   ========================================================== */
 .orbit-dot{
   position:absolute;
   top:50%;
   left:50%;
-  width:0;
-  height:0;
+  width:calc(var(--r) * 2);
+  height:calc(var(--r) * 2);
+  margin:0;
   z-index:1;
   pointer-events:none;
-  transform:rotate(var(--a)) translate(var(--r));
-  animation:dotSpin var(--dur) linear infinite;
+  transform:translate(-50%,-50%) rotate(0deg);
+  transform-origin:center center;
+  animation-name:dotSpin;
+  animation-timing-function:linear;
+  animation-iteration-count:infinite;
+  animation-duration:var(--dur);
+  animation-delay:var(--delay,0s);
+  will-change:transform;
 }
 .orbit-dot::before{
   content:"";
   position:absolute;
+  top:-4px;
+  left:50%;
   width:8px;
   height:8px;
-  top:-4px;
-  left:-4px;
+  margin-left:-4px;
   border-radius:50%;
   background:var(--accent);
   box-shadow:0 0 10px 2px var(--accent-glow);
 }
-.od-1{--r:var(--r1);--a:0deg;--dur:12s}
-.od-2{--r:var(--r1);--a:180deg;--dur:12s}
-.od-3{--r:var(--r2);--a:70deg;--dur:18s;animation-direction:reverse}
-.od-4{--r:var(--r3);--a:20deg;--dur:26s}
-.od-5{--r:var(--r3);--a:200deg;--dur:26s}
+/* ring 1 (inner) — two dots, opposite sides */
+.od-1{--r:var(--r1);--dur:12s;--delay:0s}
+.od-2{--r:var(--r1);--dur:12s;--delay:-6s}
+/* ring 2 (middle) — one dot, travels the other way */
+.od-3{--r:var(--r2);--dur:18s;--delay:-5s;animation-direction:reverse}
+/* ring 3 (outer) — two dots, opposite sides */
+.od-4{--r:var(--r3);--dur:26s;--delay:-1.5s}
+.od-5{--r:var(--r3);--dur:26s;--delay:-14.5s}
 
 @keyframes dotSpin{
-  from{transform:rotate(var(--a)) translate(var(--r))}
-  to{transform:rotate(calc(var(--a) + 360deg)) translate(var(--r))}
+  from{transform:translate(-50%,-50%) rotate(0deg)}
+  to{transform:translate(-50%,-50%) rotate(360deg)}
 }
 
 .orbit-item{
