@@ -379,7 +379,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   top:50%;
   left:50%;
   border-radius:50%;
-  border:1.5px dashed rgba(110,120,145,.55);
+  border:1.5px dashed rgba(110,120,145,.22);
   pointer-events:none;
   z-index:-1;
   transform:translate(-50%,-50%);
@@ -406,11 +406,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   pointer-events:none;
   transform:translate(-50%,-50%) rotate(0deg);
   transform-origin:center center;
-  animation-name:dotSpin;
-  animation-timing-function:linear;
-  animation-iteration-count:infinite;
-  animation-duration:var(--dur);
-  animation-delay:var(--delay,0s);
+  animation:none;            /* movement is now done by script.js */
   will-change:transform;
 }
 .orbit-dot::before{
