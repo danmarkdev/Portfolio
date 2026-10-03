@@ -1469,7 +1469,6 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .hero-grid{gap:1.5rem}
 }
 
-/* ORBIT RINGS + OLD DOTS: fully hidden (like Reb's portfolio).
-   The scattered moving dots are now created by script.js */
-.orbit-line,
+/* Rings are visible again (faint gray dashes, see .orbit-line above).
+   The old straight orbit dots stay hidden; the new still dots are made by script.js */
 .orbit-dot{display:none !important}
