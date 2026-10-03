@@ -628,3 +628,30 @@ function adjustAllTechTips(){
 window.addEventListener('load', adjustAllTechTips);
 window.addEventListener('resize', adjustAllTechTips);
 window.addEventListener('orientationchange', adjustAllTechTips);
+
+/* ORBIT DOTS — moves the blue dots along the rings (paste at the VERY BOTTOM of script.js) */
+(function () {
+  var cfg = {
+    'od-1': { start: 0,   dur: 12, dir:  1 },
+    'od-2': { start: 180, dur: 12, dir:  1 },
+    'od-3': { start: 70,  dur: 18, dir: -1 },
+    'od-4': { start: 20,  dur: 26, dir:  1 },
+    'od-5': { start: 200, dur: 26, dir:  1 }
+  };
+  var dots = [];
+  document.querySelectorAll('.orbit-dot').forEach(function (el) {
+    Object.keys(cfg).forEach(function (k) {
+      if (el.classList.contains(k)) dots.push({ el: el, c: cfg[k] });
+    });
+  });
+  if (!dots.length) return;
+  function tick(t) {
+    var sec = t / 1000;
+    dots.forEach(function (d) {
+      var deg = (d.c.start + d.c.dir * (sec / d.c.dur) * 360) % 360;
+      d.el.style.transform = 'translate(-50%,-50%) rotate(' + deg + 'deg)';
+    });
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
