@@ -641,22 +641,17 @@ window.addEventListener('orientationchange', adjustAllTechTips);
     el.parentNode.removeChild(el);
   });
 
-  /* a = angle around the photo (deg), k = distance from the photo
-     (bigger = farther), s = dot size in px */
-  /* Ring radii are r1 / r2 / r3 (180 / 220 / 260 px on desktop).
-     k = distance as a multiple of r1. These k values were picked so the dots
-     sit IN THE GAPS between the rings, never on a ring line:
-       1.11 = between ring 1 and ring 2
-       1.33 = between ring 2 and ring 3
-       1.56 = just outside ring 3 */
+  /* ring = which ring the dot sits on (1 = inner, 2 = middle, 3 = outer).
+     The dot is placed exactly on that ring's line (centered on it).
+     a = angle around the photo (deg), s = dot size in px */
   var cfg = [
-    { a: 20,  k: 1.33, s: 8 },
-    { a: 75,  k: 1.11, s: 7 },
-    { a: 130, k: 1.56, s: 8 },
-    { a: 190, k: 1.33, s: 9 },
-    { a: 245, k: 1.11, s: 7 },
-    { a: 300, k: 1.56, s: 8 },
-    { a: 345, k: 1.11, s: 7 }
+    { a: 20,  ring: 3, s: 8 },
+    { a: 75,  ring: 1, s: 7 },
+    { a: 130, ring: 2, s: 8 },
+    { a: 190, ring: 3, s: 9 },
+    { a: 245, ring: 1, s: 7 },
+    { a: 300, ring: 2, s: 8 },
+    { a: 345, ring: 1, s: 7 }
   ];
 
   var dots = cfg.map(function (c) {
@@ -672,10 +667,15 @@ window.addEventListener('orientationchange', adjustAllTechTips);
 
   /* place each dot once (and again if the screen size changes) */
   function place() {
-    var base = parseFloat(getComputedStyle(ring).getPropertyValue('--r1')) || 180;
+    var cs = getComputedStyle(ring);
+    var radii = {
+      1: parseFloat(cs.getPropertyValue('--r1')) || 180,
+      2: parseFloat(cs.getPropertyValue('--r2')) || 220,
+      3: parseFloat(cs.getPropertyValue('--r3')) || 260
+    };
     dots.forEach(function (d) {
       var rad = d.c.a * Math.PI / 180;
-      var r = base * d.c.k;
+      var r = radii[d.c.ring];
       d.el.style.transform =
         'translate(' + (Math.cos(rad) * r) + 'px,' + (Math.sin(rad) * r) + 'px)';
     });
