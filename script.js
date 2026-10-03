@@ -639,19 +639,19 @@ window.addEventListener('orientationchange', adjustAllTechTips);
 
   /* hide the old rings + old straight dots */
   ring.querySelectorAll('.orbit-line, .orbit-dot').forEach(function (el) {
-    el.style.display = 'none';
+    el.parentNode.removeChild(el);   // remove them completely
   });
 
   /* a = starting angle (deg), k = distance from the photo (bigger = farther),
      p = seconds for one full turn (smaller = faster), s = dot size in px */
   var cfg = [
-    { a: 20,  k: 1.12, p: 22, s: 8 },
-    { a: 75,  k: 1.45, p: 34, s: 7 },
-    { a: 130, k: 1.10, p: 26, s: 8 },
-    { a: 190, k: 1.38, p: 40, s: 9 },
-    { a: 245, k: 1.18, p: 30, s: 7 },
-    { a: 300, k: 1.50, p: 36, s: 8 },
-    { a: 345, k: 1.28, p: 24, s: 7 }
+    { a: 20,  k: 1.12, p: 9,  s: 9 },
+    { a: 75,  k: 1.45, p: 14, s: 8 },
+    { a: 130, k: 1.10, p: 11, s: 9 },
+    { a: 190, k: 1.38, p: 16, s: 10 },
+    { a: 245, k: 1.18, p: 12, s: 8 },
+    { a: 300, k: 1.50, p: 15, s: 9 },
+    { a: 345, k: 1.28, p: 10, s: 8 }
   ];
 
   var dots = cfg.map(function (c) {
