@@ -370,18 +370,40 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 /* SOLAR SYSTEM ORBITS */
 .orbit-ring{--r1:180px;--r2:220px;--r3:260px}
 
-/* ORBIT LINES */
-.orbit-ring::before{
+/* ORBIT LINES — dashed rings with blue accent dots */
+.orbit-line{
+  position:absolute;
+  top:50%;
+  left:50%;
+  border-radius:50%;
+  border:1.5px dashed rgba(51,85,255,.45);
+  pointer-events:none;
+  z-index:-1;
+  transform:translate(-50%,-50%);
+  animation:ringSpin var(--spin) linear infinite;
+}
+.orbit-line::before,
+.orbit-line::after{
   content:"";
   position:absolute;
-  inset:-320px;
-  z-index:-1;
-  pointer-events:none;
-  --ring:rgba(51,85,255,.28);
-  background:radial-gradient(circle at 50% 50%,
-    transparent calc(var(--r1) - 1px), var(--ring) calc(var(--r1) - 1px), var(--ring) var(--r1), transparent var(--r1),
-    transparent calc(var(--r2) - 1px), var(--ring) calc(var(--r2) - 1px), var(--ring) var(--r2), transparent var(--r2),
-    transparent calc(var(--r3) - 1px), var(--ring) calc(var(--r3) - 1px), var(--ring) var(--r3), transparent var(--r3));
+  left:50%;
+  width:8px;
+  height:8px;
+  margin-left:-4px;
+  border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 8px 1px var(--accent-glow);
+}
+.orbit-line::before{top:-5px}
+.orbit-line::after{bottom:-5px}
+
+.ol-1{width:calc(var(--r1) * 2);height:calc(var(--r1) * 2);--spin:60s}
+.ol-2{width:calc(var(--r2) * 2);height:calc(var(--r2) * 2);--spin:90s}
+.ol-3{width:calc(var(--r3) * 2);height:calc(var(--r3) * 2);--spin:120s}
+
+@keyframes ringSpin{
+  from{transform:translate(-50%,-50%) rotate(0deg)}
+  to{transform:translate(-50%,-50%) rotate(360deg)}
 }
 
 .orbit-item{
