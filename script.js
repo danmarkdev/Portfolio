@@ -629,27 +629,58 @@ window.addEventListener('load', adjustAllTechTips);
 window.addEventListener('resize', adjustAllTechTips);
 window.addEventListener('orientationchange', adjustAllTechTips);
 
-/* ORBIT DOTS — moves the blue dots along the rings (paste at the VERY BOTTOM of script.js) */
+/* ORBIT DOTS (scattered, like Reb's portfolio)
+   Creates 7 blue dots at different distances from the profile photo.
+   Each one circles the photo at its own speed. The orbit rings and the
+   old straight dots are hidden (they are also hidden in style.css). */
 (function () {
-  var cfg = {
-    'od-1': { start: 0,   dur: 12, dir:  1 },
-    'od-2': { start: 180, dur: 12, dir:  1 },
-    'od-3': { start: 70,  dur: 18, dir: -1 },
-    'od-4': { start: 20,  dur: 26, dir:  1 },
-    'od-5': { start: 200, dur: 26, dir:  1 }
-  };
-  var dots = [];
-  document.querySelectorAll('.orbit-dot').forEach(function (el) {
-    Object.keys(cfg).forEach(function (k) {
-      if (el.classList.contains(k)) dots.push({ el: el, c: cfg[k] });
-    });
+  var ring = document.getElementById('orbitRing');
+  if (!ring) return;
+
+  /* hide the old rings + old straight dots */
+  ring.querySelectorAll('.orbit-line, .orbit-dot').forEach(function (el) {
+    el.style.display = 'none';
   });
-  if (!dots.length) return;
+
+  /* a = starting angle (deg), k = distance from the photo (bigger = farther),
+     p = seconds for one full turn (smaller = faster), s = dot size in px */
+  var cfg = [
+    { a: 20,  k: 1.12, p: 22, s: 8 },
+    { a: 75,  k: 1.45, p: 34, s: 7 },
+    { a: 130, k: 1.10, p: 26, s: 8 },
+    { a: 190, k: 1.38, p: 40, s: 9 },
+    { a: 245, k: 1.18, p: 30, s: 7 },
+    { a: 300, k: 1.50, p: 36, s: 8 },
+    { a: 345, k: 1.28, p: 24, s: 7 }
+  ];
+
+  var dots = cfg.map(function (c) {
+    var el = document.createElement('div');
+    el.style.cssText =
+      'position:absolute;top:50%;left:50%;border-radius:50%;pointer-events:none;z-index:1;' +
+      'width:' + c.s + 'px;height:' + c.s + 'px;' +
+      'margin:' + (-c.s / 2) + 'px 0 0 ' + (-c.s / 2) + 'px;' +
+      'background:var(--accent);box-shadow:0 0 10px 2px var(--accent-glow);';
+    ring.appendChild(el);
+    return { el: el, c: c };
+  });
+
+  var base = 180;
+  function measure() {
+    var v = parseFloat(getComputedStyle(ring).getPropertyValue('--r1'));
+    base = v || 180;
+  }
+  measure();
+  window.addEventListener('resize', measure);
+
   function tick(t) {
     var sec = t / 1000;
     dots.forEach(function (d) {
-      var deg = (d.c.start + d.c.dir * (sec / d.c.dur) * 360) % 360;
-      d.el.style.transform = 'translate(-50%,-50%) rotate(' + deg + 'deg)';
+      var deg = d.c.a + (sec / d.c.p) * 360;
+      var rad = deg * Math.PI / 180;
+      var r = base * d.c.k;
+      d.el.style.transform =
+        'translate(' + (Math.cos(rad) * r) + 'px,' + (Math.sin(rad) * r) + 'px)';
     });
     requestAnimationFrame(tick);
   }
