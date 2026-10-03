@@ -370,13 +370,13 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 /* SOLAR SYSTEM ORBITS */
 .orbit-ring{--r1:180px;--r2:220px;--r3:260px}
 
-/* ORBIT LINES — faint dashed rings with blue dots that travel around them */
+/* ORBIT LINES — almost invisible thin rings + small glowing dots that travel around them */
 .orbit-line{
   position:absolute;
   top:50%;
   left:50%;
   border-radius:50%;
-  border:1px dashed rgba(51,85,255,.18);
+  border:1px solid rgba(51,85,255,.08);
   pointer-events:none;
   z-index:-1;
   transform:translate(-50%,-50%);
@@ -387,19 +387,21 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   content:"";
   position:absolute;
   left:50%;
-  width:8px;
-  height:8px;
-  margin-left:-4px;
+  width:7px;
+  height:7px;
+  margin-left:-3.5px;
   border-radius:50%;
   background:var(--accent);
-  box-shadow:0 0 8px 1px var(--accent-glow);
+  box-shadow:0 0 10px 2px var(--accent-glow);
 }
 .orbit-line::before{top:-4px}
 .orbit-line::after{bottom:-4px}
+/* middle ring keeps just one dot so the dots look scattered, not mirrored */
+.ol-2::after{display:none}
 
-.ol-1{width:calc(var(--r1) * 2);height:calc(var(--r1) * 2);--spin:14s}
-.ol-2{width:calc(var(--r2) * 2);height:calc(var(--r2) * 2);--spin:20s;animation-direction:reverse}
-.ol-3{width:calc(var(--r3) * 2);height:calc(var(--r3) * 2);--spin:28s}
+.ol-1{width:calc(var(--r1) * 2);height:calc(var(--r1) * 2);--spin:16s}
+.ol-2{width:calc(var(--r2) * 2);height:calc(var(--r2) * 2);--spin:24s;animation-direction:reverse}
+.ol-3{width:calc(var(--r3) * 2);height:calc(var(--r3) * 2);--spin:34s}
 
 @keyframes ringSpin{
   from{transform:translate(-50%,-50%) rotate(0deg)}
