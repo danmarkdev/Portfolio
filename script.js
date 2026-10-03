@@ -643,14 +643,20 @@ window.addEventListener('orientationchange', adjustAllTechTips);
 
   /* a = angle around the photo (deg), k = distance from the photo
      (bigger = farther), s = dot size in px */
+  /* Ring radii are r1 / r2 / r3 (180 / 220 / 260 px on desktop).
+     k = distance as a multiple of r1. These k values were picked so the dots
+     sit IN THE GAPS between the rings, never on a ring line:
+       1.11 = between ring 1 and ring 2
+       1.33 = between ring 2 and ring 3
+       1.56 = just outside ring 3 */
   var cfg = [
-    { a: 20,  k: 1.12, s: 8 },
-    { a: 75,  k: 1.45, s: 7 },
-    { a: 130, k: 1.10, s: 8 },
-    { a: 190, k: 1.38, s: 9 },
-    { a: 245, k: 1.18, s: 7 },
-    { a: 300, k: 1.50, s: 8 },
-    { a: 345, k: 1.28, s: 7 }
+    { a: 20,  k: 1.33, s: 8 },
+    { a: 75,  k: 1.11, s: 7 },
+    { a: 130, k: 1.56, s: 8 },
+    { a: 190, k: 1.33, s: 9 },
+    { a: 245, k: 1.11, s: 7 },
+    { a: 300, k: 1.56, s: 8 },
+    { a: 345, k: 1.11, s: 7 }
   ];
 
   var dots = cfg.map(function (c) {
