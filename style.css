@@ -1348,26 +1348,20 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
      The card transform / rotateY / rotateZ / perspective come from the
      desktop .testi-card and .testimonial-deck rules above — nothing is
      overridden here except the sizes. */
+  /* Card keeps the EXACT desktop size and shape (430px wide, same text,
+     same padding). The whole fan is simply scaled down with zoom so it
+     fits the phone screen — nothing inside the card is reshaped. */
   .testimonial-deck-wrap{
-    --card-w:270px;
-    --gap:44px;
-    padding-bottom:2rem;
+    --card-w:430px;
+    --gap:100px;
+    zoom:.55;
+    padding-bottom:1rem;
   }
-  .testi-card{
-    max-width:none;
-    padding:1rem 1.05rem 1.1rem;
-    border-radius:16px;
-  }
-  .testi-head{gap:.55rem}
-  .testi-avatar{width:30px;height:30px;font-size:.8rem}
-  .testi-name{font-size:.8rem}
-  .testi-rating{font-size:.72rem;padding:.25rem .6rem .25rem .45rem}
-  .testi-rating svg{width:15px;height:15px}
-  .testi-quote-icon{font-size:1.4rem;margin-top:.5rem}
-  .testi-text{font-size:.72rem;line-height:1.55}
+  .testi-card{max-width:none}
+  .testi-text{font-size:.84rem}
 }
 @media(max-width:400px){
-  .testimonial-deck-wrap{--card-w:250px;--gap:38px}
+  .testimonial-deck-wrap{zoom:.5;--gap:96px}
 }
 
 /* RESPONSIVE */
