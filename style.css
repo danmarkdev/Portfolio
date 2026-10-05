@@ -1349,19 +1349,41 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
      desktop .testi-card and .testimonial-deck rules above — nothing is
      overridden here except the sizes. */
   /* Card keeps the EXACT desktop size and shape (430px wide, same text,
-     same padding). The whole fan is simply scaled down with zoom so it
-     fits the phone screen — nothing inside the card is reshaped. */
+     same padding), scaled with zoom so it fills the phone width.
+     The other cards are stacked BEHIND it and peek out below, slightly
+     tilted — all 6 cards are in the stack. */
   .testimonial-deck-wrap{
     --card-w:430px;
-    --gap:100px;
-    zoom:.55;
-    padding-bottom:1rem;
+    --peek:30px;
+    zoom:.8;
+    padding-bottom:3.5rem;
   }
-  .testi-card{max-width:none}
-  .testi-text{font-size:.84rem}
+  .testimonial-deck{perspective:900px;perspective-origin:50% 0%}
+  .testi-card{
+    max-width:none;
+    transform-origin:50% 0%;
+    transform:
+      translateX(-50%)
+      translateY(calc(var(--r, 0) * var(--peek)))
+      translateZ(calc(var(--r, 0) * -30px))
+      rotateX(calc(var(--r, 0) * 5deg))
+      rotateZ(calc(var(--r, 0) * -2deg))
+      scale(calc(1 - var(--r, 0) * .03));
+    opacity:1;
+    pointer-events:auto;
+    z-index:calc(10 - var(--r, 0));
+  }
+  .testi-card:not(.testi-active){
+    border-color:#c2c6cf;
+    box-shadow:0 10px 20px -8px rgba(18,22,43,.35);
+  }
+  .testi-card.testi-far,
+  .testi-card.testi-out{opacity:1;pointer-events:auto}
+  .testi-card:not(.testi-active) > *{opacity:calc(.8 - var(--r, 0) * .12)}
+  .testi-card.testi-active > *{opacity:1}
 }
 @media(max-width:400px){
-  .testimonial-deck-wrap{zoom:.5;--gap:96px}
+  .testimonial-deck-wrap{zoom:.72}
 }
 
 /* RESPONSIVE */
