@@ -1346,31 +1346,46 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   #testimonials .sec-header{margin-bottom:.4rem}
   .testimonial-deck-wrap{
     --card-w:430px;
-    --peek:14px;
+    --peek:46px;
     zoom:.8;
     padding-bottom:2rem;
   }
-  .testimonial-deck{perspective:none}
+  /* 3D perspective so the cards behind look tilted, like the reference */
+  .testimonial-deck{perspective:900px;perspective-origin:50% 0%}
   .testi-card{
     max-width:none;
     transform-origin:50% 0%;
     transform:
       translateX(-50%)
       translateY(calc(var(--r, 0) * var(--peek)))
-      rotateZ(calc(var(--r, 0) * -1.2deg))
-      scale(calc(1 - var(--r, 0) * .035));
+      translateZ(calc(var(--r, 0) * -30px))
+      rotateX(calc(var(--r, 0) * 6deg))
+      rotateZ(calc(var(--r, 0) * -2.5deg))
+      scale(calc(1 - var(--r, 0) * .04));
     opacity:1;
     pointer-events:auto;
     z-index:calc(10 - var(--r, 0));
+    padding:1.35rem 1.5rem 1.5rem;
+    border-radius:22px;
   }
   .testi-card:not(.testi-active){
     border-color:#c2c6cf;
-    box-shadow:0 8px 16px -8px rgba(18,22,43,.30);
+    box-shadow:0 10px 20px -8px rgba(18,22,43,.35);
   }
+  /* only 3 cards in the stack: the active one + 2 peeking behind it */
   .testi-card.testi-far,
-  .testi-card.testi-out{opacity:1;pointer-events:auto}
-  .testi-card:not(.testi-active) > *{opacity:calc(.7 - var(--r, 0) * .15)}
+  .testi-card.testi-out{opacity:0;pointer-events:none}
+  .testi-card:not(.testi-active) > *{opacity:calc(.75 - var(--r, 0) * .2)}
   .testi-card.testi-active > *{opacity:1}
+
+  /* bigger header row, like the reference (avatar + name + rating pill) */
+  .testi-head{gap:.85rem}
+  .testi-avatar{width:46px;height:46px;font-size:1.15rem}
+  .testi-name{font-size:1.15rem}
+  .testi-rating{font-size:1rem;padding:.4rem .95rem .4rem .7rem}
+  .testi-rating svg{width:22px;height:22px}
+  .testi-quote-icon{font-size:2rem;height:1.1rem;margin-top:.9rem;margin-bottom:.5rem}
+  .testi-text{font-size:.9rem;line-height:1.65}
 }
 @media(max-width:400px){
   .testimonial-deck-wrap{zoom:.72}
