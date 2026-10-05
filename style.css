@@ -1344,51 +1344,30 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 @media(max-width:700px){
   #testimonials{padding-top:3rem}
   #testimonials .sec-header{margin-bottom:.4rem}
+  /* SAME 3D fan as desktop (all 6 cards visible), just scaled to fit a phone.
+     The card transform / rotateY / rotateZ / perspective come from the
+     desktop .testi-card and .testimonial-deck rules above — nothing is
+     overridden here except the sizes. */
   .testimonial-deck-wrap{
-    --card-w:430px;
-    --peek:46px;
-    zoom:.8;
+    --card-w:270px;
+    --gap:44px;
     padding-bottom:2rem;
   }
-  /* 3D perspective so the cards behind look tilted, like the reference */
-  .testimonial-deck{perspective:900px;perspective-origin:50% 0%}
   .testi-card{
     max-width:none;
-    transform-origin:50% 0%;
-    transform:
-      translateX(-50%)
-      translateY(calc(var(--r, 0) * var(--peek)))
-      translateZ(calc(var(--r, 0) * -30px))
-      rotateX(calc(var(--r, 0) * 6deg))
-      rotateZ(calc(var(--r, 0) * -2.5deg))
-      scale(calc(1 - var(--r, 0) * .04));
-    opacity:1;
-    pointer-events:auto;
-    z-index:calc(10 - var(--r, 0));
-    padding:1.35rem 1.5rem 1.5rem;
-    border-radius:22px;
+    padding:1rem 1.05rem 1.1rem;
+    border-radius:16px;
   }
-  .testi-card:not(.testi-active){
-    border-color:#c2c6cf;
-    box-shadow:0 10px 20px -8px rgba(18,22,43,.35);
-  }
-  /* only 3 cards in the stack: the active one + 2 peeking behind it */
-  .testi-card.testi-far,
-  .testi-card.testi-out{opacity:0;pointer-events:none}
-  .testi-card:not(.testi-active) > *{opacity:calc(.75 - var(--r, 0) * .2)}
-  .testi-card.testi-active > *{opacity:1}
-
-  /* bigger header row, like the reference (avatar + name + rating pill) */
-  .testi-head{gap:.85rem}
-  .testi-avatar{width:46px;height:46px;font-size:1.15rem}
-  .testi-name{font-size:1.15rem}
-  .testi-rating{font-size:1rem;padding:.4rem .95rem .4rem .7rem}
-  .testi-rating svg{width:22px;height:22px}
-  .testi-quote-icon{font-size:2rem;height:1.1rem;margin-top:.9rem;margin-bottom:.5rem}
-  .testi-text{font-size:.9rem;line-height:1.65}
+  .testi-head{gap:.55rem}
+  .testi-avatar{width:30px;height:30px;font-size:.8rem}
+  .testi-name{font-size:.8rem}
+  .testi-rating{font-size:.72rem;padding:.25rem .6rem .25rem .45rem}
+  .testi-rating svg{width:15px;height:15px}
+  .testi-quote-icon{font-size:1.4rem;margin-top:.5rem}
+  .testi-text{font-size:.72rem;line-height:1.55}
 }
 @media(max-width:400px){
-  .testimonial-deck-wrap{zoom:.72}
+  .testimonial-deck-wrap{--card-w:250px;--gap:38px}
 }
 
 /* RESPONSIVE */
