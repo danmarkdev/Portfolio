@@ -1396,8 +1396,21 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .orbit-ring{--r1:130px;--r2:160px;--r3:190px}
   .contact-page-grid{grid-template-columns:1fr}
   .footer-inner{flex-direction:column;gap:.5rem;text-align:center}
-.tech-icon-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:.85rem}
-.tech-icon-box{width:calc(25% - .64rem);max-width:72px;aspect-ratio:1/1;height:auto}
+
+  /* TECH STACKS (mobile/tablet) — same 9-per-row layout as desktop,
+     icons scale down with the screen so all rows stay aligned */
+  .tech-panel{padding:1rem 0}
+  .tech-icon-grid{
+    display:grid;
+    grid-template-columns:repeat(9,1fr);
+    gap:.35rem;
+    max-width:calc(9 * 72px + 8 * 1.15rem);
+    margin:0 auto;
+  }
+  .tech-icon-box{width:100%;max-width:none;height:auto;aspect-ratio:1/1}
+  .tech-icon-box > .fb-icon{border-radius:24%}
+  .tech-icon-box > .fb-icon img,
+  .tech-icon-box > .fb-icon svg{width:58%;height:58%}
 }
 @media(max-width:700px){
   .section-header{align-items:center}
