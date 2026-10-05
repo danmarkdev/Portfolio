@@ -1401,13 +1401,20 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
      icons scale down with the screen so all rows stay aligned */
   .tech-panel{padding:1rem 0}
   .tech-icon-grid{
-    display:grid;
-    grid-template-columns:repeat(9,1fr);
-    gap:.35rem;
-    max-width:calc(9 * 72px + 8 * 1.15rem);
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:.6rem;
+    max-width:520px;
     margin:0 auto;
   }
-  .tech-icon-box{width:100%;max-width:none;height:auto;aspect-ratio:1/1}
+  /* 7 icons per row; the last row is centered */
+  .tech-icon-box{
+    width:calc((100% - 6 * .6rem) / 7);
+    max-width:none;
+    height:auto;
+    aspect-ratio:1/1;
+  }
   .tech-icon-box > .fb-icon{border-radius:24%}
   .tech-icon-box > .fb-icon img,
   .tech-icon-box > .fb-icon svg{width:58%;height:58%}
