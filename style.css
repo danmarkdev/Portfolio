@@ -1023,16 +1023,23 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   display:flex;
   flex-direction:column;
   background:transparent;
-  border:1.5px solid #12162b !important;
+  border:1.5px solid #ffffff !important;
   border-radius:20px;
   padding:10px;
   overflow:hidden;
   box-shadow:none;
   transition:border-color .3s ease, transform .3s ease, background .3s ease;
 }
+.cert-item:hover,
+.cert-item:active,
+.cert-item:focus,
+.cert-item:focus-within,
+.cert-track.dragging .cert-item{
+  border-color:#ffffff !important;
+  outline:none;
+}
 .cert-item:hover{
   transform:translateY(-4px);
-  border-color:var(--accent) !important;
   background:rgba(255,255,255,.35);
 }
 .cert-img-wrap{
