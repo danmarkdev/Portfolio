@@ -356,7 +356,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .hero-right{display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative}
 .photo-orbit{position:relative;width:100%;max-width:440px;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center}
 .photo-frame{position:relative;display:inline-block;z-index:2}
-.photo-wrap{width:250px;height:250px;border-radius:26px;overflow:hidden;position:relative;z-index:1;border:6px solid var(--bg);box-shadow:var(--shadow-card)}
+.photo-wrap{width:220px;height:220px;border-radius:26px;overflow:hidden;position:relative;z-index:1;border:6px solid var(--bg);box-shadow:var(--shadow-card)}
 .photo-wrap img{width:100%;height:100%;object-fit:cover;object-position:center}
 
 .orbit-ring{
@@ -368,11 +368,10 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 
 /* SOLAR SYSTEM ORBITS */
-.orbit-ring{--r1:200px;--r2:240px;--r3:280px}
+.orbit-ring{--r1:165px;--r2:198px;--r3:230px}
 
 /* ==========================================================
    ORBIT LINES — faint blue accent dashed ( - - - - ) rings
-   (same look as the dashed orbit in the reference portfolio)
    ========================================================== */
 .orbit-line{
   position:absolute;
@@ -495,8 +494,8 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   display:flex;
   align-items:center;
   justify-content:center;
-  width:52px;
-  height:52px;
+  width:44px;
+  height:44px;
   background:transparent;
   border:none;
   transition:transform .2s;
@@ -505,7 +504,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .stack-badge:hover{transform:scale(1.1)}
 .stack-badge .fb-icon{display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .stack-badge .fb-icon img,
-.stack-badge .fb-icon svg{width:32px;height:32px;object-fit:contain;display:block}
+.stack-badge .fb-icon svg{width:26px;height:26px;object-fit:contain;display:block}
 
 .fb-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .fb-icon img,
@@ -993,7 +992,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 
 /* ==========================================================
-   CERTS — card style matched to the reference screenshot:
+   CERTS — outlined cards with inset image, title and provider:
    thin outlined card, certificate image inset with rounded
    corners, then bold title + provider, left-aligned.
    ========================================================== */
@@ -1447,11 +1446,11 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .hero-bio{margin-left:0;margin-right:0;text-align:justify;text-wrap:wrap;hyphens:auto;max-width:100%;font-size:14.5px;line-height:1.7}
   .mobile-br{display:inline}
   .photo-orbit{max-width:370px;margin:0 auto} 
-  .photo-wrap{width:180px;height:180px}
-  .stack-badge{width:44px;height:44px}
+  .photo-wrap{width:210px;height:210px}
+  .stack-badge{width:40px;height:40px}
   .stack-badge .fb-icon img,
   .stack-badge .fb-icon svg{width:26px;height:26px} 
-  .orbit-ring{--r1:125px;--r2:150px;--r3:175px}
+  .orbit-ring{--r1:145px;--r2:175px;--r3:205px}
   .contact-page-grid{grid-template-columns:1fr}
   .footer-inner{flex-direction:column;gap:.5rem;text-align:center}
 
@@ -1514,11 +1513,11 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 }
 @media(max-width:480px){
   .photo-orbit{max-width:310px}
-  .photo-wrap{width:150px;height:150px}
-  .orbit-ring{--r1:108px;--r2:130px;--r3:152px}
-  .stack-badge{width:34px;height:34px}
+  .photo-wrap{width:175px;height:175px}
+  .orbit-ring{--r1:118px;--r2:143px;--r3:168px}
+  .stack-badge{width:36px;height:36px}
   .stack-badge .fb-icon img,
-  .stack-badge .fb-icon svg{width:20px;height:20px}
+  .stack-badge .fb-icon svg{width:22px;height:22px}
   .hero-name{font-size:1.6rem}
   .section-big-heading{font-size:1.25rem}
   .cert-item{width:250px}
@@ -1531,7 +1530,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .btn-primary,.btn-outline{font-size:.68rem;padding-left:.9rem;padding-right:.9rem;gap:.35rem}
 }
 
-/* MOBILE HEADERS — every section title is centered and smaller on phones (like Reb's).
+/* MOBILE HEADERS — every section title is centered and smaller on phones.
    Kept at the very end so it overrides the desktop sizes above. */
 @media(max-width:700px){
   .sec-header{margin-bottom:2rem;text-align:center}
