@@ -1495,7 +1495,14 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   }
   .services-grid::-webkit-scrollbar{display:none}
   .service-card{flex:0 0 82%;scroll-snap-align:center;padding:2rem 1.5rem}
-  .cert-item{width:300px}
+  /* certificates on phones: two cards per screen, compact layout */
+  .cert-item{width:46vw;padding:8px;border-radius:14px}
+  .cert-img-wrap{aspect-ratio:16/10;border-radius:9px}
+  .cert-info{padding:.55rem .25rem .3rem}
+  .cert-info h4{font-size:.8rem;margin-bottom:.2rem}
+  .cert-info p{font-size:.75rem}
+  .cert-track{gap:.5rem}
+  .cert-marquee-row{margin-bottom:2rem}
   .hero-name{font-size:2.1rem;white-space:normal}
   .contact-icon-row{gap:.85rem}
   .contact-panel{padding:1.75rem 1.25rem}
@@ -1520,7 +1527,6 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .stack-badge .fb-icon svg{width:24px;height:24px}
   .hero-name{font-size:2.1rem}
   .section-big-heading{font-size:1.25rem}
-  .cert-item{width:300px}
   .project-card{width:300px;padding:.8rem;gap:.8rem}
   .project-card-title{font-size:1rem}
   .project-card-desc{font-size:.78rem;line-height:1.5}
