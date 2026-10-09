@@ -1023,7 +1023,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   display:flex;
   flex-direction:column;
   background:transparent;
-  border:1px solid rgba(18,22,43,.22);
+  border:1.5px solid #12162b !important;
   border-radius:20px;
   padding:10px;
   overflow:hidden;
@@ -1032,7 +1032,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 .cert-item:hover{
   transform:translateY(-4px);
-  border-color:rgba(51,85,255,.55);
+  border-color:var(--accent) !important;
   background:rgba(255,255,255,.35);
 }
 .cert-img-wrap{
