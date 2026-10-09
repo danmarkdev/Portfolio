@@ -1040,7 +1040,14 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 .cert-item:hover{
   transform:translateY(-4px);
-  background:rgba(255,255,255,.35);
+}
+.cert-item,
+.cert-item:hover,
+.cert-item:active,
+.cert-item:focus,
+.cert-item:focus-within,
+.cert-track.dragging .cert-item{
+  background:transparent !important;
 }
 .cert-img-wrap{
   width:100%;
