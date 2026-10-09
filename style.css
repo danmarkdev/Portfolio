@@ -356,7 +356,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .hero-right{display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative}
 .photo-orbit{position:relative;width:100%;max-width:440px;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center}
 .photo-frame{position:relative;display:inline-block;z-index:2}
-.photo-wrap{width:220px;height:220px;border-radius:26px;overflow:hidden;position:relative;z-index:1;border:6px solid var(--bg);box-shadow:var(--shadow-card)}
+.photo-wrap{width:250px;height:300px;border-radius:26px;overflow:hidden;position:relative;z-index:1;border:6px solid var(--bg);box-shadow:var(--shadow-card)}
 .photo-wrap img{width:100%;height:100%;object-fit:cover;object-position:center}
 
 .orbit-ring{
@@ -368,7 +368,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 
 /* SOLAR SYSTEM ORBITS */
-.orbit-ring{--r1:165px;--r2:198px;--r3:230px}
+.orbit-ring{--r1:165px;--r2:192px;--r3:220px;--ri1:240px;--ri2:275px;--ri3:310px}
 
 /* ==========================================================
    ORBIT LINES — faint blue accent dashed ( - - - - ) rings
@@ -378,7 +378,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   top:50%;
   left:50%;
   border-radius:50%;
-  border:1.5px dashed rgba(51,85,255,.10);
+  border:1.5px dashed rgba(51,85,255,.22);
   pointer-events:none;
   z-index:-1;
   transform:translate(-50%,-50%);
@@ -465,7 +465,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 
 /* Orbit 1 (inner, 5 icons, fastest) */
-.orbit-item.oi-2,.orbit-item.oi-5,.orbit-item.oi-8,.orbit-item.oi-11,.orbit-item.oi-14{--radius:var(--r1);--dur:30s}
+.orbit-item.oi-2,.orbit-item.oi-5,.orbit-item.oi-8,.orbit-item.oi-11,.orbit-item.oi-14{--radius:var(--ri1);--dur:30s}
 .orbit-item.oi-2{--angle:0deg!important}
 .orbit-item.oi-5{--angle:72deg!important}
 .orbit-item.oi-8{--angle:144deg!important}
@@ -473,7 +473,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .orbit-item.oi-14{--angle:288deg!important}
 
 /* Orbit 2 (middle, 6 icons) */
-.orbit-item.oi-1,.orbit-item.oi-4,.orbit-item.oi-7,.orbit-item.oi-10,.orbit-item.oi-13,.orbit-item.oi-16{--radius:var(--r2);--dur:45s}
+.orbit-item.oi-1,.orbit-item.oi-4,.orbit-item.oi-7,.orbit-item.oi-10,.orbit-item.oi-13,.orbit-item.oi-16{--radius:var(--ri2);--dur:45s}
 .orbit-item.oi-1{--angle:20deg!important}
 .orbit-item.oi-4{--angle:80deg!important}
 .orbit-item.oi-7{--angle:140deg!important}
@@ -482,7 +482,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .orbit-item.oi-16{--angle:320deg!important}
 
 /* Orbit 3 (outer, 6 icons, slowest) */
-.orbit-item.oi-0,.orbit-item.oi-3,.orbit-item.oi-6,.orbit-item.oi-9,.orbit-item.oi-12,.orbit-item.oi-15{--radius:var(--r3);--dur:65s}
+.orbit-item.oi-0,.orbit-item.oi-3,.orbit-item.oi-6,.orbit-item.oi-9,.orbit-item.oi-12,.orbit-item.oi-15{--radius:var(--ri3);--dur:65s}
 .orbit-item.oi-0{--angle:40deg!important}
 .orbit-item.oi-3{--angle:100deg!important}
 .orbit-item.oi-6{--angle:160deg!important}
@@ -1450,7 +1450,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .stack-badge{width:40px;height:40px}
   .stack-badge .fb-icon img,
   .stack-badge .fb-icon svg{width:26px;height:26px} 
-  .orbit-ring{--r1:145px;--r2:175px;--r3:205px}
+  .orbit-ring{--r1:145px;--r2:175px;--r3:205px;--ri1:145px;--ri2:175px;--ri3:205px}
   .contact-page-grid{grid-template-columns:1fr}
   .footer-inner{flex-direction:column;gap:.5rem;text-align:center}
 
@@ -1514,7 +1514,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 @media(max-width:480px){
   .photo-orbit{max-width:310px}
   .photo-wrap{width:175px;height:175px}
-  .orbit-ring{--r1:118px;--r2:143px;--r3:168px}
+  .orbit-ring{--r1:118px;--r2:143px;--r3:168px;--ri1:118px;--ri2:143px;--ri3:168px}
   .stack-badge{width:36px;height:36px}
   .stack-badge .fb-icon img,
   .stack-badge .fb-icon svg{width:22px;height:22px}
