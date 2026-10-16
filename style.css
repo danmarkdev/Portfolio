@@ -3,29 +3,30 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box} 
 
 :root{
-  /* Flat modern palette — clean cards, single soft drop-shadow, no inset/emboss */ 
-  --bg:#e4e9f5;
-  --surface:#e4e9f5;
-  --accent:#3355FF;
-  --accent-glow:rgba(51,85,255,.24); 
-  --accent-hover:#2543D6;
-  --accent-soft:#eef1ff;
-  --text:#12162b;
-  --muted:#565f7a;
-  --dim:#8890a8;
-  --border:#ffffff;
+  /* DARK THEME + ORANGE ACCENT */
+  --bg:#0a0a0e;
+  --surface:#15151b;
+  --accent:#ff7a1a;
+  --accent-rgb:255,122,26;
+  --accent-glow:rgba(255,122,26,.30); 
+  --accent-hover:#ff9340;
+  --accent-soft:rgba(255,122,26,.12);
+  --text:#f4f4f8;
+  --muted:#a4a7b8;
+  --dim:#70748a;
+  --border:rgba(255,255,255,.09);
   --nav-h:96px;
   --max-w:1140px;
   --font-heading:'Sora', sans-serif;
   --font-body:'Plus Jakarta Sans', sans-serif;
   --font-mono:'JetBrains Mono', monospace;
 
-  --shadow-card: 0 1px 2px rgba(18,22,43,.04), 0 10px 28px -10px rgba(18,22,43,.10);
-  --shadow-card-hover: 0 4px 10px rgba(18,22,43,.05), 0 22px 44px -12px rgba(18,22,43,.16);
+  --shadow-card: 0 1px 2px rgba(0,0,0,.5), 0 10px 28px -10px rgba(0,0,0,.7);
+  --shadow-card-hover: 0 4px 10px rgba(0,0,0,.5), 0 22px 44px -12px rgba(0,0,0,.85);
   --shadow-pop: 0 14px 34px -10px var(--accent-glow);
 }
 
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;color-scheme:dark}
 *{-webkit-tap-highlight-color:transparent}
 html,body{max-width:100%;overflow-x:hidden}
 body{
@@ -48,8 +49,7 @@ html{scrollbar-width:none}
 
 .container{width:90%;max-width:var(--max-w);margin:0 auto}
 
-/* SECTION HEADERS — every section title (Testimonials, Projects, Technical Stacks,
-   Programming Certifications) uses the exact same look as "Education & Milestones" */
+/* SECTION HEADERS */
 .sec-header{text-align:center;margin-bottom:3rem}
 .sec-title{
   font-family: var(--font-heading);
@@ -59,7 +59,6 @@ html{scrollbar-width:none}
   letter-spacing: -.03em;
   line-height: 1.2;
 }
-/* Testimonials header: small label on top, slightly larger title below*/
 .sec-eyebrow{
   font-family: var(--font-body);
   font-size: .85rem;
@@ -70,13 +69,10 @@ html{scrollbar-width:none}
   margin-bottom: .7rem;
 }
 .sec-title-lg{font-size:clamp(2rem,4.5vw,3.1rem)}
-/* Technical Stacks: pull the icons closer to the title */
 #skills .sec-header{margin-bottom:1.25rem}
 #skills .tech-panel{padding-top:1rem}
 
-/* Background canvas must be taken out of normal document flow,
-   otherwise its JS-set width/height reserves real space on the page
-   and pushes all content below it down. */
+/* ANIMATED BACKGROUND CANVAS (drawn by script.js) — fixed, behind everything */
 #bg-canvas{
   position:fixed;
   inset:0;
@@ -89,7 +85,7 @@ html{scrollbar-width:none}
 
 h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.02em}
 
-/* NAV — floating centered pill, detached from the top edge */
+/* NAV — floating centered pill */
 #header{
   position:fixed;
   top:1.1rem;
@@ -98,7 +94,7 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   width:calc(100% - 2.5rem);
   max-width:900px;
   height:auto;
-  background:var(--surface);
+  background:rgba(21,21,27,.78);
   backdrop-filter:blur(16px);
   -webkit-backdrop-filter:blur(16px);
   border:1px solid var(--border);
@@ -112,7 +108,7 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   box-shadow:var(--shadow-card);
   transition:box-shadow .3s ease, background .3s ease, border-color .3s ease;
 }
-#header.scrolled{background:var(--surface);box-shadow:var(--shadow-card-hover);border-color:rgba(230,232,240,.9)}
+#header.scrolled{background:rgba(21,21,27,.9);box-shadow:var(--shadow-card-hover);border-color:rgba(255,255,255,.14)}
 .logo{
   font-family: var(--font-heading);
   font-size: 1.05rem;
@@ -183,7 +179,7 @@ h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.0
   font-family:var(--font-body) !important;
   font-weight:600 !important;
 }
-#header .nav-cta:hover{transform:translateY(-1px);box-shadow:var(--shadow-card-hover)}
+#header .nav-cta:hover{transform:translateY(-1px);box-shadow:var(--shadow-card-hover);border-color:rgba(var(--accent-rgb),.5) !important}
 #header .nav-cta:active{transform:translateY(0);box-shadow:var(--shadow-card)}
 
 .hamburger{display:none;background:none;border:none;cursor:pointer;position:relative;z-index:1001;width:38px;height:38px;flex-shrink:0;border-radius:50%;transition:background .2s ease}
@@ -292,7 +288,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   text-transform: uppercase;
   padding-top: .5rem;
 }
-.section-divider{width:100%;height:1px;background:rgba(163,177,198,.4);margin-bottom:3.5rem}
+.section-divider{width:100%;height:1px;background:rgba(255,255,255,.1);margin-bottom:3.5rem}
 
 .hero{min-height:100vh;padding-top:calc(var(--nav-h) + 2rem);padding-bottom:5rem;display:flex;align-items:center;position:relative;overflow:visible;z-index:1}
 .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:3rem;position:relative;z-index:1}
@@ -323,17 +319,17 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   align-items:center;
   padding: .9rem 2.1rem;
   background: var(--accent);
-  color: #ffffff;
+  color: #1a0d02;
   text-decoration: none;
   font-family: var(--font-body);
   font-size: .85rem;
-  font-weight: 600;
+  font-weight: 700;
   border-radius: 10px;
   box-shadow: 0 10px 24px var(--accent-glow);
   transition: background .2s,transform .15s,box-shadow .2s;
 }
 .btn-primary:hover{background:var(--accent-hover);transform:translateY(-2px);box-shadow:0 14px 30px var(--accent-glow)}
-.btn-primary:active,.btn-primary:focus,.btn-primary:visited{color:#ffffff;transform:none}
+.btn-primary:active,.btn-primary:focus,.btn-primary:visited{color:#1a0d02;transform:none}
 .btn-outline{
   display: inline-flex;
   align-items: center;
@@ -350,13 +346,13 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   box-shadow: var(--shadow-card);
   transition: all .3s cubic-bezier(.16,1,.3,1);
 }
-.btn-outline:hover{color:var(--accent);transform:translateY(-2px);box-shadow:var(--shadow-card)}
+.btn-outline:hover{color:var(--accent);transform:translateY(-2px);box-shadow:var(--shadow-card);border-color:rgba(var(--accent-rgb),.5)}
 .btn-outline:active,.btn-outline:focus,.btn-outline:visited{color:var(--text);transform:none;box-shadow:var(--shadow-card)}
 
 .hero-right{display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative}
 .photo-orbit{position:relative;width:100%;max-width:440px;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center}
 .photo-frame{position:relative;display:inline-block;z-index:2}
-.photo-wrap{width:270px;height:270px;border-radius:26px;overflow:hidden;position:relative;z-index:1;border:6px solid var(--bg);box-shadow:var(--shadow-card)}
+.photo-wrap{width:270px;height:270px;border-radius:26px;overflow:hidden;position:relative;z-index:1;border:6px solid var(--bg);box-shadow:var(--shadow-card), 0 0 0 1px rgba(var(--accent-rgb),.35), 0 0 40px -6px var(--accent-glow)}
 .photo-wrap img{width:100%;height:100%;object-fit:cover;object-position:center}
 
 .orbit-ring{
@@ -370,15 +366,12 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 /* SOLAR SYSTEM ORBITS */
 .orbit-ring{--r1:180px;--r2:220px;--r3:260px}
 
-/* ==========================================================
-   ORBIT LINES — faint blue accent dashed ( - - - - ) rings
-   ========================================================== */
 .orbit-line{
   position:absolute;
   top:50%;
   left:50%;
   border-radius:50%;
-  border:1.5px dashed rgba(51,85,255,.10);
+  border:1.5px dashed rgba(255,122,26,.20);
   pointer-events:none;
   z-index:-1;
   transform:translate(-50%,-50%);
@@ -387,13 +380,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .ol-2{width:calc(var(--r2) * 2);height:calc(var(--r2) * 2)}
 .ol-3{width:calc(var(--r3) * 2);height:calc(var(--r3) * 2)}
 
-/* ==========================================================
-   ORBIT DOTS — FIXED so they really move.
-   New method: each dot is a ring-sized, invisible box that simply
-   spins 360deg around the center (plain rotate keyframes, no CSS
-   variables inside the keyframes). The blue dot sits on the edge
-   of that box, so it travels exactly along its ring.
-   ========================================================== */
 .orbit-dot{
   position:absolute;
   top:50%;
@@ -405,7 +391,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   pointer-events:none;
   transform:translate(-50%,-50%) rotate(0deg);
   transform-origin:center center;
-  animation:none;            /* movement is now done by script.js */
+  animation:none;
   will-change:transform;
 }
 .orbit-dot::before{
@@ -420,12 +406,9 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   background:var(--accent);
   box-shadow:0 0 10px 2px var(--accent-glow);
 }
-/* ring 1 (inner) — two dots, opposite sides */
 .od-1{--r:var(--r1);--dur:12s;--delay:0s}
 .od-2{--r:var(--r1);--dur:12s;--delay:-6s}
-/* ring 2 (middle) — one dot, travels the other way */
 .od-3{--r:var(--r2);--dur:18s;--delay:-5s;animation-direction:reverse}
-/* ring 3 (outer) — two dots, opposite sides */
 .od-4{--r:var(--r3);--dur:26s;--delay:-1.5s}
 .od-5{--r:var(--r3);--dur:26s;--delay:-14.5s}
 
@@ -440,7 +423,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   left:50%;
   width:0;
   height:0;
-  z-index:2;                 /* icons are always drawn ABOVE the dots */
+  z-index:2;
   transform:rotate(var(--angle)) translate(var(--radius));
   animation:orbitSpin var(--dur) linear infinite;
 }
@@ -464,7 +447,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   to{transform:translate(-50%,-50%) rotate(calc(var(--angle) * -1 - 360deg))}
 }
 
-/* Orbit 1 (inner, 5 icons, fastest) */
+/* Orbit 1 (inner, 5 icons) */
 .orbit-item.oi-2,.orbit-item.oi-5,.orbit-item.oi-8,.orbit-item.oi-11,.orbit-item.oi-14{--radius:var(--r1);--dur:30s}
 .orbit-item.oi-2{--angle:0deg!important}
 .orbit-item.oi-5{--angle:72deg!important}
@@ -481,7 +464,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .orbit-item.oi-13{--angle:260deg!important}
 .orbit-item.oi-16{--angle:320deg!important}
 
-/* Orbit 3 (outer, 6 icons, slowest) */
+/* Orbit 3 (outer, 6 icons) */
 .orbit-item.oi-0,.orbit-item.oi-3,.orbit-item.oi-6,.orbit-item.oi-9,.orbit-item.oi-12,.orbit-item.oi-15{--radius:var(--r3);--dur:65s}
 .orbit-item.oi-0{--angle:40deg!important}
 .orbit-item.oi-3{--angle:100deg!important}
@@ -510,6 +493,12 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .fb-icon img,
 .fb-icon svg{width:15px;height:15px;object-fit:contain;display:block}
 
+/* Black-only logos would vanish on a dark background: show them in white */
+.fb-icon img[alt="GitHub"],
+.fb-icon img[alt="Vercel"],
+.fb-icon img[alt="Render"],
+.fb-icon img[alt="MX Linux"]{filter:brightness(0) invert(1)}
+
 .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
 .service-card{
   background:var(--surface);
@@ -527,7 +516,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 .service-icon-wrap{width:48px;height:48px;border-radius:13px;display:flex;align-items:center;justify-content:center;margin-bottom:1.4rem;background:var(--accent-soft);transition:background .3s,transform .3s}
 .service-card:hover .service-icon-wrap{background:var(--accent);transform:scale(1.06)}
-.service-card:hover .service-icon-wrap svg{stroke:#ffffff}
+.service-card:hover .service-icon-wrap svg{stroke:#1a0d02}
 .service-icon-wrap svg{width:20px;height:20px;stroke:var(--accent);stroke-width:1.6;fill:none}
 .service-card h3{
   font-family: var(--font-heading);
@@ -565,7 +554,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   width:338px;
   flex:0 0 auto;
   background:var(--surface);
-  border:1px solid #ffffff;
+  border:1px solid var(--border);
   border-radius:28px;
   padding:.9rem;
   overflow:hidden;
@@ -573,11 +562,12 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   flex-direction:column;
   gap:.9rem;
   box-shadow:var(--shadow-card);
-  transition:box-shadow .3s ease, transform .3s ease;
+  transition:box-shadow .3s ease, transform .3s ease, border-color .3s ease;
 }
 .project-card:hover{
   transform:translateY(-6px);
   box-shadow:var(--shadow-card-hover);
+  border-color:rgba(var(--accent-rgb),.4);
 }
 
 .project-img-wrap{
@@ -686,14 +676,15 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .tech-icon-box > .fb-icon svg{width:34px;height:34px}
 .tech-icon-box:hover{
   transform:translateY(-5px);
-  box-shadow:0 14px 28px -8px rgba(18,22,43,.22);
+  box-shadow:0 14px 28px -8px rgba(0,0,0,.7);
   z-index:5;
 }
-.tech-icon-box:hover > .fb-icon{box-shadow:var(--shadow-card-hover)}
+.tech-icon-box:hover > .fb-icon{box-shadow:var(--shadow-card-hover);border-color:rgba(var(--accent-rgb),.45)}
 
 .tech-icon-box > .fb-icon{
   background: var(--surface) !important;
   border: 1px solid var(--border);
+  transition:border-color .2s ease, box-shadow .2s ease;
 }
 .tech-tip{
   position:absolute;
@@ -703,11 +694,11 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   transform:translateX(calc(-50% + var(--tip-shift, 0px))) translateY(6px);
   width:max-content;
   max-width:200px;
-  background:var(--surface);
-  border:1px solid var(--border);
+  background:#1d1d25;
+  border:1px solid rgba(255,255,255,.14);
   border-radius:8px;
   padding:.5rem .9rem;
-  box-shadow:0 8px 20px -6px rgba(18,22,43,.35);
+  box-shadow:0 8px 20px -6px rgba(0,0,0,.8);
   opacity:0;
   visibility:hidden;
   pointer-events:none;
@@ -741,7 +732,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   font-family: var(--font-body);
   font-size:.8rem;
   font-weight:600;
-  color:#12162b;
+  color:var(--text);
   line-height:1.2;
   white-space:nowrap;
 }
@@ -752,7 +743,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   left:50%;
   transform:translateX(calc(-50% - var(--tip-shift, 0px)));
   border:6px solid transparent;
-  border-top-color:var(--surface)
+  border-top-color:#1d1d25
 }
 .tech-icon-box.tip-flip .tech-tip{
   bottom:auto;
@@ -766,7 +757,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   top:auto;
   bottom:100%;
   border-top-color:transparent;
-  border-bottom-color:var(--surface)
+  border-bottom-color:#1d1d25
 }
 
 @media(min-width:961px){
@@ -781,7 +772,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   }
 }
 
-/* EDUCATION — interactive milestone timeline, title centered on top */
+/* EDUCATION */
 .edu-section{background:transparent;padding:6rem 0;position:relative;z-index:1}
 
 .edu-header{
@@ -803,7 +794,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   color:var(--muted);
 }
 
-/* Toggle pill: Academic Path / Recognition Log */
 .edu-toggle-wrap{
   display:flex;
   flex-direction:column;
@@ -827,7 +817,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   border:2px solid transparent;
   border-radius:100px;
   padding:.7rem 1.4rem;
-  box-shadow:0 10px 24px -8px rgba(18,22,43,.18), 0 2px 4px rgba(18,22,43,.04);
+  box-shadow:0 10px 24px -8px rgba(0,0,0,.6), 0 2px 4px rgba(0,0,0,.3);
   cursor:pointer;
   transition:color .2s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
 }
@@ -858,12 +848,9 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   color:var(--accent);
 }
 
-/* Panels: only the active view (Academic / Recognition) is shown */
 .edu-timeline-view{display:none;max-width:900px;margin:0 auto}
 .edu-timeline-view.active{display:block}
 
-/* Timeline row: equal columns, the line runs through every node
-   (same layout on desktop and mobile) */
 .edu-timeline{
   --c:68px;
   position:relative;
@@ -885,8 +872,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   cursor:pointer;
   font-family:var(--font-body);
 }
-/* the line: each node draws its own segment across its column,
-   so the line is continuous and works with any number of nodes */
 .edu-node::before{
   content:"";
   position:absolute;
@@ -895,7 +880,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   top:calc(1.2rem + .6rem + var(--c) / 2 - 1.5px);
   height:3px;
   border-radius:3px;
-  background:rgba(163,177,198,.45);
+  background:rgba(255,255,255,.12);
   z-index:0;
 }
 .edu-node-label{
@@ -925,6 +910,9 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   transition:transform .25s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease, color .2s ease;
 }
 .edu-node-circle svg{width:28px;height:28px}
+/* cut-out lines inside the monitor icon match the circle background */
+.edu-node-circle svg .cut{stroke:var(--surface)}
+.edu-node.active .edu-node-circle svg .cut{stroke:#2b1a0d}
 .edu-node-year{
   position:relative;
   z-index:1;
@@ -934,18 +922,16 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   transition:color .2s ease;
 }
 
-/* Active node: bigger, blue, glowing */
 .edu-node.active .edu-node-label{color:var(--accent)}
 .edu-node.active .edu-node-year{color:var(--text);font-weight:700}
 .edu-node.active .edu-node-circle{
   transform:scale(1.08);
   color:var(--accent);
-  background:var(--accent-soft);
+  background:#2b1a0d;
   border-color:transparent;
-  box-shadow:0 0 0 7px rgba(51,85,255,.08), 0 0 36px 10px var(--accent-glow);
+  box-shadow:0 0 0 7px rgba(255,122,26,.10), 0 0 36px 10px var(--accent-glow);
 }
 
-/* Detail: plain text, no box */
 .edu-detail{
   max-width:none;
   margin:0;
@@ -991,11 +977,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   line-height:1.7;
 }
 
-/* ==========================================================
-   CERTS — outlined cards with inset image, title and provider:
-   thin outlined card, certificate image inset with rounded
-   corners, then bold title + provider, left-aligned.
-   ========================================================== */
+/* CERTS */
 .cert-section{background:transparent;position:relative;z-index:1}
 .cert-marquee-row{
   width:100%;
@@ -1003,7 +985,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
   mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
   margin-bottom:1.5rem;
-  padding:6px 0; /* room so the hover lift isn't clipped */
+  padding:6px 0;
 }
 .cert-marquee-row:last-child{margin-bottom:0}
 .cert-track{
@@ -1022,7 +1004,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   display:flex;
   flex-direction:column;
   background:transparent;
-  border:1.5px solid #ffffff !important;
+  border:1.5px solid rgba(255,255,255,.14) !important;
   border-radius:20px;
   padding:10px;
   overflow:hidden;
@@ -1034,7 +1016,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .cert-item:focus,
 .cert-item:focus-within,
 .cert-track.dragging .cert-item{
-  border-color:#ffffff !important;
+  border-color:rgba(255,122,26,.55) !important;
   outline:none;
 }
 .cert-item:hover{
@@ -1046,7 +1028,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .cert-item:focus,
 .cert-item:focus-within,
 .cert-track.dragging .cert-item{
-  background:transparent !important;
+  background:rgba(255,255,255,.02) !important;
 }
 .cert-img-wrap{
   width:100%;
@@ -1117,10 +1099,10 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   display:inline-flex;align-items:center;justify-content:center;
   text-decoration:none;
   box-shadow:var(--shadow-card);
-  transition:color .2s,transform .15s,box-shadow .2s;
+  transition:color .2s,transform .15s,box-shadow .2s,border-color .2s;
 }
 .contact-round svg{width:20px;height:20px;fill:currentColor;stroke:none}
-.contact-round:hover{color:var(--accent);transform:translateY(-3px);box-shadow:var(--shadow-card-hover)}
+.contact-round:hover{color:var(--accent);transform:translateY(-3px);box-shadow:var(--shadow-card-hover);border-color:rgba(var(--accent-rgb),.5)}
 
 /* CONTACT PAGE */
 .contact-page-main{min-height:calc(100vh - var(--nav-h));padding-top:calc(var(--nav-h) + 1rem);position:relative;z-index:1}
@@ -1153,7 +1135,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   margin-bottom: 2.25rem;
 }
 .contact-info-list{display:flex;flex-direction:column}
-.contact-info-sep{height:1px;background:rgba(163,177,198,.35);display:block}
+.contact-info-sep{height:1px;background:rgba(255,255,255,.09);display:block}
 .contact-info-item{display:flex;align-items:center;gap:1.25rem;padding:1.1rem 0}
 .contact-info-icon{width:44px;height:44px;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:var(--accent);border-radius:50%;background:var(--accent-soft);transition:background .2s,color .2s}
 .contact-info-icon svg{width:18px;height:18px;fill:currentColor;stroke:none}
@@ -1201,12 +1183,12 @@ textarea{min-height:120px}
 .contact-form button{
   padding: .9rem 2rem;
   background: var(--accent);
-  color: #ffffff;
+  color: #1a0d02;
   border: none;
   border-radius: 10px;
   font-family: var(--font-body);
   font-size: .85rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   width: 100%;
   transition: background .2s,transform .15s,box-shadow .2s;
@@ -1231,7 +1213,7 @@ textarea{min-height:120px}
 .back-home:hover{color:var(--accent)}
 
 /* FOOTER */
-footer{background:transparent;border-top:1px solid rgba(163,177,198,.35);padding:2rem 0;position:relative;z-index:1}
+footer{background:transparent;border-top:1px solid rgba(255,255,255,.09);padding:2rem 0;position:relative;z-index:1}
 .footer-inner{display:flex;align-items:center;justify-content:space-between}
 footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 .footer-logo{font-family: var(--font-heading); font-size:.95rem;font-weight:700;color:var(--dim);letter-spacing:.02em}
@@ -1241,12 +1223,14 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 .reveal.visible{opacity:1;transform:none}
 
 /* ==========================================================
-   TESTIMONIALS — 3D fanned carousel (desktop) / stacked deck (mobile)
-   JS (script.js) sets these custom properties per card:
+   TESTIMONIALS — dark glass 3D fan (desktop) / stacked deck (mobile)
+   JS (script.js) sets per card:
      --o  signed offset from the active card (-3 ... 0 ... 3)
      --a  absolute offset |o|
      --r  rank behind the active card (0 = front)
    ========================================================== */
+#testimonials{overflow-x:clip}
+
 .testimonial-deck-wrap{
   width:100%;
   max-width:1140px;
@@ -1256,10 +1240,51 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   --card-w:430px;
   --gap:140px;
 }
+
+/* perspective grid "floor" under the cards, with a soft orange glow */
+.testimonial-deck-wrap::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:-1rem;
+  width:170%;
+  height:78%;
+  transform:translateX(-50%) perspective(520px) rotateX(64deg);
+  transform-origin:50% 100%;
+  background-image:
+    linear-gradient(rgba(255,122,26,.30) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,122,26,.30) 1px, transparent 1px);
+  background-size:56px 56px;
+  -webkit-mask-image:radial-gradient(ellipse 55% 70% at 50% 100%, #000 15%, transparent 72%);
+  mask-image:radial-gradient(ellipse 55% 70% at 50% 100%, #000 15%, transparent 72%);
+  pointer-events:none;
+  z-index:0;
+  animation:gridDrift 7s linear infinite;
+}
+@keyframes gridDrift{
+  from{background-position:0 0, 0 0}
+  to{background-position:0 56px, 56px 0}
+}
+.testimonial-deck-wrap::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:42%;
+  width:620px;
+  height:320px;
+  max-width:90%;
+  transform:translateX(-50%);
+  background:radial-gradient(ellipse at center, rgba(255,122,26,.16), transparent 70%);
+  filter:blur(30px);
+  pointer-events:none;
+  z-index:0;
+}
+
 .testimonial-deck{
   position:relative;
+  z-index:1;
   width:100%;
-  height:340px;              /* JS overwrites this with the real height */
+  height:340px;
   perspective:1000px;
   perspective-origin:50% 25%;
   touch-action:pan-y;
@@ -1270,18 +1295,17 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   left:50%;
   width:var(--card-w);
   max-width:92vw;
-  background:#d3d6dd;
-  border:1px solid #e6e8ed;
-  border-radius:18px;
-  padding:1.15rem 1.3rem 1.3rem;
-  box-shadow:var(--shadow-card);
+  background:linear-gradient(160deg, rgba(34,34,42,.96), rgba(14,14,19,.98));
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:20px;
+  padding:1.3rem 1.5rem 1.5rem;
+  box-shadow:0 14px 30px -12px rgba(0,0,0,.8), inset 0 1px 0 rgba(255,255,255,.06);
   display:flex;
   flex-direction:column;
-  gap:.7rem;
+  gap:.75rem;
   cursor:pointer;
   overflow:hidden;
   transform-origin:50% 50%;
-  /* fan: side cards swing inward (rotateY), tilt (rotateZ) and drop down + back */
   transform:
     translateX(-50%)
     translateX(calc(var(--o, 0) * var(--gap)))
@@ -1291,7 +1315,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
     rotateZ(calc(var(--o, 0) * 6deg));
   opacity:1;
   z-index:calc(10 - var(--a, 0));
-  transition:transform .6s cubic-bezier(.16,1,.3,1), opacity .5s ease, box-shadow .3s ease;
+  transition:transform .6s cubic-bezier(.16,1,.3,1), opacity .5s ease, box-shadow .3s ease, border-color .3s ease;
   will-change:transform;
 }
 .testi-card > *{
@@ -1300,111 +1324,106 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 }
 .testi-card.testi-active{
   cursor:default;
-  box-shadow:var(--shadow-card-hover);
+  border-color:rgba(255,122,26,.55);
+  box-shadow:
+    0 0 0 1px rgba(255,122,26,.18),
+    0 24px 50px -14px rgba(0,0,0,.9),
+    0 0 46px -10px var(--accent-glow),
+    inset 0 1px 0 rgba(255,255,255,.08);
 }
 
 /* header row: avatar + name on the left, rating pill on the right */
 .testi-head{
   display:flex;
   align-items:center;
-  gap:.65rem;
+  gap:.8rem;
 }
 .testi-avatar{
-  width:34px;height:34px;flex-shrink:0;
+  width:46px;height:46px;flex-shrink:0;
   border-radius:50%;
-  background:#aeb3c0;
-  color:#1f2330;
+  background:rgba(255,255,255,.04);
+  border:1.5px solid rgba(255,255,255,.28);
+  color:#ffffff;
   display:flex;align-items:center;justify-content:center;
   font-family:var(--font-heading);
   font-weight:700;
-  font-size:.9rem;
+  font-size:1.05rem;
 }
 .testi-name{
   font-family:var(--font-heading);
   font-weight:700;
-  color:#1f2330;
-  font-size:.88rem;
+  color:#ffffff;
+  font-size:1rem;
   line-height:1.2;
   margin-right:auto;
 }
 
-/* RATING PILL — bigger, clearer star.
-   - lighter pill background so the gold star stands out
-   - star is 18px (was 12px), richer gold fill + dark-gold outline
-   - rating text is slightly bigger and darker */
+/* rating pill with an orange star */
 .testi-rating{
   display:inline-flex;
   align-items:center;
   gap:.4rem;
   flex-shrink:0;
-  background:#eceef3;
-  color:#1f2330;
+  background:rgba(255,255,255,.07);
+  color:#ffffff;
   border-radius:100px;
-  padding:.32rem .8rem .32rem .6rem;
+  padding:.34rem .85rem .34rem .65rem;
   font-family:var(--font-body);
   font-size:.82rem;
   font-weight:800;
-  box-shadow:inset 0 0 0 1px rgba(18,22,43,.08);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.10);
 }
 .testi-rating svg{
-  width:18px;
-  height:18px;
+  width:16px;
+  height:16px;
   flex-shrink:0;
-  fill:#FFB300;
-  stroke:#B26A00;
-  stroke-width:1.4;
-  stroke-linejoin:round;
-  filter:drop-shadow(0 1px 1px rgba(178,106,0,.35));
+  fill:var(--accent);
+  stroke:none;
+  filter:drop-shadow(0 0 4px rgba(255,122,26,.65));
 }
 .testi-quote-icon{
   font-family:var(--font-heading);
-  font-size:1.6rem;
+  font-size:2rem;
   line-height:.6;
   height:.9rem;
-  margin-top:.6rem;    /* space between the avatar row and the blue quote mark */
-  margin-bottom:.3rem; /* space between the blue quote mark and the text */
-  color:#5a6072;
+  margin-top:.5rem;
+  margin-bottom:.2rem;
+  color:rgba(255,255,255,.32);
   font-weight:800;
 }
 .testi-text{
   font-family:var(--font-body);
-  font-size:.78rem;
+  font-size:.82rem;
   font-style:italic;
-  color:#3b4050;
-  line-height:1.6;
+  color:#d9dbe6;
+  line-height:1.65;
+  text-align:justify;
+  hyphens:auto;
+  -webkit-hyphens:auto;
 }
 
-/* desktop: hide cards more than 3 steps from the center */
 @media(min-width:701px){
   .testi-card.testi-out{opacity:0;pointer-events:none}
 }
 
-/* dots are no longer used */
 .testi-dots{display:none}
 
-/* Tablet: pull the side cards in a little */
+/* Tablet */
 @media(max-width:960px){
     .testimonial-deck-wrap{--card-w:360px;--gap:120px} 
 }
 
-/* Phone: same card shape as desktop (zoomed), tight stack showing all cards */
+/* Phone */
 @media(max-width:700px){
   #testimonials{padding-top:3rem}
   #testimonials .sec-header{margin-bottom:.4rem}
-  /* SAME 3D fan as desktop (all 6 cards visible), just scaled to fit a phone.
-     The card transform / rotateY / rotateZ / perspective come from the
-     desktop .testi-card and .testimonial-deck rules above — nothing is
-     overridden here except the sizes. */
-  /* Card keeps the EXACT desktop size and shape (430px wide, same text,
-     same padding), scaled with zoom so it fills the phone width.
-     The other cards are stacked BEHIND it and peek out below, slightly
-     tilted — all 6 cards are in the stack. */
   .testimonial-deck-wrap{
     --card-w:430px;
     --peek:30px;
     zoom:.8;
     padding-bottom:3.5rem;
   }
+  .testimonial-deck-wrap::before{width:150%;height:60%}
   .testimonial-deck{perspective:900px;perspective-origin:50% 0%}
   .testi-card{
     max-width:none;
@@ -1421,8 +1440,8 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
     z-index:calc(10 - var(--r, 0));
   }
   .testi-card:not(.testi-active){
-    border-color:#c2c6cf;
-    box-shadow:0 10px 20px -8px rgba(18,22,43,.35);
+    border-color:rgba(255,255,255,.08);
+    box-shadow:0 10px 20px -8px rgba(0,0,0,.85);
   }
   .testi-card.testi-far,
   .testi-card.testi-out{opacity:1;pointer-events:auto}
@@ -1454,8 +1473,6 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .contact-page-grid{grid-template-columns:1fr}
   .footer-inner{flex-direction:column;gap:.5rem;text-align:center}
 
-  /* TECH STACKS (mobile/tablet) — same 9-per-row layout as desktop,
-     icons scale down with the screen so all rows stay aligned */
   .tech-panel{padding:1rem 0}
   .tech-icon-grid{
     display:flex;
@@ -1465,7 +1482,6 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
     max-width:520px;
     margin:0 auto;
   }
-  /* 7 icons per row; the last row is centered */
   .tech-icon-box{
     width:calc((100% - 6 * .6rem) / 7);
     max-width:none;
@@ -1495,7 +1511,6 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   }
   .services-grid::-webkit-scrollbar{display:none}
   .service-card{flex:0 0 82%;scroll-snap-align:center;padding:2rem 1.5rem}
-  /* certificates on phones: two cards per screen, compact layout */
   .cert-item{width:46vw;padding:8px;border-radius:14px}
   .cert-img-wrap{aspect-ratio:16/10;border-radius:9px}
   .cert-info{padding:.55rem .25rem .3rem}
@@ -1534,8 +1549,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .btn-primary,.btn-outline{font-size:.68rem;padding-left:.9rem;padding-right:.9rem;gap:.35rem}
 }
 
-/* MOBILE HEADERS — every section title is centered and smaller on phones.
-   Kept at the very end so it overrides the desktop sizes above. */
+/* MOBILE HEADERS */
 @media(max-width:700px){
   .sec-header{margin-bottom:2rem;text-align:center}
   .sec-title,
@@ -1546,14 +1560,17 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .edu-subtitle{font-size:.85rem}
 }
 
-/* MOBILE HERO ORDER — profile photo + orbit icons first, then name and bio.
-   Kept at the very end so it overrides the rules above. Desktop is untouched. */
+/* MOBILE HERO ORDER */
 @media(max-width:960px){
   .hero-right{order:-1}
   .hero-grid{gap:1.5rem}
 }
 
-/* Rings are visible again (faint gray dashes, see .orbit-line above).
-   The old straight orbit dots stay hidden; the new still dots are made by script.js */
+/* Old straight orbit dots stay hidden; still dots are made by script.js */
 .orbit-dot{display:none !important}
 .orbit-ring > div:not([class]){display:none !important}
+
+/* Respect "reduce motion" */
+@media (prefers-reduced-motion: reduce){
+  .testimonial-deck-wrap::before{animation:none}
+}
