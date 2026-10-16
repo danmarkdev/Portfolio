@@ -1422,8 +1422,9 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 /* ==========================================================
    PERSPECTIVE GRID BACKGROUND — fades in from Testimonials
    down to Technical Stacks (toggled by script.js).
-   Lines are white. The moving particle animation is hidden
-   while the grid is showing.
+   White lines that glide toward you at a constant speed
+   (like a road). Change the speed with the "1.6s" below:
+   bigger number = slower, smaller number = faster.
    ========================================================== */
 #grid-bg{
   position:fixed;
@@ -1446,10 +1447,18 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   transform-origin:50% 0;
   transform:perspective(max(720px, 125vh)) rotateX(60deg);
   background-image:
-    linear-gradient(rgba(255,255,255,.32) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.32) 1px, transparent 1px);
+    linear-gradient(rgba(255,255,255,.28) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.28) 1px, transparent 1px);
   background-size:64px 64px;
-  background-position:center top;
+  background-position:50% 0;
+  animation:gridRun 1.6s linear infinite;
+}
+@keyframes gridRun{
+  from{background-position:50% 0}
+  to{background-position:50% 64px}
+}
+@media (prefers-reduced-motion: reduce){
+  #grid-bg .grid-floor{animation:none}
 }
 
 /* hide the moving dots/lines animation while the grid is visible */
