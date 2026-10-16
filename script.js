@@ -49,7 +49,9 @@ function closeMenu(){
   if(hbg) hbg.setAttribute('aria-expanded','false');
 }
 
-/* KEEP THE MOBILE MENU IN SYNC WITH VIEWPORT WIDTH */
+/* KEEP THE MOBILE MENU IN SYNC WITH VIEWPORT WIDTH
+   Closes the mobile overlay automatically once the viewport is wider
+   than the 960px breakpoint used in style.css. */
 var MOBILE_BREAKPOINT = window.matchMedia('(max-width: 960px)');
 function handleBreakpointChange(e){
   if(!e.matches) closeMenu();
@@ -108,7 +110,9 @@ var obs=new IntersectionObserver(function(entries){
 document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
 
 /* DRAGGABLE / SWIPEABLE MARQUEE — used by the Projects and Certificates
-   tracks. direction: 1 = normal, -1 = reversed. */
+   tracks. Mouse drag + touch swipe, momentum glide, and it keeps
+   auto-scrolling on its own when not being dragged.
+   direction: 1 = normal, -1 = reversed. */
 function initSwipeMarquee(trackId, loopSeconds, direction){
   direction = direction || 1;
   var track = document.getElementById(trackId);
@@ -177,6 +181,8 @@ function initSwipeMarquee(trackId, loopSeconds, direction){
     lastMoveTime = performance.now();
     lastMovePos = pos;
     activePointerId = e.pointerId;
+    /* pointer capture is only taken once a real drag is confirmed
+       (see pointerMove) so plain clicks on links still work. */
   }
 
   function pointerMove(e){
@@ -341,6 +347,8 @@ document.addEventListener('keydown',function(e){
     }
   ];
 
+  /* Solid/filled icons. The monitor's cut-out lines use class "cut" so
+     style.css can match them to the circle background (dark theme). */
   var ICONS = {
     cap: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 1 9l11 6 9-4.9V17h2V9L12 3z"/><path d="M5 13.2V17c0 1.7 3.1 3 7 3s7-1.3 7-3v-3.8l-7 3.8-7-3.8z"/></svg>',
     monitor: '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="4" width="18" height="13" rx="3"/><rect x="10.5" y="17" width="3" height="2"/><rect x="7.5" y="19.3" width="9" height="1.7" rx="0.85"/><path class="cut" d="M10.6 8.2 8 10.6l2.6 2.6" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path class="cut" d="M13.4 8.2 16 10.6l-2.6 2.6" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
@@ -398,6 +406,7 @@ document.addEventListener('keydown',function(e){
   initTimeline('academicTimeline', 'academicDetail', academicData);
   initTimeline('recognitionTimeline', 'recognitionDetail', recognitionData);
 
+  /* toggle between Academic Path / Recognition Log */
   var eduToggle = document.getElementById('eduToggle');
   var eduViews = document.querySelectorAll('.edu-timeline-view');
   if (eduToggle) {
@@ -416,10 +425,10 @@ document.addEventListener('keydown',function(e){
 })();
 
 /* ---------- TESTIMONIALS: 3D fan (desktop) / stacked deck (mobile) ----------
+   Works with the original testimonial HTML — no HTML edits needed.
    Each card is rearranged to: [avatar name rating] / quote icon / text.
-   Testimonials are SHORTENED here (SHORT_TEXT) so every card stays the same
-   compact size as the reference design (~330px wide, short quote).
-   To edit a quote, just change the text next to the person's name below. */
+   Click a card (or swipe) to bring it to the front.
+   Per card it sets --o (signed offset), --a (|offset|), --r (rank). */
 (function () {
   var deck = document.getElementById('testiDeck');
   if (!deck) return;
@@ -430,20 +439,9 @@ document.addEventListener('keydown',function(e){
   var dotsWrap = document.getElementById('testiDots');
   if (dotsWrap) dotsWrap.style.display = 'none';
 
-  /* SHORT versions of each testimonial, matched by the person's name */
-  var SHORT_TEXT = {
-    'Josh Aguilera':   'Danmark did a great job on the HealthSync Clinic Management System. It\u2019s simple, organized, and easy to use, with features that are practical for daily clinic tasks.',
-    'Julia Sardalla':  'The AI Danmark created for me is easy to use and has a creative design. It helped me with my tasks and improved the quality of my work.',
-    'Clark Zablan':    'His development was quite fast, even remarkable. From learning the basics, he has gained a lot of knowledge and solved many problems.',
-    'Benny Scoggins':  'He is very passionate about his work and pours his time, skills, and knowledge into it. He finds solutions you wouldn\u2019t think of.',
-    'Asher Brum':      'His growth was exemplary and worthy of imitation, and his programming skills were commendable even from his early stages.',
-    'Joaquin Flores':  'Danmark handled the design and back-end work alone and delivered on time. He\u2019s honest, responsible, and a snappy developer.',
-    'Ken Cuaresma':    'Danmark is a skilled and dedicated developer. He is easy to work with, takes every project seriously, and I would definitely recommend him.'
-  };
-
-  /* fallback for any new testimonial not listed above:
-     whole sentences only, up to ~170 characters */
-  var MAX_CHARS = 170;
+  /* keep each testimonial short: whole sentences only, up to ~210 characters
+     (change MAX_CHARS to show more or less) */
+  var MAX_CHARS = 210;
   function shorten(t) {
     t = t.replace(/\s+/g, ' ').trim();
     var parts = t.replace(/([.!?])\s+/g, '$1|').split('|');
@@ -467,17 +465,13 @@ document.addEventListener('keydown',function(e){
     var avatar = footer && footer.querySelector('.testi-avatar');
     var name = footer && footer.querySelector('.testi-name');
 
-    var personName = name ? name.textContent.trim() : '';
-
     var head = document.createElement('div');
     head.className = 'testi-head';
     if (avatar) head.appendChild(avatar);
     if (name) head.appendChild(name);
     if (rating) head.appendChild(rating);
 
-    if (text) {
-      text.textContent = SHORT_TEXT[personName] || shorten(text.textContent);
-    }
+    if (text) text.textContent = shorten(text.textContent);
 
     c.innerHTML = '';
     c.appendChild(head);
@@ -485,6 +479,7 @@ document.addEventListener('keydown',function(e){
     if (text) c.appendChild(text);
   });
 
+  /* Only the real testimonials are shown (no duplicates). */
   var n = cards.length;
   var active = 0;
 
@@ -492,7 +487,7 @@ document.addEventListener('keydown',function(e){
     return window.matchMedia('(max-width:700px)').matches;
   }
 
-  /* cards are position:absolute: make them equal height, size the deck */
+  /* 3) cards are position:absolute: make them equal height, size the deck */
   function sizeDeck() {
     var max = 0;
     cards.forEach(function (c) { c.style.height = 'auto'; });
@@ -600,7 +595,8 @@ window.addEventListener('load', adjustAllTechTips);
 window.addEventListener('resize', adjustAllTechTips);
 window.addEventListener('orientationchange', adjustAllTechTips);
 
-/* ORBIT DOTS (scattered, still) */
+/* ORBIT DOTS (scattered, still) — blue dots became orange via var(--accent).
+   Placed ON the ring lines, drawn behind the orbiting icons. */
 (function () {
   var ring = document.getElementById('orbitRing');
   if (!ring) return;
@@ -651,7 +647,8 @@ window.addEventListener('orientationchange', adjustAllTechTips);
 /* ---------- ANIMATED BACKGROUND ----------
    Drifting soft glows + a floating particle network that reacts to the
    mouse. Creates its own <canvas id="bg-canvas"> if the page doesn't have
-   one. */
+   one, so index.html needs no edit. Pauses automatically in hidden tabs
+   and shows a still frame for people who prefer reduced motion. */
 (function () {
   var canvas = document.getElementById('bg-canvas');
   if (!canvas) {
@@ -700,6 +697,7 @@ window.addEventListener('orientationchange', adjustAllTechTips);
   function draw(t) {
     ctx.clearRect(0, 0, W, H);
 
+    /* soft drifting glows */
     var big = Math.max(W, H) * 0.45;
     blobs.forEach(function (b) {
       var x = W * (0.5 + 0.4 * Math.sin(t * 0.00007 * b.s + b.p));
@@ -711,6 +709,7 @@ window.addEventListener('orientationchange', adjustAllTechTips);
       ctx.fillRect(0, 0, W, H);
     });
 
+    /* particles */
     var i, j, p, q, dx, dy, d2;
     for (i = 0; i < pts.length; i++) {
       p = pts[i];
