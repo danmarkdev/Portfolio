@@ -829,9 +829,9 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .edu-toggle-btn svg{width:18px;height:18px;flex-shrink:0;fill:currentColor;stroke:none}
 .edu-toggle-btn svg [stroke]{stroke:currentColor}
 .edu-toggle-btn.active{
-  color:var(--accent);
+  color:#ffffff;
   background:var(--surface);
-  border-color:var(--accent);
+  border-color:#ffffff;
 }
 .edu-hint{
   display:inline-flex;
@@ -850,7 +850,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   width:17px;
   height:17px;
   flex-shrink:0;
-  color:var(--accent);
+  color:#ffffff;
 }
 
 .edu-timeline-view{display:none;max-width:900px;margin:0 auto}
@@ -927,11 +927,11 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   transition:color .2s ease;
 }
 
-.edu-node.active .edu-node-label{color:var(--accent)}
+.edu-node.active .edu-node-label{color:#ffffff}
 .edu-node.active .edu-node-year{color:var(--text);font-weight:700}
 .edu-node.active .edu-node-circle{
   transform:scale(1.08);
-  color:var(--accent);
+  color:#ffffff;
   background:#1f1f27;
   border-color:transparent;
   box-shadow:0 0 0 7px rgba(255,255,255,.05), 0 0 30px 6px rgba(255,255,255,.06);
@@ -955,11 +955,11 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   font-size:.78rem;
   font-weight:700;
   letter-spacing:.06em;
-  color:var(--accent);
+  color:#ffffff;
   text-transform:uppercase;
   margin-bottom:.75rem;
 }
-.edu-detail-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.edu-detail-dot{display:none}
 .edu-detail-title{
   font-family: var(--font-heading);
   font-size:clamp(1.5rem,3vw,2rem);
@@ -1244,7 +1244,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   position:relative;
   padding-bottom:1rem; 
   --card-w:330px;
-  --gap:84px;
+  --gap:150px;
 }
 
 .testimonial-deck{
@@ -1276,7 +1276,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   transform:
     translateX(-50%)
     translateX(calc(var(--o, 0) * var(--gap)))
-    translateY(calc(var(--a, 0) * 14px))
+    translateY(calc(var(--a, 0) * 16px + var(--a, 0) * var(--a, 0) * 5px))
     translateZ(calc(var(--a, 0) * -100px))
     rotateY(calc(var(--o, 0) * -16deg)) 
     rotateZ(calc(var(--o, 0) * 6deg));
@@ -1381,7 +1381,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 .testi-dots{display:none}
 
 @media(max-width:960px){
-    .testimonial-deck-wrap{--card-w:330px;--gap:70px} 
+    .testimonial-deck-wrap{--card-w:330px;--gap:120px} 
 }
 
 /* Phone */
