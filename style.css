@@ -1420,10 +1420,41 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 }
 
 /* ==========================================================
-   PERSPECTIVE GRID BACKGROUND — REMOVED
-   (script.js still creates #grid-bg, so it is hidden here)
+   PERSPECTIVE GRID BACKGROUND — fades in from Testimonials
+   down to Technical Stacks (toggled by script.js).
+   Lines are white. The moving particle animation is hidden
+   while the grid is showing.
    ========================================================== */
-#grid-bg{display:none !important}
+#grid-bg{
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  overflow:hidden;
+  opacity:0;
+  transition:opacity .8s ease;
+  -webkit-mask-image:linear-gradient(to bottom, transparent 0%, #000 30%, #000 100%);
+  mask-image:linear-gradient(to bottom, transparent 0%, #000 30%, #000 100%);
+}
+#grid-bg.on{opacity:1}
+#grid-bg .grid-floor{
+  position:absolute;
+  left:-60%;
+  top:0;
+  width:220%;
+  height:100vh;
+  transform-origin:50% 0;
+  transform:perspective(max(720px, 125vh)) rotateX(60deg);
+  background-image:
+    linear-gradient(rgba(255,255,255,.32) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.32) 1px, transparent 1px);
+  background-size:64px 64px;
+  background-position:center top;
+}
+
+/* hide the moving dots/lines animation while the grid is visible */
+#bg-canvas{transition:opacity .8s ease}
+#grid-bg.on ~ #bg-canvas{opacity:0}
 
 /* RESPONSIVE */
 @media(max-width:960px){
