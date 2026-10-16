@@ -635,7 +635,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .project-sub-label{
   font-family: var(--font-body);
   font-size: .78rem;
-  color: var(--accent);
+  color: #ffffff;
   font-weight: 600;
   letter-spacing: .02em;
 }
