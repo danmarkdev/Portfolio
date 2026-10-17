@@ -5,9 +5,8 @@
      SFX.tick()     -> small selection tick (dragging the carousels, timeline nodes)
      SFX.shuffle()  -> 3-part card "shuffle" when a testimonial card changes
      SFX.scroll()   -> soft tick while the page is scrolling
-   PHONE FIXES: sounds are lower, longer and louder on touch screens (phone speakers
-   can't play tiny high blips), a compressor stops distortion, and on iPhone the audio
-   is switched to "playback" mode so it also works when the silent switch is on.
+   Mobile uses the EXACT same sounds as desktop. On iPhone the audio is switched to
+   "playback" mode so it also works when the silent switch is on.
    The speaker button (bottom-left) turns ALL sound on/off and remembers the choice. */
 var SFX = (function () {
   var audioCtx = null;
@@ -71,10 +70,8 @@ var SFX = (function () {
         if (!AC) return;
         audioCtx = new AC();
         master = audioCtx.createGain();
-        master.gain.value = isTouch ? 1.8 : 1;
-        var comp = audioCtx.createDynamicsCompressor();
-        master.connect(comp);
-        comp.connect(audioCtx.destination);
+        master.gain.value = 1;
+        master.connect(audioCtx.destination);
         audioCtx.onstatechange = function () {
           if (audioCtx.state === 'running') audioUnlocked = true;
         };
@@ -96,12 +93,6 @@ var SFX = (function () {
     try {
       init();
       if (!audioCtx || !master || muted) return;
-      if (isTouch) {            /* phone speakers: lower, longer, louder */
-        f1 = f1 * 0.45;
-        f2 = f2 * 0.45;
-        dur = dur * 2.4;
-        vol = Math.min(1, vol * 1.8);
-      }
       var t = audioCtx.currentTime + (offset || 0);
       var osc = audioCtx.createOscillator();
       var gain = audioCtx.createGain();
