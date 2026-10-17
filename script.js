@@ -150,7 +150,7 @@ var SFX = (function () {
     scroll: function () {
       if (muted) return;
       var now = Date.now();
-      if (now - lastScroll < 70) return;
+      if (now - lastScroll < (isTouch ? 160 : 70)) return;
       lastScroll = now;
       pop('sine', 1500, 700, 0.014, 0.14, 0);
     },
@@ -351,6 +351,7 @@ var sections=document.querySelectorAll('section[id]');
 var navLinks=document.querySelectorAll('#nav a:not(.nav-cta)');
 var mobileNavLinks=document.querySelectorAll('#mnav a');
 var headerEl=document.getElementById('header');
+var orbitEl=document.getElementById('photoOrbit');
 var sectionCache=[];
 
 function measureSections(){
@@ -373,18 +374,18 @@ measureSections();
 
     /* mark 'is scrolling' on touch devices; cleared 160ms after the last scroll */
     if(COARSE){
-      if(!SCROLLING){ SCROLLING=true; document.documentElement.classList.add('is-scrolling'); }
+      if(!SCROLLING){ SCROLLING=true; if(orbitEl) orbitEl.classList.add('is-scrolling'); }
       clearTimeout(scrollEndT);
       scrollEndT=setTimeout(function(){
         SCROLLING=false;
-        document.documentElement.classList.remove('is-scrolling');
+        if(orbitEl) orbitEl.classList.remove('is-scrolling');
       },160);
     }
 
     /* scroll sound: a soft tick every ~70px */
     acc+=Math.abs(y-lastY);
     lastY=y;
-    if(acc>=70){ acc=0; SFX.scroll(); }
+    if(acc>=(COARSE?120:70)){ acc=0; SFX.scroll(); }
 
     /* header shadow */
     if(headerEl) headerEl.classList.toggle('scrolled',y>30);
@@ -1244,21 +1245,108 @@ var BG = { gridOn: false, kick: function () {} };
    A fixed grid "floor" that fades in while the visitor is anywhere between
    the Testimonials section and the end of Technical Stacks, and fades out
    everywhere else.
-   The moving lines live in an inner <div class="grid-lines"> that the CSS
-   slides with `transform` (GPU) — see style.css.
+
+   DESKTOP: CSS grid (a 3D-rotated layer, slid with transform).
+   PHONES / TABLETS: the same look, but DRAWN ON A CANVAS (about 25 lines
+   per frame, in ONE stroke call). No giant 3D layer and no mask, so there
+   is almost no GPU memory use -> no more lag or vanishing content.
    It is checked inside the shared scroll handler (once per frame). */
 (function () {
   var testi = document.getElementById('testimonials');
   var skills = document.getElementById('skills');
   if (!testi || !skills) return;
 
+  var small = COARSE || window.matchMedia('(max-width: 960px)').matches;
+
   var g = document.createElement('div');
   g.id = 'grid-bg';
   g.setAttribute('aria-hidden', 'true');
-  g.innerHTML = '<div class="grid-floor"><div class="grid-lines"></div></div>';
+  g.innerHTML = small
+    ? '<canvas class="grid-canvas"></canvas>'
+    : '<div class="grid-floor"><div class="grid-lines"></div></div>';
   document.body.insertBefore(g, document.body.firstChild);
 
+  /* ---- phone version: canvas perspective grid ---- */
+  var gc = null, gx = null, GW = 0, GH = 0, grad = null;
+  var TILE = 64;           /* grid square size (same as the CSS version) */
+  var SPEED = 1600;        /* ms for the grid to move one square (same as 1.6s) */
+  var gridRunning = false;
+
+  function setupGridCanvas() {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    GW = window.innerWidth;
+    GH = window.innerHeight;
+    gc.width = Math.round(GW * dpr);
+    gc.height = Math.round(GH * dpr);
+    gx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    /* top of the screen fades out, like the CSS mask did */
+    grad = gx.createLinearGradient(0, 0, 0, GH);
+    grad.addColorStop(0, 'rgba(255,255,255,0)');
+    grad.addColorStop(0.3, 'rgba(255,255,255,0.28)');
+    grad.addColorStop(1, 'rgba(255,255,255,0.28)');
+  }
+
+  function drawGrid(t) {
+    var P = Math.max(720, GH * 1.25);          /* perspective distance */
+    var sin = 0.8660254, cos = 0.5;            /* rotateX(60deg) */
+    var cx = GW / 2;
+    var offset = ((t % SPEED) / SPEED) * TILE;
+
+    gx.clearRect(0, 0, GW, GH);
+    gx.strokeStyle = grad;
+    gx.lineWidth = 1;
+    gx.beginPath();
+
+    /* horizontal lines (they glide toward the viewer) */
+    for (var k = 0; k < 60; k++) {
+      var y = k * TILE + offset - TILE;
+      if (y < 0) continue;
+      var s = P / (P - sin * y);
+      var ys = cos * y * s;
+      if (ys > GH) break;
+      gx.moveTo(0, ys);
+      gx.lineTo(GW, ys);
+    }
+
+    /* vertical lines (converge toward the horizon) */
+    var yEnd = (GH * P) / (cos * P + sin * GH);   /* plane y where screen y = GH */
+    var sEnd = P / (P - sin * yEnd);
+    var n = Math.ceil(GW / 2 / TILE) + 1;
+    for (var i = -n; i <= n; i++) {
+      var x = i * TILE;
+      gx.moveTo(cx + x, 0);
+      gx.lineTo(cx + x * sEnd, GH);
+    }
+    gx.stroke();
+  }
+
+  function gridLoop(t) {
+    if (!isOn || document.hidden) { gridRunning = false; return; }
+    drawGrid(t);
+    requestAnimationFrame(gridLoop);
+  }
+
+  function startGrid() {
+    if (!small || gridRunning || !isOn || document.hidden) return;
+    gridRunning = true;
+    requestAnimationFrame(gridLoop);
+  }
+
   var isOn = false;
+
+  if (small) {
+    gc = g.querySelector('canvas');
+    gx = gc.getContext('2d');
+    setupGridCanvas();
+    var lastGW = window.innerWidth;
+    window.addEventListener('resize', function () {
+      /* ignore the height-only resizes caused by the address bar */
+      if (window.innerWidth === lastGW) return;
+      lastGW = window.innerWidth;
+      setupGridCanvas();
+    });
+    document.addEventListener('visibilitychange', startGrid);
+  }
 
   function update() {
     var H = window.innerHeight;
@@ -1268,8 +1356,9 @@ var BG = { gridOn: false, kick: function () {} };
     if (on === isOn) return;          /* nothing changed: do nothing */
     isOn = on;
     g.classList.toggle('on', on);
-    BG.gridOn = on;                   /* canvas stops while the grid is showing */
+    BG.gridOn = on;                   /* the dots canvas stops while the grid is showing */
     BG.kick();
+    if (on) startGrid();
   }
 
   SCROLL_FNS.push(update);
