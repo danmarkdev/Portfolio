@@ -1,36 +1,48 @@
-/* ---------- SOUND EFFECTS (same sound engine as rebkhei.vercel.app) ----------
+/* ---------- SOUND EFFECTS ----------
    Tiny synthesized sounds made with the Web Audio API (no audio files):
-     SFX.hover()    -> crisp mechanical tick when the mouse moves onto something pressable
-     SFX.click()    -> punchy mouse "click" when you press a button / link / card
+     SFX.hover()    -> crisp tick when the mouse moves onto something pressable (desktop)
+     SFX.click()    -> punchy click when you press a button / link / card
      SFX.tick()     -> small selection tick (dragging the carousels, timeline nodes)
      SFX.shuffle()  -> 3-part card "shuffle" when a testimonial card changes
+     SFX.scroll()   -> very soft tick while the page is scrolling
    Browsers keep audio locked until the visitor interacts once, so it is unlocked
-   on the first mouse move / tap / key press / scroll.
-   Optional mute: localStorage key 'portfolio_sound_muted' = 'true' turns it all off. */
+   on the first tap / click / key press (works on mobile AND desktop).
+   The round speaker button (bottom-left) turns ALL sound on/off and remembers
+   the choice (localStorage key 'portfolio_sound_muted'). */
 var SFX = (function () {
   var audioCtx = null;
   var audioUnlocked = false;
   var lastTick = 0;
+  var lastScroll = 0;
+  var MUTE_KEY = 'portfolio_sound_muted';
+  var muted = false;
 
-  function isMuted() {
-    try { return localStorage.getItem('portfolio_sound_muted') === 'true'; }
-    catch (e) { return false; }
+  try { muted = localStorage.getItem(MUTE_KEY) === 'true'; } catch (e) { muted = false; }
+
+  function isMuted() { return muted; }
+
+  function setMuted(v) {
+    muted = !!v;
+    try { localStorage.setItem(MUTE_KEY, muted ? 'true' : 'false'); } catch (e) {}
   }
 
   function init() {
     try {
-      if (isMuted()) return;
+      if (muted) return;
       if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        var AC = window.AudioContext || window.webkitAudioContext;
+        if (!AC) return;
+        audioCtx = new AC();
       }
       if (audioCtx.state === 'suspended') audioCtx.resume();
-      if (!audioUnlocked && audioCtx.state === 'running') {
-        audioUnlocked = true;
+      if (!audioUnlocked) {
+        /* play a silent buffer: this is what fully unlocks audio on iPhone / Android */
         var buffer = audioCtx.createBuffer(1, 1, 22050);
         var source = audioCtx.createBufferSource();
         source.buffer = buffer;
         source.connect(audioCtx.destination);
         source.start(0);
+        if (audioCtx.state === 'running') audioUnlocked = true;
       }
     } catch (e) {}
   }
@@ -39,7 +51,7 @@ var SFX = (function () {
   function pop(type, f1, f2, dur, vol, offset) {
     try {
       init();
-      if (!audioCtx) return;
+      if (!audioCtx || muted) return;
       var t = audioCtx.currentTime + (offset || 0);
       var osc = audioCtx.createOscillator();
       var gain = audioCtx.createGain();
@@ -57,27 +69,38 @@ var SFX = (function () {
 
   return {
     unlock: init,
+    isMuted: isMuted,
+    setMuted: setMuted,
+    isRunning: function () { return !!audioCtx && audioCtx.state === 'running'; },
     /* ultra-crisp mechanical clicky pop (2600Hz -> 550Hz) */
     hover: function () {
-      if (isMuted()) return;
+      if (muted) return;
       pop('sine', 2600, 550, 0.012, 0.35, 0);
     },
     /* punchy mechanical mouse click */
     click: function () {
-      if (isMuted()) return;
+      if (muted) return;
       pop('triangle', 1600, 220, 0.035, 0.5, 0);
     },
     /* small selection tick (throttled) */
     tick: function () {
-      if (isMuted()) return;
+      if (muted) return;
       var now = Date.now();
       if (now - lastTick < 35) return;
       lastTick = now;
       pop('sine', 2800, 800, 0.009, 0.25, 0);
     },
+    /* soft scroll tick (throttled) */
+    scroll: function () {
+      if (muted) return;
+      var now = Date.now();
+      if (now - lastScroll < 70) return;
+      lastScroll = now;
+      pop('sine', 1500, 700, 0.014, 0.14, 0);
+    },
     /* card shuffle: three quick descending pops */
     shuffle: function () {
-      if (isMuted()) return;
+      if (muted) return;
       [0, 0.035, 0.075].forEach(function (offset, idx) {
         pop('triangle', 1800 - idx * 250, 600 - idx * 100, 0.025, 0.35 - idx * 0.08, offset);
       });
@@ -85,16 +108,20 @@ var SFX = (function () {
   };
 })();
 
-/* unlock audio on the visitor's first interaction */
+/* unlock audio on the visitor's first interaction (touchend + click are
+   what mobile browsers accept). Listeners stay until audio is really running. */
 (function () {
+  var evts = ['pointerdown', 'pointerup', 'touchstart', 'touchend', 'mousedown', 'click', 'keydown'];
   function unlock() {
     SFX.unlock();
-    ['pointerdown', 'pointermove', 'mousemove', 'touchstart', 'keydown', 'scroll'].forEach(function (evt) {
-      window.removeEventListener(evt, unlock);
-    });
+    if (SFX.isRunning()) {
+      evts.forEach(function (evt) {
+        window.removeEventListener(evt, unlock, true);
+      });
+    }
   }
-  ['pointerdown', 'pointermove', 'mousemove', 'touchstart', 'keydown', 'scroll'].forEach(function (evt) {
-    window.addEventListener(evt, unlock, { passive: true });
+  evts.forEach(function (evt) {
+    window.addEventListener(evt, unlock, { passive: true, capture: true });
   });
 })();
 
@@ -122,11 +149,60 @@ document.addEventListener('click', function (e) {
   if (t) SFX.click();
 });
 
+/* ---------- SCROLL SOUND ----------
+   A soft tick every ~70px of scrolling (works with the mouse wheel,
+   touch scrolling and the keyboard). */
+(function () {
+  var lastY = window.scrollY || 0;
+  var acc = 0;
+  window.addEventListener('scroll', function () {
+    var y = window.scrollY || 0;
+    acc += Math.abs(y - lastY);
+    lastY = y;
+    if (acc >= 70) {
+      acc = 0;
+      SFX.scroll();
+    }
+  }, { passive: true });
+})();
+
+/* ---------- SOUND ON/OFF BUTTON (bottom-left) ---------- */
+(function () {
+  var ON_ICON =
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>' +
+    '<path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>';
+  var OFF_ICON =
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>' +
+    '<line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>';
+
+  var btn = document.createElement('button');
+  btn.type = 'button';
+  btn.id = 'soundToggle';
+  btn.className = 'sound-toggle';
+
+  function paint() {
+    var m = SFX.isMuted();
+    btn.innerHTML = m ? OFF_ICON : ON_ICON;
+    btn.classList.toggle('is-muted', m);
+    btn.setAttribute('aria-pressed', m ? 'true' : 'false');
+    btn.setAttribute('aria-label', m ? 'Turn sound on' : 'Turn sound off');
+    btn.title = m ? 'Sound off' : 'Sound on';
+  }
+
+  btn.addEventListener('click', function () {
+    SFX.setMuted(!SFX.isMuted());
+    paint();
+    /* the click sound itself is played by the global click handler when turning ON */
+  });
+
+  paint();
+  document.body.appendChild(btn);
+})();
+
 /* ---------- PRESSED COLOR FLASH ----------
    VIEW PROJECTS, SEND MESSAGE and BACK TO HOME turn WHITE the moment they are
-   pressed (mouse or finger) and stay white for about 1.2 seconds.
-   The styles are added from here, so this works on every page that loads
-   script.js, even if the browser still has an old style.css saved. */
+   pressed (mouse or finger). Links wait ~220ms before moving on, so you can
+   actually SEE the color change before the page scrolls / changes. */
 (function () {
   var st = document.createElement('style');
   st.textContent =
@@ -137,15 +213,37 @@ document.addEventListener('click', function (e) {
     '.back-home.is-pressed{color:#ffffff !important;font-weight:700 !important}';
   document.head.appendChild(st);
 
+  var PRESS_SEL = '.btn-primary, .contact-form button, .back-home';
   var timers = new WeakMap();
-  document.addEventListener('pointerdown', function (e) {
-    var el = e.target && e.target.closest
-      ? e.target.closest('.btn-primary, .contact-form button, .back-home')
-      : null;
-    if (!el) return;
+
+  function flash(el) {
     el.classList.add('is-pressed');
     clearTimeout(timers.get(el));
     timers.set(el, setTimeout(function () { el.classList.remove('is-pressed'); }, 1200));
+  }
+
+  document.addEventListener('pointerdown', function (e) {
+    var el = e.target && e.target.closest ? e.target.closest(PRESS_SEL) : null;
+    if (el) flash(el);
+  }, true);
+
+  /* delay navigation a moment so the white flash is visible */
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('a.btn-primary, a.back-home') : null;
+    if (!a) return;
+    var href = a.getAttribute('href');
+    if (!href || a.hasAttribute('download')) return;
+    e.preventDefault();
+    flash(a);
+    setTimeout(function () {
+      if (href.charAt(0) === '#') {
+        var target = document.querySelector(href);
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        try { history.pushState(null, '', href); } catch (err) {}
+      } else {
+        window.location.href = href;
+      }
+    }, 220);
   }, true);
 })();
 
