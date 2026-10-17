@@ -332,6 +332,10 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 .btn-primary:hover{background:var(--accent-hover);transform:translateY(-2px);box-shadow:0 14px 30px var(--accent-glow)}
 .btn-primary:active,.btn-primary:focus,.btn-primary:visited{color:#1a0d02;transform:none}
+/* CLICKED / TAPPED state: turns WHITE (stays white until you click elsewhere) */
+.btn-primary:active,
+.btn-primary:focus,
+.btn-primary:focus-visible{background:#ffffff !important;color:#050507 !important;box-shadow:0 10px 24px rgba(255,255,255,.18) !important;transform:none}
 .btn-outline{
   display: inline-flex;
   align-items: center;
@@ -1202,6 +1206,11 @@ textarea{min-height:120px}
 }
 .contact-form button:hover{background:var(--accent-hover);transform:translateY(-2px);box-shadow:0 14px 30px var(--accent-glow)}
 .contact-form button:active,.contact-form button:focus{transform:translateY(0)}
+/* CLICKED / TAPPED state: SEND MESSAGE turns WHITE */
+.contact-form button:active,
+.contact-form button:focus,
+.contact-form button:focus-visible{background:#ffffff !important;color:#050507 !important;box-shadow:0 10px 24px rgba(255,255,255,.18) !important}
+.contact-form button:disabled{background:#ffffff !important;color:#050507 !important}
 .contact-form button:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
 #cf-status{font-size:.82rem;min-height:1.2em;color:var(--muted)}
 
