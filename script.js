@@ -10,11 +10,12 @@ try {
   var _reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var _mem = navigator.deviceMemory || 8;
   var _cores = navigator.hardwareConcurrency || 8;
-  LITE = _reduce || (COARSE && (_mem <= 3 || _cores <= 4));
+  LITE = false;   /* never freeze the animations */
 } catch (e) {}
 if (LITE) document.documentElement.classList.add('lite-mode');
 
 var SCROLL_FNS = [];
+var SCROLLING = false;   /* true while the visitor is scrolling (phones pause heavy decorations then) */
 
 /* ---------- SOUND EFFECTS ----------
    Tiny synthesized sounds made with the Web Audio API (no audio files):
@@ -365,9 +366,20 @@ measureSections();
   var queued=false;
   var lastCur=null;
 
+  var scrollEndT;
   function frame(){
     queued=false;
     var y=window.scrollY||0;
+
+    /* mark 'is scrolling' on touch devices; cleared 160ms after the last scroll */
+    if(COARSE){
+      if(!SCROLLING){ SCROLLING=true; document.documentElement.classList.add('is-scrolling'); }
+      clearTimeout(scrollEndT);
+      scrollEndT=setTimeout(function(){
+        SCROLLING=false;
+        document.documentElement.classList.remove('is-scrolling');
+      },160);
+    }
 
     /* scroll sound: a soft tick every ~70px */
     acc+=Math.abs(y-lastY);
@@ -501,7 +513,7 @@ function initSwipeMarquee(trackId, loopSeconds, direction){
     if(dt > 0.1) dt = 0.1;          /* no big jump after a tab switch / lag spike */
 
     /* off-screen: do no work at all */
-    if(!inView && !dragging){
+    if((!inView || (COARSE && SCROLLING)) && !dragging){
       requestAnimationFrame(tick);
       return;
     }
