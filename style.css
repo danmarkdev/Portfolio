@@ -1252,7 +1252,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   position:relative;
   padding-bottom:1rem; 
   --card-w:330px;
-  --gap:150px;
+  --gap:128px;
 }
 
 .testimonial-deck{
@@ -1389,7 +1389,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 .testi-dots{display:none}
 
 @media(max-width:960px){
-    .testimonial-deck-wrap{--card-w:330px;--gap:120px} 
+    .testimonial-deck-wrap{--card-w:330px;--gap:100px} 
 }
 
 /* Phone */
