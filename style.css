@@ -555,7 +555,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   width:max-content;
   cursor:grab;
   touch-action:pan-y;
-  will-change:transform;
 }
 .project-track.dragging{cursor:grabbing}
 
@@ -1004,7 +1003,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   width:max-content;
   cursor:grab;
   touch-action:pan-y;
-  will-change:transform;
 }
 .cert-track.dragging{cursor:grabbing}
 .cert-img-wrap img{-webkit-user-drag:none;user-drag:none}
@@ -1499,10 +1497,6 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 /* no wasted work while the grid is not showing */
 #grid-bg:not(.on) .grid-lines{animation-play-state:paused}
 
-@media (prefers-reduced-motion: reduce){
-  #grid-bg .grid-lines{animation:none}
-}
-
 /* hide the moving dots/lines animation while the grid is visible */
 #bg-canvas{transition:opacity .8s ease}
 #grid-bg.on ~ #bg-canvas{opacity:0}
@@ -1771,3 +1765,16 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 .lite-mode #grid-bg .grid-lines{animation:none}
 .lite-mode .orbit-item,
 .lite-mode .orbit-counter{animation-duration:calc(var(--dur) * 2)}
+
+/* ==========================================================
+   MOBILE: keep everything moving, but stop the glitches
+   ========================================================== */
+@media(max-width:960px){
+  /* fewer giant GPU layers = no more vanishing cards / images */
+  .testi-card{will-change:auto}
+
+  /* while the finger is scrolling, pause the DECORATIVE spinning
+     (orbit icons). The grid keeps moving. They resume right after. */
+  html.is-scrolling .orbit-item,
+  html.is-scrolling .orbit-counter{animation-play-state:paused}
+}
