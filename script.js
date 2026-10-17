@@ -621,6 +621,7 @@ document.addEventListener('keydown',function(e){
 
   function render() {
     var half = Math.floor(n / 2);
+    var maxShown = Math.max(3, half);   /* show EVERY card (8 testimonials = 4 on the left, 3 on the right) */
     cards.forEach(function (c, i) {
       var o = ((i - active + n + half) % n) - half;
       var r = (i - active + n) % n;
@@ -629,7 +630,7 @@ document.addEventListener('keydown',function(e){
       c.style.setProperty('--r', r);
       c.classList.toggle('testi-active', i === active);
       c.classList.toggle('testi-far', r > 2);
-      c.classList.toggle('testi-out', Math.abs(o) > 3);
+      c.classList.toggle('testi-out', Math.abs(o) > maxShown);
     });
   }
 
