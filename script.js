@@ -8,7 +8,7 @@
 var SFX = (function () {
   var MASTER_VOLUME = 0.6;
   var ctx = null, master = null, noiseBuf = null;
-  var lastClick = 0, lastSwipe = 0;
+  var lastClick = 0, lastSwipe = 0, lastHover = 0;
 
   function ensure() {
     var AC = window.AudioContext || window.webkitAudioContext;
@@ -77,6 +77,12 @@ var SFX = (function () {
       blip(920, 600, 0.07, 'triangle', 0.22, 0);
       blip(1380, 900, 0.05, 'sine', 0.10, 0.012);
     },
+    hover: function () {
+      var n = Date.now();
+      if (n - lastHover < 70) return;
+      lastHover = n;
+      blip(1500, 1900, 0.04, 'sine', 0.07, 0);
+    },
     swipe: function (soft) {
       var n = Date.now();
       if (n - lastSwipe < (soft ? 110 : 140)) return;
@@ -100,6 +106,19 @@ document.addEventListener('click', function (e) {
     ? e.target.closest('a, button, .tech-icon-box, .edu-node, .project-card, .cert-item')
     : null;
   if (t) SFX.click();
+});
+
+/* HOVER sound: a tiny tick when the mouse moves onto something you can press
+   (before you click it). Only for mouse; phones have no hover.
+   Note: browsers keep audio locked until the first click / tap / key press. */
+var lastHoverEl = null;
+document.addEventListener('pointerover', function (e) {
+  if (e.pointerType && e.pointerType !== 'mouse') return;
+  var t = e.target && e.target.closest
+    ? e.target.closest('a, button, .tech-icon-box, .edu-node, .project-card, .cert-item, .testi-card, .stack-badge')
+    : null;
+  if (t && t !== lastHoverEl) SFX.hover();
+  lastHoverEl = t;
 });
 
 /* ICON FALLBACK — if a brand logo fails to load, swap it for a clean
