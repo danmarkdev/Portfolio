@@ -1,3 +1,107 @@
+/* ---------- SOUND EFFECTS ----------
+   Tiny sounds made with the browser's Web Audio API (no audio files needed).
+     SFX.click()  -> soft "pop" when a button / link / card is clicked
+     SFX.swipe()  -> soft "whoosh" when swiping or dragging a carousel
+   Browsers only allow sound after the visitor touches the page once, so the
+   audio is unlocked on the first tap / click / key press.
+   To make everything quieter or louder, change MASTER_VOLUME below. */
+var SFX = (function () {
+  var MASTER_VOLUME = 0.6;
+  var ctx = null, master = null, noiseBuf = null;
+  var lastClick = 0, lastSwipe = 0;
+
+  function ensure() {
+    var AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return null;
+    if (!ctx) {
+      try { ctx = new AC(); } catch (err) { return null; }
+      master = ctx.createGain();
+      master.gain.value = MASTER_VOLUME;
+      master.connect(ctx.destination);
+    }
+    if (ctx.state === 'suspended' && ctx.resume) { ctx.resume(); }
+    return ctx;
+  }
+
+  function blip(f1, f2, dur, type, vol, delay) {
+    var c = ensure();
+    if (!c) return;
+    var t = c.currentTime + (delay || 0);
+    var o = c.createOscillator();
+    var g = c.createGain();
+    o.type = type;
+    o.frequency.setValueAtTime(f1, t);
+    o.frequency.exponentialRampToValueAtTime(f2, t + dur);
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(vol, t + 0.008);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    o.connect(g);
+    g.connect(master);
+    o.start(t);
+    o.stop(t + dur + 0.03);
+  }
+
+  function whoosh(vol, dur, f1, f2) {
+    var c = ensure();
+    if (!c) return;
+    if (!noiseBuf) {
+      noiseBuf = c.createBuffer(1, c.sampleRate, c.sampleRate);
+      var data = noiseBuf.getChannelData(0);
+      for (var i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1;
+    }
+    var t = c.currentTime;
+    var src = c.createBufferSource();
+    src.buffer = noiseBuf;
+    var bp = c.createBiquadFilter();
+    bp.type = 'bandpass';
+    bp.Q.value = 1.2;
+    bp.frequency.setValueAtTime(f1, t);
+    bp.frequency.exponentialRampToValueAtTime(f2, t + dur);
+    var g = c.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(vol, t + dur * 0.35);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    src.connect(bp);
+    bp.connect(g);
+    g.connect(master);
+    src.start(t);
+    src.stop(t + dur + 0.03);
+  }
+
+  return {
+    unlock: ensure,
+    click: function () {
+      var n = Date.now();
+      if (n - lastClick < 60) return;
+      lastClick = n;
+      blip(920, 600, 0.07, 'triangle', 0.22, 0);
+      blip(1380, 900, 0.05, 'sine', 0.10, 0.012);
+    },
+    swipe: function (soft) {
+      var n = Date.now();
+      if (n - lastSwipe < (soft ? 110 : 140)) return;
+      lastSwipe = n;
+      if (soft) whoosh(0.16, 0.14, 1200, 2600);
+      else whoosh(0.28, 0.22, 700, 2800);
+    }
+  };
+})();
+
+/* unlock audio on the visitor's first touch / click / key press */
+['pointerdown', 'touchstart', 'keydown'].forEach(function (evt) {
+  window.addEventListener(evt, function () { SFX.unlock(); }, { once: true, passive: true });
+});
+
+/* click sound for buttons, links and clickable cards.
+   (Testimonial cards play the swipe sound instead; dragging a carousel
+   plays the swipe sound and does not trigger a click sound.) */
+document.addEventListener('click', function (e) {
+  var t = e.target && e.target.closest
+    ? e.target.closest('a, button, .tech-icon-box, .edu-node, .project-card, .cert-item')
+    : null;
+  if (t) SFX.click();
+});
+
 /* ICON FALLBACK — if a brand logo fails to load, swap it for a clean
    text badge (the tool's initials) instead of a broken-image icon. */
 document.querySelectorAll('.fb-icon img').forEach(function (img) {
@@ -108,7 +212,9 @@ var obs=new IntersectionObserver(function(entries){
 document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
 
 /* DRAGGABLE / SWIPEABLE MARQUEE — used by the Projects and Certificates
-   tracks. direction: 1 = normal, -1 = reversed. */
+   tracks. direction: 1 = normal, -1 = reversed.
+   Plays a swipe sound when the visitor starts dragging, plus a softer one
+   every ~170px of dragging. */
 function initSwipeMarquee(trackId, loopSeconds, direction){
   direction = direction || 1;
   var track = document.getElementById(trackId);
@@ -123,6 +229,7 @@ function initSwipeMarquee(trackId, loopSeconds, direction){
   var startPos = 0;
   var speed = 0;
   var activePointerId = null;
+  var lastSoundDx = 0;
 
   var momentumVelocity = 0;
   var momentumActive = false;
@@ -174,6 +281,7 @@ function initSwipeMarquee(trackId, loopSeconds, direction){
     momentumVelocity = 0;
     startX = e.clientX;
     startPos = pos;
+    lastSoundDx = 0;
     lastMoveTime = performance.now();
     lastMovePos = pos;
     activePointerId = e.pointerId;
@@ -185,6 +293,8 @@ function initSwipeMarquee(trackId, loopSeconds, direction){
     if(!moved && Math.abs(dx) > 15){
       moved = true;
       track.classList.add('dragging');
+      SFX.swipe(false);               /* swipe sound when the drag starts */
+      lastSoundDx = dx;
       if(track.setPointerCapture){
         try{ track.setPointerCapture(activePointerId); }catch(err){}
       }
@@ -192,6 +302,11 @@ function initSwipeMarquee(trackId, loopSeconds, direction){
     if(moved){
       pos = wrap360(startPos - dx);
       render();
+
+      if(Math.abs(dx - lastSoundDx) > 170){   /* soft tick while dragging */
+        SFX.swipe(true);
+        lastSoundDx = dx;
+      }
 
       var now = performance.now();
       var dt = now - lastMoveTime;
@@ -233,19 +348,7 @@ function initSwipeMarquee(trackId, loopSeconds, direction){
   requestAnimationFrame(tick);
 }
 
-/* PROJECT TEXT: longer Cup of Cafe description (edit the text below) */
-(function () {
-  var CAFE_DESC = 'A sophisticated digital storefront for a coffee shop, demonstrating modern frontend design, elegant interactions, and a refined user experience. Built with a warm, inviting look and a responsive layout that works smoothly on desktop and mobile.';
-  document.querySelectorAll('.project-card').forEach(function (card) {
-    var title = card.querySelector('.project-card-title');
-    var desc = card.querySelector('.project-card-desc');
-    if (title && desc && title.textContent.trim() === 'Cup of Cafe') {
-      desc.textContent = CAFE_DESC;
-    }
-  });
-})();
-
-initSwipeMarquee('projectTrack', 90, 1);
+initSwipeMarquee('projectTrack', 108, 1);
 initSwipeMarquee('certTrack', 75, 1);
 initSwipeMarquee('certTrack2', 75, -1);
 
@@ -431,7 +534,8 @@ document.addEventListener('keydown',function(e){
    Each card is rearranged to: [avatar name rating] / quote icon / text.
    Testimonials are SHORTENED here (SHORT_TEXT) so every card stays the same
    compact size as the reference design (~330px wide, short quote).
-   To edit a quote, just change the text next to the person's name below. */
+   To edit a quote, just change the text next to the person's name below.
+   Swiping / tapping a card plays the swipe sound. */
 (function () {
   var deck = document.getElementById('testiDeck');
   if (!deck) return;
@@ -444,13 +548,14 @@ document.addEventListener('keydown',function(e){
 
   /* SHORT versions of each testimonial, matched by the person's name */
   var SHORT_TEXT = {
-    'Josh Aguilera':   'Danmark did a great job on the HealthSync Clinic Management System. It\u2019s simple, organized, and easy to use, with features that are practical for daily clinic tasks.',
-    'Julia Sardalla':  'The AI Danmark created for me is easy to use and has a creative design. It helped me with my tasks and improved the quality of my work.',
-    'Clark Zablan':    'His development was quite fast, even remarkable. From learning the basics, he has gained a lot of knowledge and solved many problems.',
-    'Benny Scoggins':  'He is very passionate about his work and pours his time, skills, and knowledge into it. He finds solutions you wouldn\u2019t think of.',
-    'Asher Brum':      'His growth was exemplary and worthy of imitation, and his programming skills were commendable even from his early stages.',
-    'Joaquin Flores':  'Danmark handled the design and back-end work alone and delivered on time. He\u2019s honest, responsible, and a snappy developer.',
-    'Ken Cuaresma':    'Danmark is a skilled and dedicated developer. He is easy to work with, takes every project seriously, and I would definitely recommend him.'
+    'Josh Aguilera':    'Danmark did a great job on the HealthSync Clinic Management System. It\u2019s simple, organized, and easy to use, with features that are practical for daily clinic tasks.',
+    'Julia Sardalla':   'The AI Danmark created for me is easy to use and has a creative design. It helped me with my tasks and improved the quality of my work.',
+    'Clark Zablan':     'His development was quite fast, even remarkable. From learning the basics, he has gained a lot of knowledge and solved many problems.',
+    'Benny Scoggins':   'He is very passionate about his work and pours his time, skills, and knowledge into it. He finds solutions you wouldn\u2019t think of.',
+    'Asher Brum':       'His growth was exemplary and worthy of imitation, and his programming skills were commendable even from his early stages.',
+    'Joaquin Flores':   'Danmark handled the design and back-end work alone and delivered on time. He\u2019s honest, responsible, and a snappy developer.',
+    'Ken Cuaresma':     'Danmark is a skilled and dedicated developer. He is easy to work with, takes every project seriously, and I would definitely recommend him.',
+    'Shanell Jamandre': 'Danmark gave me a hugeee help in creating the minigame I desired for my activity simulation for practice teaching. It went to success as he resolved the issues in my minigame program.'
   };
 
   /* fallback for any new testimonial not listed above:
@@ -529,7 +634,9 @@ document.addEventListener('keydown',function(e){
   }
 
   function goTo(i) {
-    active = (i + n) % n;
+    var next = (i + n) % n;
+    if (next !== active) SFX.swipe(false);   /* swipe sound on every card change */
+    active = next;
     render();
   }
 
