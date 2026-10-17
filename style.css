@@ -1204,6 +1204,10 @@ textarea{min-height:120px}
 .contact-form button:active,.contact-form button:focus{transform:translateY(0)}
 .contact-form button:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
 #cf-status{font-size:.82rem;min-height:1.2em;color:var(--muted)}
+
+/* BACK TO HOME link (contact page)
+   Gray by default; turns WHITE on hover, tap, click and focus,
+   so it never stays gray/orange after being pressed. */
 .back-home{
   font-family: var(--font-body);
   color: var(--muted);
@@ -1215,7 +1219,11 @@ textarea{min-height:120px}
   text-decoration: none;
   transition: color .2s;
 }
-.back-home:hover{color:var(--accent)}
+.back-home:visited{color:var(--muted)}
+.back-home:hover,
+.back-home:active,
+.back-home:focus,
+.back-home:focus-visible{color:#ffffff !important}
 
 /* FOOTER */
 footer{background:transparent;border-top:1px solid rgba(255,255,255,.09);padding:2rem 0;position:relative;z-index:1}
