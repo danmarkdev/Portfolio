@@ -1,124 +1,125 @@
-/* ---------- SOUND EFFECTS ----------
-   Tiny sounds made with the browser's Web Audio API (no audio files needed).
-     SFX.click()  -> soft "pop" when a button / link / card is clicked
-     SFX.swipe()  -> soft "whoosh" when swiping or dragging a carousel
-   Browsers only allow sound after the visitor touches the page once, so the
-   audio is unlocked on the first tap / click / key press.
-   To make everything quieter or louder, change MASTER_VOLUME below. */
+/* ---------- SOUND EFFECTS (same sound engine as rebkhei.vercel.app) ----------
+   Tiny synthesized sounds made with the Web Audio API (no audio files):
+     SFX.hover()    -> crisp mechanical tick when the mouse moves onto something pressable
+     SFX.click()    -> punchy mouse "click" when you press a button / link / card
+     SFX.tick()     -> small selection tick (dragging the carousels, timeline nodes)
+     SFX.shuffle()  -> 3-part card "shuffle" when a testimonial card changes
+   Browsers keep audio locked until the visitor interacts once, so it is unlocked
+   on the first mouse move / tap / key press / scroll.
+   Optional mute: localStorage key 'portfolio_sound_muted' = 'true' turns it all off. */
 var SFX = (function () {
-  var MASTER_VOLUME = 0.6;
-  var ctx = null, master = null, noiseBuf = null;
-  var lastClick = 0, lastSwipe = 0, lastHover = 0;
+  var audioCtx = null;
+  var audioUnlocked = false;
+  var lastTick = 0;
 
-  function ensure() {
-    var AC = window.AudioContext || window.webkitAudioContext;
-    if (!AC) return null;
-    if (!ctx) {
-      try { ctx = new AC(); } catch (err) { return null; }
-      master = ctx.createGain();
-      master.gain.value = MASTER_VOLUME;
-      master.connect(ctx.destination);
-    }
-    if (ctx.state === 'suspended' && ctx.resume) { ctx.resume(); }
-    return ctx;
+  function isMuted() {
+    try { return localStorage.getItem('portfolio_sound_muted') === 'true'; }
+    catch (e) { return false; }
   }
 
-  function blip(f1, f2, dur, type, vol, delay) {
-    var c = ensure();
-    if (!c) return;
-    var t = c.currentTime + (delay || 0);
-    var o = c.createOscillator();
-    var g = c.createGain();
-    o.type = type;
-    o.frequency.setValueAtTime(f1, t);
-    o.frequency.exponentialRampToValueAtTime(f2, t + dur);
-    g.gain.setValueAtTime(0.0001, t);
-    g.gain.exponentialRampToValueAtTime(vol, t + 0.008);
-    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-    o.connect(g);
-    g.connect(master);
-    o.start(t);
-    o.stop(t + dur + 0.03);
+  function init() {
+    try {
+      if (isMuted()) return;
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      if (!audioUnlocked && audioCtx.state === 'running') {
+        audioUnlocked = true;
+        var buffer = audioCtx.createBuffer(1, 1, 22050);
+        var source = audioCtx.createBufferSource();
+        source.buffer = buffer;
+        source.connect(audioCtx.destination);
+        source.start(0);
+      }
+    } catch (e) {}
   }
 
-  function whoosh(vol, dur, f1, f2) {
-    var c = ensure();
-    if (!c) return;
-    if (!noiseBuf) {
-      noiseBuf = c.createBuffer(1, c.sampleRate, c.sampleRate);
-      var data = noiseBuf.getChannelData(0);
-      for (var i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1;
-    }
-    var t = c.currentTime;
-    var src = c.createBufferSource();
-    src.buffer = noiseBuf;
-    var bp = c.createBiquadFilter();
-    bp.type = 'bandpass';
-    bp.Q.value = 1.2;
-    bp.frequency.setValueAtTime(f1, t);
-    bp.frequency.exponentialRampToValueAtTime(f2, t + dur);
-    var g = c.createGain();
-    g.gain.setValueAtTime(0.0001, t);
-    g.gain.exponentialRampToValueAtTime(vol, t + dur * 0.35);
-    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-    src.connect(bp);
-    bp.connect(g);
-    g.connect(master);
-    src.start(t);
-    src.stop(t + dur + 0.03);
+  /* one short oscillator "pop": starts at f1, slides down to f2 */
+  function pop(type, f1, f2, dur, vol, offset) {
+    try {
+      init();
+      if (!audioCtx) return;
+      var t = audioCtx.currentTime + (offset || 0);
+      var osc = audioCtx.createOscillator();
+      var gain = audioCtx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(f1, t);
+      osc.frequency.exponentialRampToValueAtTime(f2, t + dur);
+      gain.gain.setValueAtTime(vol, t);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(t);
+      osc.stop(t + dur);
+    } catch (err) {}
   }
 
   return {
-    unlock: ensure,
-    click: function () {
-      var n = Date.now();
-      if (n - lastClick < 60) return;
-      lastClick = n;
-      blip(920, 600, 0.07, 'triangle', 0.22, 0);
-      blip(1380, 900, 0.05, 'sine', 0.10, 0.012);
-    },
+    unlock: init,
+    /* ultra-crisp mechanical clicky pop (2600Hz -> 550Hz) */
     hover: function () {
-      var n = Date.now();
-      if (n - lastHover < 70) return;
-      lastHover = n;
-      blip(1500, 1900, 0.04, 'sine', 0.07, 0);
+      if (isMuted()) return;
+      pop('sine', 2600, 550, 0.012, 0.35, 0);
     },
-    swipe: function (soft) {
-      var n = Date.now();
-      if (n - lastSwipe < (soft ? 110 : 140)) return;
-      lastSwipe = n;
-      if (soft) whoosh(0.16, 0.14, 1200, 2600);
-      else whoosh(0.28, 0.22, 700, 2800);
+    /* punchy mechanical mouse click */
+    click: function () {
+      if (isMuted()) return;
+      pop('triangle', 1600, 220, 0.035, 0.5, 0);
+    },
+    /* small selection tick (throttled) */
+    tick: function () {
+      if (isMuted()) return;
+      var now = Date.now();
+      if (now - lastTick < 35) return;
+      lastTick = now;
+      pop('sine', 2800, 800, 0.009, 0.25, 0);
+    },
+    /* card shuffle: three quick descending pops */
+    shuffle: function () {
+      if (isMuted()) return;
+      [0, 0.035, 0.075].forEach(function (offset, idx) {
+        pop('triangle', 1800 - idx * 250, 600 - idx * 100, 0.025, 0.35 - idx * 0.08, offset);
+      });
     }
   };
 })();
 
-/* unlock audio on the visitor's first touch / click / key press */
-['pointerdown', 'touchstart', 'keydown'].forEach(function (evt) {
-  window.addEventListener(evt, function () { SFX.unlock(); }, { once: true, passive: true });
+/* unlock audio on the visitor's first interaction */
+(function () {
+  function unlock() {
+    SFX.unlock();
+    ['pointerdown', 'pointermove', 'mousemove', 'touchstart', 'keydown', 'scroll'].forEach(function (evt) {
+      window.removeEventListener(evt, unlock);
+    });
+  }
+  ['pointerdown', 'pointermove', 'mousemove', 'touchstart', 'keydown', 'scroll'].forEach(function (evt) {
+    window.addEventListener(evt, unlock, { passive: true });
+  });
+})();
+
+/* things that make sound when hovered / clicked */
+var SFX_SELECTOR = 'a, button, .hamburger, .tech-icon-box, .stack-badge, .project-card, .cert-item, .testi-card, .edu-node';
+var sfxHovered = null;
+
+/* hover sound: plays once each time the mouse moves onto a new pressable thing */
+document.addEventListener('mouseover', function (e) {
+  var c = e.target && e.target.closest ? e.target.closest(SFX_SELECTOR) : null;
+  if (c && c !== sfxHovered) {
+    sfxHovered = c;
+    SFX.hover();
+  }
+});
+document.addEventListener('mouseout', function (e) {
+  if (!sfxHovered) return;
+  var related = e.relatedTarget;
+  if (!related || !sfxHovered.contains(related)) sfxHovered = null;
 });
 
-/* click sound for buttons, links and clickable cards.
-   (Testimonial cards play the swipe sound instead; dragging a carousel
-   plays the swipe sound and does not trigger a click sound.) */
+/* click sound (dragging a carousel does not count as a click) */
 document.addEventListener('click', function (e) {
-  var t = e.target && e.target.closest
-    ? e.target.closest('a, button, .tech-icon-box, .edu-node, .project-card, .cert-item')
-    : null;
+  var t = e.target && e.target.closest ? e.target.closest(SFX_SELECTOR) : null;
   if (t) SFX.click();
-});
-
-/* HOVER sound: a tiny tick when the mouse moves onto something you can press
-   (before you click it). Only for mouse; phones have no hover.
-   Note: browsers keep audio locked until the first click / tap / key press. */
-var lastHoverEl = null;
-document.addEventListener('pointerover', function (e) {
-  if (e.pointerType && e.pointerType !== 'mouse') return;
-  var t = e.target && e.target.closest
-    ? e.target.closest('a, button, .tech-icon-box, .edu-node, .project-card, .cert-item, .testi-card, .stack-badge')
-    : null;
-  if (t && t !== lastHoverEl) SFX.hover();
-  lastHoverEl = t;
 });
 
 /* ICON FALLBACK — if a brand logo fails to load, swap it for a clean
@@ -232,8 +233,7 @@ document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
 
 /* DRAGGABLE / SWIPEABLE MARQUEE — used by the Projects and Certificates
    tracks. direction: 1 = normal, -1 = reversed.
-   Plays a swipe sound when the visitor starts dragging, plus a softer one
-   every ~170px of dragging. */
+   Plays a small tick when the visitor starts dragging and every ~40px after. */
 function initSwipeMarquee(trackId, loopSeconds, direction){
   direction = direction || 1;
   var track = document.getElementById(trackId);
@@ -312,7 +312,7 @@ function initSwipeMarquee(trackId, loopSeconds, direction){
     if(!moved && Math.abs(dx) > 15){
       moved = true;
       track.classList.add('dragging');
-      SFX.swipe(false);               /* swipe sound when the drag starts */
+      SFX.tick();                     /* tick when the drag starts */
       lastSoundDx = dx;
       if(track.setPointerCapture){
         try{ track.setPointerCapture(activePointerId); }catch(err){}
@@ -322,8 +322,8 @@ function initSwipeMarquee(trackId, loopSeconds, direction){
       pos = wrap360(startPos - dx);
       render();
 
-      if(Math.abs(dx - lastSoundDx) > 170){   /* soft tick while dragging */
-        SFX.swipe(true);
+      if(Math.abs(dx - lastSoundDx) > 40){    /* tick every ~40px while dragging */
+        SFX.tick();
         lastSoundDx = dx;
       }
 
@@ -522,6 +522,7 @@ document.addEventListener('keydown',function(e){
     renderDetail(detailId, data[0]);
     nodes.forEach(function (btn, i) {
       btn.addEventListener('click', function () {
+        SFX.tick();
         nodes.forEach(function (b) { b.classList.remove('active'); });
         btn.classList.add('active');
         renderDetail(detailId, data[i]);
@@ -554,7 +555,7 @@ document.addEventListener('keydown',function(e){
    Testimonials are SHORTENED here (SHORT_TEXT) so every card stays the same
    compact size as the reference design (~330px wide, short quote).
    To edit a quote, just change the text next to the person's name below.
-   Swiping / tapping a card plays the swipe sound. */
+   Swiping / tapping a card plays the card-shuffle sound. */
 (function () {
   var deck = document.getElementById('testiDeck');
   if (!deck) return;
@@ -655,7 +656,7 @@ document.addEventListener('keydown',function(e){
 
   function goTo(i) {
     var next = (i + n) % n;
-    if (next !== active) SFX.swipe(false);   /* swipe sound on every card change */
+    if (next !== active) SFX.shuffle();   /* card shuffle sound on every card change */
     active = next;
     render();
   }
