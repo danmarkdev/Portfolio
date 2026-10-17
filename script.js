@@ -4,26 +4,63 @@
      SFX.click()    -> punchy click when you press a button / link / card
      SFX.tick()     -> small selection tick (dragging the carousels, timeline nodes)
      SFX.shuffle()  -> 3-part card "shuffle" when a testimonial card changes
-     SFX.scroll()   -> very soft tick while the page is scrolling
-   Browsers keep audio locked until the visitor interacts once, so it is unlocked
-   on the first tap / click / key press (works on mobile AND desktop).
-   The round speaker button (bottom-left) turns ALL sound on/off and remembers
-   the choice (localStorage key 'portfolio_sound_muted'). */
+     SFX.scroll()   -> soft tick while the page is scrolling
+   PHONE FIXES: sounds are lower, longer and louder on touch screens (phone speakers
+   can't play tiny high blips), a compressor stops distortion, and on iPhone the audio
+   is switched to "playback" mode so it also works when the silent switch is on.
+   The speaker button (bottom-left) turns ALL sound on/off and remembers the choice. */
 var SFX = (function () {
   var audioCtx = null;
+  var master = null;
   var audioUnlocked = false;
+  var keepAlive = null;
   var lastTick = 0;
   var lastScroll = 0;
   var MUTE_KEY = 'portfolio_sound_muted';
   var muted = false;
+  var isTouch = false;
 
   try { muted = localStorage.getItem(MUTE_KEY) === 'true'; } catch (e) { muted = false; }
+  try { isTouch = window.matchMedia('(pointer: coarse)').matches; } catch (e) { isTouch = false; }
 
   function isMuted() { return muted; }
 
   function setMuted(v) {
     muted = !!v;
     try { localStorage.setItem(MUTE_KEY, muted ? 'true' : 'false'); } catch (e) {}
+  }
+
+  /* a tiny silent WAV, built in code (no file needed) */
+  function makeSilentWav() {
+    var rate = 8000, n = 800;
+    var buf = new ArrayBuffer(44 + n);
+    var v = new DataView(buf);
+    function s(o, t) { for (var i = 0; i < t.length; i++) v.setUint8(o + i, t.charCodeAt(i)); }
+    s(0, 'RIFF'); v.setUint32(4, 36 + n, true); s(8, 'WAVE'); s(12, 'fmt ');
+    v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+    v.setUint32(24, rate, true); v.setUint32(28, rate, true);
+    v.setUint16(32, 1, true); v.setUint16(34, 8, true);
+    s(36, 'data'); v.setUint32(40, n, true);
+    for (var i = 0; i < n; i++) v.setUint8(44 + i, 128);
+    return URL.createObjectURL(new Blob([buf], { type: 'audio/wav' }));
+  }
+
+  /* iPhone: makes Web Audio play even when the silent/ringer switch is on */
+  function iosPlayback() {
+    try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) {}
+    try {
+      if (!keepAlive) {
+        keepAlive = document.createElement('audio');
+        keepAlive.setAttribute('playsinline', '');
+        keepAlive.setAttribute('webkit-playsinline', '');
+        keepAlive.loop = true;
+        keepAlive.src = makeSilentWav();
+      }
+      if (keepAlive.paused) {
+        var p = keepAlive.play();
+        if (p && p.catch) p.catch(function () {});
+      }
+    } catch (e) {}
   }
 
   function init() {
@@ -33,16 +70,23 @@ var SFX = (function () {
         var AC = window.AudioContext || window.webkitAudioContext;
         if (!AC) return;
         audioCtx = new AC();
+        master = audioCtx.createGain();
+        master.gain.value = isTouch ? 1.8 : 1;
+        var comp = audioCtx.createDynamicsCompressor();
+        master.connect(comp);
+        comp.connect(audioCtx.destination);
+        audioCtx.onstatechange = function () {
+          if (audioCtx.state === 'running') audioUnlocked = true;
+        };
       }
-      if (audioCtx.state === 'suspended') audioCtx.resume();
+      if (audioCtx.state !== 'running') audioCtx.resume();
       if (!audioUnlocked) {
-        /* play a silent buffer: this is what fully unlocks audio on iPhone / Android */
         var buffer = audioCtx.createBuffer(1, 1, 22050);
         var source = audioCtx.createBufferSource();
         source.buffer = buffer;
         source.connect(audioCtx.destination);
         source.start(0);
-        if (audioCtx.state === 'running') audioUnlocked = true;
+        iosPlayback();
       }
     } catch (e) {}
   }
@@ -51,7 +95,13 @@ var SFX = (function () {
   function pop(type, f1, f2, dur, vol, offset) {
     try {
       init();
-      if (!audioCtx || muted) return;
+      if (!audioCtx || !master || muted) return;
+      if (isTouch) {            /* phone speakers: lower, longer, louder */
+        f1 = f1 * 0.45;
+        f2 = f2 * 0.45;
+        dur = dur * 2.4;
+        vol = Math.min(1, vol * 1.8);
+      }
       var t = audioCtx.currentTime + (offset || 0);
       var osc = audioCtx.createOscillator();
       var gain = audioCtx.createGain();
@@ -61,9 +111,9 @@ var SFX = (function () {
       gain.gain.setValueAtTime(vol, t);
       gain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
       osc.connect(gain);
-      gain.connect(audioCtx.destination);
+      gain.connect(master);
       osc.start(t);
-      osc.stop(t + dur);
+      osc.stop(t + dur + 0.02);
     } catch (err) {}
   }
 
@@ -72,17 +122,14 @@ var SFX = (function () {
     isMuted: isMuted,
     setMuted: setMuted,
     isRunning: function () { return !!audioCtx && audioCtx.state === 'running'; },
-    /* ultra-crisp mechanical clicky pop (2600Hz -> 550Hz) */
     hover: function () {
       if (muted) return;
       pop('sine', 2600, 550, 0.012, 0.35, 0);
     },
-    /* punchy mechanical mouse click */
     click: function () {
       if (muted) return;
       pop('triangle', 1600, 220, 0.035, 0.5, 0);
     },
-    /* small selection tick (throttled) */
     tick: function () {
       if (muted) return;
       var now = Date.now();
@@ -90,7 +137,6 @@ var SFX = (function () {
       lastTick = now;
       pop('sine', 2800, 800, 0.009, 0.25, 0);
     },
-    /* soft scroll tick (throttled) */
     scroll: function () {
       if (muted) return;
       var now = Date.now();
@@ -98,7 +144,6 @@ var SFX = (function () {
       lastScroll = now;
       pop('sine', 1500, 700, 0.014, 0.14, 0);
     },
-    /* card shuffle: three quick descending pops */
     shuffle: function () {
       if (muted) return;
       [0, 0.035, 0.075].forEach(function (offset, idx) {
