@@ -1,3 +1,21 @@
+/* ---------- DEVICE CHECK (performance) ----------
+   LITE  = weak phone / reduced-motion user  -> grid & background stay, but don't animate
+   COARSE = touch device (phone / tablet)
+   SCROLL_FNS = small functions that run once per frame while scrolling
+                (one shared scroll handler instead of 4 separate ones) */
+var COARSE = false;
+var LITE = false;
+try {
+  COARSE = window.matchMedia('(pointer: coarse)').matches;
+  var _reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var _mem = navigator.deviceMemory || 8;
+  var _cores = navigator.hardwareConcurrency || 8;
+  LITE = _reduce || (COARSE && (_mem <= 3 || _cores <= 4));
+} catch (e) {}
+if (LITE) document.documentElement.classList.add('lite-mode');
+
+var SCROLL_FNS = [];
+
 /* ---------- SOUND EFFECTS ----------
    Tiny synthesized sounds made with the Web Audio API (no audio files):
      SFX.hover()    -> crisp tick when the mouse moves onto something pressable (desktop)
@@ -185,23 +203,6 @@ document.addEventListener('click', function (e) {
   if (t) SFX.click();
 });
 
-/* ---------- SCROLL SOUND ----------
-   A soft tick every ~70px of scrolling (works with the mouse wheel,
-   touch scrolling and the keyboard). */
-(function () {
-  var lastY = window.scrollY || 0;
-  var acc = 0;
-  window.addEventListener('scroll', function () {
-    var y = window.scrollY || 0;
-    acc += Math.abs(y - lastY);
-    lastY = y;
-    if (acc >= 70) {
-      acc = 0;
-      SFX.scroll();
-    }
-  }, { passive: true });
-})();
-
 /* ---------- SOUND ON/OFF BUTTON (bottom-left) ---------- */
 (function () {
   var ON_ICON =
@@ -310,12 +311,6 @@ document.querySelectorAll('.fb-icon img').forEach(function (img) {
   }, { once: true });
 });
 
-/* HEADER SCROLL */
-window.addEventListener('scroll',function(){
-  var h=document.getElementById('header');
-  if(h) h.classList.toggle('scrolled',window.scrollY>30);
-});
-
 /* HAMBURGER */
 var hbg=document.getElementById('hbg');
 var mnav=document.getElementById('mnav');
@@ -345,18 +340,71 @@ if (MOBILE_BREAKPOINT.addEventListener) {
   MOBILE_BREAKPOINT.addListener(handleBreakpointChange);
 }
 
-/* ACTIVE NAV */
+/* ---------- ONE SHARED SCROLL HANDLER ----------
+   Before: 4 separate scroll listeners (header, active nav, scroll sound,
+   grid) ran on EVERY scroll event, and the nav one read offsetTop of every
+   section each time (forces layout = jank on phones).
+   Now: ONE listener, runs at most once per frame (requestAnimationFrame),
+   and the section positions are measured once and cached. */
 var sections=document.querySelectorAll('section[id]');
 var navLinks=document.querySelectorAll('#nav a:not(.nav-cta)');
 var mobileNavLinks=document.querySelectorAll('#mnav a');
-if(sections.length){
-  window.addEventListener('scroll',function(){
-    var cur='';
-    sections.forEach(function(s){ if(window.scrollY>=s.offsetTop-120) cur=s.id; });
-    navLinks.forEach(function(a){ a.classList.toggle('active',a.getAttribute('href')==='#'+cur); });
-    mobileNavLinks.forEach(function(a){ a.classList.toggle('active',a.getAttribute('href')==='#'+cur); });
+var headerEl=document.getElementById('header');
+var sectionCache=[];
+
+function measureSections(){
+  sectionCache=Array.prototype.map.call(sections,function(s){
+    return { id:s.id, top:s.offsetTop };
   });
 }
+measureSections();
+
+(function(){
+  var lastY=window.scrollY||0;
+  var acc=0;
+  var queued=false;
+  var lastCur=null;
+
+  function frame(){
+    queued=false;
+    var y=window.scrollY||0;
+
+    /* scroll sound: a soft tick every ~70px */
+    acc+=Math.abs(y-lastY);
+    lastY=y;
+    if(acc>=70){ acc=0; SFX.scroll(); }
+
+    /* header shadow */
+    if(headerEl) headerEl.classList.toggle('scrolled',y>30);
+
+    /* active nav link (only touches the DOM when the section changes) */
+    var cur='';
+    for(var i=0;i<sectionCache.length;i++){
+      if(y>=sectionCache[i].top-120) cur=sectionCache[i].id;
+    }
+    if(cur!==lastCur){
+      lastCur=cur;
+      navLinks.forEach(function(a){ a.classList.toggle('active',a.getAttribute('href')==='#'+cur); });
+      mobileNavLinks.forEach(function(a){ a.classList.toggle('active',a.getAttribute('href')==='#'+cur); });
+    }
+
+    /* anything else that wants to run while scrolling (the grid) */
+    for(var j=0;j<SCROLL_FNS.length;j++) SCROLL_FNS[j]();
+  }
+
+  window.addEventListener('scroll',function(){
+    if(!queued){ queued=true; requestAnimationFrame(frame); }
+  },{passive:true});
+
+  window.addEventListener('load',function(){ measureSections(); frame(); });
+  var rT;
+  window.addEventListener('resize',function(){
+    clearTimeout(rT);
+    rT=setTimeout(measureSections,150);
+  });
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(measureSections);
+})();
+
 /* set active state instantly on click */
 [navLinks, mobileNavLinks].forEach(function(list){
   list.forEach(function(a){
@@ -381,7 +429,9 @@ if(stackTabs){
   });
 }
 
-/* SCROLL REVEAL */
+/* SCROLL REVEAL
+   rootMargin makes things appear a little BEFORE they reach the screen,
+   so sections never look empty while you scroll on a slow phone. */
 var obs=new IntersectionObserver(function(entries){
   entries.forEach(function(e,i){
     if(e.isIntersecting){
@@ -389,12 +439,14 @@ var obs=new IntersectionObserver(function(entries){
       obs.unobserve(e.target);
     }
   });
-},{threshold:.1});
+},{threshold:.05,rootMargin:'0px 0px 120px 0px'});
 document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
 
 /* DRAGGABLE / SWIPEABLE MARQUEE — used by the Projects and Certificates
    tracks. direction: 1 = normal, -1 = reversed.
-   Plays a small tick when the visitor starts dragging and every ~40px after. */
+   Plays a small tick when the visitor starts dragging and every ~40px after.
+   PERFORMANCE: the loop does nothing while the marquee is off-screen, and
+   it moves with translate3d (GPU). */
 function initSwipeMarquee(trackId, loopSeconds, direction){
   direction = direction || 1;
   var track = document.getElementById(trackId);
@@ -410,6 +462,7 @@ function initSwipeMarquee(trackId, loopSeconds, direction){
   var speed = 0;
   var activePointerId = null;
   var lastSoundDx = 0;
+  var inView = true;
 
   var momentumVelocity = 0;
   var momentumActive = false;
@@ -417,6 +470,12 @@ function initSwipeMarquee(trackId, loopSeconds, direction){
   var lastMovePos = 0;
   var MAX_VELOCITY = 4200;
   var FRICTION = 3.2;
+
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(entries){
+      inView = entries[0].isIntersecting;
+    },{ rootMargin:'120px' }).observe(wrap);
+  }
 
   function measure(){
     half = track.scrollWidth / 2;
@@ -431,7 +490,7 @@ function initSwipeMarquee(trackId, loopSeconds, direction){
   }
 
   function render(){
-    track.style.transform = 'translateX(' + (-pos) + 'px)';
+    track.style.transform = 'translate3d(' + (-pos) + 'px,0,0)';
   }
 
   var lastTime = null;
@@ -439,6 +498,14 @@ function initSwipeMarquee(trackId, loopSeconds, direction){
     if(lastTime===null) lastTime = t;
     var dt = (t - lastTime) / 1000;
     lastTime = t;
+    if(dt > 0.1) dt = 0.1;          /* no big jump after a tab switch / lag spike */
+
+    /* off-screen: do no work at all */
+    if(!inView && !dragging){
+      requestAnimationFrame(tick);
+      return;
+    }
+
     if(!dragging){
       if(momentumActive){
         pos = wrap360(pos + momentumVelocity*dt);
@@ -844,8 +911,13 @@ document.addEventListener('keydown',function(e){
     }
   }, { passive: true });
 
+  /* only re-measure when the WIDTH changes (on phones, the address bar
+     hiding/showing changes the height while scrolling — ignore that) */
+  var lastW = window.innerWidth;
   var resizeT;
   window.addEventListener('resize', function () {
+    if (window.innerWidth === lastW) return;
+    lastW = window.innerWidth;
     clearTimeout(resizeT);
     resizeT = setTimeout(sizeDeck, 120);
   });
@@ -894,12 +966,26 @@ document.querySelectorAll('.tech-icon-box').forEach(function(box){
   box.addEventListener('focus', function(){ computeTipShift(box); }, true);
 });
 
+/* (the tooltip is recomputed on hover/touch, so a full pass is only
+   needed once on load and when the screen WIDTH changes) */
 function adjustAllTechTips(){
   document.querySelectorAll('.tech-icon-box').forEach(computeTipShift);
 }
-window.addEventListener('load', adjustAllTechTips);
-window.addEventListener('resize', adjustAllTechTips);
-window.addEventListener('orientationchange', adjustAllTechTips);
+(function(){
+  var lastW = window.innerWidth;
+  var t;
+  function later(){
+    clearTimeout(t);
+    t = setTimeout(adjustAllTechTips, 200);
+  }
+  window.addEventListener('load', adjustAllTechTips);
+  window.addEventListener('resize', function(){
+    if (window.innerWidth === lastW) return;
+    lastW = window.innerWidth;
+    later();
+  });
+  window.addEventListener('orientationchange', later);
+})();
 
 /* ORBIT DOTS (scattered, still) */
 (function () {
@@ -946,13 +1032,39 @@ window.addEventListener('orientationchange', adjustAllTechTips);
     });
   }
   place();
-  window.addEventListener('resize', place);
+  var lastW = window.innerWidth;
+  window.addEventListener('resize', function () {
+    if (window.innerWidth === lastW) return;
+    lastW = window.innerWidth;
+    place();
+  });
+})();
+
+/* PAUSE THE ORBITING ICONS WHEN THEY ARE OFF-SCREEN
+   (17 icons x 2 animations each = a lot of work for nothing once you
+   have scrolled past the hero) */
+(function () {
+  var orbit = document.getElementById('photoOrbit');
+  if (!orbit || !('IntersectionObserver' in window)) return;
+  new IntersectionObserver(function (entries) {
+    orbit.classList.toggle('is-offscreen', !entries[0].isIntersecting);
+  }, { rootMargin: '60px' }).observe(orbit);
 })();
 
 /* ---------- ANIMATED BACKGROUND ----------
    Drifting soft glows + a floating particle network that reacts to the
    mouse. Creates its own <canvas id="bg-canvas"> if the page doesn't have
-   one. */
+   one.
+
+   PERFORMANCE:
+   - STOPS COMPLETELY (no drawing at all) while the perspective grid is
+     showing or the tab is hidden. Before, it kept drawing invisibly.
+   - On phones: fewer particles, 1 glow instead of 3, 1x pixel ratio and
+     ~30fps, and it ignores the height-only resizes caused by the address
+     bar hiding/showing while you scroll.
+   - On weak devices (LITE) it draws ONE still frame and never animates. */
+var BG = { gridOn: false, kick: function () {} };
+
 (function () {
   var canvas = document.getElementById('bg-canvas');
   if (!canvas) {
@@ -964,17 +1076,22 @@ window.addEventListener('orientationchange', adjustAllTechTips);
   if (!ctx) return;
 
   var ACC = '255,255,255';
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var still = LITE;                       /* reduced motion or weak device */
+  var small = COARSE || window.matchMedia('(max-width: 960px)').matches;
   var W = 0, H = 0, dpr = 1;
   var pts = [];
   var mouse = { x: -9999, y: -9999 };
-  var LINK = 140;
+  var LINK = small ? 110 : 140;
+  var running = false;
+  var lastFrame = 0;
+  var lastW = 0;
 
-  var blobs = [
+  var allBlobs = [
     { s: 1.0, p: 0.0, a: 0.02 },
     { s: 0.7, p: 2.1, a: 0.015 },
     { s: 1.3, p: 4.2, a: 0.012 }
   ];
+  var blobs = small ? allBlobs.slice(0, 1) : allBlobs;
 
   function make() {
     return {
@@ -987,13 +1104,15 @@ window.addEventListener('orientationchange', adjustAllTechTips);
   }
 
   function resize() {
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    dpr = small ? 1 : Math.min(window.devicePixelRatio || 1, 2);
     W = window.innerWidth;
     H = window.innerHeight;
+    lastW = W;
     canvas.width = Math.round(W * dpr);
     canvas.height = Math.round(H * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    var count = Math.max(24, Math.min(90, Math.round(W * H / 16000)));
+    var maxPts = small ? 34 : 90;
+    var count = Math.max(20, Math.min(maxPts, Math.round(W * H / (small ? 20000 : 16000))));
     while (pts.length < count) pts.push(make());
     pts.length = count;
   }
@@ -1015,7 +1134,7 @@ window.addEventListener('orientationchange', adjustAllTechTips);
     var i, j, p, q, dx, dy, d2;
     for (i = 0; i < pts.length; i++) {
       p = pts[i];
-      if (!reduce) {
+      if (!still) {
         dx = p.x - mouse.x;
         dy = p.y - mouse.y;
         d2 = dx * dx + dy * dy;
@@ -1052,19 +1171,39 @@ window.addEventListener('orientationchange', adjustAllTechTips);
         }
       }
     }
+    ctx.fillStyle = 'rgba(' + ACC + ',0.45)';
     for (i = 0; i < pts.length; i++) {
       p = pts[i];
-      ctx.fillStyle = 'rgba(' + ACC + ',0.45)';
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
       ctx.fill();
     }
   }
 
+  /* the loop only runs when it is really needed */
+  function shouldRun() {
+    return !still && !BG.gridOn && !document.hidden;
+  }
+
   function loop(t) {
+    if (!shouldRun()) { running = false; return; }
+    /* phones: ~30fps is plenty for a slow background */
+    if (small && t - lastFrame < 33) { requestAnimationFrame(loop); return; }
+    lastFrame = t;
     draw(t);
     requestAnimationFrame(loop);
   }
+
+  function start() {
+    if (still) { draw(0); return; }
+    if (running || !shouldRun()) return;
+    running = true;
+    requestAnimationFrame(loop);
+  }
+
+  BG.kick = start;   /* the grid calls this when it turns on / off */
+
+  document.addEventListener('visibilitychange', start);
 
   window.addEventListener('pointermove', function (e) {
     mouse.x = e.clientX;
@@ -1076,21 +1215,26 @@ window.addEventListener('orientationchange', adjustAllTechTips);
 
   var rT;
   window.addEventListener('resize', function () {
+    /* phones: scrolling changes the HEIGHT (address bar). Ignore that. */
+    if (small && window.innerWidth === lastW) return;
     clearTimeout(rT);
     rT = setTimeout(function () {
       resize();
-      if (reduce) draw(0);
-    }, 120);
+      if (still) draw(0);
+    }, 150);
   });
 
   resize();
-  if (reduce) { draw(0); } else { requestAnimationFrame(loop); }
+  start();
 })();
 
 /* ---------- PERSPECTIVE GRID BACKGROUND ----------
    A fixed grid "floor" that fades in while the visitor is anywhere between
    the Testimonials section and the end of Technical Stacks, and fades out
-   everywhere else. */
+   everywhere else.
+   The moving lines live in an inner <div class="grid-lines"> that the CSS
+   slides with `transform` (GPU) — see style.css.
+   It is checked inside the shared scroll handler (once per frame). */
 (function () {
   var testi = document.getElementById('testimonials');
   var skills = document.getElementById('skills');
@@ -1099,16 +1243,24 @@ window.addEventListener('orientationchange', adjustAllTechTips);
   var g = document.createElement('div');
   g.id = 'grid-bg';
   g.setAttribute('aria-hidden', 'true');
-  g.innerHTML = '<div class="grid-floor"></div>';
+  g.innerHTML = '<div class="grid-floor"><div class="grid-lines"></div></div>';
   document.body.insertBefore(g, document.body.firstChild);
+
+  var isOn = false;
 
   function update() {
     var H = window.innerHeight;
     var top = testi.getBoundingClientRect().top;
     var bottom = skills.getBoundingClientRect().bottom;
-    g.classList.toggle('on', top < H * 0.65 && bottom > H * 0.35);
+    var on = top < H * 0.65 && bottom > H * 0.35;
+    if (on === isOn) return;          /* nothing changed: do nothing */
+    isOn = on;
+    g.classList.toggle('on', on);
+    BG.gridOn = on;                   /* canvas stops while the grid is showing */
+    BG.kick();
   }
-  window.addEventListener('scroll', update, { passive: true });
+
+  SCROLL_FNS.push(update);
   window.addEventListener('resize', update);
   window.addEventListener('load', update);
   update();
