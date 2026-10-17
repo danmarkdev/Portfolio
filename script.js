@@ -122,6 +122,33 @@ document.addEventListener('click', function (e) {
   if (t) SFX.click();
 });
 
+/* ---------- PRESSED COLOR FLASH ----------
+   VIEW PROJECTS, SEND MESSAGE and BACK TO HOME turn WHITE the moment they are
+   pressed (mouse or finger) and stay white for about 1.2 seconds.
+   The styles are added from here, so this works on every page that loads
+   script.js, even if the browser still has an old style.css saved. */
+(function () {
+  var st = document.createElement('style');
+  st.textContent =
+    '.btn-primary.is-pressed,.contact-form button.is-pressed{' +
+      'background:#ffffff !important;color:#050507 !important;' +
+      'box-shadow:0 10px 24px rgba(255,255,255,.22) !important;' +
+      'transform:scale(.97) !important;border-color:#ffffff !important}' +
+    '.back-home.is-pressed{color:#ffffff !important;font-weight:700 !important}';
+  document.head.appendChild(st);
+
+  var timers = new WeakMap();
+  document.addEventListener('pointerdown', function (e) {
+    var el = e.target && e.target.closest
+      ? e.target.closest('.btn-primary, .contact-form button, .back-home')
+      : null;
+    if (!el) return;
+    el.classList.add('is-pressed');
+    clearTimeout(timers.get(el));
+    timers.set(el, setTimeout(function () { el.classList.remove('is-pressed'); }, 1200));
+  }, true);
+})();
+
 /* ICON FALLBACK — if a brand logo fails to load, swap it for a clean
    text badge (the tool's initials) instead of a broken-image icon. */
 document.querySelectorAll('.fb-icon img').forEach(function (img) {
