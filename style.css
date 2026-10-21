@@ -327,15 +327,12 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   font-size: .85rem;
   font-weight: 700;
   border-radius: 10px;
+  border: 2px solid transparent;   /* FIX: reserved border so nothing shifts when it turns white */
   box-shadow: 0 10px 24px var(--accent-glow);
   transition: background .2s,transform .15s,box-shadow .2s,color .2s;
 }
 .btn-primary:hover{background:var(--accent-hover);transform:translateY(-2px);box-shadow:0 14px 30px var(--accent-glow)}
 .btn-primary:active,.btn-primary:focus,.btn-primary:visited{color:#1a0d02;transform:none}
-/* CLICKED / TAPPED state: turns WHITE */
-.btn-primary:active,
-.btn-primary:focus,
-.btn-primary:focus-visible{background:#ffffff !important;color:#050507 !important;box-shadow:0 10px 24px rgba(255,255,255,.18) !important;transform:none}
 .btn-outline{
   display: inline-flex;
   align-items: center;
@@ -1193,7 +1190,7 @@ textarea{min-height:120px}
   padding: .9rem 2rem;
   background: var(--accent);
   color: #1a0d02;
-  border: none;
+  border: 2px solid transparent;   /* FIX: reserved border so nothing shifts when it turns white */
   border-radius: 10px;
   font-family: var(--font-body);
   font-size: .85rem;
@@ -1206,11 +1203,6 @@ textarea{min-height:120px}
 }
 .contact-form button:hover{background:var(--accent-hover);transform:translateY(-2px);box-shadow:0 14px 30px var(--accent-glow)}
 .contact-form button:active,.contact-form button:focus{transform:translateY(0)}
-/* CLICKED / TAPPED state: SEND MESSAGE turns WHITE */
-.contact-form button:active,
-.contact-form button:focus,
-.contact-form button:focus-visible{background:#ffffff !important;color:#050507 !important;box-shadow:0 10px 24px rgba(255,255,255,.18) !important}
-.contact-form button:disabled{background:#ffffff !important;color:#050507 !important}
 .contact-form button:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
 #cf-status{font-size:.82rem;min-height:1.2em;color:var(--muted)}
 
@@ -1620,25 +1612,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 .orbit-ring > div:not([class]){display:none !important}
 
 /* ==========================================================
-   NEW: PRESSED STATE (VIEW PROJECTS / SEND MESSAGE / BACK TO HOME)
-   script.js adds the class "is-pressed" the moment they are
-   clicked or tapped, so they flash WHITE and are clearly visible.
-   ========================================================== */
-.btn-primary.is-pressed,
-.contact-form button.is-pressed{
-  background:#ffffff !important;
-  color:#050507 !important;
-  border-color:#ffffff !important;
-  box-shadow:0 10px 24px rgba(255,255,255,.22) !important;
-  transform:scale(.97) !important;
-}
-.back-home.is-pressed{
-  color:#ffffff !important;
-  font-weight:700 !important;
-}
-
-/* ==========================================================
-   NEW: SOUND ON/OFF BUTTON (bottom-left, added by script.js)
+   SOUND ON/OFF BUTTON (bottom-left, added by script.js)
    Move it with left / bottom below.
    ========================================================== */
 .sound-toggle{
@@ -1679,7 +1653,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 }
 
 /* ==========================================================
-   NEW: MOBILE PERFORMANCE FIXES
+   MOBILE PERFORMANCE FIXES
    (everything below only affects phones / tablets, or devices
    that script.js detects as weak — desktop looks the same)
    ========================================================== */
@@ -1780,4 +1754,46 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   width:100%;
   height:100%;
   display:block;
+}
+
+/* ==========================================================
+   PRESSED STATE FIX: VIEW PROJECTS / SEND MESSAGE / BACK TO HOME
+   script.js adds the class "is-pressed" the moment a button is
+   clicked or tapped.
+
+   Pressed look = dark fill + WHITE text + WHITE border.
+   No orange border, no black text, no glow left behind.
+   (Keep this block at the very BOTTOM of the file.)
+   ========================================================== */
+
+/* tapping/clicking leaves the button "focused": make sure that
+   focus alone never changes the look (only .is-pressed does) */
+.btn-primary:active:not(.is-pressed),
+.btn-primary:focus:not(.is-pressed),
+.btn-primary:focus-visible:not(.is-pressed),
+.contact-form button:active:not(.is-pressed),
+.contact-form button:focus:not(.is-pressed),
+.contact-form button:focus-visible:not(.is-pressed){
+  background:var(--accent) !important;
+  color:#1a0d02 !important;
+  border-color:transparent !important;
+  box-shadow:0 10px 24px var(--accent-glow) !important;
+}
+
+/* the pressed state itself */
+html body .btn-primary.is-pressed,
+html body .contact-form button.is-pressed,
+html body .contact-form button.is-pressed:disabled{
+  background:#0d0d11 !important;
+  color:#ffffff !important;
+  border:2px solid #ffffff !important;
+  box-shadow:none !important;
+  outline:none !important;
+  transform:scale(.97) !important;
+  transition:none !important;     /* no fade, so no orange lingers */
+  opacity:1 !important;
+}
+.back-home.is-pressed{
+  color:#ffffff !important;
+  font-weight:700 !important;
 }
