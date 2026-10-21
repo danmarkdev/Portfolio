@@ -1757,42 +1757,39 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 }
 
 /* ==========================================================
-   PRESSED STATE FIX: VIEW PROJECTS / SEND MESSAGE / BACK TO HOME
-   script.js adds the class "is-pressed" the moment a button is
-   clicked or tapped.
-
-   Pressed look = dark fill + WHITE text + WHITE border.
-   No orange border, no black text, no glow left behind.
-   (Keep this block at the very BOTTOM of the file.)
+   BUTTONS KEEP THEIR LOOK: VIEW PROJECTS / SEND MESSAGE
+   ORANGE background + BLACK text, always. Hover, click, tap,
+   focus and the "is-pressed" class added by script.js can
+   NOT change the color. (Keep this block at the very BOTTOM.)
    ========================================================== */
-
-/* tapping/clicking leaves the button "focused": make sure that
-   focus alone never changes the look (only .is-pressed does) */
-.btn-primary:active:not(.is-pressed),
-.btn-primary:focus:not(.is-pressed),
-.btn-primary:focus-visible:not(.is-pressed),
-.contact-form button:active:not(.is-pressed),
-.contact-form button:focus:not(.is-pressed),
-.contact-form button:focus-visible:not(.is-pressed){
-  background:var(--accent) !important;
+html body .btn-primary,
+html body .btn-primary:hover,
+html body .btn-primary:active,
+html body .btn-primary:focus,
+html body .btn-primary:focus-visible,
+html body .btn-primary:visited,
+html body .btn-primary.is-pressed.is-pressed,
+html body .contact-form button,
+html body .contact-form button:hover,
+html body .contact-form button:active,
+html body .contact-form button:focus,
+html body .contact-form button:focus-visible,
+html body .contact-form button.is-pressed.is-pressed,
+html body .contact-form button.is-pressed.is-pressed:disabled{
+  background:#ff7a1a !important;
   color:#1a0d02 !important;
-  border-color:transparent !important;
-  box-shadow:0 10px 24px var(--accent-glow) !important;
-}
-
-/* the pressed state itself */
-html body .btn-primary.is-pressed,
-html body .contact-form button.is-pressed,
-html body .contact-form button.is-pressed:disabled{
-  background:#0d0d11 !important;
-  color:#ffffff !important;
-  border:2px solid #ffffff !important;
-  box-shadow:none !important;
+  border:2px solid transparent !important;
+  box-shadow:0 10px 24px rgba(255,122,26,.14) !important;
   outline:none !important;
-  transform:scale(.97) !important;
-  transition:none !important;     /* no fade, so no orange lingers */
+  transition:none !important;
   opacity:1 !important;
 }
+html body .btn-primary.is-pressed.is-pressed,
+html body .contact-form button.is-pressed.is-pressed{
+  transform:none !important;
+}
+
+/* BACK TO HOME stays gray, turns white only while hovered/pressed */
 .back-home.is-pressed{
   color:#ffffff !important;
   font-weight:700 !important;
