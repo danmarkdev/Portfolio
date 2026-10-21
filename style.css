@@ -1220,11 +1220,6 @@ textarea{min-height:120px}
   text-decoration: none;
   transition: color .2s, font-weight .2s;
 }
-.back-home:visited{color:var(--muted)}
-.back-home:hover,
-.back-home:active,
-.back-home:focus,
-.back-home:focus-visible{color:#ffffff !important}
 
 /* FOOTER */
 footer{background:transparent;border-top:1px solid rgba(255,255,255,.09);padding:2rem 0;position:relative;z-index:1}
@@ -1789,8 +1784,21 @@ html body .contact-form button.is-pressed.is-pressed{
   transform:none !important;
 }
 
-/* BACK TO HOME stays gray, turns white only while hovered/pressed */
-.back-home.is-pressed{
-  color:#ffffff !important;
-  font-weight:700 !important;
+/* BACK TO HOME keeps its look: gray text, normal weight, always.
+   Hover, click, tap, focus and the "is-pressed" class from script.js
+   can NOT change it. */
+html body a.back-home,
+html body a.back-home:visited,
+html body a.back-home:hover,
+html body a.back-home:active,
+html body a.back-home:focus,
+html body a.back-home:focus-visible,
+html body a.back-home.is-pressed.is-pressed{
+  color:#a4a7b8 !important;
+  font-weight:500 !important;
+  background:none !important;
+  box-shadow:none !important;
+  outline:none !important;
+  transition:none !important;
+  transform:none !important;
 }
