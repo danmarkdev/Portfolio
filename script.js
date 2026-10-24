@@ -1242,9 +1242,10 @@ var BG = { gridOn: false, kick: function () {} };
 })();
 
 /* ---------- GRID TUNNEL BACKGROUND ----------
-   A "room" of grid lines: back wall in the center, floor / ceiling /
-   side walls running out to the screen edges. The square rings keep
-   flowing toward the viewer so it looks like moving through a tunnel.
+   A "room" of grid lines: a small back wall (the box hole) in the middle,
+   floor / ceiling / side walls running out to the screen edges. The square
+   rings flow toward the viewer, and the box hole itself breathes (zooms in
+   and out) and sways a little, so the whole tunnel looks alive.
    Shows from Testimonials down to the end of Technical Stacks.
    Same canvas drawing on desktop and phones. */
 (function () {
@@ -1265,15 +1266,22 @@ var BG = { gridOn: false, kick: function () {} };
   if (!gx) return;
 
   /* ---- settings you can tweak ---- */
-  var D_BACK  = 5;       /* back wall distance: bigger = SMALLER center box */
-  var D_NEAR  = 0.3;     /* how close rings get before they are off-screen */
-  var SPACING = 0.34;    /* distance between rings (bigger = fewer rings) */
-  var PERIOD  = 1500;    /* ms for rings to move one spacing (bigger = slower) */
-  var LINE_A  = 0.9;     /* line brightness 0 - 1 (1 = pure white) */
-  var COLS    = small ? 6 : 14;   /* lines across the ceiling / floor */
+  var BOX_W   = small ? 0.30 : 0.15;  /* box hole WIDTH as a fraction of the screen width (smaller = smaller box) */
+  var BOX_ASP = 1.5;      /* box shape: width / height (1 = square, 1.5 = wide, 0.7 = tall) */
+  var BREATHE = 0.22;     /* how much the box zooms in/out (0 = none, 0.3 = a lot) */
+  var BREATHE_MS = 3200;  /* ms for one zoom in/out (smaller = faster) */
+  var SWAY    = 0.035;    /* how far the box drifts around (0 = stays centered) */
+  var SWAY_MS = 5200;     /* ms for one full drift (smaller = faster) */
+  var D_BACK  = 5;        /* depth of the tunnel (perspective strength) */
+  var D_NEAR  = 0.3;
+  var SPACING = 0.34;     /* distance between rings (bigger = fewer rings) */
+  var PERIOD  = 1500;     /* ms for rings to move one spacing (bigger = slower) */
+  var LINE_A  = 0.9;      /* line brightness 0 - 1 (1 = pure white) */
+  var COLS    = small ? 5 : 12;   /* lines across the ceiling / floor */
 
   var Z_MAX = D_BACK - D_NEAR;
-  var GW = 0, GH = 0, ROWS = 8, dpr = 1;
+  var iB = 1 / D_BACK, iN = 1 / D_NEAR;
+  var GW = 0, GH = 0, ROWS = 6, dpr = 1;
   var isOn = false, running = false;
 
   function setupCanvas() {
@@ -1283,62 +1291,78 @@ var BG = { gridOn: false, kick: function () {} };
     gc.width = Math.round(GW * dpr);
     gc.height = Math.round(GH * dpr);
     gx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    /* rows keep the squares close to square on any screen shape */
-    ROWS = Math.max(4, Math.min(16, Math.round(COLS * GH / GW)));
+    ROWS = Math.max(3, Math.round(COLS / BOX_ASP));
   }
 
   function drawTunnel(t) {
     var cx = GW / 2, cy = GH / 2;
-    var hw = GW / 2, hh = GH / 2;
-    var i, j, x, y, d;
 
+    /* the box hole: size breathes, position sways */
+    var k = 1 + BREATHE * Math.sin(t * 2 * Math.PI / BREATHE_MS);
+    var bw = GW * BOX_W * 0.5 * k;
+    var bh = bw / BOX_ASP;
+    var bx = cx + Math.sin(t * 2 * Math.PI / SWAY_MS) * GW * SWAY;
+    var by = cy + Math.cos(t * 2 * Math.PI / (SWAY_MS * 1.3)) * GH * SWAY;
+
+    /* the "near" box is far bigger than the screen, so walls reach every edge */
+    var nw = GW * 0.5 * iN / iB * 0.55;
+    var nh = GH * 0.5 * iN / iB * 0.55;
+    if (nw < GW) nw = GW;
+    if (nh < GH) nh = GH;
+
+    /* box (center + half size) at tunnel position p (0 = back wall, 1 = near) */
+    function boxAt(p) {
+      return {
+        x: bx + (cx - bx) * p,
+        y: by + (cy - by) * p,
+        w: bw + (nw - bw) * p,
+        h: bh + (nh - bh) * p
+      };
+    }
+
+    var i, j, u, B, N;
     gx.clearRect(0, 0, GW, GH);
     gx.lineWidth = 1;
 
-    /* 1) lines running from the back wall to the screen edges */
+    /* dark hole in the middle */
+    gx.fillStyle = 'rgba(5,5,7,0.92)';
+    gx.fillRect(bx - bw, by - bh, bw * 2, bh * 2);
+
+    /* 1) lines running from the back wall out to the screen edges */
+    B = boxAt(0); N = boxAt(1);
     gx.strokeStyle = 'rgba(255,255,255,' + LINE_A + ')';
     gx.beginPath();
-    var sB = 1 / D_BACK, sN = 1 / D_NEAR;
     for (i = 0; i <= COLS; i++) {            /* ceiling + floor */
-      x = -1 + (2 * i) / COLS;
-      gx.moveTo(cx + x * hw * sB, cy - hh * sB);
-      gx.lineTo(cx + x * hw * sN, cy - hh * sN);
-      gx.moveTo(cx + x * hw * sB, cy + hh * sB);
-      gx.lineTo(cx + x * hw * sN, cy + hh * sN);
+      u = -1 + (2 * i) / COLS;
+      gx.moveTo(B.x + u * B.w, B.y - B.h);
+      gx.lineTo(N.x + u * N.w, N.y - N.h);
+      gx.moveTo(B.x + u * B.w, B.y + B.h);
+      gx.lineTo(N.x + u * N.w, N.y + N.h);
     }
     for (j = 1; j < ROWS; j++) {             /* left + right walls */
-      y = -1 + (2 * j) / ROWS;
-      gx.moveTo(cx - hw * sB, cy + y * hh * sB);
-      gx.lineTo(cx - hw * sN, cy + y * hh * sN);
-      gx.moveTo(cx + hw * sB, cy + y * hh * sB);
-      gx.lineTo(cx + hw * sN, cy + y * hh * sN);
+      u = -1 + (2 * j) / ROWS;
+      gx.moveTo(B.x - B.w, B.y + u * B.h);
+      gx.lineTo(N.x - N.w, N.y + u * N.h);
+      gx.moveTo(B.x + B.w, B.y + u * B.h);
+      gx.lineTo(N.x + N.w, N.y + u * N.h);
     }
     gx.stroke();
 
     /* 2) square rings that flow toward the viewer */
     var offset = ((t % PERIOD) / PERIOD) * SPACING;
-    for (var k = 0; ; k++) {
-      var z = k * SPACING + offset;
+    for (var r = 0; ; r++) {
+      var z = r * SPACING + offset;
       if (z > Z_MAX) break;
-      d = D_BACK - z;
-      var a = Math.min(1, z / (SPACING * 2)) * LINE_A;   /* fade in from the back */
-      if (k === 0 && offset < 0.0001) a = LINE_A;
+      var p = (1 / (D_BACK - z) - iB) / (iN - iB);     /* perspective-correct position */
+      var R = boxAt(p);
+      var a = Math.min(1, z / (SPACING * 2)) * LINE_A;  /* fade in from the back */
       gx.strokeStyle = 'rgba(255,255,255,' + a.toFixed(3) + ')';
-      var w = hw / d, h = hh / d;
-      gx.strokeRect(cx - w, cy - h, w * 2, h * 2);
+      gx.strokeRect(R.x - R.w, R.y - R.h, R.w * 2, R.h * 2);
     }
 
-    /* 3) the back wall itself (fixed square) */
+    /* 3) the back wall outline */
     gx.strokeStyle = 'rgba(255,255,255,' + LINE_A + ')';
-    gx.strokeRect(cx - hw * sB, cy - hh * sB, hw * sB * 2, hh * sB * 2);
-
-    /* 4) dark center, like the reference picture */
-    var r = Math.max(hw, hh) * sB * 1.1;
-    var grad = gx.createRadialGradient(cx, cy, 0, cx, cy, r);
-    grad.addColorStop(0, 'rgba(5,5,7,0.85)');
-    grad.addColorStop(1, 'rgba(5,5,7,0)');
-    gx.fillStyle = grad;
-    gx.fillRect(0, 0, GW, GH);
+    gx.strokeRect(bx - bw, by - bh, bw * 2, bh * 2);
   }
 
   function gridLoop(t) {
