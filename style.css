@@ -1426,19 +1426,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .testi-card.testi-active > *{opacity:1}
 }
 
-/* ==========================================================
-   PERSPECTIVE GRID BACKGROUND — fades in from Testimonials
-   down to Technical Stacks (toggled by script.js).
-
-   PERFORMANCE VERSION:
-   - The grid now moves with `transform` (GPU) instead of
-     animating `background-position` (CPU repaint every frame).
-     script.js adds an inner <div class="grid-lines"> that slides
-     down exactly one tile (64px) and loops — it looks identical.
-   - Hidden (visibility:hidden) + animation paused when it is off.
-   - Speed: change "1.6s" in .grid-lines below.
-     bigger number = slower, smaller number = faster.
-   ========================================================== */
+/* ===== GRID TUNNEL BACKGROUND (drawn on a canvas by script.js) ===== */
 #grid-bg{
   position:fixed;
   inset:0;
@@ -1448,44 +1436,12 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   opacity:0;
   visibility:hidden;
   transition:opacity .8s ease, visibility 0s linear .8s;
-  -webkit-mask-image:linear-gradient(to bottom, transparent 0%, #000 30%, #000 100%);
-  mask-image:linear-gradient(to bottom, transparent 0%, #000 30%, #000 100%);
 }
 #grid-bg.on{
   opacity:1;
   visibility:visible;
   transition:opacity .8s ease, visibility 0s linear 0s;
 }
-#grid-bg .grid-floor{
-  position:absolute;
-  left:-60%;
-  top:0;
-  width:220%;
-  height:100vh;
-  overflow:hidden;
-  transform-origin:50% 0;
-  transform:perspective(max(720px, 125vh)) rotateX(60deg);
-}
-#grid-bg .grid-lines{
-  position:absolute;
-  left:0;
-  right:0;
-  top:-64px;                       /* one extra tile above, so the loop has no gap */
-  height:calc(100% + 64px);
-  background-image:
-    linear-gradient(rgba(255,255,255,.28) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.28) 1px, transparent 1px);
-  background-size:64px 64px;
-  background-position:50% 0;
-  will-change:transform;
-  animation:gridRun 1.6s linear infinite;
-}
-@keyframes gridRun{
-  from{transform:translate3d(0,0,0)}
-  to{transform:translate3d(0,64px,0)}
-}
-/* no wasted work while the grid is not showing */
-#grid-bg:not(.on) .grid-lines{animation-play-state:paused}
 
 /* hide the moving dots/lines animation while the grid is visible */
 #bg-canvas{transition:opacity .8s ease}
@@ -1673,18 +1629,6 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   #header{background:rgba(12,12,16,.96)}
   #header.scrolled{background:rgba(12,12,16,.98)}
   .sound-toggle{background:rgba(12,12,16,.94)}
-
-  /* 3) Grid: a mask on a moving layer is expensive. Use a plain
-        gradient overlay for the top fade instead, and make the
-        floor narrower (fewer pixels to draw). */
-  #grid-bg{
-    -webkit-mask-image:none;
-    mask-image:none;
-  }
-  #grid-bg .grid-floor{
-    left:-20%;
-    width:140%;
-  }
 }
 
 @media(max-width:700px){
@@ -1728,7 +1672,6 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
       script.js adds class "lite-mode" on <html> when the phone has
       little RAM / few CPU cores, or the user asked for reduced motion.
       The grid is still shown, just not animated. */
-.lite-mode #grid-bg .grid-lines{animation:none}
 .lite-mode .orbit-item,
 .lite-mode .orbit-counter{animation-duration:calc(var(--dur) * 2)}
 
