@@ -1247,7 +1247,7 @@ var BG = { gridOn: false, kick: function () {} };
    rings flow toward the viewer, and the box hole itself breathes (zooms in
    and out) and sways a little, so the whole tunnel looks alive.
    Shows from Testimonials down to the end of Technical Stacks.
-   Same canvas drawing on desktop and phones. */
+   Same canvas drawing, same settings and same movement on desktop and phones. */
 (function () {
   var testi = document.getElementById('testimonials');
   var skills = document.getElementById('skills');
@@ -1265,21 +1265,21 @@ var BG = { gridOn: false, kick: function () {} };
   var gx = gc.getContext('2d');
   if (!gx) return;
 
-  /* ---- settings you can tweak ---- */
-  var BOX_W   = small ? 0.30 : 0.15;  /* box hole WIDTH as a fraction of the screen width (smaller = smaller box) */
+  /* ---- settings you can tweak (SAME on desktop and mobile) ---- */
+  var BOX_W   = 0.15;     /* small hole: width as a fraction of the screen width (smaller = smaller hole) */
   var BOX_ASP = 1.5;      /* box shape: width / height (1 = square, 1.5 = wide, 0.7 = tall) */
-  var BREATHE = 0.08;     /* box zooms toward you / away (0 = none, 0.6 = a lot) */
-  var BREATHE_MS = 6000;  /* ms for one zoom in/out (smaller = faster) */
-  var SWAY    = 0.02;     /* how far the box wanders around the screen (0 = stays centered) */
-  var SWAY_MS = 9000;     /* ms for one wander loop (smaller = faster) */
-  var TILT    = 0;     /* the whole tunnel slowly rocks left/right, in radians (0 = no tilt) */
-  var TILT_MS = 6000;     /* ms for one rock left-right-left */
+  var BREATHE = 0.35;     /* hole zooms toward you / away (0 = none, 0.6 = a lot)  [was 0.08] */
+  var BREATHE_MS = 4000;  /* ms for one zoom in/out (smaller = faster)             [was 6000] */
+  var SWAY    = 0.12;     /* how far the hole wanders around the screen (0 = stays centered) [was 0.02] */
+  var SWAY_MS = 7000;     /* ms for one wander loop (smaller = faster)             [was 9000] */
+  var TILT    = 0.06;     /* the whole tunnel rocks left/right, in radians (0 = no tilt) [was 0] */
+  var TILT_MS = 7000;     /* ms for one rock left-right-left */
   var D_BACK  = 5;        /* depth of the tunnel (perspective strength) */
   var D_NEAR  = 0.3;
   var SPACING = 0.34;     /* distance between rings (bigger = fewer rings) */
-  var PERIOD  = 1500;     /* ms for rings to move one spacing (smaller = faster) */
+  var PERIOD  = 700;      /* ms for rings to move one spacing (smaller = faster)   [was 1500] */
   var LINE_A  = 0.9;      /* line brightness 0 - 1 (1 = pure white) */
-  var COLS    = small ? 5 : 12;   /* lines across the ceiling / floor */
+  var COLS    = 12;       /* lines across the ceiling / floor: same on phone and desktop [was 5 on phone] */
 
   var Z_MAX = D_BACK - D_NEAR;
   var iB = 1 / D_BACK, iN = 1 / D_NEAR;
