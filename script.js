@@ -1268,16 +1268,16 @@ var BG = { gridOn: false, kick: function () {} };
   /* ---- settings you can tweak (SAME on desktop and mobile) ---- */
   var BOX_W   = 0.15;     /* small hole: width as a fraction of the screen width (smaller = smaller hole) */
   var BOX_ASP = 1.5;      /* box shape: width / height (1 = square, 1.5 = wide, 0.7 = tall) */
-  var BREATHE = 0.35;     /* hole zooms toward you / away (0 = none, 0.6 = a lot)  [was 0.08] */
+  var BREATHE = 0;     /* hole does NOT zoom: stays the same small size */
   var BREATHE_MS = 4000;  /* ms for one zoom in/out (smaller = faster)             [was 6000] */
-  var SWAY    = 0.12;     /* how far the hole wanders around the screen (0 = stays centered) [was 0.02] */
+  var SWAY    = 0;     /* hole stays centered */
   var SWAY_MS = 7000;     /* ms for one wander loop (smaller = faster)             [was 9000] */
-  var TILT    = 0.06;     /* the whole tunnel rocks left/right, in radians (0 = no tilt) [was 0] */
+  var TILT    = 0;     /* no rocking: straight like the original */
   var TILT_MS = 7000;     /* ms for one rock left-right-left */
   var D_BACK  = 5;        /* depth of the tunnel (perspective strength) */
   var D_NEAR  = 0.3;
   var SPACING = 0.34;     /* distance between rings (bigger = fewer rings) */
-  var PERIOD  = 700;      /* ms for rings to move one spacing (smaller = faster)   [was 1500] */
+  var PERIOD  = 1600;     /* ms for rings to glide one step toward you: SAME speed as the original grid (1.6s) */
   var LINE_A  = 0.9;      /* line brightness 0 - 1 (1 = pure white) */
   var COLS    = 12;       /* lines across the ceiling / floor: same on phone and desktop [was 5 on phone] */
 
