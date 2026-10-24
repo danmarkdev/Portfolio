@@ -1266,8 +1266,8 @@ var BG = { gridOn: false, kick: function () {} };
   if (!gx) return;
 
   /* ---- settings you can tweak (SAME on desktop and mobile) ---- */
-  var BOX_W   = 0.15;     /* small hole: width as a fraction of the screen width (smaller = smaller hole) */
-  var BOX_ASP = 1.5;      /* box shape: width / height (1 = square, 1.5 = wide, 0.7 = tall) */
+  var BOX_W   = 0.05;     /* small hole like the reference (smaller = smaller hole) */
+  var BOX_ASP = 1;      /* SQUARE hole like the reference (1 = square) */
   var BREATHE = 0;     /* hole does NOT zoom: stays the same small size */
   var BREATHE_MS = 4000;  /* ms for one zoom in/out (smaller = faster)             [was 6000] */
   var SWAY    = 0;     /* hole stays centered */
@@ -1301,7 +1301,7 @@ var BG = { gridOn: false, kick: function () {} };
 
     /* the box hole: size zooms, position wanders (two waves = not a boring loop) */
     var k = 1 + BREATHE * Math.sin(t * 2 * Math.PI / BREATHE_MS);
-    var bw = GW * BOX_W * 0.5 * k;
+    var bw = Math.max(GW, GH) * BOX_W * 0.5 * k;   /* same hole size on desktop and phone */
     var bh = bw / BOX_ASP;
     var wx = Math.sin(t * 2 * Math.PI / SWAY_MS) + 0.4 * Math.sin(t * 2 * Math.PI / (SWAY_MS * 0.43) + 1.3);
     var wy = Math.cos(t * 2 * Math.PI / (SWAY_MS * 1.3)) + 0.4 * Math.cos(t * 2 * Math.PI / (SWAY_MS * 0.57) + 0.7);
@@ -1332,8 +1332,16 @@ var BG = { gridOn: false, kick: function () {} };
     gx.translate(-cx, -cy);
     gx.lineWidth = 1;
 
-    /* dark hole in the middle */
-    gx.fillStyle = 'rgba(5,5,7,0.92)';
+    /* soft glow around the hole (like the bright light at the end of the tunnel) */
+    var gr = bw * 7;
+    var glow = gx.createRadialGradient(bx, by, bw * 0.6, bx, by, gr);
+    glow.addColorStop(0, 'rgba(255,255,255,0.28)');
+    glow.addColorStop(1, 'rgba(255,255,255,0)');
+    gx.fillStyle = glow;
+    gx.fillRect(bx - gr, by - gr, gr * 2, gr * 2);
+
+    /* dark square hole in the middle */
+    gx.fillStyle = 'rgba(5,5,7,0.95)';
     gx.fillRect(bx - bw, by - bh, bw * 2, bh * 2);
 
     /* 1) lines running from the back wall out to the screen edges */
