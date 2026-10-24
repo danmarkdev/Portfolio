@@ -1472,8 +1472,8 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   top:-64px;                       /* one extra tile above, so the loop has no gap */
   height:calc(100% + 64px);
   background-image:
-    linear-gradient(rgba(255,255,255,.28) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.28) 1px, transparent 1px);
+    linear-gradient(rgba(255,255,255,.85) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.85) 1px, transparent 1px);
   background-size:64px 64px;
   background-position:50% 0;
   will-change:transform;
