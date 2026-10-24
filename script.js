@@ -1282,8 +1282,8 @@ var BG = { gridOn: false, kick: function () {} };
     /* top of the screen fades out, like the CSS mask did */
     grad = gx.createLinearGradient(0, 0, 0, GH);
     grad.addColorStop(0, 'rgba(255,255,255,0)');
-    grad.addColorStop(0.3, 'rgba(255,255,255,0.28)');
-    grad.addColorStop(1, 'rgba(255,255,255,0.28)');
+    grad.addColorStop(0.3, 'rgba(255,255,255,0.85)');
+    grad.addColorStop(1, 'rgba(255,255,255,0.85)');
   }
 
   function drawGrid(t) {
