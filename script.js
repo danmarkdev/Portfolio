@@ -1070,7 +1070,7 @@ function adjustAllTechTips(){
    one.
 
    PERFORMANCE:
-   - STOPS COMPLETELY (no drawing at all) while the grid tunnel is
+   - STOPS COMPLETELY (no drawing at all) while the perspective grid is
      showing or the tab is hidden. Before, it kept drawing invisibly.
    - On phones: fewer particles, 1 glow instead of 3, 1x pixel ratio and
      ~30fps, and it ignores the height-only resizes caused by the address
@@ -1241,13 +1241,16 @@ var BG = { gridOn: false, kick: function () {} };
   start();
 })();
 
-/* ---------- GRID TUNNEL BACKGROUND ----------
-   A "room" of grid lines: a small back wall (the box hole) in the middle,
-   floor / ceiling / side walls running out to the screen edges. The square
-   rings flow toward the viewer, and the box hole itself breathes (zooms in
-   and out) and sways a little, so the whole tunnel looks alive.
-   Shows from Testimonials down to the end of Technical Stacks.
-   Same canvas drawing, same settings and same movement on desktop and phones. */
+/* ---------- PERSPECTIVE GRID BACKGROUND ----------
+   A fixed grid "floor" that fades in while the visitor is anywhere between
+   the Testimonials section and the end of Technical Stacks, and fades out
+   everywhere else.
+
+   DESKTOP: CSS grid (a 3D-rotated layer, slid with transform).
+   PHONES / TABLETS: the same look, but DRAWN ON A CANVAS (about 25 lines
+   per frame, in ONE stroke call). No giant 3D layer and no mask, so there
+   is almost no GPU memory use -> no more lag or vanishing content.
+   It is checked inside the shared scroll handler (once per frame). */
 (function () {
   var testi = document.getElementById('testimonials');
   var skills = document.getElementById('skills');
@@ -1258,160 +1261,102 @@ var BG = { gridOn: false, kick: function () {} };
   var g = document.createElement('div');
   g.id = 'grid-bg';
   g.setAttribute('aria-hidden', 'true');
-  g.innerHTML = '<canvas class="grid-canvas"></canvas>';
+  g.innerHTML = small
+    ? '<canvas class="grid-canvas"></canvas>'
+    : '<div class="grid-floor"><div class="grid-lines"></div></div>';
   document.body.insertBefore(g, document.body.firstChild);
 
-  var gc = g.querySelector('canvas');
-  var gx = gc.getContext('2d');
-  if (!gx) return;
+  /* ---- phone version: canvas perspective grid ---- */
+  var gc = null, gx = null, GW = 0, GH = 0, grad = null;
+  var TILE = 64;           /* grid square size (same as the CSS version) */
+  var SPEED = 1600;        /* ms for the grid to move one square (same as 1.6s) */
+  var gridRunning = false;
 
-  /* ---- settings you can tweak (SAME on desktop and mobile) ---- */
-  var BOX_W   = 0.05;     /* small hole like the reference (smaller = smaller hole) */
-  var BOX_ASP = 1;      /* SQUARE hole like the reference (1 = square) */
-  var BREATHE = 0;     /* hole does NOT zoom: stays the same small size */
-  var BREATHE_MS = 4000;  /* ms for one zoom in/out (smaller = faster)             [was 6000] */
-  var SWAY    = 0;     /* hole stays centered */
-  var SWAY_MS = 7000;     /* ms for one wander loop (smaller = faster)             [was 9000] */
-  var TILT    = 0;     /* no rocking: straight like the original */
-  var TILT_MS = 7000;     /* ms for one rock left-right-left */
-  var D_BACK  = 5;        /* depth of the tunnel (perspective strength) */
-  var D_NEAR  = 0.3;
-  var SPACING = 0.34;     /* distance between rings (bigger = fewer rings) */
-  var PERIOD  = 1600;     /* ms for rings to glide one step toward you: SAME speed as the original grid (1.6s) */
-  var LINE_A  = 0.9;      /* line brightness 0 - 1 (1 = pure white) */
-  var COLS    = 12;       /* lines across the ceiling / floor: same on phone and desktop [was 5 on phone] */
-
-  var Z_MAX = D_BACK - D_NEAR;
-  var iB = 1 / D_BACK, iN = 1 / D_NEAR;
-  var GW = 0, GH = 0, ROWS = 6, dpr = 1;
-  var isOn = false, running = false;
-
-  function setupCanvas() {
-    dpr = Math.min(window.devicePixelRatio || 1, small ? 1.5 : 2);
+  function setupGridCanvas() {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
     GW = window.innerWidth;
     GH = window.innerHeight;
     gc.width = Math.round(GW * dpr);
     gc.height = Math.round(GH * dpr);
     gx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ROWS = Math.max(3, Math.round(COLS / BOX_ASP));
+    /* top of the screen fades out, like the CSS mask did */
+    grad = gx.createLinearGradient(0, 0, 0, GH);
+    grad.addColorStop(0, 'rgba(255,255,255,0)');
+    grad.addColorStop(0.3, 'rgba(255,255,255,0.28)');
+    grad.addColorStop(1, 'rgba(255,255,255,0.28)');
   }
 
-  function drawTunnel(t) {
-    var cx = GW / 2, cy = GH / 2;
+  function drawGrid(t) {
+    var P = Math.max(720, GH * 1.25);          /* perspective distance */
+    var sin = 0.8660254, cos = 0.5;            /* rotateX(60deg) */
+    var cx = GW / 2;
+    var offset = ((t % SPEED) / SPEED) * TILE;
 
-    /* the box hole: size zooms, position wanders (two waves = not a boring loop) */
-    var k = 1 + BREATHE * Math.sin(t * 2 * Math.PI / BREATHE_MS);
-    var bw = Math.max(GW, GH) * BOX_W * 0.5 * k;   /* same hole size on desktop and phone */
-    var bh = bw / BOX_ASP;
-    var wx = Math.sin(t * 2 * Math.PI / SWAY_MS) + 0.4 * Math.sin(t * 2 * Math.PI / (SWAY_MS * 0.43) + 1.3);
-    var wy = Math.cos(t * 2 * Math.PI / (SWAY_MS * 1.3)) + 0.4 * Math.cos(t * 2 * Math.PI / (SWAY_MS * 0.57) + 0.7);
-    var bx = cx + wx * GW * SWAY * 0.8;
-    var by = cy + wy * GH * SWAY * 0.8;
-
-    /* the "near" box is far bigger than the screen, so walls reach every edge */
-    var nw = GW * 0.5 * iN / iB * 0.55;
-    var nh = GH * 0.5 * iN / iB * 0.55;
-    if (nw < GW) nw = GW;
-    if (nh < GH) nh = GH;
-
-    /* box (center + half size) at tunnel position p (0 = back wall, 1 = near) */
-    function boxAt(p) {
-      return {
-        x: bx + (cx - bx) * p,
-        y: by + (cy - by) * p,
-        w: bw + (nw - bw) * p,
-        h: bh + (nh - bh) * p
-      };
-    }
-
-    var i, j, u, B, N;
     gx.clearRect(0, 0, GW, GH);
-    gx.save();
-    gx.translate(cx, cy);
-    gx.rotate(TILT * Math.sin(t * 2 * Math.PI / TILT_MS));
-    gx.translate(-cx, -cy);
+    gx.strokeStyle = grad;
     gx.lineWidth = 1;
-
-    /* soft glow around the hole (like the bright light at the end of the tunnel) */
-    var gr = bw * 7;
-    var glow = gx.createRadialGradient(bx, by, bw * 0.6, bx, by, gr);
-    glow.addColorStop(0, 'rgba(255,255,255,0.28)');
-    glow.addColorStop(1, 'rgba(255,255,255,0)');
-    gx.fillStyle = glow;
-    gx.fillRect(bx - gr, by - gr, gr * 2, gr * 2);
-
-    /* dark square hole in the middle */
-    gx.fillStyle = 'rgba(5,5,7,0.95)';
-    gx.fillRect(bx - bw, by - bh, bw * 2, bh * 2);
-
-    /* 1) lines running from the back wall out to the screen edges */
-    B = boxAt(0); N = boxAt(1);
-    gx.strokeStyle = 'rgba(255,255,255,' + LINE_A + ')';
     gx.beginPath();
-    for (i = 0; i <= COLS; i++) {            /* ceiling + floor */
-      u = -1 + (2 * i) / COLS;
-      gx.moveTo(B.x + u * B.w, B.y - B.h);
-      gx.lineTo(N.x + u * N.w, N.y - N.h);
-      gx.moveTo(B.x + u * B.w, B.y + B.h);
-      gx.lineTo(N.x + u * N.w, N.y + N.h);
+
+    /* horizontal lines (they glide toward the viewer) */
+    for (var k = 0; k < 60; k++) {
+      var y = k * TILE + offset - TILE;
+      if (y < 0) continue;
+      var s = P / (P - sin * y);
+      var ys = cos * y * s;
+      if (ys > GH) break;
+      gx.moveTo(0, ys);
+      gx.lineTo(GW, ys);
     }
-    for (j = 1; j < ROWS; j++) {             /* left + right walls */
-      u = -1 + (2 * j) / ROWS;
-      gx.moveTo(B.x - B.w, B.y + u * B.h);
-      gx.lineTo(N.x - N.w, N.y + u * N.h);
-      gx.moveTo(B.x + B.w, B.y + u * B.h);
-      gx.lineTo(N.x + N.w, N.y + u * N.h);
+
+    /* vertical lines (converge toward the horizon) */
+    var yEnd = (GH * P) / (cos * P + sin * GH);   /* plane y where screen y = GH */
+    var sEnd = P / (P - sin * yEnd);
+    var n = Math.ceil(GW / 2 / TILE) + 1;
+    for (var i = -n; i <= n; i++) {
+      var x = i * TILE;
+      gx.moveTo(cx + x, 0);
+      gx.lineTo(cx + x * sEnd, GH);
     }
     gx.stroke();
-
-    /* 2) square rings that flow toward the viewer */
-    var offset = ((t % PERIOD) / PERIOD) * SPACING;
-    for (var r = 0; ; r++) {
-      var z = r * SPACING + offset;
-      if (z > Z_MAX) break;
-      var p = (1 / (D_BACK - z) - iB) / (iN - iB);     /* perspective-correct position */
-      var R = boxAt(p);
-      var a = Math.min(1, z / (SPACING * 2)) * LINE_A;  /* fade in from the back */
-      gx.strokeStyle = 'rgba(255,255,255,' + a.toFixed(3) + ')';
-      gx.strokeRect(R.x - R.w, R.y - R.h, R.w * 2, R.h * 2);
-    }
-
-    /* 3) the back wall outline */
-    gx.strokeStyle = 'rgba(255,255,255,' + LINE_A + ')';
-    gx.strokeRect(bx - bw, by - bh, bw * 2, bh * 2);
-    gx.restore();
   }
 
   function gridLoop(t) {
-    if (!isOn || document.hidden) { running = false; return; }
-    drawTunnel(t);
-    requestAnimationFrame(gridLoop);
-  }
-  function startGrid() {
-    if (running || !isOn || document.hidden) return;
-    running = true;
+    if (!isOn || document.hidden) { gridRunning = false; return; }
+    drawGrid(t);
     requestAnimationFrame(gridLoop);
   }
 
-  setupCanvas();
-  var lastGW = window.innerWidth;
-  window.addEventListener('resize', function () {
-    /* phones: ignore height-only resizes caused by the address bar */
-    if (small && window.innerWidth === lastGW) return;
-    lastGW = window.innerWidth;
-    setupCanvas();
-  });
-  document.addEventListener('visibilitychange', startGrid);
+  function startGrid() {
+    if (!small || gridRunning || !isOn || document.hidden) return;
+    gridRunning = true;
+    requestAnimationFrame(gridLoop);
+  }
+
+  var isOn = false;
+
+  if (small) {
+    gc = g.querySelector('canvas');
+    gx = gc.getContext('2d');
+    setupGridCanvas();
+    var lastGW = window.innerWidth;
+    window.addEventListener('resize', function () {
+      /* ignore the height-only resizes caused by the address bar */
+      if (window.innerWidth === lastGW) return;
+      lastGW = window.innerWidth;
+      setupGridCanvas();
+    });
+    document.addEventListener('visibilitychange', startGrid);
+  }
 
   function update() {
     var H = window.innerHeight;
     var top = testi.getBoundingClientRect().top;
     var bottom = skills.getBoundingClientRect().bottom;
     var on = top < H * 0.65 && bottom > H * 0.35;
-    if (on === isOn) return;
+    if (on === isOn) return;          /* nothing changed: do nothing */
     isOn = on;
     g.classList.toggle('on', on);
-    BG.gridOn = on;          /* the dots canvas stops while the tunnel is showing */
+    BG.gridOn = on;                   /* the dots canvas stops while the grid is showing */
     BG.kick();
     if (on) startGrid();
   }
