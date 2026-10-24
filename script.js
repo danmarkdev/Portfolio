@@ -1265,11 +1265,11 @@ var BG = { gridOn: false, kick: function () {} };
   if (!gx) return;
 
   /* ---- settings you can tweak ---- */
-  var D_BACK  = 2.4;     /* back wall distance: bigger = smaller back rectangle */
+  var D_BACK  = 5;       /* back wall distance: bigger = SMALLER center box */
   var D_NEAR  = 0.3;     /* how close rings get before they are off-screen */
-  var SPACING = 0.16;    /* distance between rings (bigger = fewer rings) */
+  var SPACING = 0.34;    /* distance between rings (bigger = fewer rings) */
   var PERIOD  = 1500;    /* ms for rings to move one spacing (bigger = slower) */
-  var LINE_A  = 0.24;    /* line brightness 0 - 1 */
+  var LINE_A  = 0.9;     /* line brightness 0 - 1 (1 = pure white) */
   var COLS    = small ? 6 : 14;   /* lines across the ceiling / floor */
 
   var Z_MAX = D_BACK - D_NEAR;
