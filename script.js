@@ -1268,16 +1268,16 @@ var BG = { gridOn: false, kick: function () {} };
   /* ---- settings you can tweak ---- */
   var BOX_W   = small ? 0.30 : 0.15;  /* box hole WIDTH as a fraction of the screen width (smaller = smaller box) */
   var BOX_ASP = 1.5;      /* box shape: width / height (1 = square, 1.5 = wide, 0.7 = tall) */
-  var BREATHE = 0.45;     /* box zooms toward you / away (0 = none, 0.6 = a lot) */
-  var BREATHE_MS = 2400;  /* ms for one zoom in/out (smaller = faster) */
-  var SWAY    = 0.10;     /* how far the box wanders around the screen (0 = stays centered) */
-  var SWAY_MS = 3600;     /* ms for one wander loop (smaller = faster) */
-  var TILT    = 0.05;     /* the whole tunnel slowly rocks left/right, in radians (0 = no tilt) */
+  var BREATHE = 0.08;     /* box zooms toward you / away (0 = none, 0.6 = a lot) */
+  var BREATHE_MS = 6000;  /* ms for one zoom in/out (smaller = faster) */
+  var SWAY    = 0.02;     /* how far the box wanders around the screen (0 = stays centered) */
+  var SWAY_MS = 9000;     /* ms for one wander loop (smaller = faster) */
+  var TILT    = 0;     /* the whole tunnel slowly rocks left/right, in radians (0 = no tilt) */
   var TILT_MS = 6000;     /* ms for one rock left-right-left */
   var D_BACK  = 5;        /* depth of the tunnel (perspective strength) */
   var D_NEAR  = 0.3;
   var SPACING = 0.34;     /* distance between rings (bigger = fewer rings) */
-  var PERIOD  = 1000;     /* ms for rings to move one spacing (smaller = faster) */
+  var PERIOD  = 1500;     /* ms for rings to move one spacing (smaller = faster) */
   var LINE_A  = 0.9;      /* line brightness 0 - 1 (1 = pure white) */
   var COLS    = small ? 5 : 12;   /* lines across the ceiling / floor */
 
