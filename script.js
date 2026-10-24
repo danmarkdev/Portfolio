@@ -1268,14 +1268,16 @@ var BG = { gridOn: false, kick: function () {} };
   /* ---- settings you can tweak ---- */
   var BOX_W   = small ? 0.30 : 0.15;  /* box hole WIDTH as a fraction of the screen width (smaller = smaller box) */
   var BOX_ASP = 1.5;      /* box shape: width / height (1 = square, 1.5 = wide, 0.7 = tall) */
-  var BREATHE = 0.22;     /* how much the box zooms in/out (0 = none, 0.3 = a lot) */
-  var BREATHE_MS = 3200;  /* ms for one zoom in/out (smaller = faster) */
-  var SWAY    = 0.035;    /* how far the box drifts around (0 = stays centered) */
-  var SWAY_MS = 5200;     /* ms for one full drift (smaller = faster) */
+  var BREATHE = 0.45;     /* box zooms toward you / away (0 = none, 0.6 = a lot) */
+  var BREATHE_MS = 2400;  /* ms for one zoom in/out (smaller = faster) */
+  var SWAY    = 0.10;     /* how far the box wanders around the screen (0 = stays centered) */
+  var SWAY_MS = 3600;     /* ms for one wander loop (smaller = faster) */
+  var TILT    = 0.05;     /* the whole tunnel slowly rocks left/right, in radians (0 = no tilt) */
+  var TILT_MS = 6000;     /* ms for one rock left-right-left */
   var D_BACK  = 5;        /* depth of the tunnel (perspective strength) */
   var D_NEAR  = 0.3;
   var SPACING = 0.34;     /* distance between rings (bigger = fewer rings) */
-  var PERIOD  = 1500;     /* ms for rings to move one spacing (bigger = slower) */
+  var PERIOD  = 1000;     /* ms for rings to move one spacing (smaller = faster) */
   var LINE_A  = 0.9;      /* line brightness 0 - 1 (1 = pure white) */
   var COLS    = small ? 5 : 12;   /* lines across the ceiling / floor */
 
@@ -1297,12 +1299,14 @@ var BG = { gridOn: false, kick: function () {} };
   function drawTunnel(t) {
     var cx = GW / 2, cy = GH / 2;
 
-    /* the box hole: size breathes, position sways */
+    /* the box hole: size zooms, position wanders (two waves = not a boring loop) */
     var k = 1 + BREATHE * Math.sin(t * 2 * Math.PI / BREATHE_MS);
     var bw = GW * BOX_W * 0.5 * k;
     var bh = bw / BOX_ASP;
-    var bx = cx + Math.sin(t * 2 * Math.PI / SWAY_MS) * GW * SWAY;
-    var by = cy + Math.cos(t * 2 * Math.PI / (SWAY_MS * 1.3)) * GH * SWAY;
+    var wx = Math.sin(t * 2 * Math.PI / SWAY_MS) + 0.4 * Math.sin(t * 2 * Math.PI / (SWAY_MS * 0.43) + 1.3);
+    var wy = Math.cos(t * 2 * Math.PI / (SWAY_MS * 1.3)) + 0.4 * Math.cos(t * 2 * Math.PI / (SWAY_MS * 0.57) + 0.7);
+    var bx = cx + wx * GW * SWAY * 0.8;
+    var by = cy + wy * GH * SWAY * 0.8;
 
     /* the "near" box is far bigger than the screen, so walls reach every edge */
     var nw = GW * 0.5 * iN / iB * 0.55;
@@ -1322,6 +1326,10 @@ var BG = { gridOn: false, kick: function () {} };
 
     var i, j, u, B, N;
     gx.clearRect(0, 0, GW, GH);
+    gx.save();
+    gx.translate(cx, cy);
+    gx.rotate(TILT * Math.sin(t * 2 * Math.PI / TILT_MS));
+    gx.translate(-cx, -cy);
     gx.lineWidth = 1;
 
     /* dark hole in the middle */
@@ -1363,6 +1371,7 @@ var BG = { gridOn: false, kick: function () {} };
     /* 3) the back wall outline */
     gx.strokeStyle = 'rgba(255,255,255,' + LINE_A + ')';
     gx.strokeRect(bx - bw, by - bh, bw * 2, bh * 2);
+    gx.restore();
   }
 
   function gridLoop(t) {
