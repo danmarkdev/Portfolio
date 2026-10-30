@@ -559,17 +559,17 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .project-track.dragging{cursor:grabbing}
 
 .project-card{
-  width:292px;
-  min-height:460px;           /* same height everywhere, grows only if the text needs it */
-  flex:0 0 292px;
+  width:322px;
+  min-height:380px;           /* same height everywhere, grows only if the text needs it */
+  flex:0 0 322px;
   background:var(--surface);
   border:1px solid rgba(255,255,255,.14);
   border-radius:6px;
-  padding:19px;
+  padding:21px;
   overflow:hidden;
   display:flex;
   flex-direction:column;
-  gap:22px;
+  gap:30px;
   box-shadow:var(--shadow-card);
   -webkit-text-size-adjust:100%;   /* stops phones from auto-enlarging the text */
   text-size-adjust:100%;
@@ -583,7 +583,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 
 .project-img-wrap{
   width:100%;
-  aspect-ratio:254/164;
+  aspect-ratio:280/165;
   overflow:hidden;
   padding:0;
   background:transparent;
@@ -604,7 +604,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 .project-card:hover .project-img-wrap img{transform:scale(1.03)}
 
-.project-body{padding:0;display:flex;flex-direction:column;gap:14px;flex:1}
+.project-body{padding:0;display:flex;flex-direction:column;gap:16px;flex:1}
 
 .project-title-row{
   display:flex;
@@ -614,7 +614,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 .project-card-title{
   font-family:var(--font-heading);
-  font-size:17px;
+  font-size:18px;
   font-weight:700;
   color:var(--text);
   line-height:1.3;
@@ -650,9 +650,9 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .project-card-desc{
   font-family:var(--font-body);
   font-size:13.5px;
-  font-weight:600;            /* same bold weight on desktop and mobile */
-  color:#f4f4f8;
-  line-height:1.55;
+  font-weight:700;            /* bold white text, same on desktop and mobile */
+  color:#ffffff;
+  line-height:1.4;
   text-align:justify;
   hyphens:auto;
   -webkit-hyphens:auto;
