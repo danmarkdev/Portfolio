@@ -537,7 +537,9 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 .service-num{display:none}
 
-/* ===== PROJECT CARDS (reference-style size, still swipeable + spaced) ===== */
+/* ===== PROJECT CARDS — SAME SIZE & WEIGHT ON DESKTOP AND MOBILE =====
+   All values are fixed px, so rem / viewport / media queries can't change them.
+   To resize the cards, edit ONLY the numbers in this block. */
 .projects-marquee{
   width:100%;
   overflow:hidden;
@@ -548,8 +550,8 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 .project-track{
   display:flex;
-  align-items:stretch;
-  gap:1.5rem;                 /* space between cards: they never stick together */
+  align-items:stretch;        /* every card gets the same height as the tallest one */
+  gap:24px;
   width:max-content;
   cursor:grab;
   touch-action:pan-y;
@@ -557,18 +559,20 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .project-track.dragging{cursor:grabbing}
 
 .project-card{
-  width:292px;                /* same width as the reference */
-  min-height:400px;           /* same height as the reference */
-  flex:0 0 auto;
+  width:292px;
+  min-height:460px;           /* same height everywhere, grows only if the text needs it */
+  flex:0 0 292px;
   background:var(--surface);
   border:1px solid rgba(255,255,255,.14);
   border-radius:6px;
-  padding:1.2rem;
+  padding:19px;
   overflow:hidden;
   display:flex;
   flex-direction:column;
-  gap:1.4rem;
+  gap:22px;
   box-shadow:var(--shadow-card);
+  -webkit-text-size-adjust:100%;   /* stops phones from auto-enlarging the text */
+  text-size-adjust:100%;
   transition:box-shadow .3s ease, transform .3s ease, border-color .3s ease;
 }
 .project-card:hover{
@@ -579,7 +583,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 
 .project-img-wrap{
   width:100%;
-  aspect-ratio:254/164;       /* image box proportion from the reference */
+  aspect-ratio:254/164;
   overflow:hidden;
   padding:0;
   background:transparent;
@@ -600,17 +604,17 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 .project-card:hover .project-img-wrap img{transform:scale(1.03)}
 
-.project-body{padding:0;display:flex;flex-direction:column;gap:.9rem;flex:1}
+.project-body{padding:0;display:flex;flex-direction:column;gap:14px;flex:1}
 
 .project-title-row{
   display:flex;
   align-items:center;
   justify-content:flex-start;
-  gap:.5rem;
+  gap:8px;
 }
 .project-card-title{
   font-family:var(--font-heading);
-  font-size:1.05rem;
+  font-size:17px;
   font-weight:700;
   color:var(--text);
   line-height:1.3;
@@ -645,8 +649,8 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 
 .project-card-desc{
   font-family:var(--font-body);
-  font-size:.84rem;
-  font-weight:600;            /* bolder, like the reference */
+  font-size:13.5px;
+  font-weight:600;            /* same bold weight on desktop and mobile */
   color:#f4f4f8;
   line-height:1.55;
   text-align:justify;
@@ -1580,9 +1584,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .stack-badge .fb-icon svg{width:24px;height:24px}
   .hero-name{font-size:2.1rem}
   .section-big-heading{font-size:1.25rem}
-  .project-card{width:272px;min-height:380px;padding:1rem;gap:1.1rem}
-  .project-card-title{font-size:1rem}
-  .project-card-desc{font-size:.8rem;line-height:1.5}
+  /* (project-card overrides removed: cards are identical on desktop and mobile) */
   .hero-actions{gap:.5rem}
   .btn-primary,.btn-outline{font-size:.68rem;padding-left:.9rem;padding-right:.9rem;gap:.35rem}
 }
