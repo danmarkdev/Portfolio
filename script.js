@@ -612,17 +612,24 @@ initSwipeMarquee('projectTrack', 108, 1);
 initSwipeMarquee('certTrack', 75, 1);
 initSwipeMarquee('certTrack2', 75, -1);
 
-/* CONTACT FORM — Google Apps Script */
+/* ==========================================================
+   CONTACT FORM — Google Apps Script (with spam protection)
+   - PAGE_LOADED + 'elapsed' : the server rejects forms filled too fast
+   - 'website'               : hidden honeypot field, bots fill it in
+   - the server also limits messages per hour / per day
+   ========================================================== */
+var PAGE_LOADED = Date.now();
+
 function sendMsg(){
-  var name=document.getElementById('cf-name')?document.getElementById('cf-name').value.trim():'';
-  var email=document.getElementById('cf-email')?document.getElementById('cf-email').value.trim():'';
-  var subject=document.getElementById('cf-subject')?document.getElementById('cf-subject').value.trim():'';
-  var msg=document.getElementById('cf-msg')?document.getElementById('cf-msg').value.trim():'';
+  var val=function(id){ var el=document.getElementById(id); return el?el.value.trim():''; };
+  var name=val('cf-name'), email=val('cf-email'), subject=val('cf-subject'), msg=val('cf-msg');
   var status=document.getElementById('cf-status');
   var btn=document.getElementById('cf-btn');
   if(!status||!btn) return;
+
   if(!name||!email||!msg){ status.style.color='#ff6b6b'; status.textContent='Please fill in all required fields.'; return; }
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ status.style.color='#ff6b6b'; status.textContent='Please enter a valid email address.'; return; }
+
   btn.disabled=true; btn.textContent='Sending...';
   status.style.color='#a4a7b8'; status.textContent='Sending your message\u2026';
 
@@ -631,23 +638,31 @@ function sendMsg(){
   formData.append('email', email);
   formData.append('subject', subject || 'New message from Portfolio');
   formData.append('message', msg);
+  formData.append('website', val('cf-website'));            // honeypot
+  formData.append('elapsed', Date.now() - PAGE_LOADED);     // time on page
 
-  fetch('https://script.google.com/macros/s/AKfycbx9vIB7FvB0Inv97LWBio3U4_XNGmVLPlAvZxJ7cBNQN2xtIIwkqEW9GzRj9yIxYCd7/exec',{
-    method:'POST',
-    body: formData
-  }).then(function(res){ return res.json(); }).then(function(data){
-    if(data.ok){
-      status.style.color='#22c55e'; status.textContent='Message Sent!';
-      document.getElementById('cf-name').value='';
-      document.getElementById('cf-email').value='';
-      if(document.getElementById('cf-subject')) document.getElementById('cf-subject').value='';
-      document.getElementById('cf-msg').value='';
-    } else { status.style.color='#ff6b6b'; status.textContent='Failed to send. Please try again.'; }
-    btn.textContent='SEND MESSAGE'; btn.disabled=false;
-  }).catch(function(){
-    status.style.color='#ff6b6b'; status.textContent='Failed to send. Please try again.';
-    btn.textContent='SEND MESSAGE'; btn.disabled=false;
-  });
+  fetch('https://script.google.com/macros/s/AKfycbzFKLKp7Z-6tA3BH80f1bpkj9ORJrDVIL4dOi7WMWazKDgszjCdHUoMo1_8FNY0eec/exec', { method:'POST', body: formData })
+    .then(function(res){ return res.text(); })
+    .then(function(txt){
+      var data=null;
+      try{ data=JSON.parse(txt); }catch(e){}
+      if(data && data.ok){
+        status.style.color='#22c55e'; status.textContent='Message Sent!';
+        ['cf-name','cf-email','cf-subject','cf-msg'].forEach(function(id){
+          var el=document.getElementById(id); if(el) el.value='';
+        });
+      } else if(data && data.error==='rate'){
+        status.style.color='#ff6b6b'; status.textContent='Too many messages. Please try again later.';
+      } else {
+        status.style.color='#ff6b6b'; status.textContent='Failed to send. Please try again.';
+      }
+    })
+    .catch(function(){
+      status.style.color='#ff6b6b'; status.textContent='Failed to send. Please try again.';
+    })
+    .then(function(){
+      btn.textContent='SEND MESSAGE'; btn.disabled=false;
+    });
 }
 
 /* COPY PROTECTION */
