@@ -1514,3 +1514,49 @@ var BG = { gridOn: false, kick: function () {} };
   window.addEventListener('load', update);
   update();
 })();
+
+/* ==========================================================
+   NO "-" AT THE END OF A LINE (project descriptions)  <-- NEW
+   The "-" you still saw is a REAL hyphen inside the words themselves
+   (Kitty-themed, AI-powered, step-by-step, rule-based, scroll-triggered,
+   section-by-section ...). Browsers are always allowed to break a line
+   after a real hyphen, and CSS cannot turn that off.
+
+   This keeps every hyphenated word together on one line by wrapping it
+   in a no-wrap <span>. The description text is NOT changed, only how
+   the line is broken.
+   ========================================================== */
+(function () {
+  function fix(el) {
+    if (el.getAttribute('data-nohyphen') === '1') return;
+    var text = el.textContent;
+    if (text.indexOf('-') === -1) return;
+
+    var parts = text.split(/(\S+-\S+)/g);   /* hyphenated words are the odd items */
+    var frag = document.createDocumentFragment();
+    parts.forEach(function (part, i) {
+      if (i % 2 === 1) {
+        var span = document.createElement('span');
+        span.style.whiteSpace = 'nowrap';
+        span.textContent = part;
+        frag.appendChild(span);
+      } else if (part) {
+        frag.appendChild(document.createTextNode(part));
+      }
+    });
+
+    el.textContent = '';
+    el.appendChild(frag);
+    el.setAttribute('data-nohyphen', '1');
+  }
+
+  function run() {
+    document.querySelectorAll('.project-card-desc').forEach(fix);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', run);
+  } else {
+    run();
+  }
+})();
