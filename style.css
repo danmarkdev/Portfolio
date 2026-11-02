@@ -643,8 +643,11 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   color:#ffffff;
   line-height:1.4;
   text-align:justify;
-  hyphens:auto;
-  -webkit-hyphens:auto;
+  text-justify:inter-word;
+  hyphens:none;              /* no "-" splitting words */
+  -webkit-hyphens:none;
+  overflow-wrap:break-word;  /* safety only for a very long word/link */
+  text-wrap:pretty;          /* balances line endings so words fit nicely without hyphens */
 }
 
 /* SMALLER LAPTOPS (961px - 1279px): still 5 in a row, slightly tighter inside */
