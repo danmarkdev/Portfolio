@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="style.css?v=43"/>
+  <link rel="stylesheet" href="style.css?v=44"/>
 </head>
 <body>
 
@@ -76,162 +76,155 @@
 
         <!-- Tech stack — icon-only badges orbiting the profile photo -->
         <div class="orbit-ring" id="orbitRing">
+          <!-- only 2 orbit ring lines -->
           <div class="orbit-line ol-1"></div>
           <div class="orbit-line ol-2"></div>
-          <div class="orbit-line ol-3"></div>
-          <div class="orbit-dot od-1"></div>
-          <div class="orbit-dot od-2"></div>
-          <div class="orbit-dot od-3"></div>
-          <div class="orbit-dot od-4"></div>
-          <div class="orbit-dot od-5"></div>
 
-          <div class="orbit-item oi-0" style="--angle:0deg">
+          <!-- inner orbit of icons (outside the ring lines) -->
+          <div class="orbit-item orb-in" style="--angle:0deg" data-name="HTML5">
             <div class="orbit-counter">
-              <div class="stack-badge">
+              <div class="stack-badge" role="button" tabindex="0" aria-label="HTML5">
                 <span class="fb-icon" style="background:#E34F26"><img src="https://cdn.simpleicons.org/html5" alt="HTML5" loading="lazy"/></span>
               </div>
             </div>
           </div>
 
-          <div class="orbit-item oi-1" style="--angle:21.18deg">
+          <div class="orbit-item orb-in" style="--angle:45deg" data-name="React">
             <div class="orbit-counter">
-              <div class="stack-badge">
-                <span class="fb-icon" style="background:#F7DF1E"><img src="https://cdn.simpleicons.org/javascript" alt="JavaScript" loading="lazy"/></span>
-              </div>
-            </div>
-          </div>
-
-          <div class="orbit-item oi-2" style="--angle:42.35deg">
-            <div class="orbit-counter">
-              <div class="stack-badge">
-                <span class="fb-icon" style="background:#4479A1"><img src="https://cdn.simpleicons.org/mysql" alt="MySQL" loading="lazy"/></span>
-              </div>
-            </div>
-          </div>
-
-          <div class="orbit-item oi-3" style="--angle:63.53deg">
-            <div class="orbit-counter">
-              <div class="stack-badge">
-                <span class="fb-icon" style="background:#1e1e1e"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" alt="VS Code" loading="lazy"/></span>
-              </div>
-            </div>
-          </div>
-
-          <div class="orbit-item oi-4" style="--angle:84.71deg">
-            <div class="orbit-counter">
-              <div class="stack-badge">
-                <span class="fb-icon" style="background:#FF2D20"><img src="https://cdn.simpleicons.org/laravel" alt="Laravel" loading="lazy"/></span>
-              </div>
-            </div>
-          </div>
-
-          <div class="orbit-item oi-5" style="--angle:105.88deg">
-            <div class="orbit-counter">
-              <div class="stack-badge">
-                <span class="fb-icon" style="background:#181717"><img src="https://cdn.simpleicons.org/github" alt="GitHub" loading="lazy"/></span>
-              </div>
-            </div>
-          </div>
-
-          <div class="orbit-item oi-6" style="--angle:127.06deg">
-            <div class="orbit-counter">
-              <div class="stack-badge">
-                <span class="fb-icon" style="background:#7952B3"><img src="https://cdn.simpleicons.org/bootstrap" alt="Bootstrap" loading="lazy"/></span>
-              </div>
-            </div>
-          </div>
-
-          <div class="orbit-item oi-7" style="--angle:148.24deg">
-            <div class="orbit-counter">
-              <div class="stack-badge">
-                <span class="fb-icon" style="background:#777BB4"><img src="https://cdn.simpleicons.org/php" alt="PHP" loading="lazy"/></span>
-              </div>
-            </div>
-          </div>
-
-          <div class="orbit-item oi-8" style="--angle:169.41deg">
-            <div class="orbit-counter">
-              <div class="stack-badge">
-                <span class="fb-icon" style="background:#339933"><img src="https://cdn.simpleicons.org/nodedotjs" alt="Node.js" loading="lazy"/></span>
-              </div>
-            </div>
-          </div>
-
-          <div class="orbit-item oi-9" style="--angle:190.59deg">
-            <div class="orbit-counter">
-              <div class="stack-badge">
-                <span class="fb-icon" style="background:#ffffff"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" loading="lazy"/></span>
-              </div>
-            </div>
-          </div>
-
-          <div class="orbit-item oi-10" style="--angle:211.76deg">
-            <div class="orbit-counter">
-              <div class="stack-badge">
-                <span class="fb-icon" style="background:#ffffff"><svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><path fill="#9B4F96" d="M115.4 30.7L67.1 2.9c-.8-.5-1.9-.7-3.1-.7-1.2 0-2.3.3-3.1.7l-48 27.9c-1.7 1-2.9 3.5-2.9 5.4v55.7c0 1.1.2 2.4 1 3.5l106.8-62c-.6-1.2-1.5-2.1-2.4-2.7z"/><path fill="#68217A" d="M10.7 95.3c.5.8 1.2 1.5 1.9 1.9l48.2 27.9c.8.5 1.9.7 3.1.7 1.2 0 2.3-.3 3.1-.7l48-27.9c1.7-1 2.9-3.5 2.9-5.4V36.1c0-.9-.1-1.9-.6-2.8l-106.6 62z"/><path fill="#fff" d="M85.3 76.1C81.1 83.5 73.1 88.5 64 88.5c-13.5 0-24.5-11-24.5-24.5s11-24.5 24.5-24.5c9.1 0 17.1 5 21.3 12.5l13-7.5c-6.8-11.9-19.6-20-34.3-20-21.8 0-39.5 17.7-39.5 39.5s17.7 39.5 39.5 39.5c14.6 0 27.4-8 34.2-19.8l-12.9-7.6zM97 66.2l.9-4.3h-4.2v-4.7h5.1L100 51h4.9l-1.2 6.1h3.8l1.2-6.1h4.8l-1.2 6.1h2.4v4.7h-3.3l-.9 4.3h4.2v4.7h-5.1l-1.2 6h-4.9l1.2-6h-3.8l-1.2 6h-4.8l1.2-6h-2.4v-4.7H97zm4.8 0h3.8l.9-4.3h-3.8l-.9 4.3z"/></svg></span>
-              </div>
-            </div>
-          </div>
-
-          <div class="orbit-item oi-11" style="--angle:232.94deg">
-            <div class="orbit-counter">
-              <div class="stack-badge">
-                <span class="fb-icon" style="background:#ffffff"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg" alt="SQLite" loading="lazy"/></span>
-              </div>
-            </div>
-          </div>
-
-          <div class="orbit-item oi-12" style="--angle:254.12deg">
-            <div class="orbit-counter">
-              <div class="stack-badge">
-                <span class="fb-icon" style="background:#ffffff"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/netbeans/netbeans-original.svg" alt="NetBeans" loading="lazy"/></span>
-              </div>
-            </div>
-          </div>
-
-          <div class="orbit-item oi-13" style="--angle:275.29deg">
-            <div class="orbit-counter">
-              <div class="stack-badge">
-                <span class="fb-icon" style="background:#ffffff"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/visualstudio/visualstudio-plain.svg" alt="Visual Studio" loading="lazy"/></span>
-              </div>
-            </div>
-          </div>
-
-          <!-- NEW: Supabase (replaces .NET MAUI) -->
-          <div class="orbit-item oi-14" style="--angle:296.47deg">
-            <div class="orbit-counter">
-              <div class="stack-badge">
-                <span class="fb-icon" style="background:#3FCF8E"><img src="https://cdn.simpleicons.org/supabase" alt="Supabase" loading="lazy"/></span>
-              </div>
-            </div>
-          </div>
-
-          <!-- NEW: MongoDB (replaces ASP.NET) -->
-          <div class="orbit-item oi-15" style="--angle:317.65deg">
-            <div class="orbit-counter">
-              <div class="stack-badge">
-                <span class="fb-icon" style="background:#47A248"><img src="https://cdn.simpleicons.org/mongodb" alt="MongoDB" loading="lazy"/></span>
-              </div>
-            </div>
-          </div>
-
-          <div class="orbit-item oi-16" style="--angle:338.82deg">
-            <div class="orbit-counter">
-              <div class="stack-badge">
+              <div class="stack-badge" role="button" tabindex="0" aria-label="React">
                 <span class="fb-icon" style="background:#20232A"><img src="https://cdn.simpleicons.org/react" alt="React" loading="lazy"/></span>
               </div>
             </div>
           </div>
 
-          <!-- NEW: Git -->
-          <div class="orbit-item oi-17" style="--angle:0deg">
+          <div class="orbit-item orb-in" style="--angle:90deg" data-name="JavaScript">
             <div class="orbit-counter">
-              <div class="stack-badge">
+              <div class="stack-badge" role="button" tabindex="0" aria-label="JavaScript">
+                <span class="fb-icon" style="background:#F7DF1E"><img src="https://cdn.simpleicons.org/javascript" alt="JavaScript" loading="lazy"/></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="orbit-item orb-in" style="--angle:135deg" data-name="PHP">
+            <div class="orbit-counter">
+              <div class="stack-badge" role="button" tabindex="0" aria-label="PHP">
+                <span class="fb-icon" style="background:#777BB4"><img src="https://cdn.simpleicons.org/php" alt="PHP" loading="lazy"/></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="orbit-item orb-in" style="--angle:180deg" data-name="Laravel">
+            <div class="orbit-counter">
+              <div class="stack-badge" role="button" tabindex="0" aria-label="Laravel">
+                <span class="fb-icon" style="background:#FF2D20"><img src="https://cdn.simpleicons.org/laravel" alt="Laravel" loading="lazy"/></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="orbit-item orb-in" style="--angle:225deg" data-name="MySQL">
+            <div class="orbit-counter">
+              <div class="stack-badge" role="button" tabindex="0" aria-label="MySQL">
+                <span class="fb-icon" style="background:#4479A1"><img src="https://cdn.simpleicons.org/mysql" alt="MySQL" loading="lazy"/></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="orbit-item orb-in" style="--angle:270deg" data-name="MongoDB">
+            <div class="orbit-counter">
+              <div class="stack-badge" role="button" tabindex="0" aria-label="MongoDB">
+                <span class="fb-icon" style="background:#47A248"><img src="https://cdn.simpleicons.org/mongodb" alt="MongoDB" loading="lazy"/></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="orbit-item orb-in" style="--angle:315deg" data-name="Supabase">
+            <div class="orbit-counter">
+              <div class="stack-badge" role="button" tabindex="0" aria-label="Supabase">
+                <span class="fb-icon" style="background:#3FCF8E"><img src="https://cdn.simpleicons.org/supabase" alt="Supabase" loading="lazy"/></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- outer orbit of icons -->
+          <div class="orbit-item orb-out" style="--angle:18deg" data-name="Node.js">
+            <div class="orbit-counter">
+              <div class="stack-badge" role="button" tabindex="0" aria-label="Node.js">
+                <span class="fb-icon" style="background:#339933"><img src="https://cdn.simpleicons.org/nodedotjs" alt="Node.js" loading="lazy"/></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="orbit-item orb-out" style="--angle:54deg" data-name="Bootstrap">
+            <div class="orbit-counter">
+              <div class="stack-badge" role="button" tabindex="0" aria-label="Bootstrap">
+                <span class="fb-icon" style="background:#7952B3"><img src="https://cdn.simpleicons.org/bootstrap" alt="Bootstrap" loading="lazy"/></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="orbit-item orb-out" style="--angle:90deg" data-name="Java">
+            <div class="orbit-counter">
+              <div class="stack-badge" role="button" tabindex="0" aria-label="Java">
+                <span class="fb-icon" style="background:#ffffff"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" loading="lazy"/></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="orbit-item orb-out" style="--angle:126deg" data-name="C#">
+            <div class="orbit-counter">
+              <div class="stack-badge" role="button" tabindex="0" aria-label="C#">
+                <span class="fb-icon" style="background:#ffffff"><svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><path fill="#9B4F96" d="M115.4 30.7L67.1 2.9c-.8-.5-1.9-.7-3.1-.7-1.2 0-2.3.3-3.1.7l-48 27.9c-1.7 1-2.9 3.5-2.9 5.4v55.7c0 1.1.2 2.4 1 3.5l106.8-62c-.6-1.2-1.5-2.1-2.4-2.7z"/><path fill="#68217A" d="M10.7 95.3c.5.8 1.2 1.5 1.9 1.9l48.2 27.9c.8.5 1.9.7 3.1.7 1.2 0 2.3-.3 3.1-.7l48-27.9c1.7-1 2.9-3.5 2.9-5.4V36.1c0-.9-.1-1.9-.6-2.8l-106.6 62z"/><path fill="#fff" d="M85.3 76.1C81.1 83.5 73.1 88.5 64 88.5c-13.5 0-24.5-11-24.5-24.5s11-24.5 24.5-24.5c9.1 0 17.1 5 21.3 12.5l13-7.5c-6.8-11.9-19.6-20-34.3-20-21.8 0-39.5 17.7-39.5 39.5s17.7 39.5 39.5 39.5c14.6 0 27.4-8 34.2-19.8l-12.9-7.6zM97 66.2l.9-4.3h-4.2v-4.7h5.1L100 51h4.9l-1.2 6.1h3.8l1.2-6.1h4.8l-1.2 6.1h2.4v4.7h-3.3l-.9 4.3h4.2v4.7h-5.1l-1.2 6h-4.9l1.2-6h-3.8l-1.2 6h-4.8l1.2-6h-2.4v-4.7H97zm4.8 0h3.8l.9-4.3h-3.8l-.9 4.3z"/></svg></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="orbit-item orb-out" style="--angle:162deg" data-name="SQLite">
+            <div class="orbit-counter">
+              <div class="stack-badge" role="button" tabindex="0" aria-label="SQLite">
+                <span class="fb-icon" style="background:#ffffff"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg" alt="SQLite" loading="lazy"/></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="orbit-item orb-out" style="--angle:198deg" data-name="VS Code">
+            <div class="orbit-counter">
+              <div class="stack-badge" role="button" tabindex="0" aria-label="VS Code">
+                <span class="fb-icon" style="background:#1e1e1e"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" alt="VS Code" loading="lazy"/></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="orbit-item orb-out" style="--angle:234deg" data-name="Git">
+            <div class="orbit-counter">
+              <div class="stack-badge" role="button" tabindex="0" aria-label="Git">
                 <span class="fb-icon" style="background:#F05032"><img src="https://cdn.simpleicons.org/git" alt="Git" loading="lazy"/></span>
               </div>
             </div>
           </div>
 
+          <div class="orbit-item orb-out" style="--angle:270deg" data-name="GitHub">
+            <div class="orbit-counter">
+              <div class="stack-badge" role="button" tabindex="0" aria-label="GitHub">
+                <span class="fb-icon" style="background:#181717"><img src="https://cdn.simpleicons.org/github" alt="GitHub" loading="lazy"/></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="orbit-item orb-out" style="--angle:306deg" data-name="NetBeans">
+            <div class="orbit-counter">
+              <div class="stack-badge" role="button" tabindex="0" aria-label="NetBeans">
+                <span class="fb-icon" style="background:#ffffff"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/netbeans/netbeans-original.svg" alt="NetBeans" loading="lazy"/></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="orbit-item orb-out" style="--angle:342deg" data-name="Visual Studio">
+            <div class="orbit-counter">
+              <div class="stack-badge" role="button" tabindex="0" aria-label="Visual Studio">
+                <span class="fb-icon" style="background:#ffffff"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/visualstudio/visualstudio-plain.svg" alt="Visual Studio" loading="lazy"/></span>
+              </div>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -1178,5 +1171,71 @@
 </footer>
 
 <script src="script.js?v=40"></script>
+<script>
+/* ORBIT ICONS: tap / click an icon -> its name pops up (same look as the Technical Stacks tooltip).
+   The orbit pauses while a tooltip is open. Tap the icon again, tap anywhere else, or press Esc to close. */
+(function () {
+  var orbit = document.getElementById('photoOrbit');
+  if (!orbit) return;
+  var items = Array.prototype.slice.call(orbit.querySelectorAll('.orbit-item'));
+  var active = null;
+
+  items.forEach(function (it) {
+    var counter = it.querySelector('.orbit-counter');
+    var badge = it.querySelector('.stack-badge');
+    var icon = badge && badge.querySelector('.fb-icon');
+    if (!counter || !icon) return;
+    var tip = document.createElement('div');
+    tip.className = 'orbit-tip';
+    tip.setAttribute('role', 'tooltip');
+    tip.appendChild(icon.cloneNode(true));
+    var nm = document.createElement('span');
+    nm.className = 'orbit-tip-name';
+    nm.textContent = it.getAttribute('data-name') || '';
+    tip.appendChild(nm);
+    counter.appendChild(tip);
+
+    badge.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); badge.click(); }
+    });
+  });
+
+  function place(it) {
+    var counter = it.querySelector('.orbit-counter');
+    var tip = it.querySelector('.orbit-tip');
+    if (!counter || !tip) return;
+    it.classList.remove('tip-flip');
+    tip.style.setProperty('--tip-shift', '0px');
+    var r = counter.getBoundingClientRect();
+    if (r.top < tip.offsetHeight + 14 + 90) it.classList.add('tip-flip');   /* not enough room above (nav bar) -> show below */
+    var vw = document.documentElement.clientWidth;
+    var cx = r.left + r.width / 2, tw = tip.offsetWidth, m = 10, shift = 0;
+    if (cx - tw / 2 < m) shift = m - (cx - tw / 2);
+    else if (cx + tw / 2 > vw - m) shift = (vw - m) - (cx + tw / 2);
+    tip.style.setProperty('--tip-shift', shift + 'px');
+  }
+
+  function closeTip() {
+    if (active) active.classList.remove('is-active');
+    active = null;
+    orbit.classList.remove('has-active');
+  }
+  function openTip(it) {
+    closeTip();
+    active = it;
+    orbit.classList.add('has-active');     /* pauses the spinning first, then we measure */
+    it.classList.add('is-active');
+    place(it);
+  }
+
+  document.addEventListener('click', function (e) {
+    var it = e.target && e.target.closest ? e.target.closest('.orbit-item') : null;
+    if (!it || items.indexOf(it) === -1) { closeTip(); return; }
+    if (it === active) closeTip(); else openTip(it);
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeTip(); });
+  window.addEventListener('resize', function () { if (active) place(active); });
+})();
+</script>
 </body>
 </html>
