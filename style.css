@@ -519,16 +519,18 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 .service-num{display:none}
 
-/* ===== PROJECT CARDS — STATIC GRID (no more auto-swipe) =====
-   DESKTOP : 3 cards on the top row, 2 centered cards on the bottom row.
-   TABLET  : 2 cards per row, the last one centered.
-   MOBILE  : normal page scrolling, one compact card per row.
-   The HTML still contains a duplicate set of cards (it was used for the
-   old infinite loop). They are simply hidden here, so index.html does not
-   need to change. */
+/* ===== PROJECT CARDS — JOINED CELLS (same look on desktop and mobile) =====
+   Every card is the SAME size everywhere (about 320px wide, 21px padding,
+   14px normal-weight text). Cards touch each other and share their borders,
+   like a table.
+   DESKTOP : 3 cells on the top row, 2 centered cells on the bottom row.
+   TABLET  : 2 cells per row, the last one centered.
+   MOBILE  : 1 cell per row (same card size), just scroll the page.
+   The HTML still contains a duplicate set of cards (used by the old infinite
+   loop). They are simply hidden here, so index.html does not need to change.
+   To resize the cards, change the 320px values (and the width values below). */
 .projects-marquee{
-  width:90%;
-  max-width:var(--max-w);
+  width:min(960px, 94%);           /* 3 cells x 320px */
   margin:0 auto;
   overflow:visible;
   padding:0;
@@ -538,8 +540,8 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .project-track{
   display:grid;
   grid-template-columns:repeat(6,1fr);
-  grid-auto-rows:1fr;          /* every row has the same height */
-  gap:24px;
+  gap:0;                           /* cells touch each other */
+  padding:1px 0 0 1px;             /* room for the 1px overlap of the shared borders */
   width:100%;
   cursor:default;
   touch-action:auto;
@@ -548,39 +550,41 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .project-card[aria-hidden="true"]{display:none}
 
 .project-card{
-  grid-column:span 2;          /* 3 per row */
+  grid-column:span 2;              /* 3 per row */
   min-width:0;
-  background:var(--surface);
-  border:1px solid rgba(255,255,255,.14);
-  border-radius:6px;
+  position:relative;
+  margin:-1px 0 0 -1px;            /* overlap neighbours so shared borders are only 1px */
+  background:var(--bg);
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:0;
   padding:21px;
   overflow:hidden;
   display:flex;
   flex-direction:column;
   gap:30px;
-  box-shadow:var(--shadow-card);
+  box-shadow:none;
   -webkit-text-size-adjust:100%;   /* stops phones from auto-enlarging the text */
   text-size-adjust:100%;
-  transition:box-shadow .3s ease, transform .3s ease, border-color .3s ease;
+  transition:border-color .25s ease, background .25s ease;
 }
-/* bottom row: cards 4 and 5 sit in the middle */
+/* bottom row: cells 4 and 5 sit in the middle */
 .project-card:nth-child(4){grid-column:2 / span 2}
 .project-card:nth-child(5){grid-column:4 / span 2}
 
 .project-card:hover{
-  transform:translateY(-6px);
-  box-shadow:var(--shadow-card-hover);
-  border-color:rgba(255,255,255,.3);
+  z-index:2;
+  border-color:rgba(255,255,255,.75);
+  background:rgba(255,255,255,.025);
 }
 
 .project-img-wrap{
   width:100%;
-  aspect-ratio:280/165;
+  aspect-ratio:276/180;
   overflow:hidden;
   padding:0;
   background:transparent;
   border:1px solid rgba(255,255,255,.2);
-  border-radius:2px;
+  border-radius:0;
   flex-shrink:0;
 }
 .project-img-wrap img{
@@ -590,13 +594,11 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   object-position:center;
   display:block;
   border-radius:0;
-  transition:transform .5s ease;
   -webkit-user-drag:none;
   user-drag:none;
 }
-.project-card:hover .project-img-wrap img{transform:scale(1.03)}
 
-.project-body{padding:0;display:flex;flex-direction:column;gap:16px;flex:1}
+.project-body{padding:0;display:flex;flex-direction:column;gap:12px;flex:1}
 
 .project-title-row{
   display:flex;
@@ -605,10 +607,10 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   gap:8px;
 }
 .project-card-title{
-  font-family:var(--font-heading);
-  font-size:18px;
-  font-weight:700;
-  color:var(--text);
+  font-family:var(--font-body);
+  font-size:17px;
+  font-weight:600;
+  color:#ffffff;
   line-height:1.3;
   letter-spacing:-.01em;
 }
@@ -616,8 +618,8 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 /* live-site arrow icon -> white */
 .project-link-icon{
   flex-shrink:0;
-  width:22px;
-  height:22px;
+  width:20px;
+  height:20px;
   border-radius:50%;
   display:flex;
   align-items:center;
@@ -626,7 +628,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   text-decoration:none;
   transition:background .2s ease, color .2s ease, transform .2s ease;
 }
-.project-link-icon svg{width:15px;height:15px;stroke:currentColor;stroke-width:2;fill:none}
+.project-link-icon svg{width:14px;height:14px;stroke:currentColor;stroke-width:2;fill:none}
 .project-link-icon:hover{color:#ffffff;transform:translateY(-2px)}
 .project-link-locked{color:var(--dim)}
 .project-link-locked:hover{color:var(--text)}
@@ -641,8 +643,8 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 
 .project-card-desc{
   font-family:var(--font-body);
-  font-size:13.5px;
-  font-weight:700;            /* bold white text on desktop */
+  font-size:14px;
+  font-weight:400;            /* normal weight, same on desktop and mobile */
   color:#ffffff;
   line-height:1.4;
   text-align:justify;
@@ -650,39 +652,22 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   -webkit-hyphens:auto;
 }
 
-/* TABLET: 2 cards per row, last card centered */
+/* TABLET: 2 cells per row, last cell centered (cards stay 320px) */
 @media(max-width:960px){
-  .project-track{grid-template-columns:repeat(4,1fr);gap:20px}
+  .projects-marquee{width:min(640px, 94%)}
+  .project-track{grid-template-columns:repeat(4,1fr)}
   .project-card,
   .project-card:nth-child(4){grid-column:span 2}
   .project-card:nth-child(5){grid-column:2 / span 2}
 }
 
-/* MOBILE: just normal scrolling, one smaller + lighter card per row */
+/* MOBILE: 1 cell per row, SAME card size as desktop, just scroll */
 @media(max-width:700px){
-  .projects-marquee{width:88%}
-  .project-track{grid-template-columns:1fr;grid-auto-rows:auto;gap:14px}
+  .projects-marquee{width:min(320px, 92%)}
+  .project-track{grid-template-columns:1fr}
   .project-card,
   .project-card:nth-child(4),
-  .project-card:nth-child(5){
-    grid-column:auto;
-    padding:14px;
-    gap:14px;
-    border-radius:8px;
-  }
-  .project-img-wrap{aspect-ratio:16/8.5}
-  .project-body{gap:8px}
-  .project-card-title{font-size:15px;line-height:1.3}
-  .project-link-icon{width:20px;height:20px}
-  .project-link-icon svg{width:14px;height:14px}
-  .project-card-desc{
-    font-size:12px;
-    font-weight:500;          /* lighter on phones */
-    line-height:1.55;
-    text-align:left;
-    hyphens:none;
-    -webkit-hyphens:none;
-  }
+  .project-card:nth-child(5){grid-column:auto}
 }
 
 .tech-panel{
