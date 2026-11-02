@@ -1527,11 +1527,10 @@ var BG = { gridOn: false, kick: function () {} };
    the line is broken.
    ========================================================== */
 (function () {
-  function fix(el) {
-    if (el.getAttribute('data-nohyphen') === '1') return;
-    var text = el.textContent;
+  /* wraps hyphenated words of ONE text node in no-wrap spans */
+  function fixTextNode(node) {
+    var text = node.nodeValue;
     if (text.indexOf('-') === -1) return;
-
     var parts = text.split(/(\S+-\S+)/g);   /* hyphenated words are the odd items */
     var frag = document.createDocumentFragment();
     parts.forEach(function (part, i) {
@@ -1544,9 +1543,14 @@ var BG = { gridOn: false, kick: function () {} };
         frag.appendChild(document.createTextNode(part));
       }
     });
+    node.parentNode.replaceChild(frag, node);
+  }
 
-    el.textContent = '';
-    el.appendChild(frag);
+  function fix(el) {
+    if (el.getAttribute('data-nohyphen') === '1') return;
+    /* only plain text nodes are touched, so spans like <span class="hl-white"> are kept */
+    var nodes = Array.prototype.filter.call(el.childNodes, function (n) { return n.nodeType === 3; });
+    nodes.forEach(fixTextNode);
     el.setAttribute('data-nohyphen', '1');
   }
 
