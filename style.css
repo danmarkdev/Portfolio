@@ -674,9 +674,9 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 .tech-icon-box{
   position:relative;
-  width:72px;
-  height:72px;
-  border-radius:16px;
+  width:82px;
+  height:82px;
+  border-radius:0;
   background:transparent;
   border:none;
   display:flex;
@@ -685,19 +685,19 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   cursor:pointer;
   transition:transform .2s ease, box-shadow .2s ease;
 }
-.tech-icon-box > .fb-icon{width:100%;height:100%;border-radius:16px;box-shadow:var(--shadow-card)}
+.tech-icon-box > .fb-icon{width:100%;height:100%;border-radius:0;box-shadow:none}
 .tech-icon-box > .fb-icon img,
-.tech-icon-box > .fb-icon svg{width:34px;height:34px}
+.tech-icon-box > .fb-icon svg{width:46px;height:46px}
 .tech-icon-box:hover{
   transform:translateY(-5px);
   box-shadow:0 14px 28px -8px rgba(0,0,0,.7);
   z-index:5;
 }
-.tech-icon-box:hover > .fb-icon{box-shadow:var(--shadow-card-hover);border-color:rgba(255,255,255,.26)}
+.tech-icon-box:hover > .fb-icon{box-shadow:0 10px 24px -8px rgba(0,0,0,.8);border-color:rgba(255,255,255,.85)}
 
 .tech-icon-box > .fb-icon{
-  background: var(--surface) !important;
-  border: 1px solid var(--border);
+  background: #0a0b10 !important;
+  border: 1px solid rgba(255,255,255,.45);
   transition:border-color .2s ease, box-shadow .2s ease;
 }
 .tech-tip{
@@ -777,8 +777,8 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 /* DESKTOP: 10 icons per row (30 icons = 3 even rows) */
 @media(min-width:961px){
   .tech-icon-grid{
-    gap:1.15rem;
-    width: calc(10 * 72px + 9 * 1.15rem);
+    gap:20px;
+    width: calc(10 * 82px + 9 * 20px);
     margin: 0 auto;
   }
   .tech-panel{
@@ -1532,7 +1532,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
     height:auto;
     aspect-ratio:1/1;
   }
-  .tech-icon-box > .fb-icon{border-radius:24%}
+  .tech-icon-box > .fb-icon{border-radius:0}
   .tech-icon-box > .fb-icon img,
   .tech-icon-box > .fb-icon svg{width:58%;height:58%}
 }
