@@ -450,13 +450,14 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   to{transform:translate(-50%,-50%) rotate(calc(var(--angle) * -1 - 360deg))}
 }
 
-/* Orbit 1 (inner, 5 icons) */
-.orbit-item.oi-2,.orbit-item.oi-5,.orbit-item.oi-8,.orbit-item.oi-11,.orbit-item.oi-14{--radius:var(--r1);--dur:30s}
+/* Orbit 1 (inner, 6 icons: oi-2, 5, 8, 11, 14, 17) — 60deg apart */
+.orbit-item.oi-2,.orbit-item.oi-5,.orbit-item.oi-8,.orbit-item.oi-11,.orbit-item.oi-14,.orbit-item.oi-17{--radius:var(--r1);--dur:30s}
 .orbit-item.oi-2{--angle:0deg!important}
-.orbit-item.oi-5{--angle:72deg!important}
-.orbit-item.oi-8{--angle:144deg!important}
-.orbit-item.oi-11{--angle:216deg!important}
-.orbit-item.oi-14{--angle:288deg!important}
+.orbit-item.oi-5{--angle:60deg!important}
+.orbit-item.oi-8{--angle:120deg!important}
+.orbit-item.oi-11{--angle:180deg!important}
+.orbit-item.oi-14{--angle:240deg!important}
+.orbit-item.oi-17{--angle:300deg!important}
 
 /* Orbit 2 (middle, 6 icons) */
 .orbit-item.oi-1,.orbit-item.oi-4,.orbit-item.oi-7,.orbit-item.oi-10,.orbit-item.oi-13,.orbit-item.oi-16{--radius:var(--r2);--dur:45s}
@@ -773,10 +774,11 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   border-bottom-color:#1d1d25
 }
 
+/* DESKTOP: 10 icons per row (30 icons = 3 even rows) */
 @media(min-width:961px){
   .tech-icon-grid{
     gap:1.15rem;
-    width: calc(9 * 72px + 8 * 1.15rem);
+    width: calc(10 * 72px + 9 * 1.15rem);
     margin: 0 auto;
   }
   .tech-panel{
