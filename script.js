@@ -1554,8 +1554,38 @@ var BG = { gridOn: false, kick: function () {} };
     el.setAttribute('data-nohyphen', '1');
   }
 
+  /* ---- WHITE + BOLD PHRASES inside project descriptions ----
+     No HTML change needed: add a phrase to this list and it is found
+     automatically (the description text itself is not changed). */
+  var HIGHLIGHTS = ['web based capstone system'];
+
+  function highlight(el) {
+    HIGHLIGHTS.forEach(function (phrase) {
+      var lower = phrase.toLowerCase();
+      var nodes = Array.prototype.filter.call(el.childNodes, function (n) { return n.nodeType === 3; });
+      nodes.forEach(function (node) {
+        var idx = node.nodeValue.toLowerCase().indexOf(lower);
+        if (idx === -1) return;
+        var text = node.nodeValue;
+        var span = document.createElement('span');
+        span.className = 'hl-white';
+        span.style.color = '#ffffff';
+        span.style.fontWeight = '700';
+        span.textContent = text.substr(idx, phrase.length);
+        var frag = document.createDocumentFragment();
+        if (idx > 0) frag.appendChild(document.createTextNode(text.slice(0, idx)));
+        frag.appendChild(span);
+        if (idx + phrase.length < text.length) frag.appendChild(document.createTextNode(text.slice(idx + phrase.length)));
+        node.parentNode.replaceChild(frag, node);
+      });
+    });
+  }
+
   function run() {
-    document.querySelectorAll('.project-card-desc').forEach(fix);
+    document.querySelectorAll('.project-card-desc').forEach(function (el) {
+      highlight(el);   /* first the white phrase */
+      fix(el);         /* then keep hyphenated words together */
+    });
   }
 
   if (document.readyState === 'loading') {
