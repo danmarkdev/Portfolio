@@ -361,8 +361,8 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .orbit-ring{
   position:absolute;
   inset:0;
-  z-index:1;
-  pointer-events:none;
+  z-index:3;               /* ABOVE the photo (photo-frame is z-index:2) so the icon name popup is never hidden behind the photo */
+  pointer-events:none;     /* clicks still go through to the photo; only the icons catch taps */
   --radius:235px;
 }
 
@@ -1815,6 +1815,7 @@ html body a.back-home.is-pressed.is-pressed{
    ORBIT ICONS: click / tap tooltip (same look as the tech stack tooltip)
    ========================================================== */
 .orbit-item.is-active{z-index:30}
+.orbit-item.is-active .orbit-counter{z-index:30}
 .photo-orbit.has-active .orbit-item,
 .photo-orbit.has-active .orbit-counter{animation-play-state:paused}
 
