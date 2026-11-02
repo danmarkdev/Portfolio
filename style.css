@@ -522,12 +522,12 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 /* ===== PROJECT CARDS — JOINED CELLS =====
    Every card is the SAME size everywhere: about 320px wide, 21px padding,
    17px title, 14px justified text. Cards touch and share their borders.
-   DESKTOP : 4 equal cells per row (5th card centered on the next row).
+   DESKTOP : all 5 cards equal, in ONE straight row (nothing left below).
    TABLET  : 2 cells per row, the last one centered.
    MOBILE  : 1 cell per row.
    The duplicate cards (aria-hidden) stay hidden. */
 .projects-marquee{
-  width:min(1280px, 94%);          /* 4 cells x 320px */
+  width:min(1600px, 98%);          /* 5 cells in one row (up to 320px each) */
   margin:0 auto;
   overflow:visible;
   padding:0;
@@ -536,7 +536,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 .project-track{
   display:grid;
-  grid-template-columns:repeat(8,1fr);   /* 4 cards per row, each spans 2 */
+  grid-template-columns:repeat(5,1fr);   /* 5 equal columns = 1 straight row */
   gap:0;
   padding:1px 0 0 1px;
   width:100%;
@@ -546,7 +546,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .project-card[aria-hidden="true"]{display:none}
 
 .project-card{
-  grid-column:span 2;
+  grid-column:auto;
   min-width:0;
   position:relative;
   margin:-1px 0 0 -1px;
@@ -563,8 +563,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   text-size-adjust:100%;
   transition:border-color .25s ease, background-color .25s ease;
 }
-/* 5th card sits in the middle of the second row */
-.project-card:nth-child(5){grid-column:4 / span 2}
 
 /* hover / tap / focus: SOLID background so the grid lines never show through the text */
 .project-card:hover,
@@ -647,6 +645,13 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   text-align:justify;
   hyphens:auto;
   -webkit-hyphens:auto;
+}
+
+/* SMALLER LAPTOPS (961px - 1279px): still 5 in a row, slightly tighter inside */
+@media(min-width:961px) and (max-width:1279px){
+  .project-card{padding:14px;gap:20px}
+  .project-card-title{font-size:15px}
+  .project-card-desc{font-size:12.5px;line-height:1.45;text-align:left}
 }
 
 /* TABLET: 2 cells per row, last cell centered */
