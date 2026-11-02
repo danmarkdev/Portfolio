@@ -455,8 +455,9 @@ var obs=new IntersectionObserver(function(entries){
 },{threshold:.05,rootMargin:'0px 0px 120px 0px'});
 document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
 
-/* DRAGGABLE / SWIPEABLE MARQUEE — used by the Projects and Certificates
-   tracks. direction: 1 = normal, -1 = reversed.
+/* DRAGGABLE / SWIPEABLE MARQUEE — used by the Certificates tracks only.
+   (The Projects section is now a static grid, so it no longer uses this.)
+   direction: 1 = normal, -1 = reversed.
    Plays a small tick when the visitor starts dragging and every ~40px after.
    PERFORMANCE: the loop does nothing while the marquee is off-screen, and
    it moves with translate3d (GPU). */
@@ -608,7 +609,7 @@ function initSwipeMarquee(trackId, loopSeconds, direction){
   requestAnimationFrame(tick);
 }
 
-initSwipeMarquee('projectTrack', 108, 1);
+/* Projects: static grid now (no auto-swipe), so no marquee is started for it. */
 initSwipeMarquee('certTrack', 75, 1);
 initSwipeMarquee('certTrack2', 75, -1);
 
