@@ -1079,6 +1079,138 @@ function adjustAllTechTips(){
   }, { rootMargin: '60px' }).observe(orbit);
 })();
 
+/* ==========================================================
+   ORBIT ICONS: CLICK or TAP an icon -> its name pops up
+   (same look as the Technical Stacks tooltip).
+
+   - ONLY the icon you clicked / tapped stops. All the other icons keep
+     orbiting.
+   - Works for mouse, finger and pen (pointerdown), so a tap works even
+     though the icon is moving.
+   - Click / tap the same icon again, tap anywhere else, scroll with the
+     finger, or press Esc to close it and let it orbit again.
+   - This code used to live inside index.html. It is now here, so you can
+     delete the inline <script> block from the HTML.
+   - It also injects the small CSS it needs (so style.css is unchanged).
+   ========================================================== */
+(function () {
+  var orbit = document.getElementById('photoOrbit');
+  if (!orbit) return;
+
+  /* CSS: only the active icon pauses. The old rules that paused the WHOLE orbit
+     (on hover, and the has-active class) are overridden here. Off-screen and
+     scrolling-on-phone pausing still work. */
+  var st = document.createElement('style');
+  st.textContent =
+    '#photoOrbit:hover:not(.is-offscreen):not(.is-scrolling) .orbit-item,' +
+    '#photoOrbit:hover:not(.is-offscreen):not(.is-scrolling) .orbit-counter,' +
+    '#photoOrbit.has-active:not(.is-offscreen):not(.is-scrolling) .orbit-item,' +
+    '#photoOrbit.has-active:not(.is-offscreen):not(.is-scrolling) .orbit-counter{' +
+      'animation-play-state:running}' +
+    '#photoOrbit .orbit-item.is-active,' +
+    '#photoOrbit .orbit-item.is-active .orbit-counter{' +
+      'animation-play-state:paused !important}' +
+    '#photoOrbit .orbit-counter{touch-action:manipulation}';
+  document.head.appendChild(st);
+
+  var items = Array.prototype.slice.call(orbit.querySelectorAll('.orbit-item'));
+  var active = null;
+  var activePointerId = null;
+  var lastDown = 0;
+
+  /* build one tooltip per icon (copy of the icon + its name) */
+  items.forEach(function (it) {
+    var counter = it.querySelector('.orbit-counter');
+    var badge = it.querySelector('.stack-badge');
+    var icon = badge && badge.querySelector('.fb-icon');
+    if (!counter || !icon) return;
+    var tip = document.createElement('div');
+    tip.className = 'orbit-tip';
+    tip.setAttribute('role', 'tooltip');
+    tip.appendChild(icon.cloneNode(true));
+    var nm = document.createElement('span');
+    nm.className = 'orbit-tip-name';
+    nm.textContent = it.getAttribute('data-name') || '';
+    tip.appendChild(nm);
+    counter.appendChild(tip);
+
+    /* keyboard: Enter / Space on a focused icon */
+    badge.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggle(it, null);
+      }
+    });
+  });
+
+  /* keeps the tooltip inside the screen (and flips it under the icon near the nav bar) */
+  function place(it) {
+    var counter = it.querySelector('.orbit-counter');
+    var tip = it.querySelector('.orbit-tip');
+    if (!counter || !tip) return;
+    it.classList.remove('tip-flip');
+    tip.style.setProperty('--tip-shift', '0px');
+    var r = counter.getBoundingClientRect();
+    if (r.top < tip.offsetHeight + 14 + 90) it.classList.add('tip-flip');   /* not enough room above (nav bar) -> show below */
+    var vw = document.documentElement.clientWidth;
+    var cx = r.left + r.width / 2, tw = tip.offsetWidth, m = 10, shift = 0;
+    if (cx - tw / 2 < m) shift = m - (cx - tw / 2);
+    else if (cx + tw / 2 > vw - m) shift = (vw - m) - (cx + tw / 2);
+    tip.style.setProperty('--tip-shift', shift + 'px');
+  }
+
+  function closeTip() {
+    if (active) active.classList.remove('is-active');
+    active = null;
+    activePointerId = null;
+  }
+
+  function openTip(it, pointerId) {
+    closeTip();
+    active = it;
+    activePointerId = pointerId;
+    it.classList.add('is-active');     /* ONLY this icon pauses (see the CSS above) */
+    place(it);
+  }
+
+  function toggle(it, pointerId) {
+    if (it === active) closeTip(); else openTip(it, pointerId);
+  }
+
+  function itemFrom(e) {
+    var it = e.target && e.target.closest ? e.target.closest('.orbit-item') : null;
+    return (it && items.indexOf(it) !== -1) ? it : null;
+  }
+
+  /* MOUSE + FINGER + PEN: act the moment the icon is touched. (We use pointerdown
+     because the icon is moving: by the time a finger lifts, the icon may have
+     moved away and the "click" could miss.) */
+  document.addEventListener('pointerdown', function (e) {
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    var it = itemFrom(e);
+    if (!it) { closeTip(); return; }          /* tapped somewhere else -> close */
+    lastDown = Date.now();
+    toggle(it, e.pointerId);
+  }, { passive: true });
+
+  /* if the finger starts scrolling the page, the browser cancels the pointer:
+     close the tooltip so the icon does not stay frozen by accident */
+  document.addEventListener('pointercancel', function (e) {
+    if (active && e.pointerId === activePointerId) closeTip();
+  }, { passive: true });
+
+  /* fallback for clicks that did NOT come from a pointerdown (keyboard / screen reader) */
+  document.addEventListener('click', function (e) {
+    if (Date.now() - lastDown < 600) return;  /* already handled by pointerdown */
+    var it = itemFrom(e);
+    if (!it) { closeTip(); return; }
+    toggle(it, null);
+  });
+
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeTip(); });
+  window.addEventListener('resize', function () { if (active) place(active); });
+})();
+
 /* ---------- ANIMATED BACKGROUND ----------
    Drifting soft glows + a floating particle network that reacts to the
    mouse. Creates its own <canvas id="bg-canvas"> if the page doesn't have
