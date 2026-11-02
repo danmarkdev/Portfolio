@@ -650,6 +650,12 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   text-wrap:pretty;          /* balances line endings so words fit nicely without hyphens */
 }
 
+/* highlighted phrase inside a project description (wrap it in <span class="hl-white">) */
+.project-card-desc .hl-white{
+  color:#ffffff;
+  font-weight:700;
+}
+
 /* SMALLER LAPTOPS (961px - 1279px): still 5 in a row, slightly tighter inside */
 @media(min-width:961px) and (max-width:1279px){
   .project-card{padding:14px;gap:20px}
