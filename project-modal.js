@@ -34,13 +34,26 @@
       title: 'Julia AI',
       intro: 'Developed in September 2026. A Hello Kitty-themed AI companion and Danmark\u2019s most challenging project.',
       points: [
-        ['Natural conversation:', 'Chats naturally as a friendly AI companion.'],
-        ['Image generation:', 'Turns your ideas into generated images.'],
-        ['Reads photos, PDFs and links:', 'Understands photos, PDF files and shared links.'],
-        ['Clear formatting:', 'Formats answers clearly, from step-by-step lists to tables.'],
-        ['Hello Kitty theme:', 'A cheerful, creative interface that makes tasks easier and more fun.']
+        ['Natural conversation:', 'Chats naturally as a friendly AI companion, with replies that stream in real time.'],
+        ['Image generation:', 'Turns your ideas into generated images. Julia decides on her own when a message is a picture request.'],
+        ['Reads photos, PDFs and links:', 'Understands photos, PDF files, text files and shared web links.'],
+        ['Clear formatting:', 'Formats answers clearly, from step-by-step lists and tables to copy-ready code blocks.'],
+        ['Practice quiz and flashcards:', 'Creates quizzes and flashcards from a chat, a file or any topic, with Easy, Average and Hard levels.'],
+        ['Cross-device sync:', 'Syncs chats between phone and computer using a private sync code.'],
+        ['Chat tools:', 'Read aloud, copy, edit and resend, good or bad feedback, retry, and rename or delete chats.'],
+        ['Hello Kitty theme:', 'A cheerful, creative interface with a daily motivation card that makes tasks easier and more fun.']
       ],
-      tech: []
+      tech: [
+        'HTML5',
+        'CSS3',
+        'JavaScript',
+        'Google Gemini API',
+        'Cloudflare Workers',
+        'Cloudflare Workers AI',
+        'FLUX.1 schnell',
+        'Cloudflare KV',
+        'Web Speech API'
+      ]
     },
 
     'Resume Analyzer': {
