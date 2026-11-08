@@ -168,6 +168,7 @@
 
     elKicker.textContent = d.kicker;
     elBadge.textContent = d.badge;
+    elBadge.classList.toggle('is-private', !!isPrivate);
     elTitle.textContent = d.title;
     elIntro.textContent = d.intro;
 
@@ -198,15 +199,16 @@
     });
     elTechWrap.style.display = d.tech.length ? '' : 'none';
 
+    elVisit.classList.remove('is-disabled');
+    elVisit.removeAttribute('aria-disabled');
     if (isPrivate) {
-      elVisit.classList.add('is-disabled');
-      elVisit.removeAttribute('href');
-      elVisit.setAttribute('aria-disabled', 'true');
-      elVisit.textContent = 'Private System';
+      /* private systems: the button sends the visitor to the contact page */
+      elVisit.setAttribute('href', 'contact.html');
+      elVisit.removeAttribute('target');
+      elVisit.innerHTML = 'Inquire About ' + d.title + ' ' + ARROW_ICON;
     } else {
-      elVisit.classList.remove('is-disabled');
       elVisit.setAttribute('href', href);
-      elVisit.removeAttribute('aria-disabled');
+      elVisit.setAttribute('target', '_blank');
       elVisit.innerHTML = 'Visit Live Site ' + ARROW_ICON;
     }
   }
