@@ -10,7 +10,8 @@
    - To change a project: edit its entry in PROJECTS (the key must
      match the card title exactly).
    - Leave `tech` empty ( [] ) to hide the Technologies section.
-   - The arrow icon on each card still opens the live site directly.
+   - The arrow / lock icon on each card also opens this overview
+     (the live site is reached from the button at the bottom).
    ========================================================== */
 (function () {
   var PROJECTS = {
@@ -18,7 +19,7 @@
       kicker: '// CAPSTONE SYSTEM',
       badge: 'LIVE DEPLOYMENT',
       title: 'HealthSync Clinic Management System',
-      intro: 'A web-based capstone system that simplifies the school nurse\u2019s workflow, from digital records to real-time communication.',
+      intro: 'A web-based capstone clinic management system engineered by Danmark Rosalejos. Features a streamlined school nurse workflow, digital health records, and real-time communication tools for managing clinic information and daily tasks.',
       points: [
         ['School nurse workflow:', 'Simplifies the daily tasks of the school nurse in one organized system.'],
         ['Digital records:', 'Keeps clinic information in digital form instead of paper.'],
@@ -32,7 +33,7 @@
       kicker: '// FLAGSHIP AI SYSTEM',
       badge: 'PRIVATE DEPLOYMENT',
       title: 'Julia AI',
-      intro: 'Developed in September 2026. A Hello Kitty-themed AI companion and Danmark\u2019s most challenging project.',
+      intro: 'A Hello Kitty-themed AI companion engineered by Danmark Rosalejos in September 2026. Features real-time Gemini chat, image generation with FLUX.1 on Cloudflare Workers AI, photo, PDF and link reading, a practice quiz and flashcard engine, and cross-device chat sync.',
       points: [
         ['Natural conversation:', 'Chats as a friendly AI companion with real-time streaming replies.'],
         ['Image generation:', 'Turns your ideas into images; Julia decides when a message is a picture request.'],
@@ -58,7 +59,7 @@
       kicker: '// WEB APP',
       badge: 'LIVE DEPLOYMENT',
       title: 'Resume Analyzer',
-      intro: 'A web-based resume review system that helps job seekers improve their resumes with rule-based checks and AI feedback.',
+      intro: 'A web-based resume review system engineered by Danmark Rosalejos with Node.js and Tailwind CSS. Features PDF and DOCX upload, rule-based ATS checks, AI-generated feedback, keyword matching against job postings, and section-by-section improvement suggestions.',
       points: [
         ['PDF and DOCX upload:', 'Accepts resumes in the two most common formats.'],
         ['Rule-based ATS checks:', 'Checks the resume against common applicant tracking system rules.'],
@@ -73,7 +74,7 @@
       kicker: '// INTERACTIVE GAME',
       badge: 'LIVE DEPLOYMENT',
       title: 'Learn & Approach',
-      intro: 'An interactive matching game designed to sharpen attention to detail.',
+      intro: 'An interactive matching game engineered by Danmark Rosalejos to sharpen attention to detail. Features four levels with three shuffled choices each, only one correct match, and final results that connect players to the activity questions in Google Drive.',
       points: [
         ['Four levels:', 'Each level tests how closely the player looks.'],
         ['Shuffled choices:', 'Three shuffled choices per round, with only one correct match.'],
@@ -86,7 +87,7 @@
       kicker: '// INTERACTIVE LETTER',
       badge: 'LIVE DEPLOYMENT',
       title: 'Digital Father\u2019s Day Letter',
-      intro: 'An interactive tap-to-open envelope with a scripture-rooted tribute to the two church pastors.',
+      intro: 'An interactive digital letter engineered by Danmark Rosalejos. Features a tap-to-open envelope, a scripture-rooted tribute to the two church pastors, personalized letters, a scroll-triggered reveal, and a closing message of gratitude from the congregation.',
       points: [
         ['Tap-to-open envelope:', 'The letter opens with a tap, like a real envelope.'],
         ['Personalized letters:', 'Individual letters written for each pastor.'],
@@ -252,11 +253,17 @@
     });
   });
 
-  /* click a card -> open (the arrow icon still goes straight to the live site) */
+  /* click a card, its arrow icon or its lock icon -> open the overview.
+     (capture phase, so the arrow's live-site link and the lock's old alert
+     never fire; the live site is now reached from the overview's button) */
   document.addEventListener('click', function (e) {
     var card = e.target && e.target.closest ? e.target.closest('.project-card') : null;
     if (!card || card.getAttribute('aria-hidden') === 'true') return;
-    if (e.target.closest('.project-link-icon')) return;
+    if (e.target.closest('.project-link-icon')) {
+      e.preventDefault();
+      e.stopPropagation();
+      try { if (window.SFX && SFX.click) SFX.click(); } catch (err) {}
+    }
     openOverlay(card);
-  });
+  }, true);
 })();
