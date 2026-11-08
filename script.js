@@ -722,12 +722,12 @@ document.addEventListener('keydown',function(e){
     },
     {
       year: 'Sept 2026',
-      label: 'UI/UX Role',
+      label: 'Web Development Role',
       range: 'Sept 26, 2026',
       current: false,
       title: 'UI/UX & Web Development Associate',
       org: 'AWS Student Builder Group - TUP Manila',
-      desc: 'Officially appointed to the role responsible for UI/UX design and web development in the student builder community.',
+      desc: 'Officially appointed to the role responsible for UI/UX design and Web development in the student builder community.',
       icon: 'badge'
     }
   ];
