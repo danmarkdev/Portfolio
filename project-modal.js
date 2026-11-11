@@ -137,6 +137,30 @@
     if (target) LOOKUP[norm(alias)] = target;
   });
 
+  /* Make the visible card titles match the canonical titles above, so the
+     card and the overview always show the SAME name (even if index.html
+     still has an old title). Hidden duplicate cards are skipped. */
+  var CANON = {};
+  Object.keys(PROJECTS).forEach(function (k) { CANON[norm(k)] = k; });
+  Object.keys(ALIASES).forEach(function (a) { CANON[norm(a)] = ALIASES[a]; });
+  Array.prototype.forEach.call(
+    document.querySelectorAll('.project-card:not([aria-hidden="true"]) .project-card-title'),
+    function (t) {
+      var canon = CANON[norm(t.textContent)];
+      if (canon) t.textContent = canon;
+    }
+  );
+
+  /* RENAMES: rewrites the visible card title on the page, so the card AND the
+     overview both show the new title even if index.html still has the old one. */
+  var RENAMES = {
+    'Interactive Image-Matching Learning Game': 'Interactive Matching Learning Game'
+  };
+  Array.prototype.forEach.call(document.querySelectorAll('.project-card-title'), function (el) {
+    var t = el.textContent.trim();
+    if (RENAMES[t]) el.textContent = RENAMES[t];
+  });
+
   var X_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>';
   var ARROW_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
 
