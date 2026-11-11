@@ -1,30 +1,28 @@
-/* PROJECT DETAILS OVERLAY*/
+/* PROJECT DETAILS OVERLAY */
 (function () {
   var PROJECTS = {
     'HealthSync Clinic Management System': {
       kicker: '// CAPSTONE SYSTEM',
       badge: 'LIVE DEPLOYMENT',
       title: 'HealthSync Clinic Management System',
-      intro: 'A web-based capstone clinic management system engineered by Danmark Rosalejos for STI College Bacoor. Features a compliance dashboard, Excel and manual record import, scheduled Gmail and Outlook reminders, and a submission review flow that updates each record automatically.',
+      intro: 'A full-stack capstone clinic management system for STI College Bacoor. Features a real-time compliance dashboard, Excel and manual record import, scheduled Gmail and Outlook reminders, and a submission review workflow that updates each record automatically.',
       points: [
-        ['Dashboard and analytics:', 'Live population chart, compliance counts and a bell for pending items.'],
-        ['Records management:', 'SHS and Tertiary students and teachers in separate views, with archive and restore.'],
-        ['Excel and manual import:', 'Bulk import with validation and a downloadable template, or add records by hand.'],
-        ['Broadcast reminders:', 'Sends or schedules Gmail and Outlook reminders using ready-made templates.'],
-        ['Submission review:', 'Reads replies from the clinic inbox; the nurse approves or rejects with an emailed reason.'],
-        ['Printable reports:', 'Prints or saves PDF reports filtered by compliance status or school level.'],
-        ['Secure access:', 'Email OTP two-step login, reset links that expire in 30 minutes, and dark mode.']
+        ['Real-Time Compliance Dashboard:', 'Live population chart (bar, doughnut or pie), complete and pending counts, and a notification bell that refreshes every 10 seconds with new submissions and scheduled reminder results.'],
+        ['Population and Records Management:', 'Separate SHS and Tertiary views for students and teachers, grouped by strand or course, with profile cards, search, archive and restore, plus printable reports.'],
+        ['Bulk Import and Smart Validation:', 'Add records by hand or import Excel and CSV files with a downloadable template, numeric ID and email validation, and duplicate detection.'],
+        ['Automated Email Reminders:', 'Send or schedule Gmail and Outlook reminders with templates and file attachments; scheduled blasts run automatically and replies from the clinic inbox are matched to the right record.'],
+        ['Approval Workflow and Secure Access:', 'The nurse approves or rejects each submission (rejections email the reason back) and approved files mark the record Complete; login uses email OTP and reset links expire in 30 minutes.']
       ],
       tech: [
-        'HTML5',
-        'CSS3',
-        'JavaScript',
-        'PHP',
+        'PHP (MySQLi)',
         'MySQL',
-        'PHPMailer',
-        'EmailJS',
+        'PHPMailer 7',
+        'IMAP Inbox Reader',
+        'EmailJS (OTP and Reset)',
         'Chart.js',
-        'SheetJS'
+        'SheetJS (XLSX Import)',
+        'JavaScript ES6+',
+        'HTML5 and CSS3'
       ]
     },
 
@@ -34,23 +32,22 @@
       title: 'Julia AI',
       intro: 'A Hello Kitty-themed AI companion engineered by Danmark Rosalejos in September 2026. Features real-time Gemini chat, image generation with FLUX.1 on Cloudflare Workers AI, photo, PDF and link reading, a practice quiz and flashcard engine, and cross-device chat sync.',
       points: [
-        ['Natural conversation:', 'Chats as a friendly AI companion with real-time streaming replies.'],
-        ['Image generation:', 'Turns your ideas into images; Julia decides when a message is a picture request.'],
-        ['Reads photos, PDFs and links:', 'Understands photos, PDF and text files, and shared web links.'],
-        ['Clear formatting:', 'Answers come as step-by-step lists, tables and copy-ready code blocks.'],
-        ['Practice quiz and flashcards:', 'Builds them from a chat, a file or any topic, at three difficulty levels.'],
-        ['Cross-device sync:', 'Syncs chats between phone and computer with a private sync code.'],
-        ['Hello Kitty theme:', 'A cheerful interface with a daily motivation card that makes tasks more fun.']
+        ['Streaming AI Companion Chat:', 'Real-time conversation powered by the Gemini API through a secure Cloudflare Worker proxy, with markdown replies, copy-ready code blocks, tables and lists.'],
+        ['Autonomous Image Generation:', 'Julia decides on her own when a message is a picture request, then generates the image with FLUX.1 schnell on Cloudflare Workers AI and shows it right in the chat.'],
+        ['Multimodal Understanding:', 'Reads photos, PDF and text files, and shared web links; the Worker opens each link, extracts the page text and falls back to a reader service for JavaScript-heavy pages.'],
+        ['Practice Quiz and Flashcard Engine:', 'Builds multiple-choice quizzes and flip flashcards from a chat, a file or any topic, with Easy, Average and Hard levels and instant scoring.'],
+        ['Cross-Device Sync and Hello Kitty UX:', 'A private sync code keeps chats in step between phone and computer (Cloudflare KV), plus read-aloud replies, feedback buttons and a daily motivation card.']
       ],
       tech: [
-        'HTML5',
-        'CSS3',
-        'JavaScript',
         'Google Gemini API',
         'Cloudflare Workers',
-        'Workers AI (FLUX.1)',
+        'Cloudflare Workers AI (FLUX.1)',
         'Cloudflare KV',
-        'Web Speech API'
+        'Server-Sent Events Streaming',
+        'JavaScript ES6+ (Vanilla)',
+        'Custom Markdown Renderer',
+        'Web Speech API',
+        'HTML5 and CSS3'
       ]
     },
 
@@ -58,23 +55,22 @@
       kicker: '// WEB APP',
       badge: 'LIVE DEPLOYMENT',
       title: 'Resume Analyzer',
-      intro: 'A web-based resume review system engineered by Danmark Rosalejos with Node.js and Tailwind CSS. Features PDF and DOCX upload, AI and ATS readiness scores, rule-based checks, keyword matching against job postings, and section-by-section improvement suggestions.',
+      intro: 'A full-stack resume review web app built with Node.js and Tailwind CSS. Features PDF and DOCX upload, AI and ATS readiness scores, rule-based checks, keyword matching against job postings, and section-by-section improvement suggestions.',
       points: [
-        ['PDF and DOCX upload:', 'Drag and drop or choose a resume file, up to 5MB.'],
-        ['Dual scoring:', 'Shows an AI score and an ATS score from 0 to 100, color-coded by readiness.'],
-        ['Rule-based ATS checks:', 'Detects email, phone, bullet points and section headers, and flags issues.'],
-        ['Keyword matching:', 'Paste a job posting to get a match percentage and a list of missing keywords.'],
-        ['AI-generated feedback:', 'Lists strengths, formatting issues and top recommendations.'],
-        ['Section-by-section suggestions:', 'Shows what to improve in each part of the resume.']
+        ['Drag-and-Drop Resume Upload:', 'Accepts PDF and DOCX files up to 5MB, with an optional job description field that sharpens keyword matching.'],
+        ['Dual AI and ATS Scoring:', 'Two animated score rings from 0 to 100, color-coded green, amber or red, so job seekers see their ATS readiness at a glance.'],
+        ['Rule-Based ATS Checks:', 'Detects email, phone number, bullet points and section headers, reports the word count, and lists detected issues in the resume.'],
+        ['Job-Targeted Keyword Matching:', 'Compares the resume against a pasted job posting to give a keyword match percentage and a list of missing keywords.'],
+        ['Structured AI Feedback:', 'Returns strengths, formatting issues, top recommendations and section-by-section advice, shown as clear result cards.']
       ],
       tech: [
-        'HTML5',
-        'CSS3',
-        'JavaScript',
+        'Node.js (REST API)',
         'Tailwind CSS',
-        'Node.js',
-        'REST API',
-        'Render'
+        'JavaScript ES6+ (Fetch API)',
+        'HTML5',
+        'PDF and DOCX Parsing',
+        'AI Feedback API',
+        'Render (API Hosting)'
       ]
     },
 
@@ -82,19 +78,18 @@
       kicker: '// INTERACTIVE GAME',
       badge: 'LIVE DEPLOYMENT',
       title: 'Learn & Approach',
-      intro: 'An interactive matching game engineered by Danmark Rosalejos for a ProfEd 1 class activity. Features four levels with three shuffled choices each, live scoring and feedback, and a results screen that connects players to the activity questions in Google Drive.',
+      intro: 'An interactive image-matching game for a ProfEd 1 class activity. Features four levels with three shuffled choices each, live scoring and feedback, and a results screen that connects players to the activity questions in Google Drive.',
       points: [
-        ['Four levels:', 'Each level shows a reference image and tests how closely the player looks.'],
-        ['Shuffled choices:', 'Three choices per round in random order, with only one correct match.'],
-        ['Instant feedback:', 'Right and wrong answers are highlighted right away, with a live score.'],
-        ['Progress tracker:', 'A step bar turns green or red for each answered level.'],
-        ['Results and activity link:', 'Shows the final score, then links to the activity questions in Google Drive.'],
-        ['Easy to edit, mobile friendly:', 'Levels and the activity link live in one config block; the layout fits phones.']
+        ['Four-Level Matching Challenge:', 'Each level shows a reference image and three look-alike choices with only one exact match, built to sharpen attention to detail.'],
+        ['Shuffled Choices Every Round:', 'Answer positions are randomized each time, so players cannot memorize where the correct image sits.'],
+        ['Instant Feedback and Progress Tracking:', 'Right and wrong answers are highlighted right away, with a live score and a step bar that turns green or red for each level.'],
+        ['Results and Activity Hand-Off:', 'Ends with a final score and an encouraging message, a play-again option, and a button that opens the activity questions in Google Drive.'],
+        ['Config-Driven and Responsive:', 'Levels and the activity link live in one config block, and the layout adapts to desktop and phone screens.']
       ],
       tech: [
         'HTML5',
-        'CSS3',
-        'JavaScript',
+        'CSS3 (Grid and Flexbox)',
+        'JavaScript ES6+ (Vanilla)',
         'GitHub Pages',
         'Google Drive',
         'Google Fonts'
@@ -105,14 +100,21 @@
       kicker: '// INTERACTIVE LETTER',
       badge: 'LIVE DEPLOYMENT',
       title: 'Digital Father\u2019s Day Letter',
-      intro: 'An interactive digital letter engineered by Danmark Rosalejos. Features a tap-to-open envelope, a scripture-rooted tribute to the two church pastors, personalized letters, a scroll-triggered reveal, and a closing message of gratitude from the congregation.',
+      intro: 'An interactive digital letter for the two pastors of the Lorimi Bacoor Faith Family. Features a tap-to-open envelope, a scripture-rooted tribute, personal messages for each pastor, a scroll-triggered reveal, and a closing message of gratitude from the congregation.',
       points: [
-        ['Tap-to-open envelope:', 'The letter opens with a tap, like a real envelope.'],
-        ['Personalized letters:', 'Individual letters written for each pastor.'],
-        ['Scroll-triggered reveal:', 'Content appears as the reader scrolls.'],
-        ['Closing message:', 'Ends with a message of gratitude from the congregation.']
+        ['Tap-to-Open Envelope Intro:', 'A CSS-animated envelope with a flipping flap and a rising letter opens on tap, and page scrolling stays locked until it does.'],
+        ['Scripture-Rooted Tribute:', 'Opens with 1 Thessalonians 2:11-12 and a heartfelt tribute thanking the pastors for shepherding the church like fathers.'],
+        ['Pastor Profile Cards:', 'Each pastor gets a framed photo, name, role and a personal thank-you message written by the church family.'],
+        ['Scroll-Triggered Reveal:', 'The pastor cards fade in as the reader scrolls down to them, driven by the Intersection Observer API.'],
+        ['Letters of Gratitude:', 'A letter from the church family and a personal greeting from Danmark close the page, followed by a final thank-you message.']
       ],
-      tech: []
+      tech: [
+        'HTML5',
+        'CSS3 (Keyframes and Transitions)',
+        'JavaScript ES6+ (Vanilla)',
+        'Intersection Observer API',
+        'Responsive Design'
+      ]
     }
   };
 
@@ -271,7 +273,7 @@
     });
   });
 
-  /* click a card, -> open the overview.
+  /* click a card, its arrow icon or its lock icon -> open the overview.
      (capture phase, so the arrow's live-site link and the lock's old alert
      never fire; the live site is now reached from the overview's button) */
   document.addEventListener('click', function (e) {
