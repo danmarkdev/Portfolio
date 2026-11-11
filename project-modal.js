@@ -19,14 +19,27 @@
       kicker: '// CAPSTONE SYSTEM',
       badge: 'LIVE DEPLOYMENT',
       title: 'HealthSync Clinic Management System',
-      intro: 'A web-based capstone clinic management system engineered by Danmark Rosalejos. Features a streamlined school nurse workflow, digital health records, and real-time communication tools for managing clinic information and daily tasks.',
+      intro: 'A web-based capstone clinic management system engineered by Danmark Rosalejos for STI College Bacoor. Features a compliance dashboard, Excel and manual record import, scheduled Gmail and Outlook reminders, and a submission review flow that updates each record automatically.',
       points: [
-        ['School nurse workflow:', 'Simplifies the daily tasks of the school nurse in one organized system.'],
-        ['Digital records:', 'Keeps clinic information in digital form instead of paper.'],
-        ['Real-time communication:', 'Built-in tools for communicating in real time.'],
-        ['Streamlined healthcare processes:', 'Simple, organized and easy to use for managing clinic information and daily tasks.']
+        ['Dashboard and analytics:', 'Live population chart, compliance counts and a bell for pending items.'],
+        ['Records management:', 'SHS and Tertiary students and teachers in separate views, with archive and restore.'],
+        ['Excel and manual import:', 'Bulk import with validation and a downloadable template, or add records by hand.'],
+        ['Broadcast reminders:', 'Sends or schedules Gmail and Outlook reminders using ready-made templates.'],
+        ['Submission review:', 'Reads replies from the clinic inbox; the nurse approves or rejects with an emailed reason.'],
+        ['Printable reports:', 'Prints or saves PDF reports filtered by compliance status or school level.'],
+        ['Secure access:', 'Email OTP two-step login, reset links that expire in 30 minutes, and dark mode.']
       ],
-      tech: []   /* add your stack here, e.g. ['PHP', 'MySQL'] */
+      tech: [
+        'HTML5',
+        'CSS3',
+        'JavaScript',
+        'PHP',
+        'MySQL',
+        'PHPMailer',
+        'EmailJS',
+        'Chart.js',
+        'SheetJS'
+      ]
     },
 
     'Julia AI': {
