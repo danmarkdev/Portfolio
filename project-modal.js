@@ -1,18 +1,4 @@
-/* ==========================================================
-   PROJECT DETAILS OVERLAY
-   Click (or press Enter on) a project card -> a full-screen details
-   view opens. Close it with the X, the "Close Overview" button,
-   or the Esc key.
-
-   - Add this file in index.html AFTER script.js.
-   - The card's image and live-site link are read from the card itself,
-     so you only edit the text below.
-   - To change a project: edit its entry in PROJECTS (the key must
-     match the card title exactly).
-   - Leave `tech` empty ( [] ) to hide the Technologies section.
-   - The arrow / lock icon on each card also opens this overview
-     (the live site is reached from the button at the bottom).
-   ========================================================== */
+/* PROJECT DETAILS OVERLAY*/
 (function () {
   var PROJECTS = {
     'HealthSync Clinic Management System': {
@@ -285,7 +271,7 @@
     });
   });
 
-  /* click a card, its arrow icon or its lock icon -> open the overview.
+  /* click a card, -> open the overview.
      (capture phase, so the arrow's live-site link and the lock's old alert
      never fire; the live site is now reached from the overview's button) */
   document.addEventListener('click', function (e) {
