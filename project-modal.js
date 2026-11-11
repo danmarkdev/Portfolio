@@ -76,7 +76,7 @@
     },
 
     /* FIXED: was  'Interactive Image-Matching Learning Game: {   (missing closing quote and ":" ) */
-    'Interactive Image-Matching Learning Game': {
+    'Interactive Image Matching Learning Game': {
       kicker: '// INTERACTIVE GAME',
       badge: 'LIVE DEPLOYMENT',
       name: 'Learn & Approach',
@@ -122,7 +122,7 @@
 
   /* normalise titles so  Father's  /  Father\u2019s  and  &  all match */
   function norm(s) {
-    return (s || '').replace(/[\u2018\u2019]/g, "'").replace(/\s+/g, ' ').trim().toLowerCase();
+    return (s || '').replace(/[\u2018\u2019]/g, "'").replace(/-/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase();
   }
   var LOOKUP = {};
   Object.keys(PROJECTS).forEach(function (k) { LOOKUP[norm(k)] = PROJECTS[k]; });
