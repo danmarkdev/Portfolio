@@ -26,7 +26,6 @@
       ]
     },
 
-    /* FIXED: was  'AI Companion and Quiz Platform ' {   (missing ":" ) */
     'AI Companion and Quiz Platform': {
       kicker: '// FLAGSHIP AI SYSTEM',
       badge: 'PRIVATE DEPLOYMENT',
@@ -75,7 +74,7 @@
       ]
     },
 
-    /* FIXED: was  'Interactive Image-Matching Learning Game: {   (missing closing quote and ":" ) */
+    /* The key matches the card title in index.html exactly */
     'Interactive Matching Learning Game': {
       kicker: '// INTERACTIVE GAME',
       badge: 'LIVE DEPLOYMENT',
@@ -126,6 +125,17 @@
   }
   var LOOKUP = {};
   Object.keys(PROJECTS).forEach(function (k) { LOOKUP[norm(k)] = PROJECTS[k]; });
+
+  /* ALIASES: older / alternate card titles that should open the same details.
+     If you ever rename a card again, add its old or new title here. */
+  var ALIASES = {
+    'Interactive Image-Matching Learning Game': 'Interactive Matching Learning Game',
+    'Learn & Approach': 'Interactive Matching Learning Game'
+  };
+  Object.keys(ALIASES).forEach(function (alias) {
+    var target = PROJECTS[ALIASES[alias]];
+    if (target) LOOKUP[norm(alias)] = target;
+  });
 
   var X_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>';
   var ARROW_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
