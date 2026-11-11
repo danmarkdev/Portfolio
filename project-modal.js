@@ -4,7 +4,7 @@
     'School Clinic Compliance & Records Management System': {
       kicker: '// CAPSTONE SYSTEM',
       badge: 'LIVE DEPLOYMENT',
-      title: 'HealthSync Clinic Management System',
+      name: 'HealthSync Clinic Management System',
       intro: 'A full-stack capstone clinic management system for STI College Bacoor. Features a real-time compliance dashboard, Excel and manual record import, scheduled Gmail and Outlook reminders, and a submission review workflow that updates each record automatically.',
       points: [
         ['Real-Time Compliance Dashboard:', 'Live population chart (bar, doughnut or pie), complete and pending counts, and a notification bell that refreshes every 10 seconds with new submissions and scheduled reminder results.'],
@@ -30,7 +30,7 @@
     'AI Companion and Quiz Platform': {
       kicker: '// FLAGSHIP AI SYSTEM',
       badge: 'PRIVATE DEPLOYMENT',
-      title: 'Julia AI',
+      name: 'Julia AI',
       intro: 'A Hello Kitty-themed AI companion engineered by Danmark Rosalejos in September 2026. Features real-time Gemini chat, image generation with FLUX.1 on Cloudflare Workers AI, photo, PDF and link reading, a practice quiz and flashcard engine, and cross-device chat sync.',
       points: [
         ['Streaming AI Companion Chat:', 'Real-time conversation powered by the Gemini API through a secure Cloudflare Worker proxy, with markdown replies, copy-ready code blocks, tables and lists.'],
@@ -55,7 +55,7 @@
     'AI Resume Review & ATS Scoring System': {
       kicker: '// WEB APP',
       badge: 'LIVE DEPLOYMENT',
-      title: 'Resume Analyzer',
+      name: 'Resume Analyzer',
       intro: 'A full-stack resume review web app built with Node.js and Tailwind CSS. Features PDF and DOCX upload, AI and ATS readiness scores, rule-based checks, keyword matching against job postings, and section-by-section improvement suggestions.',
       points: [
         ['Drag-and-Drop Resume Upload:', 'Accepts PDF and DOCX files up to 5MB, with an optional job description field that sharpens keyword matching.'],
@@ -79,7 +79,7 @@
     'Interactive Image-Matching Learning Game': {
       kicker: '// INTERACTIVE GAME',
       badge: 'LIVE DEPLOYMENT',
-      title: 'Learn & Approach',
+      name: 'Learn & Approach',
       intro: 'An interactive image-matching game for a ProfEd 1 class activity. Features four levels with three shuffled choices each, live scoring and feedback, and a results screen that connects players to the activity questions in Google Drive.',
       points: [
         ['Four-Level Matching Challenge:', 'Each level shows a reference image and three look-alike choices with only one exact match, built to sharpen attention to detail.'],
@@ -101,7 +101,7 @@
     'Interactive Digital Tribute Letter for Pastors': {
       kicker: '// INTERACTIVE LETTER',
       badge: 'LIVE DEPLOYMENT',
-      title: 'Digital Father\u2019s Day Letter',
+      name: 'Digital Father\u2019s Day Letter',
       intro: 'An interactive digital letter for the two pastors of the Lorimi Bacoor Faith Family. Features a tap-to-open envelope, a scripture-rooted tribute, personal messages for each pastor, a scroll-triggered reveal, and a closing message of gratitude from the congregation.',
       points: [
         ['Tap-to-Open Envelope Intro:', 'A CSS-animated envelope with a flipping flap and a rising letter opens on tap, and page scrolling stays locked until it does.'],
@@ -130,6 +130,12 @@
   var X_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>';
   var ARROW_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
 
+  var pmStyle = document.createElement('style');
+  pmStyle.textContent =
+    '.pm-name{font-family:var(--font-mono);font-size:.8rem;font-weight:600;letter-spacing:.06em;color:#a4a7b8;margin-top:.55rem}' +
+    '@media(min-width:961px){.pm-name{font-size:clamp(.7rem,1.6vh,.8rem);margin-top:clamp(.3rem,.9vh,.55rem)}}';
+  document.head.appendChild(pmStyle);
+
   /* build the overlay once */
   var overlay = document.createElement('div');
   overlay.className = 'pm-overlay';
@@ -142,6 +148,7 @@
         '<div class="pm-head">' +
           '<div class="pm-meta"><span class="pm-kicker"></span><span class="pm-badge"></span></div>' +
           '<h2 class="pm-title" id="pmTitle"></h2>' +
+          '<p class="pm-name"></p>' +
         '</div>' +
         '<button type="button" class="pm-x" aria-label="Close">' + X_ICON + '</button>' +
       '</div>' +
@@ -165,6 +172,7 @@
   document.body.appendChild(overlay);
 
   var $ = function (sel) { return overlay.querySelector(sel); };
+  var elName = $('.pm-name');
   var elKicker = $('.pm-kicker'), elBadge = $('.pm-badge'), elTitle = $('.pm-title');
   var elIntro = $('.pm-intro'), elImg = $('.pm-shot img'), elList = $('.pm-list');
   var elTechWrap = $('.pm-tech-wrap'), elTech = $('.pm-tech'), elVisit = $('.pm-visit');
@@ -183,7 +191,7 @@
     var d = LOOKUP[norm(cardTitle)] || {
       kicker: '// PROJECT',
       badge: isPrivate ? 'PRIVATE DEPLOYMENT' : 'LIVE DEPLOYMENT',
-      title: cardTitle,
+      name: '',
       intro: descEl ? descEl.textContent.trim() : '',
       points: [],
       tech: []
@@ -192,7 +200,16 @@
     elKicker.textContent = d.kicker;
     elBadge.textContent = d.badge;
     elBadge.classList.toggle('is-private', !!isPrivate);
-    elTitle.textContent = d.title;
+    /* the overview title is ALWAYS the same name as the card on the page;
+       the project's own name (HealthSync, Julia AI ...) shows under it */
+    elTitle.textContent = cardTitle || d.name;
+    if (d.name && norm(d.name) !== norm(cardTitle)) {
+      elName.textContent = d.name;
+      elName.style.display = '';
+    } else {
+      elName.textContent = '';
+      elName.style.display = 'none';
+    }
     elIntro.textContent = d.intro;
 
     if (imgEl) {
@@ -228,7 +245,7 @@
       /* private systems: the button sends the visitor to the contact page */
       elVisit.setAttribute('href', 'contact.html');
       elVisit.removeAttribute('target');
-      elVisit.innerHTML = 'Inquire About ' + d.title + ' ' + ARROW_ICON;
+      elVisit.innerHTML = 'Inquire About ' + (d.name || cardTitle) + ' ' + ARROW_ICON;
     } else {
       elVisit.setAttribute('href', href);
       elVisit.setAttribute('target', '_blank');
