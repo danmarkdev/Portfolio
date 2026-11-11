@@ -76,7 +76,7 @@
     },
 
     /* FIXED: was  'Interactive Image-Matching Learning Game: {   (missing closing quote and ":" ) */
-    'Interactive Image Matching Learning Game': {
+    'Interactive Matching Learning Game': {
       kicker: '// INTERACTIVE GAME',
       badge: 'LIVE DEPLOYMENT',
       name: 'Learn & Approach',
