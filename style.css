@@ -74,7 +74,7 @@ html{scrollbar-width:none}
 #skills .sec-header{margin-bottom:1.25rem}
 #skills .tech-panel{padding-top:1rem}
 
-/* ANIMATED BACKGROUND CANVAS (drawn by script.js) — fixed, behind everything */
+/* ANIMATED BACKGROUND CANVAS*/
 #bg-canvas{
   position:fixed;
   inset:0;
@@ -519,13 +519,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 .service-num{display:none}
 
-/* ===== PROJECT CARDS — JOINED CELLS =====
-   Every card is the SAME size everywhere: about 320px wide, 21px padding,
-   17px title, 14px justified text. Cards touch and share their borders.
-   DESKTOP : all 5 cards equal, in ONE straight row (nothing left below).
-   TABLET  : 2 cells per row, the last one centered.
-   MOBILE  : 1 cell per row.
-   The duplicate cards (aria-hidden) stay hidden. */
+/* PROJECT CARDS — JOINED CELLS */
 .projects-marquee{
   width:min(1600px, 98%);          /* 5 cells in one row (up to 320px each) */
   margin:0 auto;
@@ -947,7 +941,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   transition:transform .25s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease, color .2s ease;
 }
 .edu-node-circle svg{width:28px;height:28px}
-/* cut-out lines inside the monitor icon match the circle background */
+/* About circle background */
 .edu-node-circle svg .cut{stroke:var(--surface)}
 .edu-node.active .edu-node-circle svg .cut{stroke:#1f1f27}
 .edu-node-year{
@@ -1262,14 +1256,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease}
 .reveal.visible{opacity:1;transform:none}
 
-/* ==========================================================
-   TESTIMONIALS — dark glass 3D fan (desktop) / stacked deck (mobile)
-   JS (script.js) sets per card:
-     --o  signed offset from the active card (-3 ... 0 ... 3)
-     --a  absolute offset |o|
-     --r  rank behind the active card (0 = front)
-   --gap = distance between cards (smaller = cards closer together)
-   ========================================================== */
+/* TESTIMONIALS — dark glass 3D fan (desktop) / stacked deck (mobile) */
 #testimonials{overflow-x:clip}
 
 .testimonial-deck-wrap{
@@ -1454,18 +1441,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .testi-card.testi-active > *{opacity:1}
 }
 
-/* ==========================================================
-   PERSPECTIVE GRID BACKGROUND (the old design) — fades in from
-   Testimonials down to Technical Stacks (toggled by script.js).
-
-   - Desktop: the grid moves with `transform` (GPU). script.js adds an
-     inner <div class="grid-lines"> that slides down exactly one tile
-     (64px) and loops.
-   - Phones: script.js draws the same grid on a <canvas> instead.
-   - Hidden (visibility:hidden) + animation paused when it is off.
-   - Speed: change "1.6s" in .grid-lines below.
-     bigger number = slower, smaller number = faster.
-   ========================================================== */
+/* PERSPECTIVE GRID BACKGROUND */
 #grid-bg{
   position:fixed;
   inset:0;
@@ -1627,10 +1603,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 .orbit-dot{display:none !important}
 .orbit-ring > div:not([class]){display:none !important}
 
-/* ==========================================================
-   SOUND ON/OFF BUTTON (bottom-left, added by script.js)
-   Move it with left / bottom below.
-   ========================================================== */
+/* SOUND ON/OFF BUTTON */
 .sound-toggle{
   position:fixed;
   left:1.25rem;
@@ -1668,20 +1641,14 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .sound-toggle{left:.9rem;bottom:.9rem;width:42px;height:42px}
 }
 
-/* ==========================================================
-   MOBILE PERFORMANCE FIXES
-   (everything below only affects phones / tablets, or devices
-   that script.js detects as weak — desktop looks the same)
-   ========================================================== */
+/* MOBILE PERFORMANCE FIXES */
 
-/* 1) Orbit icons stop spinning while they are off-screen
-      (script.js adds .is-offscreen to .photo-orbit) */
+/** Orbit icons */
 .photo-orbit.is-offscreen .orbit-item,
 .photo-orbit.is-offscreen .orbit-counter{animation-play-state:paused}
 
 @media(max-width:960px){
-  /* 2) backdrop-filter re-blurs everything behind it on EVERY frame.
-        On phones we use a solid, slightly see-through color instead. */
+  /* backdrop-filter  */
   #header,
   #header.scrolled,
   .sound-toggle{
@@ -1692,8 +1659,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   #header.scrolled{background:rgba(12,12,16,.98)}
   .sound-toggle{background:rgba(12,12,16,.94)}
 
-  /* 3) Grid: phones draw it on a canvas (script.js), so no mask is
-        needed here (the canvas fades its own top edge). */
+  /* Grids */
   #grid-bg{
     -webkit-mask-image:none;
     mask-image:none;
@@ -1705,9 +1671,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 }
 
 @media(max-width:700px){
-  /* 4) Certificate marquee edge-fade: swap the (costly) mask for two light
-        gradient overlays. Looks the same.
-        (The projects section is a normal grid now, so it is NOT in this list.) */
+  /* Certificate marquee  */
   .cert-marquee-row{
     -webkit-mask-image:none;
     mask-image:none;
@@ -1732,12 +1696,12 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
     background:linear-gradient(270deg, var(--bg), rgba(5,5,7,0));
   }
 
-  /* 5) Lighter shadows on the 3D testimonial cards */
+  /* Lighter shadows on the 3D testimonial cards */
   .testi-card{box-shadow:0 8px 18px -10px rgba(0,0,0,.9)}
   .testi-card.testi-active{box-shadow:0 14px 28px -12px rgba(0,0,0,.95)}
 }
 
-/* 6) WEAK-DEVICE MODE
+/* WEAK-DEVICE MODE
       script.js adds class "lite-mode" on <html> when the phone has
       little RAM / few CPU cores, or the user asked for reduced motion.
       The grid is still shown, just not animated. */
@@ -1745,9 +1709,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 .lite-mode .orbit-item,
 .lite-mode .orbit-counter{animation-duration:calc(var(--dur) * 2)}
 
-/* ==========================================================
-   MOBILE: keep everything moving, but stop the glitches
-   ========================================================== */
+/* MOBILE: keep everything moving, but stop the glitches */
 @media(max-width:960px){
   /* fewer giant GPU layers = no more vanishing cards / images */
   .testi-card{will-change:auto}
@@ -1758,7 +1720,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   #photoOrbit.is-scrolling .orbit-counter{animation-play-state:paused}
 }
 
-/* phone grid: drawn on a canvas by script.js (fades its own top edge) */
+/* phone grid */
 #grid-bg .grid-canvas{
   position:absolute;
   inset:0;
@@ -1767,12 +1729,8 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   display:block;
 }
 
-/* ==========================================================
-   BUTTONS KEEP THEIR LOOK: VIEW PROJECTS / SEND MESSAGE
-   ORANGE background + BLACK text, always. Hover, click, tap,
-   focus and the "is-pressed" class added by script.js can
-   NOT change the color. (Keep this block at the very BOTTOM.)
-   ========================================================== */
+/* BUTTONS KEEP THEIR LOOK: VIEW PROJECTS / SEND MESSAGE
+   ORANGE background + BLACK text, always. Hover, click, tap. */
 html body .btn-primary,
 html body .btn-primary:hover,
 html body .btn-primary:active,
@@ -1800,9 +1758,7 @@ html body .contact-form button.is-pressed.is-pressed{
   transform:none !important;
 }
 
-/* BACK TO HOME keeps its look: gray text, normal weight, always.
-   Hover, click, tap, focus and the "is-pressed" class from script.js
-   can NOT change it. */
+/* BACK TO HOME color fonts */
 html body a.back-home,
 html body a.back-home:visited,
 html body a.back-home:hover,
@@ -1820,9 +1776,7 @@ html body a.back-home.is-pressed.is-pressed{
 }
 
 
-/* ==========================================================
-   ORBIT ICONS: click / tap tooltip (same look as the tech stack tooltip)
-   ========================================================== */
+/* ORBIT ICONS: click */
 .orbit-item.is-active{z-index:30}
 .orbit-item.is-active .orbit-counter{z-index:30}
 .photo-orbit.has-active .orbit-item,
