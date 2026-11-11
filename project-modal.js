@@ -96,13 +96,23 @@
       kicker: '// INTERACTIVE GAME',
       badge: 'LIVE DEPLOYMENT',
       title: 'Learn & Approach',
-      intro: 'An interactive matching game engineered by Danmark Rosalejos to sharpen attention to detail. Features four levels with three shuffled choices each, only one correct match, and final results that connect players to the activity questions in Google Drive.',
+      intro: 'An interactive matching game engineered by Danmark Rosalejos for a ProfEd 1 class activity. Features four levels with three shuffled choices each, live scoring and feedback, and a results screen that connects players to the activity questions in Google Drive.',
       points: [
-        ['Four levels:', 'Each level tests how closely the player looks.'],
-        ['Shuffled choices:', 'Three shuffled choices per round, with only one correct match.'],
-        ['Activity questions:', 'The final results connect players to the activity questions in Google Drive.']
+        ['Four levels:', 'Each level shows a reference image and tests how closely the player looks.'],
+        ['Shuffled choices:', 'Three choices per round in random order, with only one correct match.'],
+        ['Instant feedback:', 'Right and wrong answers are highlighted right away, with a live score.'],
+        ['Progress tracker:', 'A step bar turns green or red for each answered level.'],
+        ['Results and activity link:', 'Shows the final score, then links to the activity questions in Google Drive.'],
+        ['Easy to edit, mobile friendly:', 'Levels and the activity link live in one config block; the layout fits phones.']
       ],
-      tech: ['GitHub Pages', 'Google Drive']
+      tech: [
+        'HTML5',
+        'CSS3',
+        'JavaScript',
+        'GitHub Pages',
+        'Google Drive',
+        'Google Fonts'
+      ]
     },
 
     'Digital Father\u2019s Day Letter': {
