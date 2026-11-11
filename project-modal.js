@@ -1,7 +1,7 @@
 /* PROJECT DETAILS OVERLAY */
 (function () {
   var PROJECTS = {
-    'Clinic Compliance & Records Management System': {
+    'School Clinic Compliance & Records Management System': {
       kicker: '// CAPSTONE SYSTEM',
       badge: 'LIVE DEPLOYMENT',
       name: 'HealthSync Clinic Management System',
