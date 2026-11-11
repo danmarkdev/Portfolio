@@ -1,10 +1,10 @@
 /* PROJECT DETAILS OVERLAY */
 (function () {
   var PROJECTS = {
-    'HealthSync Clinic Management System': {
+    'School Clinic Compliance & Records Management System': {
       kicker: '// CAPSTONE SYSTEM',
       badge: 'LIVE DEPLOYMENT',
-      title: 'HealthSync Clinic Management System',
+      title: 'School Clinic Compliance & Records Management System',
       intro: 'A full-stack capstone clinic management system for STI College Bacoor. Features a real-time compliance dashboard, Excel and manual record import, scheduled Gmail and Outlook reminders, and a submission review workflow that updates each record automatically.',
       points: [
         ['Real-Time Compliance Dashboard:', 'Live population chart (bar, doughnut or pie), complete and pending counts, and a notification bell that refreshes every 10 seconds with new submissions and scheduled reminder results.'],
@@ -26,14 +26,14 @@
       ]
     },
 
-    'Julia AI': {
+    'AI Companion & Quiz Platform': {
       kicker: '// FLAGSHIP AI SYSTEM',
       badge: 'PRIVATE DEPLOYMENT',
-      title: 'Julia AI',
+      title: 'AI Companion & Quiz Platform',
       intro: 'A Hello Kitty-themed AI companion engineered by Danmark Rosalejos in September 2026. Features real-time Gemini chat, image generation with FLUX.1 on Cloudflare Workers AI, photo, PDF and link reading, a practice quiz and flashcard engine, and cross-device chat sync.',
       points: [
         ['Streaming AI Companion Chat:', 'Real-time conversation powered by the Gemini API through a secure Cloudflare Worker proxy, with markdown replies, copy-ready code blocks, tables and lists.'],
-        ['Autonomous Image Generation:', 'Julia decides on her own when a message is a picture request, then generates the image with FLUX.1 schnell on Cloudflare Workers AI and shows it right in the chat.'],
+        ['Autonomous Image Generation:', 'The assistant decides on its own when a message is a picture request, then generates the image with FLUX.1 schnell on Cloudflare Workers AI and shows it right in the chat.'],
         ['Multimodal Understanding:', 'Reads photos, PDF and text files, and shared web links; the Worker opens each link, extracts the page text and falls back to a reader service for JavaScript-heavy pages.'],
         ['Practice Quiz and Flashcard Engine:', 'Builds multiple-choice quizzes and flip flashcards from a chat, a file or any topic, with Easy, Average and Hard levels and instant scoring.'],
         ['Cross-Device Sync and Hello Kitty UX:', 'A private sync code keeps chats in step between phone and computer (Cloudflare KV), plus read-aloud replies, feedback buttons and a daily motivation card.']
@@ -51,10 +51,10 @@
       ]
     },
 
-    'Resume Analyzer': {
+    'AI Resume Review & ATS Scoring System': {
       kicker: '// WEB APP',
       badge: 'LIVE DEPLOYMENT',
-      title: 'Resume Analyzer',
+      title: 'AI Resume Review & ATS Scoring System',
       intro: 'A full-stack resume review web app built with Node.js and Tailwind CSS. Features PDF and DOCX upload, AI and ATS readiness scores, rule-based checks, keyword matching against job postings, and section-by-section improvement suggestions.',
       points: [
         ['Drag-and-Drop Resume Upload:', 'Accepts PDF and DOCX files up to 5MB, with an optional job description field that sharpens keyword matching.'],
@@ -74,10 +74,10 @@
       ]
     },
 
-    'Learn & Approach': {
+    'Interactive Image-Matching Learning Game': {
       kicker: '// INTERACTIVE GAME',
       badge: 'LIVE DEPLOYMENT',
-      title: 'Learn & Approach',
+      title: 'Interactive Image-Matching Learning Game',
       intro: 'An interactive image-matching game for a ProfEd 1 class activity. Features four levels with three shuffled choices each, live scoring and feedback, and a results screen that connects players to the activity questions in Google Drive.',
       points: [
         ['Four-Level Matching Challenge:', 'Each level shows a reference image and three look-alike choices with only one exact match, built to sharpen attention to detail.'],
@@ -96,10 +96,10 @@
       ]
     },
 
-    'Digital Father\u2019s Day Letter': {
+    'Interactive Digital Tribute Letter for Pastors': {
       kicker: '// INTERACTIVE LETTER',
       badge: 'LIVE DEPLOYMENT',
-      title: 'Digital Father\u2019s Day Letter',
+      title: 'Interactive Digital Tribute Letter for Pastors',
       intro: 'An interactive digital letter for the two pastors of the Lorimi Bacoor Faith Family. Features a tap-to-open envelope, a scripture-rooted tribute, personal messages for each pastor, a scroll-triggered reveal, and a closing message of gratitude from the congregation.',
       points: [
         ['Tap-to-Open Envelope Intro:', 'A CSS-animated envelope with a flipping flap and a rising letter opens on tap, and page scrolling stays locked until it does.'],
@@ -223,10 +223,11 @@
     elVisit.classList.remove('is-disabled');
     elVisit.removeAttribute('aria-disabled');
     if (isPrivate) {
-      /* private systems: the button sends the visitor to the contact page */
+      /* private systems: the button sends the visitor to the contact page
+         (generic label, because the new project titles are long) */
       elVisit.setAttribute('href', 'contact.html');
       elVisit.removeAttribute('target');
-      elVisit.innerHTML = 'Inquire About ' + d.title + ' ' + ARROW_ICON;
+      elVisit.innerHTML = 'Inquire About This Project ' + ARROW_ICON;
     } else {
       elVisit.setAttribute('href', href);
       elVisit.setAttribute('target', '_blank');
