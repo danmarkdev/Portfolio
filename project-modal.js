@@ -26,7 +26,8 @@
       ]
     },
 
-    'AI Companion and Quiz Platform ' {
+    /* FIXED: was  'AI Companion and Quiz Platform ' {   (missing ":" ) */
+    'AI Companion and Quiz Platform': {
       kicker: '// FLAGSHIP AI SYSTEM',
       badge: 'PRIVATE DEPLOYMENT',
       title: 'Julia AI',
@@ -74,7 +75,8 @@
       ]
     },
 
-    'Interactive Image-Matching Learning Game: {
+    /* FIXED: was  'Interactive Image-Matching Learning Game: {   (missing closing quote and ":" ) */
+    'Interactive Image-Matching Learning Game': {
       kicker: '// INTERACTIVE GAME',
       badge: 'LIVE DEPLOYMENT',
       title: 'Learn & Approach',
