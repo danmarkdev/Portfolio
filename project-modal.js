@@ -72,15 +72,24 @@
       kicker: '// WEB APP',
       badge: 'LIVE DEPLOYMENT',
       title: 'Resume Analyzer',
-      intro: 'A web-based resume review system engineered by Danmark Rosalejos with Node.js and Tailwind CSS. Features PDF and DOCX upload, rule-based ATS checks, AI-generated feedback, keyword matching against job postings, and section-by-section improvement suggestions.',
+      intro: 'A web-based resume review system engineered by Danmark Rosalejos with Node.js and Tailwind CSS. Features PDF and DOCX upload, AI and ATS readiness scores, rule-based checks, keyword matching against job postings, and section-by-section improvement suggestions.',
       points: [
-        ['PDF and DOCX upload:', 'Accepts resumes in the two most common formats.'],
-        ['Rule-based ATS checks:', 'Checks the resume against common applicant tracking system rules.'],
-        ['AI-generated feedback:', 'Gives written feedback on the resume\u2019s content.'],
-        ['Keyword matching:', 'Compares the resume against a job posting\u2019s keywords.'],
+        ['PDF and DOCX upload:', 'Drag and drop or choose a resume file, up to 5MB.'],
+        ['Dual scoring:', 'Shows an AI score and an ATS score from 0 to 100, color-coded by readiness.'],
+        ['Rule-based ATS checks:', 'Detects email, phone, bullet points and section headers, and flags issues.'],
+        ['Keyword matching:', 'Paste a job posting to get a match percentage and a list of missing keywords.'],
+        ['AI-generated feedback:', 'Lists strengths, formatting issues and top recommendations.'],
         ['Section-by-section suggestions:', 'Shows what to improve in each part of the resume.']
       ],
-      tech: ['Node.js', 'Tailwind CSS']
+      tech: [
+        'HTML5',
+        'CSS3',
+        'JavaScript',
+        'Tailwind CSS',
+        'Node.js',
+        'REST API',
+        'Render'
+      ]
     },
 
     'Learn & Approach': {
