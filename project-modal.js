@@ -1,7 +1,8 @@
 /* PROJECT DETAILS OVERLAY */
 (function () {
   var PROJECTS = {
-    'School Clinic Compliance & Records Management System': {
+    /* "School" removed from the title */
+    'Clinic Compliance & Records Management System': {
       kicker: '// CAPSTONE SYSTEM',
       badge: 'LIVE DEPLOYMENT',
       name: 'HealthSync Clinic Management System',
@@ -130,7 +131,9 @@
      If you ever rename a card again, add its old or new title here. */
   var ALIASES = {
     'Interactive Image-Matching Learning Game': 'Interactive Matching Learning Game',
-    'Learn & Approach': 'Interactive Matching Learning Game'
+    'Learn & Approach': 'Interactive Matching Learning Game',
+    /* old clinic title (with "School") now points to the new title */
+    'School Clinic Compliance & Records Management System': 'Clinic Compliance & Records Management System'
   };
   Object.keys(ALIASES).forEach(function (alias) {
     var target = PROJECTS[ALIASES[alias]];
@@ -154,7 +157,8 @@
   /* RENAMES: rewrites the visible card title on the page, so the card AND the
      overview both show the new title even if index.html still has the old one. */
   var RENAMES = {
-    'Interactive Image-Matching Learning Game': 'Interactive Matching Learning Game'
+    'Interactive Image-Matching Learning Game': 'Interactive Matching Learning Game',
+    'School Clinic Compliance & Records Management System': 'Clinic Compliance & Records Management System'
   };
   Array.prototype.forEach.call(document.querySelectorAll('.project-card-title'), function (el) {
     var t = el.textContent.trim();
