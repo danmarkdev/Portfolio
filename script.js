@@ -1,8 +1,8 @@
 /* ---------- DEVICE CHECK (performance) ----------
-   LITE  = weak phone / reduced-motion user  -> grid & background stay, but don't animate
+   LITE  = weak phone / reduced-motion user
    COARSE = touch device (phone / tablet)
    SCROLL_FNS = small functions that run once per frame while scrolling
-                (one shared scroll handler instead of 4 separate ones) */
+                (one shared scroll handler instead of separate ones) */
 var COARSE = false;
 var LITE = false;
 try {
@@ -342,10 +342,7 @@ if (MOBILE_BREAKPOINT.addEventListener) {
 }
 
 /* ---------- ONE SHARED SCROLL HANDLER ----------
-   Before: 4 separate scroll listeners (header, active nav, scroll sound,
-   grid) ran on EVERY scroll event, and the nav one read offsetTop of every
-   section each time (forces layout = jank on phones).
-   Now: ONE listener, runs at most once per frame (requestAnimationFrame),
+   ONE listener, runs at most once per frame (requestAnimationFrame),
    and the section positions are measured once and cached. */
 var sections=document.querySelectorAll('section[id]');
 var navLinks=document.querySelectorAll('#nav a:not(.nav-cta)');
@@ -401,7 +398,7 @@ measureSections();
       mobileNavLinks.forEach(function(a){ a.classList.toggle('active',a.getAttribute('href')==='#'+cur); });
     }
 
-    /* anything else that wants to run while scrolling (the grid) */
+    /* anything else that wants to run while scrolling */
     for(var j=0;j<SCROLL_FNS.length;j++) SCROLL_FNS[j]();
   }
 
@@ -1090,8 +1087,6 @@ function adjustAllTechTips(){
      though the icon is moving.
    - Click / tap the same icon again, tap anywhere else, scroll with the
      finger, or press Esc to close it and let it orbit again.
-   - This code used to live inside index.html. It is now here, so you can
-     delete the inline <script> block from the HTML.
    - It also injects the small CSS it needs (so style.css is unchanged).
    ========================================================== */
 (function () {
@@ -1212,311 +1207,13 @@ function adjustAllTechTips(){
   window.addEventListener('resize', function () { if (active) place(active); });
 })();
 
-/* ---------- ANIMATED BACKGROUND ----------
-   Drifting soft glows + a floating particle network that reacts to the
-   mouse. Creates its own <canvas id="bg-canvas"> if the page doesn't have
-   one.
-
-   PERFORMANCE:
-   - STOPS COMPLETELY (no drawing at all) while the perspective grid is
-     showing or the tab is hidden. Before, it kept drawing invisibly.
-   - On phones: fewer particles, 1 glow instead of 3, 1x pixel ratio and
-     ~30fps, and it ignores the height-only resizes caused by the address
-     bar hiding/showing while you scroll.
-   - On weak devices (LITE) it draws ONE still frame and never animates. */
-var BG = { gridOn: false, kick: function () {} };
-
-(function () {
-  var canvas = document.getElementById('bg-canvas');
-  if (!canvas) {
-    canvas = document.createElement('canvas');
-    canvas.id = 'bg-canvas';
-    document.body.insertBefore(canvas, document.body.firstChild);
-  }
-  var ctx = canvas.getContext('2d');
-  if (!ctx) return;
-
-  var ACC = '255,255,255';
-  var still = LITE;                       /* reduced motion or weak device */
-  var small = COARSE || window.matchMedia('(max-width: 960px)').matches;
-  var W = 0, H = 0, dpr = 1;
-  var pts = [];
-  var mouse = { x: -9999, y: -9999 };
-  var LINK = small ? 110 : 140;
-  var running = false;
-  var lastFrame = 0;
-  var lastW = 0;
-
-  var allBlobs = [
-    { s: 1.0, p: 0.0, a: 0.02 },
-    { s: 0.7, p: 2.1, a: 0.015 },
-    { s: 1.3, p: 4.2, a: 0.012 }
-  ];
-  var blobs = small ? allBlobs.slice(0, 1) : allBlobs;
-
-  function make() {
-    return {
-      x: Math.random() * W,
-      y: Math.random() * H,
-      vx: (Math.random() - 0.5) * 0.35,
-      vy: (Math.random() - 0.5) * 0.35,
-      r: Math.random() * 1.6 + 0.8
-    };
-  }
-
-  function resize() {
-    dpr = small ? 1 : Math.min(window.devicePixelRatio || 1, 2);
-    W = window.innerWidth;
-    H = window.innerHeight;
-    lastW = W;
-    canvas.width = Math.round(W * dpr);
-    canvas.height = Math.round(H * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    var maxPts = small ? 34 : 90;
-    var count = Math.max(20, Math.min(maxPts, Math.round(W * H / (small ? 20000 : 16000))));
-    while (pts.length < count) pts.push(make());
-    pts.length = count;
-  }
-
-  function draw(t) {
-    ctx.clearRect(0, 0, W, H);
-
-    var big = Math.max(W, H) * 0.45;
-    blobs.forEach(function (b) {
-      var x = W * (0.5 + 0.4 * Math.sin(t * 0.00007 * b.s + b.p));
-      var y = H * (0.5 + 0.4 * Math.cos(t * 0.00005 * b.s + b.p * 1.3));
-      var g = ctx.createRadialGradient(x, y, 0, x, y, big);
-      g.addColorStop(0, 'rgba(' + ACC + ',' + b.a + ')');
-      g.addColorStop(1, 'rgba(' + ACC + ',0)');
-      ctx.fillStyle = g;
-      ctx.fillRect(0, 0, W, H);
-    });
-
-    var i, j, p, q, dx, dy, d2;
-    for (i = 0; i < pts.length; i++) {
-      p = pts[i];
-      if (!still) {
-        dx = p.x - mouse.x;
-        dy = p.y - mouse.y;
-        d2 = dx * dx + dy * dy;
-        if (d2 < 14400 && d2 > 1) {
-          var d = Math.sqrt(d2);
-          var f = (120 - d) / 120 * 0.6;
-          p.x += (dx / d) * f;
-          p.y += (dy / d) * f;
-        }
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < -10) p.x = W + 10;
-        if (p.x > W + 10) p.x = -10;
-        if (p.y < -10) p.y = H + 10;
-        if (p.y > H + 10) p.y = -10;
-      }
-    }
-
-    ctx.lineWidth = 1;
-    for (i = 0; i < pts.length; i++) {
-      p = pts[i];
-      for (j = i + 1; j < pts.length; j++) {
-        q = pts[j];
-        dx = p.x - q.x;
-        dy = p.y - q.y;
-        d2 = dx * dx + dy * dy;
-        if (d2 < LINK * LINK) {
-          var a = (1 - Math.sqrt(d2) / LINK) * 0.16;
-          ctx.strokeStyle = 'rgba(' + ACC + ',' + a.toFixed(3) + ')';
-          ctx.beginPath();
-          ctx.moveTo(p.x, p.y);
-          ctx.lineTo(q.x, q.y);
-          ctx.stroke();
-        }
-      }
-    }
-    ctx.fillStyle = 'rgba(' + ACC + ',0.45)';
-    for (i = 0; i < pts.length; i++) {
-      p = pts[i];
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fill();
-    }
-  }
-
-  /* the loop only runs when it is really needed */
-  function shouldRun() {
-    return !still && !BG.gridOn && !document.hidden;
-  }
-
-  function loop(t) {
-    if (!shouldRun()) { running = false; return; }
-    /* phones: ~30fps is plenty for a slow background */
-    if (small && t - lastFrame < 33) { requestAnimationFrame(loop); return; }
-    lastFrame = t;
-    draw(t);
-    requestAnimationFrame(loop);
-  }
-
-  function start() {
-    if (still) { draw(0); return; }
-    if (running || !shouldRun()) return;
-    running = true;
-    requestAnimationFrame(loop);
-  }
-
-  BG.kick = start;   /* the grid calls this when it turns on / off */
-
-  document.addEventListener('visibilitychange', start);
-
-  window.addEventListener('pointermove', function (e) {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
-  }, { passive: true });
-  window.addEventListener('pointerleave', function () {
-    mouse.x = mouse.y = -9999;
-  });
-
-  var rT;
-  window.addEventListener('resize', function () {
-    /* phones: scrolling changes the HEIGHT (address bar). Ignore that. */
-    if (small && window.innerWidth === lastW) return;
-    clearTimeout(rT);
-    rT = setTimeout(function () {
-      resize();
-      if (still) draw(0);
-    }, 150);
-  });
-
-  resize();
-  start();
-})();
-
-/* ---------- PERSPECTIVE GRID BACKGROUND ----------
-   A fixed grid "floor" that fades in while the visitor is anywhere between
-   the Testimonials section and the end of Technical Stacks, and fades out
-   everywhere else.
-
-   DESKTOP: CSS grid (a 3D-rotated layer, slid with transform).
-   PHONES / TABLETS: the same look, but DRAWN ON A CANVAS (about 25 lines
-   per frame, in ONE stroke call). No giant 3D layer and no mask, so there
-   is almost no GPU memory use -> no more lag or vanishing content.
-   It is checked inside the shared scroll handler (once per frame). */
-(function () {
-  var testi = document.getElementById('testimonials');
-  var skills = document.getElementById('skills');
-  if (!testi || !skills) return;
-
-  var small = COARSE || window.matchMedia('(max-width: 960px)').matches;
-
-  var g = document.createElement('div');
-  g.id = 'grid-bg';
-  g.setAttribute('aria-hidden', 'true');
-  g.innerHTML = small
-    ? '<canvas class="grid-canvas"></canvas>'
-    : '<div class="grid-floor"><div class="grid-lines"></div></div>';
-  document.body.insertBefore(g, document.body.firstChild);
-
-  /* ---- phone version: canvas perspective grid ---- */
-  var gc = null, gx = null, GW = 0, GH = 0, grad = null;
-  var TILE = 64;           /* grid square size (same as the CSS version) */
-  var SPEED = 1600;        /* ms for the grid to move one square (same as 1.6s) */
-  var gridRunning = false;
-
-  function setupGridCanvas() {
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    GW = window.innerWidth;
-    GH = window.innerHeight;
-    gc.width = Math.round(GW * dpr);
-    gc.height = Math.round(GH * dpr);
-    gx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    /* top of the screen fades out, like the CSS mask did */
-    grad = gx.createLinearGradient(0, 0, 0, GH);
-    grad.addColorStop(0, 'rgba(255,255,255,0)');
-    grad.addColorStop(0.3, 'rgba(255,255,255,0.85)');
-    grad.addColorStop(1, 'rgba(255,255,255,0.85)');
-  }
-
-  function drawGrid(t) {
-    var P = Math.max(720, GH * 1.25);          /* perspective distance */
-    var sin = 0.8660254, cos = 0.5;            /* rotateX(60deg) */
-    var cx = GW / 2;
-    var offset = ((t % SPEED) / SPEED) * TILE;
-
-    gx.clearRect(0, 0, GW, GH);
-    gx.strokeStyle = grad;
-    gx.lineWidth = 1;
-    gx.beginPath();
-
-    /* horizontal lines (they glide toward the viewer) */
-    for (var k = 0; k < 60; k++) {
-      var y = k * TILE + offset - TILE;
-      if (y < 0) continue;
-      var s = P / (P - sin * y);
-      var ys = cos * y * s;
-      if (ys > GH) break;
-      gx.moveTo(0, ys);
-      gx.lineTo(GW, ys);
-    }
-
-    /* vertical lines (converge toward the horizon) */
-    var yEnd = (GH * P) / (cos * P + sin * GH);   /* plane y where screen y = GH */
-    var sEnd = P / (P - sin * yEnd);
-    var n = Math.ceil(GW / 2 / TILE) + 1;
-    for (var i = -n; i <= n; i++) {
-      var x = i * TILE;
-      gx.moveTo(cx + x, 0);
-      gx.lineTo(cx + x * sEnd, GH);
-    }
-    gx.stroke();
-  }
-
-  function gridLoop(t) {
-    if (!isOn || document.hidden) { gridRunning = false; return; }
-    drawGrid(t);
-    requestAnimationFrame(gridLoop);
-  }
-
-  function startGrid() {
-    if (!small || gridRunning || !isOn || document.hidden) return;
-    gridRunning = true;
-    requestAnimationFrame(gridLoop);
-  }
-
-  var isOn = false;
-
-  if (small) {
-    gc = g.querySelector('canvas');
-    gx = gc.getContext('2d');
-    setupGridCanvas();
-    var lastGW = window.innerWidth;
-    window.addEventListener('resize', function () {
-      /* ignore the height-only resizes caused by the address bar */
-      if (window.innerWidth === lastGW) return;
-      lastGW = window.innerWidth;
-      setupGridCanvas();
-    });
-    document.addEventListener('visibilitychange', startGrid);
-  }
-
-  function update() {
-    var H = window.innerHeight;
-    var top = testi.getBoundingClientRect().top;
-    var bottom = skills.getBoundingClientRect().bottom;
-    var on = top < H * 0.65 && bottom > H * 0.35;
-    if (on === isOn) return;          /* nothing changed: do nothing */
-    isOn = on;
-    g.classList.toggle('on', on);
-    BG.gridOn = on;                   /* the dots canvas stops while the grid is showing */
-    BG.kick();
-    if (on) startGrid();
-  }
-
-  SCROLL_FNS.push(update);
-  window.addEventListener('resize', update);
-  window.addEventListener('load', update);
-  update();
-})();
+/* ==========================================================
+   (The animated particle background and the perspective grid
+   have been removed. The page now has a plain dark background.)
+   ========================================================== */
 
 /* ==========================================================
-   NO "-" AT THE END OF A LINE (project descriptions)  <-- NEW
+   NO "-" AT THE END OF A LINE (project descriptions)
    The "-" you still saw is a REAL hyphen inside the words themselves
    (Kitty-themed, AI-powered, step-by-step, rule-based, scroll-triggered,
    section-by-section ...). Browsers are always allowed to break a line
