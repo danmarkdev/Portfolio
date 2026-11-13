@@ -1,8 +1,4 @@
-/* ---------- DEVICE CHECK (performance) ----------
-   LITE  = weak phone / reduced-motion user
-   COARSE = touch device (phone / tablet)
-   SCROLL_FNS = small functions that run once per frame while scrolling
-                (one shared scroll handler instead of separate ones) */
+/* DEVICE CHECK  */
 var COARSE = false;
 var LITE = false;
 try {
@@ -10,23 +6,14 @@ try {
   var _reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var _mem = navigator.deviceMemory || 8;
   var _cores = navigator.hardwareConcurrency || 8;
-  LITE = false;   /* never freeze the animations */
+  LITE = false;   
 } catch (e) {}
 if (LITE) document.documentElement.classList.add('lite-mode');
 
 var SCROLL_FNS = [];
-var SCROLLING = false;   /* true while the visitor is scrolling (phones pause heavy decorations then) */
+var SCROLLING = false;   
 
-/* ---------- SOUND EFFECTS ----------
-   Tiny synthesized sounds made with the Web Audio API (no audio files):
-     SFX.hover()    -> crisp tick when the mouse moves onto something pressable (desktop)
-     SFX.click()    -> punchy click when you press a button / link / card
-     SFX.tick()     -> small selection tick (dragging the carousels, timeline nodes)
-     SFX.shuffle()  -> 3-part card "shuffle" when a testimonial card changes
-     SFX.scroll()   -> soft tick while the page is scrolling
-   Mobile uses the EXACT same sounds as desktop. On iPhone the audio is switched to
-   "playback" mode so it also works when the silent switch is on.
-   The speaker button (bottom-left) turns ALL sound on/off and remembers the choice. */
+/* SOUND EFFECTS  */
 var SFX = (function () {
   var audioCtx = null;
   var master = null;
@@ -48,7 +35,7 @@ var SFX = (function () {
     try { localStorage.setItem(MUTE_KEY, muted ? 'true' : 'false'); } catch (e) {}
   }
 
-  /* a tiny silent WAV, built in code (no file needed) */
+  
   function makeSilentWav() {
     var rate = 8000, n = 800;
     var buf = new ArrayBuffer(44 + n);
@@ -63,7 +50,7 @@ var SFX = (function () {
     return URL.createObjectURL(new Blob([buf], { type: 'audio/wav' }));
   }
 
-  /* iPhone: makes Web Audio play even when the silent/ringer switch is on */
+  /* Web Audio on Mobile Devices */
   function iosPlayback() {
     try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) {}
     try {
@@ -107,7 +94,7 @@ var SFX = (function () {
     } catch (e) {}
   }
 
-  /* one short oscillator "pop": starts at f1, slides down to f2 */
+  
   function pop(type, f1, f2, dur, vol, offset) {
     try {
       init();
@@ -163,8 +150,8 @@ var SFX = (function () {
   };
 })();
 
-/* unlock audio on the visitor's first interaction (touchend + click are
-   what mobile browsers accept). Listeners stay until audio is really running. */
+/* Audio */
+(function () { */
 (function () {
   var evts = ['pointerdown', 'pointerup', 'touchstart', 'touchend', 'mousedown', 'click', 'keydown'];
   function unlock() {
@@ -180,11 +167,11 @@ var SFX = (function () {
   });
 })();
 
-/* things that make sound when hovered / clicked */
+/* Sound Hovered */
 var SFX_SELECTOR = 'a, button, .hamburger, .tech-icon-box, .stack-badge, .project-card, .cert-item, .testi-card, .edu-node';
 var sfxHovered = null;
 
-/* hover sound: plays once each time the mouse moves onto a new pressable thing */
+/* Sound Hovered */
 document.addEventListener('mouseover', function (e) {
   var c = e.target && e.target.closest ? e.target.closest(SFX_SELECTOR) : null;
   if (c && c !== sfxHovered) {
@@ -198,13 +185,13 @@ document.addEventListener('mouseout', function (e) {
   if (!related || !sfxHovered.contains(related)) sfxHovered = null;
 });
 
-/* click sound (dragging a carousel does not count as a click) */
+/* Sound Click */
 document.addEventListener('click', function (e) {
   var t = e.target && e.target.closest ? e.target.closest(SFX_SELECTOR) : null;
   if (t) SFX.click();
 });
 
-/* ---------- SOUND ON/OFF BUTTON (bottom-left) ---------- */
+/* SOUND ON/OFF BUTTON  */
 (function () {
   var ON_ICON =
     '<svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>' +
@@ -230,17 +217,14 @@ document.addEventListener('click', function (e) {
   btn.addEventListener('click', function () {
     SFX.setMuted(!SFX.isMuted());
     paint();
-    /* the click sound itself is played by the global click handler when turning ON */
+    /* Click Sound Handler ON/OFF */
   });
 
   paint();
   document.body.appendChild(btn);
 })();
 
-/* ---------- PRESSED COLOR FLASH ----------
-   VIEW PROJECTS, SEND MESSAGE and BACK TO HOME turn WHITE the moment they are
-   pressed (mouse or finger). Links wait ~220ms before moving on, so you can
-   actually SEE the color change before the page scrolls / changes. */
+/*  PRESSED COLOR FLASH */
 (function () {
   var st = document.createElement('style');
   st.textContent =
@@ -285,8 +269,7 @@ document.addEventListener('click', function (e) {
   }, true);
 })();
 
-/* ICON FALLBACK — if a brand logo fails to load, swap it for a clean
-   text badge (the tool's initials) instead of a broken-image icon. */
+/* ICON FALLBACK  */
 document.querySelectorAll('.fb-icon img').forEach(function (img) {
   img.addEventListener('error', function () {
     var wrap = img.closest('.fb-icon');
@@ -341,9 +324,7 @@ if (MOBILE_BREAKPOINT.addEventListener) {
   MOBILE_BREAKPOINT.addListener(handleBreakpointChange);
 }
 
-/* ---------- ONE SHARED SCROLL HANDLER ----------
-   ONE listener, runs at most once per frame (requestAnimationFrame),
-   and the section positions are measured once and cached. */
+/* ONE SHARED SCROLL HANDLER  */
 var sections=document.querySelectorAll('section[id]');
 var navLinks=document.querySelectorAll('#nav a:not(.nav-cta)');
 var mobileNavLinks=document.querySelectorAll('#mnav a');
@@ -369,7 +350,7 @@ measureSections();
     queued=false;
     var y=window.scrollY||0;
 
-    /* mark 'is scrolling' on touch devices; cleared 160ms after the last scroll */
+    /* Scrolling & Touch Devices */
     if(COARSE){
       if(!SCROLLING){ SCROLLING=true; if(orbitEl) orbitEl.classList.add('is-scrolling'); }
       clearTimeout(scrollEndT);
@@ -379,15 +360,15 @@ measureSections();
       },160);
     }
 
-    /* scroll sound: a soft tick every ~70px */
+    /* scroll sound */
     acc+=Math.abs(y-lastY);
     lastY=y;
     if(acc>=(COARSE?120:70)){ acc=0; SFX.scroll(); }
 
-    /* header shadow */
+  
     if(headerEl) headerEl.classList.toggle('scrolled',y>30);
 
-    /* active nav link (only touches the DOM when the section changes) */
+   
     var cur='';
     for(var i=0;i<sectionCache.length;i++){
       if(y>=sectionCache[i].top-120) cur=sectionCache[i].id;
@@ -398,7 +379,7 @@ measureSections();
       mobileNavLinks.forEach(function(a){ a.classList.toggle('active',a.getAttribute('href')==='#'+cur); });
     }
 
-    /* anything else that wants to run while scrolling */
+   
     for(var j=0;j<SCROLL_FNS.length;j++) SCROLL_FNS[j]();
   }
 
@@ -439,9 +420,7 @@ if(stackTabs){
   });
 }
 
-/* SCROLL REVEAL
-   rootMargin makes things appear a little BEFORE they reach the screen,
-   so sections never look empty while you scroll on a slow phone. */
+/* SCROLL REVEAL */
 var obs=new IntersectionObserver(function(entries){
   entries.forEach(function(e,i){
     if(e.isIntersecting){
@@ -452,12 +431,7 @@ var obs=new IntersectionObserver(function(entries){
 },{threshold:.05,rootMargin:'0px 0px 120px 0px'});
 document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
 
-/* DRAGGABLE / SWIPEABLE MARQUEE — used by the Certificates tracks only.
-   (The Projects section is now a static grid, so it no longer uses this.)
-   direction: 1 = normal, -1 = reversed.
-   Plays a small tick when the visitor starts dragging and every ~40px after.
-   PERFORMANCE: the loop does nothing while the marquee is off-screen, and
-   it moves with translate3d (GPU). */
+/* DRAGGABLE / SWIPEABLE MARQUEE */
 function initSwipeMarquee(trackId, loopSeconds, direction){
   direction = direction || 1;
   var track = document.getElementById(trackId);
@@ -509,9 +483,9 @@ function initSwipeMarquee(trackId, loopSeconds, direction){
     if(lastTime===null) lastTime = t;
     var dt = (t - lastTime) / 1000;
     lastTime = t;
-    if(dt > 0.1) dt = 0.1;          /* no big jump after a tab switch / lag spike */
+    if(dt > 0.1) dt = 0.1;         
 
-    /* off-screen: do no work at all */
+ 
     if((!inView || (COARSE && SCROLLING)) && !dragging){
       requestAnimationFrame(tick);
       return;
@@ -551,7 +525,7 @@ function initSwipeMarquee(trackId, loopSeconds, direction){
     if(!moved && Math.abs(dx) > 15){
       moved = true;
       track.classList.add('dragging');
-      SFX.tick();                     /* tick when the drag starts */
+      SFX.tick();                     
       lastSoundDx = dx;
       if(track.setPointerCapture){
         try{ track.setPointerCapture(activePointerId); }catch(err){}
@@ -561,7 +535,7 @@ function initSwipeMarquee(trackId, loopSeconds, direction){
       pos = wrap360(startPos - dx);
       render();
 
-      if(Math.abs(dx - lastSoundDx) > 40){    /* tick every ~40px while dragging */
+      if(Math.abs(dx - lastSoundDx) > 40){    
         SFX.tick();
         lastSoundDx = dx;
       }
@@ -606,16 +580,11 @@ function initSwipeMarquee(trackId, loopSeconds, direction){
   requestAnimationFrame(tick);
 }
 
-/* Projects: static grid now (no auto-swipe), so no marquee is started for it. */
+/* Projects: static grid */
 initSwipeMarquee('certTrack', 75, 1);
 initSwipeMarquee('certTrack2', 75, -1);
 
-/* ==========================================================
-   CONTACT FORM — Google Apps Script (with spam protection)
-   - PAGE_LOADED + 'elapsed' : the server rejects forms filled too fast
-   - 'website'               : hidden honeypot field, bots fill it in
-   - the server also limits messages per hour / per day
-   ========================================================== */
+/* CONTACT FORM "Google Apps Script"  */
 var PAGE_LOADED = Date.now();
 
 function sendMsg(){
@@ -636,8 +605,8 @@ function sendMsg(){
   formData.append('email', email);
   formData.append('subject', subject || 'New message from Portfolio');
   formData.append('message', msg);
-  formData.append('website', val('cf-website'));            // honeypot
-  formData.append('elapsed', Date.now() - PAGE_LOADED);     // time on page
+  formData.append('website', val('cf-website'));           
+  formData.append('elapsed', Date.now() - PAGE_LOADED);     
 
   fetch('https://script.google.com/macros/s/AKfycbzFKLKp7Z-6tA3BH80f1bpkj9ORJrDVIL4dOi7WMWazKDgszjCdHUoMo1_8FNY0eec/exec', { method:'POST', body: formData })
     .then(function(res){ return res.text(); })
@@ -672,7 +641,7 @@ document.addEventListener('keydown',function(e){
   if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&['i','j'].includes(e.key.toLowerCase()))) e.preventDefault();
 });
 
-/* ---------- EDUCATION & MILESTONES: interactive timeline ---------- */
+/* EDUCATION & MILESTONES: interactive timeline */
 (function () {
   var academicData = [
     {
@@ -705,7 +674,7 @@ document.addEventListener('keydown',function(e){
     }
   ];
 
-  /* NOTE: the AI Store Visualizer is an idea/concept only — it has not been built. */
+  
   var recognitionData = [
     {
       year: 'Sept 2026',
@@ -804,12 +773,7 @@ document.addEventListener('keydown',function(e){
   }
 })();
 
-/* ---------- TESTIMONIALS: 3D fan (desktop) / stacked deck (mobile) ----------
-   Each card is rearranged to: [avatar name rating] / quote icon / text.
-   Testimonials are SHORTENED here (SHORT_TEXT) so every card stays the same
-   compact size as the reference design (~330px wide, short quote).
-   To edit a quote, just change the text next to the person's name below.
-   Swiping / tapping a card plays the card-shuffle sound. */
+/* TESTIMONIALS: 3D fan */
 (function () {
   var deck = document.getElementById('testiDeck');
   if (!deck) return;
@@ -820,7 +784,7 @@ document.addEventListener('keydown',function(e){
   var dotsWrap = document.getElementById('testiDots');
   if (dotsWrap) dotsWrap.style.display = 'none';
 
-  /* SHORT versions of each testimonial, matched by the person's name */
+  /* Testimonials*/
   var SHORT_TEXT = {
     'Josh Aguilera':    'Danmark did a great job on the HealthSync Clinic Management System. It\u2019s simple, organized, and easy to use, with features that are practical for daily clinic tasks.',
     'Julia Sardalla':   'The AI Danmark created for me is easy to use and has a creative design. It helped me with my tasks and improved the quality of my work.',
@@ -832,8 +796,7 @@ document.addEventListener('keydown',function(e){
     'Shanell Jamandre': 'Danmark gave me a hugeee help in creating the minigame I desired for my activity simulation for practice teaching. It went to success as he resolved the issues in my minigame program.'
   };
 
-  /* fallback for any new testimonial not listed above:
-     whole sentences only, up to ~170 characters */
+  /* Testimonials */
   var MAX_CHARS = 170;
   function shorten(t) {
     t = t.replace(/\s+/g, ' ').trim();
@@ -847,7 +810,7 @@ document.addEventListener('keydown',function(e){
     return out;
   }
 
-  /* 1) restructure each card */
+  /* restructure card */
   cards.forEach(function (c) {
     if (c.querySelector('.testi-head')) return;
     var top = c.querySelector('.testi-card-top');
@@ -883,7 +846,7 @@ document.addEventListener('keydown',function(e){
     return window.matchMedia('(max-width:700px)').matches;
   }
 
-  /* cards are position:absolute: make them equal height, size the deck */
+ 
   function sizeDeck() {
     var max = 0;
     cards.forEach(function (c) { c.style.height = 'auto'; });
@@ -895,7 +858,7 @@ document.addEventListener('keydown',function(e){
 
   function render() {
     var half = Math.floor(n / 2);
-    var maxShown = Math.max(3, half);   /* show EVERY card (8 testimonials = 4 on the left, 3 on the right) */
+    var maxShown = Math.max(3, half);   
     cards.forEach(function (c, i) {
       var o = ((i - active + n + half) % n) - half;
       var r = (i - active + n) % n;
@@ -910,7 +873,7 @@ document.addEventListener('keydown',function(e){
 
   function goTo(i) {
     var next = (i + n) % n;
-    if (next !== active) SFX.shuffle();   /* card shuffle sound on every card change */
+    if (next !== active) SFX.shuffle();   
     active = next;
     render();
   }
@@ -937,8 +900,7 @@ document.addEventListener('keydown',function(e){
     }
   }, { passive: true });
 
-  /* only re-measure when the WIDTH changes (on phones, the address bar
-     hiding/showing changes the height while scrolling — ignore that) */
+ 
   var lastW = window.innerWidth;
   var resizeT;
   window.addEventListener('resize', function () {
@@ -954,7 +916,7 @@ document.addEventListener('keydown',function(e){
   render();
 })();
 
-/* TECH TIP EDGE GUARD — keeps the Technical Stack tooltip inside the screen. */
+/* TECH TIP EDGE GUARD */
 function computeTipShift(box){
   var tip = box.querySelector('.tech-tip');
   if(!tip) return;
@@ -992,8 +954,7 @@ document.querySelectorAll('.tech-icon-box').forEach(function(box){
   box.addEventListener('focus', function(){ computeTipShift(box); }, true);
 });
 
-/* (the tooltip is recomputed on hover/touch, so a full pass is only
-   needed once on load and when the screen WIDTH changes) */
+/* tooltip touch on hover */
 function adjustAllTechTips(){
   document.querySelectorAll('.tech-icon-box').forEach(computeTipShift);
 }
@@ -1013,7 +974,7 @@ function adjustAllTechTips(){
   window.addEventListener('orientationchange', later);
 })();
 
-/* ORBIT DOTS (scattered, still) */
+/* ORBIT DOTS */
 (function () {
   var ring = document.getElementById('orbitRing');
   if (!ring) return;
@@ -1066,9 +1027,7 @@ function adjustAllTechTips(){
   });
 })();
 
-/* PAUSE THE ORBITING ICONS WHEN THEY ARE OFF-SCREEN
-   (17 icons x 2 animations each = a lot of work for nothing once you
-   have scrolled past the hero) */
+/* PAUSE THE ORBITING */
 (function () {
   var orbit = document.getElementById('photoOrbit');
   if (!orbit || !('IntersectionObserver' in window)) return;
@@ -1077,25 +1036,12 @@ function adjustAllTechTips(){
   }, { rootMargin: '60px' }).observe(orbit);
 })();
 
-/* ==========================================================
-   ORBIT ICONS: CLICK or TAP an icon -> its name pops up
-   (same look as the Technical Stacks tooltip).
-
-   - ONLY the icon you clicked / tapped stops. All the other icons keep
-     orbiting.
-   - Works for mouse, finger and pen (pointerdown), so a tap works even
-     though the icon is moving.
-   - Click / tap the same icon again, tap anywhere else, scroll with the
-     finger, or press Esc to close it and let it orbit again.
-   - It also injects the small CSS it needs (so style.css is unchanged).
-   ========================================================== */
+/* ORBIT ICONS */
 (function () {
   var orbit = document.getElementById('photoOrbit');
   if (!orbit) return;
 
-  /* CSS: only the active icon pauses. The old rules that paused the WHOLE orbit
-     (on hover, and the has-active class) are overridden here. Off-screen and
-     scrolling-on-phone pausing still work. */
+ 
   var st = document.createElement('style');
   st.textContent =
     '#photoOrbit:hover:not(.is-offscreen):not(.is-scrolling) .orbit-item,' +
@@ -1114,7 +1060,7 @@ function adjustAllTechTips(){
   var activePointerId = null;
   var lastDown = 0;
 
-  /* build one tooltip per icon (copy of the icon + its name) */
+
   items.forEach(function (it) {
     var counter = it.querySelector('.orbit-counter');
     var badge = it.querySelector('.stack-badge');
@@ -1130,7 +1076,7 @@ function adjustAllTechTips(){
     tip.appendChild(nm);
     counter.appendChild(tip);
 
-    /* keyboard: Enter / Space on a focused icon */
+    
     badge.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
@@ -1139,7 +1085,7 @@ function adjustAllTechTips(){
     });
   });
 
-  /* keeps the tooltip inside the screen (and flips it under the icon near the nav bar) */
+  /* Tooltip */
   function place(it) {
     var counter = it.querySelector('.orbit-counter');
     var tip = it.querySelector('.orbit-tip');
@@ -1147,7 +1093,7 @@ function adjustAllTechTips(){
     it.classList.remove('tip-flip');
     tip.style.setProperty('--tip-shift', '0px');
     var r = counter.getBoundingClientRect();
-    if (r.top < tip.offsetHeight + 14 + 90) it.classList.add('tip-flip');   /* not enough room above (nav bar) -> show below */
+    if (r.top < tip.offsetHeight + 14 + 90) it.classList.add('tip-flip');   
     var vw = document.documentElement.clientWidth;
     var cx = r.left + r.width / 2, tw = tip.offsetWidth, m = 10, shift = 0;
     if (cx - tw / 2 < m) shift = m - (cx - tw / 2);
@@ -1165,7 +1111,7 @@ function adjustAllTechTips(){
     closeTip();
     active = it;
     activePointerId = pointerId;
-    it.classList.add('is-active');     /* ONLY this icon pauses (see the CSS above) */
+    it.classList.add('is-active');     
     place(it);
   }
 
@@ -1178,26 +1124,23 @@ function adjustAllTechTips(){
     return (it && items.indexOf(it) !== -1) ? it : null;
   }
 
-  /* MOUSE + FINGER + PEN: act the moment the icon is touched. (We use pointerdown
-     because the icon is moving: by the time a finger lifts, the icon may have
-     moved away and the "click" could miss.) */
+  
   document.addEventListener('pointerdown', function (e) {
     if (e.pointerType === 'mouse' && e.button !== 0) return;
     var it = itemFrom(e);
-    if (!it) { closeTip(); return; }          /* tapped somewhere else -> close */
+    if (!it) { closeTip(); return; }          
     lastDown = Date.now();
     toggle(it, e.pointerId);
   }, { passive: true });
 
-  /* if the finger starts scrolling the page, the browser cancels the pointer:
-     close the tooltip so the icon does not stay frozen by accident */
+  
   document.addEventListener('pointercancel', function (e) {
     if (active && e.pointerId === activePointerId) closeTip();
   }, { passive: true });
 
-  /* fallback for clicks that did NOT come from a pointerdown (keyboard / screen reader) */
+  
   document.addEventListener('click', function (e) {
-    if (Date.now() - lastDown < 600) return;  /* already handled by pointerdown */
+    if (Date.now() - lastDown < 600) return;  
     var it = itemFrom(e);
     if (!it) { closeTip(); return; }
     toggle(it, null);
@@ -1207,28 +1150,13 @@ function adjustAllTechTips(){
   window.addEventListener('resize', function () { if (active) place(active); });
 })();
 
-/* ==========================================================
-   (The animated particle background and the perspective grid
-   have been removed. The page now has a plain dark background.)
-   ========================================================== */
 
-/* ==========================================================
-   NO "-" AT THE END OF A LINE (project descriptions)
-   The "-" you still saw is a REAL hyphen inside the words themselves
-   (Kitty-themed, AI-powered, step-by-step, rule-based, scroll-triggered,
-   section-by-section ...). Browsers are always allowed to break a line
-   after a real hyphen, and CSS cannot turn that off.
-
-   This keeps every hyphenated word together on one line by wrapping it
-   in a no-wrap <span>. The description text is NOT changed, only how
-   the line is broken.
-   ========================================================== */
 (function () {
-  /* wraps hyphenated words of ONE text node in no-wrap spans */
+ 
   function fixTextNode(node) {
     var text = node.nodeValue;
     if (text.indexOf('-') === -1) return;
-    var parts = text.split(/(\S+-\S+)/g);   /* hyphenated words are the odd items */
+    var parts = text.split(/(\S+-\S+)/g);   
     var frag = document.createDocumentFragment();
     parts.forEach(function (part, i) {
       if (i % 2 === 1) {
@@ -1245,15 +1173,13 @@ function adjustAllTechTips(){
 
   function fix(el) {
     if (el.getAttribute('data-nohyphen') === '1') return;
-    /* only plain text nodes are touched, so spans like <span class="hl-white"> are kept */
+    
     var nodes = Array.prototype.filter.call(el.childNodes, function (n) { return n.nodeType === 3; });
     nodes.forEach(fixTextNode);
     el.setAttribute('data-nohyphen', '1');
   }
 
-  /* ---- WHITE + BOLD PHRASES inside project descriptions ----
-     No HTML change needed: add a phrase to this list and it is found
-     automatically (the description text itself is not changed). */
+ 
   var HIGHLIGHTS = ['web based capstone system'];
 
   function highlight(el) {
@@ -1280,8 +1206,8 @@ function adjustAllTechTips(){
 
   function run() {
     document.querySelectorAll('.project-card-desc').forEach(function (el) {
-      highlight(el);   /* first the white phrase */
-      fix(el);         /* then keep hyphenated words together */
+      highlight(el);   
+      fix(el);         
     });
   }
 
