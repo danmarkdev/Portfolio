@@ -1,7 +1,7 @@
 /* PROJECT DETAILS OVERLAY */
 (function () {
   var PROJECTS = {
-    /* "School" removed from the title */
+    /* Project Modal */
     'Clinic Compliance & Records Management System': {
       kicker: '// CAPSTONE SYSTEM',
       badge: 'LIVE DEPLOYMENT',
