@@ -16,12 +16,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css?v=44"/> 
-  <!-- NEW: project details overlay styles -->
+  
+  <!-- Project Detail Overlay -->
   <link rel="stylesheet" href="project-modal.css?v=1"/>
 </head>
 <body>
 
-<!-- NAV — floating pill -->
+<!-- Navigation floating pill -->
 <header id="header">
   <a href="#home" class="logo">Dan.Dev</a>
   <nav id="nav">
@@ -38,7 +39,7 @@
   </button>
 </header>
 
-<!-- MOBILE NAV -->
+<!-- Mobile Navigation -->
 <div class="mobile-nav" id="mnav">
   <a href="#home" onclick="closeMenu()">Home</a>
   <a href="#testimonials" onclick="closeMenu()">Testimonials</a>
@@ -76,9 +77,10 @@
           </div>
         </div>
 
-        <!-- Tech stack — icon-only badges orbiting the profile photo -->
+        <!-- Tech stack Icons -->
         <div class="orbit-ring" id="orbitRing">
-          <!-- only 2 orbit ring lines -->
+          
+          <!-- Two Orbit Rings -->
           <div class="orbit-line ol-1"></div>
           <div class="orbit-line ol-2"></div>
 
@@ -448,76 +450,6 @@
         </div>
       </div>
 
-      <!-- duplicate set for seamless infinite loop -->
-      <div class="project-card" aria-hidden="true">
-        <div class="project-img-wrap">
-          <img src="Projects/HealthSync.JPG" alt=""/>
-        </div>
-        <div class="project-body">
-          <div class="project-title-row">
-            <h3 class="project-card-title">HealthSync Clinic Management System</h3>
-            <a href="https://healthsync.hstn.me" target="_blank" class="project-link-icon" tabindex="-1" aria-label="View live site"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
-          </div>
-          <p class="project-card-desc">A web based system simplifying the school nurse's workflow, digital records, real-time communication tools and streamlined healthcare processes.</p>
-        </div>
-      </div>
-
-      <div class="project-card" aria-hidden="true">
-        <div class="project-img-wrap">
-          <img src="Projects/JuliaAI.png" alt=""/>
-        </div>
-        <div class="project-body">
-          <div class="project-title-row">
-            <h3 class="project-card-title">Julia AI</h3>
-            <a href="#" class="project-link-icon project-link-locked" tabindex="-1" aria-label="Private system" onclick="event.preventDefault();"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></a>
-          </div>
-          <p class="project-card-desc">Developed in September 2026. Danmark's most challenging and best AI project. A Hello Kitty-themed AI companion that chats naturally, generates images from your ideas, reads photos, PDFs and shared links, and formats answers clearly, from step-by-step lists to tables.</p>
-        </div>
-      </div>
-
-      <div class="project-card" aria-hidden="true">
-        <div class="project-img-wrap">
-          <img src="Projects/Analyzer Resume.JPG" alt=""/>
-        </div>
-        <div class="project-body">
-          <div class="project-title-row">
-            <h3 class="project-card-title">Resume Analyzer</h3>
-            <a href="https://resumeanalyzer.hstn.me/" target="_blank" class="project-link-icon" tabindex="-1" aria-label="View live site"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
-          </div>
-          <p class="project-card-desc">A web-based resume review system built with Node.js and Tailwind CSS featuring PDF and DOCX upload, rule-based ATS checks, AI-generated feedback, keyword matching against job postings, and section-by-section improvement suggestions for job seekers.</p>
-        </div>
-      </div>
-
-      <div class="project-card" aria-hidden="true">
-        <div class="project-img-wrap">
-          <img src="Projects/Learn and approach.JPG" alt=""/>
-        </div>
-        <div class="project-body">
-          <div class="project-title-row">
-            <h3 class="project-card-title">Learn &amp; Approach</h3>
-            <a href="https://danmarkdev.github.io/learn-approach/" target="_blank" class="project-link-icon" tabindex="-1" aria-label="View live site"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
-          </div>
-          <p class="project-card-desc"> An Interactive matching game designed to sharpen attention to detail, each of the four levels offers three shuffled choices with only one correct match and the final results connects players to the activity questions in Google drive.</p>
-        </div>
-      </div>
-
-      <div class="project-card" aria-hidden="true">
-        <div class="project-img-wrap">
-          <img src="Projects/LBFF.png" alt=""/>
-        </div>
-        <div class="project-body">
-          <div class="project-title-row">
-            <h3 class="project-card-title">Digital Father's Day Letter</h3>
-            <a href="https://lbff.hstn.me/" target="_blank" class="project-link-icon" tabindex="-1" aria-label="View live site"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
-          </div>
-          <p class="project-card-desc">An interactive tap to open envelope revealing a scripture rooted tribute to the two church pastors, personalized letters, a scroll-triggered reveal and a closing message of gratitude from the congregation.</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
 <!-- SKILLS -->
 <section id="skills" class="section section-alt">
   <div class="container">
@@ -753,7 +685,6 @@
           </div>
         </div>
 
-        <!-- NEW: Supabase -->
         <div class="tech-icon-box">
           <span class="fb-icon" style="background:#3FCF8E"><img src="https://cdn.simpleicons.org/supabase" alt="Supabase" loading="lazy"/></span>
           <div class="tech-tip">
@@ -768,7 +699,6 @@
           </div>
         </div>
 
-        <!-- NEW: Git -->
         <div class="tech-icon-box">
           <span class="fb-icon" style="background:#F05032"><img src="https://cdn.simpleicons.org/git" alt="Git" loading="lazy"/></span>
           <div class="tech-tip">
@@ -996,7 +926,7 @@
   </div>
 </section>
 
-<!-- CERTIFICATIONS — auto-scrolling marquee, two independent rows -->
+<!-- CERTIFICATIONS -->
 <section id="certificates" class="section cert-section">
   <div class="container">
     <div class="sec-header reveal">
@@ -1173,7 +1103,8 @@
 </footer>
 
 <script src="script.js?v=40"></script>
-<!-- NEW: project details overlay -->
+       
+<!-- Overview Project Modal -->
 <script src="project-modal.js?v=1"></script>
 </body>
 </html>
