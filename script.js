@@ -6,12 +6,12 @@ try {
   var _reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var _mem = navigator.deviceMemory || 8;
   var _cores = navigator.hardwareConcurrency || 8;
-  LITE = false;   
+  LITE = false;
 } catch (e) {}
 if (LITE) document.documentElement.classList.add('lite-mode');
 
 var SCROLL_FNS = [];
-var SCROLLING = false;   
+var SCROLLING = false;
 
 /* SOUND EFFECTS  */
 var SFX = (function () {
@@ -35,7 +35,6 @@ var SFX = (function () {
     try { localStorage.setItem(MUTE_KEY, muted ? 'true' : 'false'); } catch (e) {}
   }
 
-  
   function makeSilentWav() {
     var rate = 8000, n = 800;
     var buf = new ArrayBuffer(44 + n);
@@ -94,7 +93,6 @@ var SFX = (function () {
     } catch (e) {}
   }
 
-  
   function pop(type, f1, f2, dur, vol, offset) {
     try {
       init();
@@ -150,8 +148,7 @@ var SFX = (function () {
   };
 })();
 
-/* Audio */
-(function () { */
+/* Audio unlock on first interaction */
 (function () {
   var evts = ['pointerdown', 'pointerup', 'touchstart', 'touchend', 'mousedown', 'click', 'keydown'];
   function unlock() {
@@ -365,10 +362,10 @@ measureSections();
     lastY=y;
     if(acc>=(COARSE?120:70)){ acc=0; SFX.scroll(); }
 
-  
+    /* header shadow */
     if(headerEl) headerEl.classList.toggle('scrolled',y>30);
 
-   
+    /* active nav link */
     var cur='';
     for(var i=0;i<sectionCache.length;i++){
       if(y>=sectionCache[i].top-120) cur=sectionCache[i].id;
@@ -379,7 +376,7 @@ measureSections();
       mobileNavLinks.forEach(function(a){ a.classList.toggle('active',a.getAttribute('href')==='#'+cur); });
     }
 
-   
+    /* anything else that runs while scrolling */
     for(var j=0;j<SCROLL_FNS.length;j++) SCROLL_FNS[j]();
   }
 
@@ -483,9 +480,9 @@ function initSwipeMarquee(trackId, loopSeconds, direction){
     if(lastTime===null) lastTime = t;
     var dt = (t - lastTime) / 1000;
     lastTime = t;
-    if(dt > 0.1) dt = 0.1;         
+    if(dt > 0.1) dt = 0.1;
 
- 
+    /* off-screen: do no work at all */
     if((!inView || (COARSE && SCROLLING)) && !dragging){
       requestAnimationFrame(tick);
       return;
@@ -525,7 +522,7 @@ function initSwipeMarquee(trackId, loopSeconds, direction){
     if(!moved && Math.abs(dx) > 15){
       moved = true;
       track.classList.add('dragging');
-      SFX.tick();                     
+      SFX.tick();
       lastSoundDx = dx;
       if(track.setPointerCapture){
         try{ track.setPointerCapture(activePointerId); }catch(err){}
@@ -535,7 +532,7 @@ function initSwipeMarquee(trackId, loopSeconds, direction){
       pos = wrap360(startPos - dx);
       render();
 
-      if(Math.abs(dx - lastSoundDx) > 40){    
+      if(Math.abs(dx - lastSoundDx) > 40){
         SFX.tick();
         lastSoundDx = dx;
       }
@@ -605,8 +602,8 @@ function sendMsg(){
   formData.append('email', email);
   formData.append('subject', subject || 'New message from Portfolio');
   formData.append('message', msg);
-  formData.append('website', val('cf-website'));           
-  formData.append('elapsed', Date.now() - PAGE_LOADED);     
+  formData.append('website', val('cf-website'));
+  formData.append('elapsed', Date.now() - PAGE_LOADED);
 
   fetch('https://script.google.com/macros/s/AKfycbzFKLKp7Z-6tA3BH80f1bpkj9ORJrDVIL4dOi7WMWazKDgszjCdHUoMo1_8FNY0eec/exec', { method:'POST', body: formData })
     .then(function(res){ return res.text(); })
@@ -674,7 +671,6 @@ document.addEventListener('keydown',function(e){
     }
   ];
 
-  
   var recognitionData = [
     {
       year: 'Sept 2026',
@@ -784,7 +780,7 @@ document.addEventListener('keydown',function(e){
   var dotsWrap = document.getElementById('testiDots');
   if (dotsWrap) dotsWrap.style.display = 'none';
 
-  /* Testimonials*/
+  /* Testimonials */
   var SHORT_TEXT = {
     'Josh Aguilera':    'Danmark did a great job on the HealthSync Clinic Management System. It\u2019s simple, organized, and easy to use, with features that are practical for daily clinic tasks.',
     'Julia Sardalla':   'The AI Danmark created for me is easy to use and has a creative design. It helped me with my tasks and improved the quality of my work.',
@@ -796,7 +792,7 @@ document.addEventListener('keydown',function(e){
     'Shanell Jamandre': 'Danmark gave me a hugeee help in creating the minigame I desired for my activity simulation for practice teaching. It went to success as he resolved the issues in my minigame program.'
   };
 
-  /* Testimonials */
+  /* Fallback for any new testimonial */
   var MAX_CHARS = 170;
   function shorten(t) {
     t = t.replace(/\s+/g, ' ').trim();
@@ -846,7 +842,6 @@ document.addEventListener('keydown',function(e){
     return window.matchMedia('(max-width:700px)').matches;
   }
 
- 
   function sizeDeck() {
     var max = 0;
     cards.forEach(function (c) { c.style.height = 'auto'; });
@@ -858,7 +853,7 @@ document.addEventListener('keydown',function(e){
 
   function render() {
     var half = Math.floor(n / 2);
-    var maxShown = Math.max(3, half);   
+    var maxShown = Math.max(3, half);
     cards.forEach(function (c, i) {
       var o = ((i - active + n + half) % n) - half;
       var r = (i - active + n) % n;
@@ -873,7 +868,7 @@ document.addEventListener('keydown',function(e){
 
   function goTo(i) {
     var next = (i + n) % n;
-    if (next !== active) SFX.shuffle();   
+    if (next !== active) SFX.shuffle();
     active = next;
     render();
   }
@@ -900,7 +895,6 @@ document.addEventListener('keydown',function(e){
     }
   }, { passive: true });
 
- 
   var lastW = window.innerWidth;
   var resizeT;
   window.addEventListener('resize', function () {
@@ -1027,7 +1021,7 @@ function adjustAllTechTips(){
   });
 })();
 
-/* PAUSE THE ORBITING */
+/* PAUSE THE ORBITING WHEN OFF-SCREEN */
 (function () {
   var orbit = document.getElementById('photoOrbit');
   if (!orbit || !('IntersectionObserver' in window)) return;
@@ -1036,12 +1030,11 @@ function adjustAllTechTips(){
   }, { rootMargin: '60px' }).observe(orbit);
 })();
 
-/* ORBIT ICONS */
+/* ORBIT ICONS: click or tap an icon -> its name pops up */
 (function () {
   var orbit = document.getElementById('photoOrbit');
   if (!orbit) return;
 
- 
   var st = document.createElement('style');
   st.textContent =
     '#photoOrbit:hover:not(.is-offscreen):not(.is-scrolling) .orbit-item,' +
@@ -1060,7 +1053,6 @@ function adjustAllTechTips(){
   var activePointerId = null;
   var lastDown = 0;
 
-
   items.forEach(function (it) {
     var counter = it.querySelector('.orbit-counter');
     var badge = it.querySelector('.stack-badge');
@@ -1076,7 +1068,6 @@ function adjustAllTechTips(){
     tip.appendChild(nm);
     counter.appendChild(tip);
 
-    
     badge.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
@@ -1093,7 +1084,7 @@ function adjustAllTechTips(){
     it.classList.remove('tip-flip');
     tip.style.setProperty('--tip-shift', '0px');
     var r = counter.getBoundingClientRect();
-    if (r.top < tip.offsetHeight + 14 + 90) it.classList.add('tip-flip');   
+    if (r.top < tip.offsetHeight + 14 + 90) it.classList.add('tip-flip');
     var vw = document.documentElement.clientWidth;
     var cx = r.left + r.width / 2, tw = tip.offsetWidth, m = 10, shift = 0;
     if (cx - tw / 2 < m) shift = m - (cx - tw / 2);
@@ -1111,7 +1102,7 @@ function adjustAllTechTips(){
     closeTip();
     active = it;
     activePointerId = pointerId;
-    it.classList.add('is-active');     
+    it.classList.add('is-active');
     place(it);
   }
 
@@ -1124,23 +1115,20 @@ function adjustAllTechTips(){
     return (it && items.indexOf(it) !== -1) ? it : null;
   }
 
-  
   document.addEventListener('pointerdown', function (e) {
     if (e.pointerType === 'mouse' && e.button !== 0) return;
     var it = itemFrom(e);
-    if (!it) { closeTip(); return; }          
+    if (!it) { closeTip(); return; }
     lastDown = Date.now();
     toggle(it, e.pointerId);
   }, { passive: true });
 
-  
   document.addEventListener('pointercancel', function (e) {
     if (active && e.pointerId === activePointerId) closeTip();
   }, { passive: true });
 
-  
   document.addEventListener('click', function (e) {
-    if (Date.now() - lastDown < 600) return;  
+    if (Date.now() - lastDown < 600) return;
     var it = itemFrom(e);
     if (!it) { closeTip(); return; }
     toggle(it, null);
@@ -1150,13 +1138,12 @@ function adjustAllTechTips(){
   window.addEventListener('resize', function () { if (active) place(active); });
 })();
 
-
+/* NO "-" AT THE END OF A LINE (project descriptions) + highlighted phrases */
 (function () {
- 
   function fixTextNode(node) {
     var text = node.nodeValue;
     if (text.indexOf('-') === -1) return;
-    var parts = text.split(/(\S+-\S+)/g);   
+    var parts = text.split(/(\S+-\S+)/g);
     var frag = document.createDocumentFragment();
     parts.forEach(function (part, i) {
       if (i % 2 === 1) {
@@ -1173,13 +1160,11 @@ function adjustAllTechTips(){
 
   function fix(el) {
     if (el.getAttribute('data-nohyphen') === '1') return;
-    
     var nodes = Array.prototype.filter.call(el.childNodes, function (n) { return n.nodeType === 3; });
     nodes.forEach(fixTextNode);
     el.setAttribute('data-nohyphen', '1');
   }
 
- 
   var HIGHLIGHTS = ['web based capstone system'];
 
   function highlight(el) {
@@ -1206,8 +1191,8 @@ function adjustAllTechTips(){
 
   function run() {
     document.querySelectorAll('.project-card-desc').forEach(function (el) {
-      highlight(el);   
-      fix(el);         
+      highlight(el);
+      fix(el);
     });
   }
 
