@@ -361,13 +361,12 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .orbit-ring{
   position:absolute;
   inset:0;
-  z-index:3;               /* ABOVE the photo (photo-frame is z-index:2) so the icon name popup is never hidden behind the photo */
-  pointer-events:none;     /* clicks still go through to the photo; only the icons catch taps */
+  z-index:3;               
+  pointer-events:none;     
   --radius:235px;
 }
 
 /* SOLAR SYSTEM ORBITS */
-/* 2 ring lines (--ring1 solid, --ring2 dashed); icons orbit OUTSIDE them on --o1 and --o2 */
 .orbit-ring{--ring1:162px;--ring2:182px;--o1:207px;--o2:261px;--badge:46px;--badge-icon:26px}
 
 .orbit-line{
@@ -450,7 +449,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   to{transform:translate(-50%,-50%) rotate(calc(var(--angle) * -1 - 360deg))}
 }
 
-/* Icon orbits (angles are set inline in index.html) */
+/* Icon orbits */
 .orbit-item.orb-in{--radius:var(--o1);--dur:42s}
 .orbit-item.orb-out{--radius:var(--o2);--dur:64s}
 
@@ -478,7 +477,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .fb-icon img,
 .fb-icon svg{width:15px;height:15px;object-fit:contain;display:block}
 
-/* Black-only logos would vanish on a dark background: show them in white */
+
 .fb-icon img[alt="GitHub"],
 .fb-icon img[alt="Vercel"],
 .fb-icon img[alt="Render"],
@@ -519,9 +518,9 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 .service-num{display:none}
 
-/* PROJECT CARDS — JOINED CELLS */
+/* PROJECT CARDS */
 .projects-marquee{
-  width:min(1600px, 98%);          /* 5 cells in one row (up to 320px each) */
+  width:min(1600px, 98%);         
   margin:0 auto;
   overflow:visible;
   padding:0;
@@ -530,7 +529,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 .project-track{
   display:grid;
-  grid-template-columns:repeat(5,1fr);   /* 5 equal columns = 1 straight row */
+  grid-template-columns:repeat(5,1fr);   
   gap:0;
   padding:1px 0 0 1px;
   width:100%;
@@ -558,7 +557,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   transition:border-color .25s ease, background-color .25s ease;
 }
 
-/* hover / tap / focus: SOLID background so the grid lines never show through the text */
+/* hover / tap */
 .project-card:hover,
 .project-card:active,
 .project-card:focus-within{
@@ -638,26 +637,26 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   line-height:1.4;
   text-align:justify;
   text-justify:inter-word;
-  hyphens:none;              /* no "-" splitting words */
+  hyphens:none;            
   -webkit-hyphens:none;
-  overflow-wrap:break-word;  /* safety only for a very long word/link */
-  text-wrap:pretty;          /* balances line endings so words fit nicely without hyphens */
+  overflow-wrap:break-word;  
+  text-wrap:pretty;          
 }
 
-/* highlighted phrase inside a project description (wrap it in <span class="hl-white">) */
+/* highlighted phrase inside a project description */
 .project-card-desc .hl-white{
   color:#ffffff;
   font-weight:700;
 }
 
-/* SMALLER LAPTOPS (961px - 1279px): still 5 in a row, slightly tighter inside */
+/* SMALLER LAPTOPS Responsive Design */
 @media(min-width:961px) and (max-width:1279px){
   .project-card{padding:14px;gap:20px}
   .project-card-title{font-size:15px}
   .project-card-desc{font-size:12.5px;line-height:1.45;text-align:left}
 }
 
-/* TABLET: 2 cells per row, last cell centered */
+/* TABLET: 2 */
 @media(max-width:960px){
   .projects-marquee{width:min(640px, 94%)}
   .project-track{grid-template-columns:repeat(4,1fr)}
@@ -666,7 +665,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   .project-card:nth-child(5){grid-column:2 / span 2}
 }
 
-/* MOBILE: 1 cell per row */
+/* MOBILE: 1 */
 @media(max-width:700px){
   .projects-marquee{width:min(320px, 92%)}
   .project-track{grid-template-columns:1fr}
@@ -790,7 +789,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   border-bottom-color:#1d1d25
 }
 
-/* DESKTOP: 10 icons per row (30 icons = 3 even rows) */
+/* DESKTOP: 10 icons */
 @media(min-width:961px){
   .tech-icon-grid{
     gap:20px;
@@ -941,7 +940,8 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   transition:transform .25s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease, color .2s ease;
 }
 .edu-node-circle svg{width:28px;height:28px}
-/* About circle background */
+
+/* About Circle background */
 .edu-node-circle svg .cut{stroke:var(--surface)}
 .edu-node.active .edu-node-circle svg .cut{stroke:#1f1f27}
 .edu-node-year{
@@ -1231,9 +1231,7 @@ textarea{min-height:120px}
 .contact-form button:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
 #cf-status{font-size:.82rem;min-height:1.2em;color:var(--muted)}
 
-/* BACK TO HOME link (contact page)
-   Gray by default; turns WHITE on hover, tap, click and focus,
-   so it never stays gray/orange after being pressed. */
+/* BACK TO HOME link (contact page)  */
 .back-home{
   font-family: var(--font-body);
   color: var(--muted);
@@ -1256,7 +1254,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease}
 .reveal.visible{opacity:1;transform:none}
 
-/* TESTIMONIALS — dark glass 3D fan (desktop) / stacked deck (mobile) */
+/* TESTIMONIALS — dark glass 3D  */
 #testimonials{overflow-x:clip}
 
 .testimonial-deck-wrap{
@@ -1473,7 +1471,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   position:absolute;
   left:0;
   right:0;
-  top:-64px;                       /* one extra tile above, so the loop has no gap */
+  top:-64px;                       
   height:calc(100% + 64px);
   background-image:
     linear-gradient(rgba(255,255,255,.85) 1px, transparent 1px),
@@ -1487,14 +1485,14 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   from{transform:translate3d(0,0,0)}
   to{transform:translate3d(0,64px,0)}
 }
-/* no wasted work while the grid is not showing */
+
 #grid-bg:not(.on) .grid-lines{animation-play-state:paused}
 
-/* hide the moving dots/lines animation while the grid is visible */
+
 #bg-canvas{transition:opacity .8s ease}
 #grid-bg.on ~ #bg-canvas{opacity:0}
 
-/* RESPONSIVE */
+/* RESPONSIVE Design */
 @media(max-width:960px){
   #nav{display:none}
   #header .nav-cta{display:none}
@@ -1599,7 +1597,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .hero-grid{gap:1.5rem}
 }
 
-/* Old straight orbit dots stay hidden; still dots are made by script.js */
+/* Straight Orbit */
 .orbit-dot{display:none !important}
 .orbit-ring > div:not([class]){display:none !important}
 
@@ -1641,13 +1639,14 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .sound-toggle{left:.9rem;bottom:.9rem;width:42px;height:42px}
 }
 
-/* MOBILE PERFORMANCE FIXES */
+/* MOBILE PERFORMANCE */
 
-/** Orbit icons */
+/* Orbit icons */
 .photo-orbit.is-offscreen .orbit-item,
 .photo-orbit.is-offscreen .orbit-counter{animation-play-state:paused}
 
 @media(max-width:960px){
+  
   /* backdrop-filter  */
   #header,
   #header.scrolled,
@@ -1671,7 +1670,8 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
 }
 
 @media(max-width:700px){
-  /* Certificate marquee  */
+  
+  /* Certificate marquee */
   .cert-marquee-row{
     -webkit-mask-image:none;
     mask-image:none;
@@ -1701,21 +1701,18 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   .testi-card.testi-active{box-shadow:0 14px 28px -12px rgba(0,0,0,.95)}
 }
 
-/* WEAK-DEVICE MODE
-      script.js adds class "lite-mode" on <html> when the phone has
-      little RAM / few CPU cores, or the user asked for reduced motion.
-      The grid is still shown, just not animated. */
+/* WEAK-DEVICE MODE */
 .lite-mode #grid-bg .grid-lines{animation:none}
 .lite-mode .orbit-item,
 .lite-mode .orbit-counter{animation-duration:calc(var(--dur) * 2)}
 
-/* MOBILE: keep everything moving, but stop the glitches */
+/* Mobile glitches */
 @media(max-width:960px){
-  /* fewer giant GPU layers = no more vanishing cards / images */
+  
+  /* Vanishing Cards */
   .testi-card{will-change:auto}
 
-  /* while the finger is scrolling, pause the DECORATIVE spinning
-     (orbit icons). The grid keeps moving. They resume right after. */
+  /* Scrolling */
   #photoOrbit.is-scrolling .orbit-item,
   #photoOrbit.is-scrolling .orbit-counter{animation-play-state:paused}
 }
@@ -1729,8 +1726,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   display:block;
 }
 
-/* BUTTONS KEEP THEIR LOOK: VIEW PROJECTS / SEND MESSAGE
-   ORANGE background + BLACK text, always. Hover, click, tap. */
+/* BUTTONS OF VIEW PROJECTS / SEND MESSAGE */
 html body .btn-primary,
 html body .btn-primary:hover,
 html body .btn-primary:active,
