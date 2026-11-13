@@ -802,6 +802,28 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   }
 }
 
+/* DESKTOP ONLY: bigger tech stack popup (name + icon) when hovering / tapping an icon */
+@media(min-width:961px){
+  .tech-tip{
+    bottom:calc(100% + 16px);
+    max-width:300px;
+    padding:.8rem 1.3rem;
+    border-radius:12px;
+    box-shadow:0 12px 28px -8px rgba(0,0,0,.85);
+  }
+  .tech-tip-head{gap:.8rem}
+  .tech-tip-icon{
+    width:34px;
+    height:34px;
+    border-radius:8px;
+  }
+  .tech-tip-icon img,
+  .tech-tip-icon svg{width:26px;height:26px}
+  .tech-tip-name{font-size:1.1rem}
+  .tech-tip::after{border-width:8px}
+  .tech-icon-box.tip-flip .tech-tip{top:calc(100% + 16px)}
+}
+
 /* EDUCATION */
 .edu-section{background:transparent;padding:6rem 0;position:relative;z-index:1}
 
@@ -1373,7 +1395,7 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   fill:#ffc53d;
   stroke:none;
 }
-/* quote mark: tucked right under the header, right above the text */
+/* Testimonial Quote Mark */
 .testi-quote-icon{
   font-family:var(--font-heading);
   font-size:1.9rem;
