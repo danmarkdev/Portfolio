@@ -1,7 +1,7 @@
 /* PROJECT DETAILS OVERLAY */
 (function () {
   var PROJECTS = {
-    /* Project Modal */
+    
     'Clinic Compliance & Records Management System': {
       kicker: '// CAPSTONE SYSTEM',
       badge: 'LIVE DEPLOYMENT',
@@ -75,10 +75,11 @@
       ]
     },
 
-    /* The key matches the card title in index.html exactly */
+    /* Card Title */
     'Interactive Matching Learning Game': {
       kicker: '// INTERACTIVE GAME',
       badge: 'LIVE DEPLOYMENT',
+      image: 'Projects/Interactive game.png',
       name: 'Learn & Approach',
       intro: 'An interactive image-matching game for a ProfEd 1 class activity. Features four levels with three shuffled choices each, live scoring and feedback, and a results screen that connects players to the activity questions in Google Drive.',
       points: [
@@ -120,19 +121,16 @@
     }
   };
 
-  /* normalise titles so  Father's  /  Father\u2019s  and  &  all match */
   function norm(s) {
     return (s || '').replace(/[\u2018\u2019]/g, "'").replace(/-/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase();
   }
   var LOOKUP = {};
   Object.keys(PROJECTS).forEach(function (k) { LOOKUP[norm(k)] = PROJECTS[k]; });
 
-  /* ALIASES: older / alternate card titles that should open the same details.
-     If you ever rename a card again, add its old or new title here. */
   var ALIASES = {
     'Interactive Image-Matching Learning Game': 'Interactive Matching Learning Game',
     'Learn & Approach': 'Interactive Matching Learning Game',
-    /* old clinic title (with "School") now points to the new title */
+  
     'School Clinic Compliance & Records Management System': 'Clinic Compliance & Records Management System'
   };
   Object.keys(ALIASES).forEach(function (alias) {
@@ -140,9 +138,7 @@
     if (target) LOOKUP[norm(alias)] = target;
   });
 
-  /* Make the visible card titles match the canonical titles above, so the
-     card and the overview always show the SAME name (even if index.html
-     still has an old title). Hidden duplicate cards are skipped. */
+  /* Visible Card */
   var CANON = {};
   Object.keys(PROJECTS).forEach(function (k) { CANON[norm(k)] = k; });
   Object.keys(ALIASES).forEach(function (a) { CANON[norm(a)] = ALIASES[a]; });
@@ -151,11 +147,17 @@
     function (t) {
       var canon = CANON[norm(t.textContent)];
       if (canon) t.textContent = canon;
+
+      /* swap the card picture if the project has its own "image" */
+      var proj = canon ? PROJECTS[canon] : null;
+      if (proj && proj.image) {
+        var card = t.closest('.project-card');
+        var pic = card && card.querySelector('.project-img-wrap img');
+        if (pic) pic.setAttribute('src', proj.image);
+      }
     }
   );
 
-  /* RENAMES: rewrites the visible card title on the page, so the card AND the
-     overview both show the new title even if index.html still has the old one. */
   var RENAMES = {
     'Interactive Image-Matching Learning Game': 'Interactive Matching Learning Game',
     'School Clinic Compliance & Records Management System': 'Clinic Compliance & Records Management System'
@@ -174,7 +176,7 @@
     '@media(min-width:961px){.pm-name{font-size:clamp(.7rem,1.6vh,.8rem);margin-top:clamp(.3rem,.9vh,.55rem)}}';
   document.head.appendChild(pmStyle);
 
-  /* build the overlay once */
+  /* Overlay */
   var overlay = document.createElement('div');
   overlay.className = 'pm-overlay';
   overlay.setAttribute('role', 'dialog');
@@ -238,8 +240,8 @@
     elKicker.textContent = d.kicker;
     elBadge.textContent = d.badge;
     elBadge.classList.toggle('is-private', !!isPrivate);
-    /* the overview title is ALWAYS the same name as the card on the page;
-       the project's own name (HealthSync, Julia AI ...) shows under it */
+    
+    /* Overview */
     elTitle.textContent = cardTitle || d.name;
     if (d.name && norm(d.name) !== norm(cardTitle)) {
       elName.textContent = d.name;
@@ -280,11 +282,12 @@
     elVisit.classList.remove('is-disabled');
     elVisit.removeAttribute('aria-disabled');
     if (isPrivate) {
+      
       /* private systems: the button sends the visitor to the contact page */
       elVisit.setAttribute('href', 'contact.html');
       elVisit.removeAttribute('target');
       elVisit.innerHTML = 'Inquire About ' + (d.name || cardTitle) + ' ' + ARROW_ICON;
-    } else {
+    } else { 
       elVisit.setAttribute('href', href);
       elVisit.setAttribute('target', '_blank');
       elVisit.innerHTML = 'Visit Live Site ' + ARROW_ICON;
@@ -316,7 +319,7 @@
     if (e.key === 'Escape') closeOverlay();
   });
 
-  /* make the visible cards keyboard-friendly */
+  /* Visible Card Friendly */
   var cards = Array.prototype.slice.call(document.querySelectorAll('.project-card:not([aria-hidden="true"])'));
   cards.forEach(function (c) {
     c.setAttribute('tabindex', '0');
@@ -330,9 +333,7 @@
     });
   });
 
-  /* click a card, its arrow icon or its lock icon -> open the overview.
-     (capture phase, so the arrow's live-site link and the lock's old alert
-     never fire; the live site is now reached from the overview's button) */
+  /* Card Clicking */
   document.addEventListener('click', function (e) {
     var card = e.target && e.target.closest ? e.target.closest('.project-card') : null;
     if (!card || card.getAttribute('aria-hidden') === 'true') return;
