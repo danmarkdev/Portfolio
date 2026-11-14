@@ -87,7 +87,7 @@ html{scrollbar-width:none}
 
 h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.02em}
 
-/* NAV — floating centered pill */
+/* Navigation floating header */
 #header{
   position:fixed;
   top:1.1rem;
@@ -382,10 +382,11 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   transform:translate(-50%,-50%);
 }
 .ol-1{width:calc(var(--ring1) * 2);height:calc(var(--ring1) * 2);border:1.5px solid rgba(255,255,255,.14)}
-/* DASHED line is now the OUTERMOST (uses --ring3) */
+
+/* Dashed solar line */
 .ol-2{width:calc(var(--ring3) * 2);height:calc(var(--ring3) * 2);border:1.5px dashed rgba(255,255,255,.22)}
 
-/* 3rd line - now SOLID and in the MIDDLE (uses --ring2) - no HTML change needed */
+/* Solar line */
 .orbit-ring::before{
   content:"";
   position:absolute;
@@ -820,7 +821,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   }
 }
 
-/* DESKTOP ONLY: bigger tech stack popup (name + icon) when hovering / tapping an icon */
+/* Tech Icon bigger size */
 @media(min-width:961px){
   .tech-tip{
     bottom:calc(100% + 16px);
@@ -1301,7 +1302,7 @@ footer p{
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease}
 .reveal.visible{opacity:1;transform:none}
 
-/* TESTIMONIALS — dark glass 3D  */
+/* TESTIMONIALS - dark glass 3D  */
 #testimonials{overflow-x:clip}
 
 .testimonial-deck-wrap{
@@ -1420,6 +1421,7 @@ footer p{
   fill:#ffc53d;
   stroke:none;
 }
+
 /* Testimonial Quote Mark */
 .testi-quote-icon{
   font-family:var(--font-heading);
@@ -1456,12 +1458,7 @@ footer p{
     .testimonial-deck-wrap{--card-w:330px;--gap:100px} 
 }
 
-/* ============================================================
-   DESKTOP ONLY (>= 961px): BIGGER + CLOSER testimonial cards
-   (this is the part that was changed)
-   - --card-w  : card width (bigger)
-   - --gap     : distance between cards (smaller number = closer)
-   ============================================================ */
+/* Testimonial Cards */
 @media(min-width:961px){
   .testimonial-deck-wrap{
     max-width:1300px;
@@ -1650,7 +1647,8 @@ footer p{
 @media(max-width:480px){
   .photo-orbit{max-width:310px}
   .photo-wrap{width:160px;height:160px}
-  /* Small phone orbit: 3 lines + icons outside */
+  
+  /* Orbit icons outside in Mobile layout */
   .orbit-ring{--ring1:92px;--ring2:104px;--ring3:116px;--o1:136px;--o2:168px;--badge:32px;--badge-icon:18px}
   .hero-name{font-size:2.1rem}
   .section-big-heading{font-size:1.25rem}
