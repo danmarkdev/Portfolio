@@ -1426,6 +1426,30 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
     .testimonial-deck-wrap{--card-w:330px;--gap:100px} 
 }
 
+/* ============================================================
+   DESKTOP ONLY (>= 961px): BIGGER + CLOSER testimonial cards
+   (this is the part that was changed)
+   - --card-w  : card width (bigger)
+   - --gap     : distance between cards (smaller number = closer)
+   ============================================================ */
+@media(min-width:961px){
+  .testimonial-deck-wrap{
+    max-width:1300px;
+    --card-w:360px;
+    --gap:clamp(112px, 10.5vw, 150px);
+  }
+  .testi-card{
+    padding:1.2rem 1.5rem 1.4rem;
+    gap:.65rem;
+    border-radius:22px;
+  }
+  .testi-avatar{width:46px;height:46px;font-size:1.1rem}
+  .testi-name{font-size:1.08rem}
+  .testi-rating{font-size:.8rem;padding:.3rem .8rem .3rem .6rem}
+  .testi-quote-icon{font-size:2.1rem}
+  .testi-text{font-size:.95rem;line-height:1.6}
+}
+
 /* Phone */
 @media(max-width:700px){
   #testimonials{padding-top:3rem}
