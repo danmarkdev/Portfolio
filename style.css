@@ -367,7 +367,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 
 /* SOLAR SYSTEM ORBITS
-   3 lines: ring1 (solid) / ring2 (dashed) / ring3 (solid, NEW)
+   3 lines: ring1 (solid, inner) / ring2 (solid, middle) / ring3 (DASHED, outermost)
    icons stay OUTSIDE all lines: o1 (inner icon orbit) / o2 (outer icon orbit) */
 .orbit-ring{--ring1:162px;--ring2:182px;--ring3:202px;--o1:230px;--o2:276px;--badge:46px;--badge-icon:26px}
 
@@ -382,16 +382,17 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   transform:translate(-50%,-50%);
 }
 .ol-1{width:calc(var(--ring1) * 2);height:calc(var(--ring1) * 2);border:1.5px solid rgba(255,255,255,.14)}
-.ol-2{width:calc(var(--ring2) * 2);height:calc(var(--ring2) * 2);border:1.5px dashed rgba(255,255,255,.22)}
+/* DASHED line is now the OUTERMOST (uses --ring3) */
+.ol-2{width:calc(var(--ring3) * 2);height:calc(var(--ring3) * 2);border:1.5px dashed rgba(255,255,255,.22)}
 
-/* 3rd solar line (NEW) - no HTML change needed */
+/* 3rd line - now SOLID and in the MIDDLE (uses --ring2) - no HTML change needed */
 .orbit-ring::before{
   content:"";
   position:absolute;
   top:50%;
   left:50%;
-  width:calc(var(--ring3) * 2);
-  height:calc(var(--ring3) * 2);
+  width:calc(var(--ring2) * 2);
+  height:calc(var(--ring2) * 2);
   border-radius:50%;
   border:1.5px solid rgba(255,255,255,.10);
   transform:translate(-50%,-50%);
