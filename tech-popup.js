@@ -1,4 +1,4 @@
-/* TECH STACK POPUP */
+/* Technical stack popup */
 (function () {
   'use strict';
 
@@ -158,11 +158,11 @@
   var boxes = Array.prototype.slice.call(document.querySelectorAll('.tech-icon-box'));
   if (!boxes.length) return;
 
-  /* Mobile / Touch check */
+  /* Mobile touch check*/
   var mq = window.matchMedia('(max-width:960px), (pointer:coarse)');
   function isMobile() { return mq.matches; }
 
-  /* Tech Descriptions (longer, same style as Reb.Dev) */
+  /* Tech Descriptions */
   var DESCRIPTIONS = {
     'HTML5': 'The standard markup language that structures web pages, defining headings, text, images, links, and forms.',
     'CSS3': 'Styles and lays out web pages, controlling colors, fonts, spacing, animations, and responsive design across screen sizes.',
@@ -258,12 +258,14 @@
     if (grid) grid.classList.add('has-open');
 
     if (isMobile()) {
-      /* Mobile: show the single card at the top */
+      
+      /* Mobile single card top */
       var tip = box.querySelector('.tech-tip');
       if (tip) card.innerHTML = tip.innerHTML;
       card.classList.add('show');
     } else {
-      /* Desktop: popup above the icon */
+      
+      /* Desktop popup icon */
       card.classList.remove('show');
       place(box);
     }
@@ -334,7 +336,7 @@
     setTimeout(function () { if (openBox && !isMobile()) place(openBox); }, 200);
   });
 
-  /* ORBIT ICONS POPUP (hero) */
+  /* Orbit icons popup (hero) */
   var techTips = {};
   boxes.forEach(function (box) {
     var n = box.querySelector('.tech-tip-name');
@@ -345,7 +347,7 @@
   var orbitItems = Array.prototype.slice.call(document.querySelectorAll('#photoOrbit .orbit-item'));
   var orbitCard = false;
 
-  /* Use the same icon + name + tag + description as the Technical Stacks */
+  /* Technical Stacks Icon name & tags & descriptions */
   orbitItems.forEach(function (it) {
     var html = techTips[it.getAttribute('data-name')];
     it.__tpHtml = html || '';
@@ -356,13 +358,14 @@
     }
   });
 
-  /* Orbit icon clicked / tapped (is-active is handled by script.js) */
+  /* Orbit icon clicked & tap */
   function syncOrbitCard() {
     var act = document.querySelector('#photoOrbit .orbit-item.is-active');
     if (act) {
-      closeTip(); /* close any open tech stack popup */
+      closeTip(); 
       if (isMobile() && act.__tpHtml) {
-        /* Mobile: show the single card at the top */
+        
+        /* Mobile single card top */
         card.innerHTML = act.__tpHtml;
         card.classList.add('show');
         orbitCard = true;
@@ -379,7 +382,7 @@
     });
   }
 
-  /* Close the orbit card when the icon scrolls out of view */
+  /* Close the orbit card  */
   window.addEventListener('scroll', function () {
     if (!orbitCard) return;
     var act = document.querySelector('#photoOrbit .orbit-item.is-active');
