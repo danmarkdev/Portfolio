@@ -33,9 +33,10 @@
     flex:1;
     min-width:0;
     display:flex;
+    flex-wrap:wrap;
     align-items:center;
     justify-content:space-between;
-    gap:.6rem;
+    gap:.3rem .6rem;
   }
   .tp-body .tech-tip-name{
     font-family:var(--font-body);
@@ -71,7 +72,7 @@
 
   /* Desktop tooltip (above the icon) */
   .tech-icon-box .tech-tip.tp-body{
-    width:290px;
+    width:320px;
     max-width:calc(100vw - 24px);
     pointer-events:none;
   }
@@ -125,7 +126,7 @@
   /* Orbit icons popup (hero) - same full card as the tech stacks */
   .orbit-tip.tp-body{
     display:block;
-    width:290px;
+    width:320px;
     max-width:calc(100vw - 24px);
     padding:.9rem 1rem 1rem;
     border-radius:14px;
@@ -161,10 +162,50 @@
   var mq = window.matchMedia('(max-width:960px), (pointer:coarse)');
   function isMobile() { return mq.matches; }
 
+  /* Tech Descriptions (longer, same style as Reb.Dev) */
+  var DESCRIPTIONS = {
+    'HTML5': 'The standard markup language that structures web pages, defining headings, text, images, links, and forms.',
+    'CSS3': 'Styles and lays out web pages, controlling colors, fonts, spacing, animations, and responsive design across screen sizes.',
+    'JavaScript': 'Adds interactivity to the browser, powering dynamic content, user events, form validation, and real-time updates.',
+    'Bootstrap': 'A CSS framework with ready-made components and a grid system for building responsive, mobile-first layouts quickly.',
+    'Tailwind CSS': 'A utility-first CSS framework that styles interfaces directly in the markup using small, reusable classes.',
+    'React': 'A JavaScript library for building fast, interactive user interfaces from reusable components that update efficiently.',
+    'PHP': 'A server-side scripting language that handles forms, sessions, and database queries to power dynamic websites.',
+    'Laravel': 'A PHP framework with routing, authentication, and database tools that speeds up building secure, well-structured web apps.',
+    'Node.js': 'Allows JavaScript to run on backend servers, handling real-time data, web requests, and APIs.',
+    'Java': 'A general-purpose, object-oriented language used for desktop apps, backend systems, and Android development.',
+    'C#': 'A modern object-oriented language from Microsoft for building desktop, web, and mobile apps on the .NET platform.',
+    '.NET MAUI': 'A cross-platform framework for building native Android, iOS, Windows, and macOS apps from a single C# codebase.',
+    'ASP.NET': 'A Microsoft web framework for building secure, scalable web apps and APIs using C# and the .NET platform.',
+    'MySQL': 'A popular relational database that stores data in tables and lets apps query it quickly using SQL.',
+    'SQLite': 'A lightweight, file-based database that runs inside the app without a server, ideal for small projects and local storage.',
+    'MongoDB': 'A NoSQL database that stores data as flexible JSON-like documents, great for fast-changing or unstructured data.',
+    'Supabase': 'An open-source backend platform built on Postgres that provides a database, authentication, storage, and real-time APIs.',
+    'Git': 'A tool that records every code change, letting developers safely test features and undo mistakes.',
+    'GitHub': 'A platform for hosting Git repositories online, making it easy to collaborate, review code, and track project changes.',
+    'Vercel': 'A cloud platform that deploys and hosts web apps in seconds, with automatic builds and global delivery.',
+    'Netlify': 'A hosting platform that builds and deploys websites straight from Git, with a fast global CDN and easy rollbacks.',
+    'Render': 'A cloud platform for hosting web services, APIs, and databases with simple automatic deployments from your repository.',
+    'InfinityFree': 'A free web hosting service with PHP and MySQL support, handy for publishing and testing websites at no cost.',
+    'AeonFree': 'A free web hosting service that supports PHP and MySQL, used to publish and test websites at no cost.',
+    'XAMPP': 'A local server package with Apache, MySQL, and PHP that lets developers build and test web apps on their own computer.',
+    'VS Code': 'A lightweight, powerful code editor with extensions, debugging, and Git support for writing code in many languages.',
+    'Windows 10': 'Microsoft\u2019s desktop operating system, used as the main environment for development, testing, and everyday work.',
+    'MX Linux': 'A stable, lightweight Linux distribution used for development, learning the command line, and testing on Linux.',
+    'NetBeans': 'A Java IDE with code editing, debugging, and project tools for building desktop and Java applications.',
+    'Visual Studio': 'Microsoft\u2019s full-featured IDE for building, debugging, and deploying .NET, C#, and web applications.'
+  };
+
   /* Style every per-icon tooltip like the card */
   boxes.forEach(function (box) {
     var tip = box.querySelector('.tech-tip');
     if (tip) tip.classList.add('tp-body');
+
+    /* Replace the short description with the longer one */
+    var nm = box.querySelector('.tech-tip-name');
+    var ds = box.querySelector('.tech-tip-desc');
+    var key = nm ? nm.textContent.trim() : '';
+    if (ds && DESCRIPTIONS[key]) ds.textContent = DESCRIPTIONS[key];
   });
 
   /* Single mobile card */
