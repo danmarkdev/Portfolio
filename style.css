@@ -1412,8 +1412,13 @@ footer p{font-family: var(--font-body); font-size:.8rem;color:var(--dim)}
   color:#e3e5ee;
   line-height:1.55;
   text-align:justify;
-  hyphens:auto;
-  -webkit-hyphens:auto;
+  text-justify:inter-word;
+  /* no more cut-off words like "or-ganized": whole words move to the next line */
+  hyphens:none;
+  -webkit-hyphens:none;
+  word-break:normal;
+  overflow-wrap:normal;
+  text-wrap:pretty;
 }
 
 @media(min-width:701px){
