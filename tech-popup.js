@@ -121,6 +121,31 @@
   }
   #techPopupCard .tech-tip-name{font-size:1.05rem}
   #techPopupCard .tech-tip-desc{font-size:.9rem}
+
+  /* Orbit icons popup (hero) - same full card as the tech stacks */
+  .orbit-tip.tp-body{
+    display:block;
+    width:290px;
+    max-width:calc(100vw - 24px);
+    padding:.9rem 1rem 1rem;
+    border-radius:14px;
+    text-align:left;
+  }
+  .orbit-tip.tp-body .tech-tip-icon{
+    width:32px;
+    height:32px;
+    border-radius:8px;
+    border:1px solid rgba(255,255,255,.18) !important;
+    background:#0a0b10 !important;
+    box-shadow:none !important;
+  }
+  .orbit-tip.tp-body .tech-tip-icon img,
+  .orbit-tip.tp-body .tech-tip-icon svg{width:20px;height:20px}
+
+  /* Mobile / Touch: orbit icons use the single fixed card too */
+  @media (max-width:960px), (pointer:coarse){
+    .orbit-item .orbit-tip{display:none !important}
+  }
   `;
   var st = document.createElement('style');
   st.id = 'tech-popup-css';
@@ -187,6 +212,7 @@
   function openTip(box) {
     if (openBox && openBox !== box) openBox.classList.remove('tip-open');
     openBox = box;
+    orbitCard = false;
     box.classList.add('tip-open');
     if (grid) grid.classList.add('has-open');
 
@@ -236,7 +262,7 @@
   /* click & Tap */
   document.addEventListener('click', function (e) {
     if (!openBox) return;
-    if (e.target && e.target.closest && e.target.closest('.tech-icon-box')) return;
+    if (e.target && e.target.closest && e.target.closest('.tech-icon-box, .orbit-item')) return;
     closeTip();
   });
 
@@ -266,4 +292,60 @@
   window.addEventListener('orientationchange', function () {
     setTimeout(function () { if (openBox && !isMobile()) place(openBox); }, 200);
   });
+
+  /* ORBIT ICONS POPUP (hero) */
+  var techTips = {};
+  boxes.forEach(function (box) {
+    var n = box.querySelector('.tech-tip-name');
+    var t = box.querySelector('.tech-tip');
+    if (n && t) techTips[n.textContent.trim()] = t.innerHTML;
+  });
+
+  var orbitItems = Array.prototype.slice.call(document.querySelectorAll('#photoOrbit .orbit-item'));
+  var orbitCard = false;
+
+  /* Use the same icon + name + tag + description as the Technical Stacks */
+  orbitItems.forEach(function (it) {
+    var html = techTips[it.getAttribute('data-name')];
+    it.__tpHtml = html || '';
+    var tip = it.querySelector('.orbit-tip');
+    if (tip && html) {
+      tip.innerHTML = html;
+      tip.classList.add('tp-body');
+    }
+  });
+
+  /* Orbit icon clicked / tapped (is-active is handled by script.js) */
+  function syncOrbitCard() {
+    var act = document.querySelector('#photoOrbit .orbit-item.is-active');
+    if (act) {
+      closeTip(); /* close any open tech stack popup */
+      if (isMobile() && act.__tpHtml) {
+        /* Mobile: show the single card at the top */
+        card.innerHTML = act.__tpHtml;
+        card.classList.add('show');
+        orbitCard = true;
+      }
+    } else if (orbitCard) {
+      card.classList.remove('show');
+      orbitCard = false;
+    }
+  }
+  if ('MutationObserver' in window) {
+    var mo = new MutationObserver(syncOrbitCard);
+    orbitItems.forEach(function (it) {
+      mo.observe(it, { attributes: true, attributeFilter: ['class'] });
+    });
+  }
+
+  /* Close the orbit card when the icon scrolls out of view */
+  window.addEventListener('scroll', function () {
+    if (!orbitCard) return;
+    var act = document.querySelector('#photoOrbit .orbit-item.is-active');
+    if (!act) return;
+    var r = act.getBoundingClientRect();
+    if (r.bottom < 0 || r.top > window.innerHeight) {
+      document.body.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }));
+    }
+  }, { passive: true });
 })();
