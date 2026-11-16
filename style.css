@@ -1640,8 +1640,29 @@ footer p{
   .contact-page-main{padding-top:calc(var(--nav-h) - .5rem)}
   .contact-page-head{margin-bottom:2rem}
 
-  /* Orbit Spacing Responsive Design on Tablet/phones/Desktop */
-  .orbit-ring{--ring1:110px;--ring2:126px;--ring3:142px;--o1:172px;--o2:222px;--badge:36px;--badge-icon:20px}
+  /* rectangular photo or profile in mobile layout */
+  .photo-orbit{max-width:340px}
+  .photo-wrap{width:192px;height:170px;border-radius:8px;border-width:0}
+  .orbit-ring{--ring3:152px;--o1:100px;--o1b:122px;--o2:152px;--badge:28px;--badge-icon:16px}
+  .ol-1,
+  .orbit-ring::before{display:none}
+
+  /* inner icon */
+  .orbit-item.orb-in[data-name="React"],
+  .orbit-item.orb-in[data-name="JavaScript"],
+  .orbit-item.orb-in[data-name="Laravel"],
+  .orbit-item.orb-in[data-name="MongoDB"]{--radius:var(--o1b)}
+
+  /* Description (hero) */
+  .hero-bio{
+    text-wrap:wrap;
+    text-align:left;
+    font-size:13px;
+    line-height:1.7;
+    max-width:100%;
+    margin-left:0;
+    margin-right:0;
+  }
 
   .edu-header{margin-bottom:1.5rem}
   .edu-toggle-wrap{margin-bottom:2.25rem}
@@ -1653,10 +1674,8 @@ footer p{
 }
 @media(max-width:480px){
   .photo-orbit{max-width:310px}
-  .photo-wrap{width:160px;height:160px}
   
-  /* Orbit icons gaps */
-  .orbit-ring{--ring1:88px;--ring2:98px;--ring3:108px;--o1:136px;--o2:178px;--badge:30px;--badge-icon:17px}
+  /* photo & orbit size on mobile layout */
   .hero-name{font-size:2.1rem}
   .section-big-heading{font-size:1.25rem}
   .hero-actions{gap:.5rem}
@@ -1853,7 +1872,6 @@ html body a.back-home.is-pressed.is-pressed{
   transition:none !important;
   transform:none !important;
 }
-
 
 /* Orbit icons (clicking) */
 .orbit-item.is-active{z-index:30}
