@@ -367,8 +367,8 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   --radius:235px;
 }
 
-/* Solar system orbits & orbit gaps*/
-.orbit-ring{--ring1:162px;--ring2:182px;--ring3:202px;--o1:222px;--o2:292px;--badge:46px;--badge-icon:26px}
+/* Solar system orbits & orbit gaps */
+.orbit-ring{--ring1:162px;--ring2:182px;--ring3:202px;--o1:246px;--o2:316px;--badge:46px;--badge-icon:26px}
 
 .orbit-line{
   position:absolute;
@@ -1584,7 +1584,7 @@ footer p{
   .photo-wrap{width:200px;height:200px}
   
   /* Orbit icons gap */
-  .orbit-ring{--ring1:126px;--ring2:144px;--ring3:162px;--o1:184px;--o2:244px;--badge:40px;--badge-icon:22px}
+  .orbit-ring{--ring1:126px;--ring2:144px;--ring3:162px;--o1:208px;--o2:268px;--badge:40px;--badge-icon:22px}
   .contact-page-grid{grid-template-columns:1fr}
   .footer-inner{flex-direction:column;gap:.5rem;text-align:center}
 
@@ -1640,6 +1640,9 @@ footer p{
   .contact-page-main{padding-top:calc(var(--nav-h) - .5rem)}
   .contact-page-head{margin-bottom:2rem}
 
+  /* Orbit Spacing Responsive Design on Tablet/phones/Desktop */
+  .orbit-ring{--ring1:110px;--ring2:126px;--ring3:142px;--o1:172px;--o2:222px;--badge:36px;--badge-icon:20px}
+
   .edu-header{margin-bottom:1.5rem}
   .edu-toggle-wrap{margin-bottom:2.25rem}
   .edu-toggle-btn{font-size:.78rem;padding:.6rem 1rem}
@@ -1653,7 +1656,7 @@ footer p{
   .photo-wrap{width:160px;height:160px}
   
   /* Orbit icons gaps */
-  .orbit-ring{--ring1:92px;--ring2:104px;--ring3:116px;--o1:124px;--o2:170px;--badge:32px;--badge-icon:18px}
+  .orbit-ring{--ring1:88px;--ring2:98px;--ring3:108px;--o1:136px;--o2:178px;--badge:30px;--badge-icon:17px}
   .hero-name{font-size:2.1rem}
   .section-big-heading{font-size:1.25rem}
   .hero-actions{gap:.5rem}
