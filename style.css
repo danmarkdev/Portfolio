@@ -68,7 +68,8 @@ html{scrollbar-width:none}
   color: var(--accent);
   margin-bottom: .7rem;
 }
-/* "What people or clients say" -> white */
+
+/* What people or clients say */
 #testimonials .sec-eyebrow{color:#ffffff}
 .sec-title-lg{font-size:clamp(2rem,4.5vw,3.1rem)}
 #skills .sec-header{margin-bottom:1.25rem}
@@ -327,7 +328,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   font-size: .85rem;
   font-weight: 700;
   border-radius: 10px;
-  border: 2px solid transparent;   /* FIX: reserved border so nothing shifts when it turns white */
+  border: 2px solid transparent;   
   box-shadow: 0 10px 24px var(--accent-glow);
   transition: background .2s,transform .15s,box-shadow .2s,color .2s;
 }
@@ -366,9 +367,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   --radius:235px;
 }
 
-/* SOLAR SYSTEM ORBITS
-   3 lines: ring1 (solid, inner) / ring2 (solid, middle) / ring3 (DASHED, outermost)
-   icons stay OUTSIDE all lines: o1 (inner icon orbit) / o2 (outer icon orbit) */
+/* SOLAR SYSTEM ORBITS */
 .orbit-ring{--ring1:162px;--ring2:182px;--ring3:202px;--o1:230px;--o2:276px;--badge:46px;--badge-icon:26px}
 
 .orbit-line{
@@ -468,9 +467,13 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   to{transform:translate(-50%,-50%) rotate(calc(var(--angle) * -1 - 360deg))}
 }
 
-/* Icon orbits */
+/* Orbits left & Right roundings */
 .orbit-item.orb-in{--radius:var(--o1);--dur:42s}
 .orbit-item.orb-out{--radius:var(--o2);--dur:64s}
+
+/* counter rotation orbits */
+.orbit-item.orb-out,
+.orbit-item.orb-out .orbit-counter{animation-direction:reverse}
 
 .stack-badge{
   display:flex;
@@ -1440,7 +1443,7 @@ footer p{
   line-height:1.55;
   text-align:justify;
   text-justify:inter-word;
-  /* no more cut-off words like "or-ganized": whole words move to the next line */
+  
   hyphens:none;
   -webkit-hyphens:none;
   word-break:normal;
@@ -1579,6 +1582,7 @@ footer p{
   .mobile-br{display:inline}
   .photo-orbit{max-width:370px;margin:0 auto} 
   .photo-wrap{width:200px;height:200px}
+  
   /* Tablet / Mobile orbit: 3 lines + icons outside */
   .orbit-ring{--ring1:126px;--ring2:144px;--ring3:162px;--o1:188px;--o2:226px;--badge:40px;--badge-icon:22px}
   .contact-page-grid{grid-template-columns:1fr}
