@@ -367,8 +367,8 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   --radius:235px;
 }
 
-/* SOLAR SYSTEM ORBITS */
-.orbit-ring{--ring1:162px;--ring2:182px;--ring3:202px;--o1:230px;--o2:276px;--badge:46px;--badge-icon:26px}
+/* Solar system orbits & orbit gaps*/
+.orbit-ring{--ring1:162px;--ring2:182px;--ring3:202px;--o1:222px;--o2:292px;--badge:46px;--badge-icon:26px}
 
 .orbit-line{
   position:absolute;
@@ -1583,8 +1583,8 @@ footer p{
   .photo-orbit{max-width:370px;margin:0 auto} 
   .photo-wrap{width:200px;height:200px}
   
-  /* Tablet / Mobile orbit: 3 lines + icons outside */
-  .orbit-ring{--ring1:126px;--ring2:144px;--ring3:162px;--o1:188px;--o2:226px;--badge:40px;--badge-icon:22px}
+  /* Orbit icons gap */
+  .orbit-ring{--ring1:126px;--ring2:144px;--ring3:162px;--o1:184px;--o2:244px;--badge:40px;--badge-icon:22px}
   .contact-page-grid{grid-template-columns:1fr}
   .footer-inner{flex-direction:column;gap:.5rem;text-align:center}
 
@@ -1652,8 +1652,8 @@ footer p{
   .photo-orbit{max-width:310px}
   .photo-wrap{width:160px;height:160px}
   
-  /* Orbit icons outside in Mobile layout */
-  .orbit-ring{--ring1:92px;--ring2:104px;--ring3:116px;--o1:136px;--o2:168px;--badge:32px;--badge-icon:18px}
+  /* Orbit icons gaps */
+  .orbit-ring{--ring1:92px;--ring2:104px;--ring3:116px;--o1:124px;--o2:170px;--badge:32px;--badge-icon:18px}
   .hero-name{font-size:2.1rem}
   .section-big-heading{font-size:1.25rem}
   .hero-actions{gap:.5rem}
@@ -1852,7 +1852,7 @@ html body a.back-home.is-pressed.is-pressed{
 }
 
 
-/* ORBIT ICONS: click */
+/* Orbit icons (clicking) */
 .orbit-item.is-active{z-index:30}
 .orbit-item.is-active .orbit-counter{z-index:30}
 .photo-orbit.has-active .orbit-item,
