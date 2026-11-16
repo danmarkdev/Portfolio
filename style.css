@@ -1259,7 +1259,7 @@ textarea{min-height:120px}
   padding: .9rem 2rem;
   background: var(--accent);
   color: #1a0d02;
-  border: 2px solid transparent;   /* FIX: reserved border so nothing shifts when it turns white */
+  border: 2px solid transparent; 
   border-radius: 10px;
   font-family: var(--font-body);
   font-size: .85rem;
