@@ -1052,7 +1052,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   line-height:1.7;
 }
 
-/* CERTS  (square card + bordered image frame) - sizes matched to reference */
+/* CERTS */
 .cert-section{background:transparent;position:relative;z-index:1}
 .cert-marquee-row{
   width:100%;
@@ -1074,7 +1074,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .cert-track.dragging{cursor:grabbing}
 .cert-img-wrap img{-webkit-user-drag:none;user-drag:none}
 
-/* outer card: square corners, thin border (316px wide on desktop) */
+/* certificate outer card */
 .cert-item{
   width:316px;
   flex:0 0 auto;
@@ -1108,7 +1108,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   background:transparent !important;
 }
 
-/* inner image frame: thin border, certificate image about 282 x 200 */
+/* inner certificate image */
 .cert-img-wrap{
   width:100%;
   margin:0;
@@ -1636,7 +1636,7 @@ footer p{
   .services-grid::-webkit-scrollbar{display:none}
   .service-card{flex:0 0 82%;scroll-snap-align:center;padding:2rem 1.5rem}
 
-  /* certificate cards on phone: 46vw wide, everything scales with the screen */
+  /* certificate cards size on all mobile devices */
   .cert-item{width:46vw;padding:2vw 2vw 2.2vw;border-radius:0 !important}
   .cert-img-wrap{padding:1.5vw 0;border-radius:0}
   .cert-img-wrap img{width:78%;aspect-ratio:282/200}
