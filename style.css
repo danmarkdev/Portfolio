@@ -847,12 +847,12 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 
 /* ==========================================================
-   EDUCATION & MILESTONES  (3-column horizontal timeline)
-   2020 | 2024 (wider) | 2026 (ends with arrow)
+   EDUCATION & MILESTONES  (2-column horizontal timeline)
+   2024 (wider) | 2026 (ends with arrow)
    ========================================================== */
 .edu-section{
   background:transparent;
-  padding:8rem 0 6rem;          /* extra top space so the heading clears the floating nav */
+  padding:9rem 0 6rem;          /* extra top space so the heading clears the floating nav */
   position:relative;
   z-index:1;
   scroll-margin-top:0;          /* section top sits at the very top when "About" is clicked */
@@ -874,10 +874,10 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   line-height: 1.2;
 }
 
-/* three columns */
+/* two columns */
 .edu-tl{
   display:grid;
-  grid-template-columns:1fr 1.6fr 1fr;
+  grid-template-columns:1.6fr 1fr;
   align-items:start;
 }
 .edu-col{
@@ -1015,7 +1015,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   margin-top:.15rem;
 }
 
-/* smaller laptops: keep 3 columns, slightly smaller text */
+/* smaller laptops: keep 2 columns, slightly smaller text */
 @media(min-width:961px) and (max-width:1279px){
   .edu-school h3{font-size:1rem}
   .edu-course{font-size:.82rem}
@@ -1025,7 +1025,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 
 /* TABLET + PHONE: stack the columns, each keeps its own line */
 @media(max-width:960px){
-  .edu-section{padding:7rem 0 4rem}
+  .edu-section{padding:8rem 0 4rem}
   .edu-section .container{width:90%}
   .edu-tl{grid-template-columns:1fr;row-gap:3rem}
   .edu-col,
@@ -1948,4 +1948,14 @@ html body a.back-home.is-pressed.is-pressed{
   bottom:100%;
   border-top-color:transparent;
   border-bottom-color:#1d1d25;
+}
+
+/* EDUCATION: keep heading clear of the floating nav when clicking "About"
+   (more specific selector so it beats section[id]{scroll-margin-top}) */
+section#education.edu-section{
+  scroll-margin-top:0;
+  padding-top:9rem;
+}
+@media(max-width:960px){
+  section#education.edu-section{padding-top:8rem}
 }
