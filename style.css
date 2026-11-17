@@ -847,11 +847,16 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 
 /* ==========================================================
-   EDUCATION & MILESTONES  (horizontal timeline)
-   Matches the reference screenshot: wide layout, big title,
-   bigger text, bigger dots, long line with arrow at the end.
+   EDUCATION & MILESTONES  (3-column horizontal timeline)
+   2020 | 2024 (wider) | 2026 (ends with arrow)
    ========================================================== */
-.edu-section{background:transparent;padding:6rem 0;position:relative;z-index:1}
+.edu-section{
+  background:transparent;
+  padding:8rem 0 6rem;          /* extra top space so the heading clears the floating nav */
+  position:relative;
+  z-index:1;
+  scroll-margin-top:0;          /* section top sits at the very top when "About" is clicked */
+}
 
 /* wider container so the timeline spreads across the screen */
 .edu-section .container{
@@ -869,10 +874,10 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   line-height: 1.2;
 }
 
-/* two columns: STI (wide) -> TUP (ends with the arrow) */
+/* three columns */
 .edu-tl{
   display:grid;
-  grid-template-columns:1.7fr 1fr;
+  grid-template-columns:1fr 1.6fr 1fr;
   align-items:start;
 }
 .edu-col{
@@ -894,11 +899,11 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   margin-bottom:1.1rem;
 }
 
-/* the line + dot */
+/* the line + dot (line runs on into the next column's dot) */
 .edu-rail{
   position:relative;
   height:14px;
-  margin:0 -2.5rem 1.6rem 0;      /* line runs on into the next column's dot */
+  margin:0 -2.5rem 1.6rem 0;
 }
 .edu-col:last-child .edu-rail{margin-right:0}
 .edu-rail::before{
@@ -1010,8 +1015,17 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   margin-top:.15rem;
 }
 
+/* smaller laptops: keep 3 columns, slightly smaller text */
+@media(min-width:961px) and (max-width:1279px){
+  .edu-school h3{font-size:1rem}
+  .edu-course{font-size:.82rem}
+  .edu-item-title{font-size:.9rem}
+  .edu-item-meta{font-size:.68rem}
+}
+
 /* TABLET + PHONE: stack the columns, each keeps its own line */
 @media(max-width:960px){
+  .edu-section{padding:7rem 0 4rem}
   .edu-section .container{width:90%}
   .edu-tl{grid-template-columns:1fr;row-gap:3rem}
   .edu-col,
