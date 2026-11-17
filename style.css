@@ -848,14 +848,22 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 
 /* ==========================================================
    EDUCATION & MILESTONES  (horizontal timeline)
+   Matches the reference screenshot: wide layout, big title,
+   bigger text, bigger dots, long line with arrow at the end.
    ========================================================== */
 .edu-section{background:transparent;padding:6rem 0;position:relative;z-index:1}
 
-.edu-header{text-align:left;margin:0 0 3.25rem}
+/* wider container so the timeline spreads across the screen */
+.edu-section .container{
+  width:calc(100% - 86px);
+  max-width:1500px;
+}
+
+.edu-header{text-align:left;margin:0 0 4rem}
 .education-title{
   font-family: var(--font-heading);
   color: var(--text);
-  font-size: clamp(1.7rem,3.5vw,2.4rem);
+  font-size: clamp(2rem,4vw,3rem);
   font-weight: 700;
   letter-spacing: -.03em;
   line-height: 1.2;
@@ -864,7 +872,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 /* two columns: STI (wide) -> TUP (ends with the arrow) */
 .edu-tl{
   display:grid;
-  grid-template-columns:1.55fr 1fr;
+  grid-template-columns:1.7fr 1fr;
   align-items:start;
 }
 .edu-col{
@@ -878,25 +886,25 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .edu-year{
   display:block;
   font-family:var(--font-mono);
-  font-size:.95rem;
+  font-size:1.05rem;
   font-weight:700;
   letter-spacing:.06em;
   line-height:1;
   color:#ffffff;
-  margin-bottom:.9rem;
+  margin-bottom:1.1rem;
 }
 
 /* the line + dot */
 .edu-rail{
   position:relative;
-  height:12px;
-  margin:0 -2.5rem 1.15rem 0;      /* line runs on into the next column's dot */
+  height:14px;
+  margin:0 -2.5rem 1.6rem 0;      /* line runs on into the next column's dot */
 }
 .edu-col:last-child .edu-rail{margin-right:0}
 .edu-rail::before{
   content:"";
   position:absolute;
-  left:5px;
+  left:6px;
   right:0;
   top:50%;
   height:2px;
@@ -907,9 +915,9 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   position:absolute;
   left:0;
   top:50%;
-  width:11px;
-  height:11px;
-  margin-top:-5.5px;
+  width:14px;
+  height:14px;
+  margin-top:-7px;
   border-radius:50%;
   background:#ffffff;
   box-shadow:0 0 0 3px rgba(255,255,255,.12), 0 0 12px rgba(255,255,255,.55);
@@ -917,42 +925,42 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 
 /* last column: short line that ends in an arrow */
-.edu-col:last-child .edu-rail::before{right:auto;width:82px}
+.edu-col:last-child .edu-rail::before{right:auto;width:100px}
 .edu-col:last-child .edu-rail::after{
   content:"";
   position:absolute;
-  left:78px;
+  left:94px;
   top:50%;
-  width:7px;
-  height:7px;
+  width:8px;
+  height:8px;
   border-top:2px solid #ffffff;
   border-right:2px solid #ffffff;
   transform:translateY(-50%) rotate(45deg);
 }
 
 /* school block */
-.edu-school{padding-left:1.05rem;margin-bottom:1.6rem}
+.edu-school{padding-left:1.35rem;margin-bottom:2.2rem}
 .edu-school h3{
   font-family:var(--font-body);
-  font-size:1rem;
+  font-size:1.2rem;
   font-weight:700;
   letter-spacing:-.02em;
   text-transform:uppercase;
   line-height:1.25;
   color:#ffffff;
-  margin-bottom:.45rem;
+  margin-bottom:.55rem;
 }
 .edu-course{
   font-family:var(--font-body);
-  font-size:.78rem;
+  font-size:.92rem;
   font-weight:400;
   line-height:1.5;
-  color:var(--muted);
-  margin-bottom:.5rem;
+  color:#ffffff;
+  margin-bottom:.65rem;
 }
 .edu-range{
   font-family:var(--font-mono);
-  font-size:.66rem;
+  font-size:.76rem;
   font-weight:700;
   letter-spacing:.03em;
   text-transform:uppercase;
@@ -960,10 +968,10 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 
 /* achievements list with the little branch ticks */
-.edu-list{list-style:none;margin:0;padding:0 0 0 5px}
+.edu-list{list-style:none;margin:0;padding:0 0 0 6px}
 .edu-item{
   position:relative;
-  padding:0 0 .6rem 1.2rem;
+  padding:0 0 .85rem 1.55rem;
 }
 .edu-item::before{                 /* vertical branch line */
   content:"";
@@ -978,16 +986,16 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   content:"";
   position:absolute;
   left:0;
-  top:.62rem;
-  width:.6rem;
+  top:.72rem;
+  width:.8rem;
   height:1px;
   background:rgba(255,255,255,.4);
 }
-.edu-item:last-child::before{bottom:auto;height:.62rem}
+.edu-item:last-child::before{bottom:auto;height:.72rem}
 .edu-item-title{
   display:block;
   font-family:var(--font-body);
-  font-size:.74rem;
+  font-size:1rem;
   font-weight:600;
   line-height:1.35;
   color:#ffffff;
@@ -995,15 +1003,16 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .edu-item-meta{
   display:block;
   font-family:var(--font-body);
-  font-size:.62rem;
+  font-size:.74rem;
   font-weight:400;
   line-height:1.4;
-  color:var(--muted);
-  margin-top:.1rem;
+  color:#ffffff;
+  margin-top:.15rem;
 }
 
 /* TABLET + PHONE: stack the columns, each keeps its own line */
 @media(max-width:960px){
+  .edu-section .container{width:90%}
   .edu-tl{grid-template-columns:1fr;row-gap:3rem}
   .edu-col,
   .edu-col:last-child{padding-right:0}
@@ -1020,7 +1029,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   .edu-range{font-size:.68rem}
   .edu-item-title{font-size:.82rem}
   .edu-item-meta{font-size:.68rem}
-  .edu-item{padding-bottom:.75rem}
+  .edu-item{padding-bottom:.75rem;padding-left:1.2rem}
   .edu-item::after{top:.68rem}
   .edu-item:last-child::before{height:.68rem}
 }
