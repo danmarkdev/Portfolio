@@ -367,7 +367,9 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   --radius:235px;
 }
 
-/* Solar system orbits & orbit gaps */
+/* Solar system orbits & orbit gaps
+   CHANGED: --o1 222 -> 246 and --o2 292 -> 316 so the icons no longer
+   touch the dashed solar lines (ring3 = 202px). */
 .orbit-ring{--ring1:162px;--ring2:182px;--ring3:202px;--o1:246px;--o2:316px;--badge:46px;--badge-icon:26px}
 
 .orbit-line{
@@ -1583,7 +1585,8 @@ footer p{
   .photo-orbit{max-width:370px;margin:0 auto} 
   .photo-wrap{width:200px;height:200px}
   
-  /* Orbit icons gap */
+  /* Orbit icons gap
+     CHANGED: --o1 184 -> 208 and --o2 244 -> 268 (more space from the lines) */
   .orbit-ring{--ring1:126px;--ring2:144px;--ring3:162px;--o1:208px;--o2:268px;--badge:40px;--badge-icon:22px}
   .contact-page-grid{grid-template-columns:1fr}
   .footer-inner{flex-direction:column;gap:.5rem;text-align:center}
@@ -1640,25 +1643,37 @@ footer p{
   .contact-page-main{padding-top:calc(var(--nav-h) - .5rem)}
   .contact-page-head{margin-bottom:2rem}
 
-  /* rectangular photo or profile in mobile layout */
+  /* ===== MOBILE PROFILE + ORBITS (matches the reference screenshot) =====
+     - rectangular photo (192 x 170)
+     - 3 orbit radii hugging the photo: 100px, 122px (inner icons) and 152px (outer icons)
+     - small 28px badges, only the outer dashed line is shown (so no line crosses the photo) */
   .photo-orbit{max-width:340px}
-  .photo-wrap{width:192px;height:170px;border-radius:8px;border-width:0}
-  .orbit-ring{--ring3:152px;--o1:100px;--o1b:122px;--o2:152px;--badge:28px;--badge-icon:16px}
+  .photo-wrap{width:192px;height:170px;border-radius:6px;border-width:0}
+  .orbit-ring{--o1:104px;--o1b:127px;--o2:150px;--badge:28px;--badge-icon:16px}
+  /* reference has no visible orbit lines, so hide all of them on mobile */
   .ol-1,
+  .ol-2,
   .orbit-ring::before{display:none}
 
-  /* inner icon */
+  /* every other inner icon sits on the middle radius */
   .orbit-item.orb-in[data-name="React"],
   .orbit-item.orb-in[data-name="JavaScript"],
   .orbit-item.orb-in[data-name="Laravel"],
   .orbit-item.orb-in[data-name="MongoDB"]{--radius:var(--o1b)}
 
-  /* Description (hero) */
+  /* ===== MOBILE DESCRIPTION (matches the 2nd screenshot) =====
+     natural left-aligned lines using the full width, no balanced/centered wrapping */
   .hero-bio{
     text-wrap:wrap;
-    text-align:left;
-    font-size:13px;
+    text-align:justify;
+    text-align-last:left;
+    text-justify:inter-word;
+    hyphens:none;
+    -webkit-hyphens:none;
+    font-size:clamp(10.5px, 2.9vw, 13px);
+    letter-spacing:-.01em;
     line-height:1.7;
+    width:100%;
     max-width:100%;
     margin-left:0;
     margin-right:0;
@@ -1674,8 +1689,7 @@ footer p{
 }
 @media(max-width:480px){
   .photo-orbit{max-width:310px}
-  
-  /* photo & orbit size on mobile layout */
+  /* photo + orbit sizes for phones are now set in the max-width:700px block above */
   .hero-name{font-size:2.1rem}
   .section-big-heading{font-size:1.25rem}
   .hero-actions{gap:.5rem}
@@ -1872,6 +1886,7 @@ html body a.back-home.is-pressed.is-pressed{
   transition:none !important;
   transform:none !important;
 }
+
 
 /* Orbit icons (clicking) */
 .orbit-item.is-active{z-index:30}
