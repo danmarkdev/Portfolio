@@ -1641,7 +1641,7 @@ footer p{
   .cert-img-wrap{padding:0;border-radius:0}
   .cert-img-wrap img{width:100%;aspect-ratio:282/200}
   .cert-info{padding:1.5vw .6vw 0}
-  .cert-info h4{font-size:3.2vw;line-height:1.3;min-height:calc(3.2vw * 1.3 * 2);margin-bottom:0}
+  .cert-info h4{font-size:3.2vw;line-height:1.3;margin-bottom:.6vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .cert-info p{font-size:2.8vw;line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .cert-track{gap:1.6vw}
 
