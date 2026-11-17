@@ -1065,7 +1065,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .cert-marquee-row:last-child{margin-bottom:0}
 .cert-track{
   display:flex;
-  align-items:flex-start;
+  align-items:stretch;
   gap:1.25rem;
   width:max-content;
   cursor:grab;
@@ -1133,6 +1133,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .cert-info{
   padding:16px 2px 0;
   text-align:left;
+  flex:1 1 auto;
 }
 .cert-info h4{
   font-family: var(--font-body);
@@ -1640,8 +1641,8 @@ footer p{
   .cert-img-wrap{padding:1.5vw 0;border-radius:0}
   .cert-img-wrap img{width:78%;aspect-ratio:282/200}
   .cert-info{padding:1.5vw .6vw 0}
-  .cert-info h4{font-size:3.2vw;margin-bottom:0}
-  .cert-info p{font-size:2.8vw;line-height:1.5}
+  .cert-info h4{font-size:3.2vw;line-height:1.3;min-height:calc(3.2vw * 1.3 * 2);margin-bottom:0}
+  .cert-info p{font-size:2.8vw;line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .cert-track{gap:1.6vw}
 
   .hero-name{font-size:2.1rem;white-space:normal}
