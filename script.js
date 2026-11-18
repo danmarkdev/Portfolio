@@ -148,7 +148,7 @@ var SFX = (function () {
   };
 })();
 
-/* Audio unlock on first interaction */
+/* Audio unlock */
 (function () {
   var evts = ['pointerdown', 'pointerup', 'touchstart', 'touchend', 'mousedown', 'click', 'keydown'];
   function unlock() {
@@ -246,7 +246,7 @@ document.addEventListener('click', function (e) {
     if (el) flash(el);
   }, true);
 
-  /* delay navigation a moment so the white flash is visible */
+  /* navigation white flash */
   document.addEventListener('click', function (e) {
     var a = e.target && e.target.closest ? e.target.closest('a.btn-primary, a.back-home') : null;
     if (!a) return;
@@ -310,7 +310,7 @@ function closeMenu(){
   if(hbg) hbg.setAttribute('aria-expanded','false');
 }
 
-/* KEEP THE MOBILE MENU IN SYNC WITH VIEWPORT WIDTH */
+/* viewport width */
 var MOBILE_BREAKPOINT = window.matchMedia('(max-width: 960px)');
 function handleBreakpointChange(e){
   if(!e.matches) closeMenu();
@@ -321,7 +321,7 @@ if (MOBILE_BREAKPOINT.addEventListener) {
   MOBILE_BREAKPOINT.addListener(handleBreakpointChange);
 }
 
-/* ONE SHARED SCROLL HANDLER  */
+/* scroll handler  */
 var sections=document.querySelectorAll('section[id]');
 var navLinks=document.querySelectorAll('#nav a:not(.nav-cta)');
 var mobileNavLinks=document.querySelectorAll('#mnav a');
@@ -376,7 +376,7 @@ measureSections();
       mobileNavLinks.forEach(function(a){ a.classList.toggle('active',a.getAttribute('href')==='#'+cur); });
     }
 
-    /* anything else that runs while scrolling */
+    /* scrolling function */
     for(var j=0;j<SCROLL_FNS.length;j++) SCROLL_FNS[j]();
   }
 
@@ -393,7 +393,7 @@ measureSections();
   if(document.fonts&&document.fonts.ready) document.fonts.ready.then(measureSections);
 })();
 
-/* set active state instantly on click */
+/* acive state click */
 [navLinks, mobileNavLinks].forEach(function(list){
   list.forEach(function(a){
     a.addEventListener('click',function(){
@@ -403,7 +403,7 @@ measureSections();
   });
 });
 
-/* TECHNICAL STACK TABS (no visible effect on desktop) */
+/* technical stack tabs */
 var stackTabs = document.getElementById('stackTabs');
 if(stackTabs){
   var tabBtns = stackTabs.querySelectorAll('.stack-tab-btn');
@@ -417,7 +417,7 @@ if(stackTabs){
   });
 }
 
-/* SCROLL REVEAL */
+/* Scroll reveal */
 var obs=new IntersectionObserver(function(entries){
   entries.forEach(function(e,i){
     if(e.isIntersecting){
@@ -428,7 +428,7 @@ var obs=new IntersectionObserver(function(entries){
 },{threshold:.05,rootMargin:'0px 0px 120px 0px'});
 document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
 
-/* DRAGGABLE / SWIPEABLE MARQUEE */
+/* draggable & swipable */
 function initSwipeMarquee(trackId, loopSeconds, direction){
   direction = direction || 1;
   var track = document.getElementById(trackId);
@@ -482,7 +482,7 @@ function initSwipeMarquee(trackId, loopSeconds, direction){
     lastTime = t;
     if(dt > 0.1) dt = 0.1;
 
-    /* off-screen: do no work at all */
+    /* off-screen */
     if((!inView || (COARSE && SCROLLING)) && !dragging){
       requestAnimationFrame(tick);
       return;
@@ -577,11 +577,11 @@ function initSwipeMarquee(trackId, loopSeconds, direction){
   requestAnimationFrame(tick);
 }
 
-/* Projects: static grid */
+/* Project static grid */
 initSwipeMarquee('certTrack', 75, 1);
 initSwipeMarquee('certTrack2', 75, -1);
 
-/* CONTACT FORM "Google Apps Script"  */
+/* contact form "Google Apps Script"  */
 var PAGE_LOADED = Date.now();
 
 function sendMsg(){
@@ -780,7 +780,7 @@ document.addEventListener('keydown',function(e){
   var dotsWrap = document.getElementById('testiDots');
   if (dotsWrap) dotsWrap.style.display = 'none';
 
-  /* Testimonials */
+  /* Testimonials short text */
   var SHORT_TEXT = {
     'Josh Aguilera':    'Danmark did a great job on the HealthSync Clinic Management System. It\u2019s simple, organized, and easy to use, with features that are practical for daily clinic tasks.',
     'Julia Sardalla':   'The AI Danmark created for me is easy to use and has a creative design. It helped me with my tasks and improved the quality of my work.',
@@ -792,7 +792,7 @@ document.addEventListener('keydown',function(e){
     'Shanell Jamandre': 'Danmark gave me a hugeee help in creating the minigame I desired for my activity simulation for practice teaching. It went to success as he resolved the issues in my minigame program.'
   };
 
-  /* Fallback for any new testimonial */
+  /* Fallback testimonial */
   var MAX_CHARS = 170;
   function shorten(t) {
     t = t.replace(/\s+/g, ' ').trim();
