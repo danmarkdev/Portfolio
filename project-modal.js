@@ -1,4 +1,3 @@
-/* PROJECT DETAILS OVERLAY */
 (function () {
   var PROJECTS = {
     
@@ -75,7 +74,6 @@
       ]
     },
 
-    /* Card Title */
     'Interactive Matching Learning Game': {
       kicker: '// INTERACTIVE GAME',
       badge: 'LIVE DEPLOYMENT',
@@ -138,7 +136,6 @@
     if (target) LOOKUP[norm(alias)] = target;
   });
 
-  /* Visible Card */
   var CANON = {};
   Object.keys(PROJECTS).forEach(function (k) { CANON[norm(k)] = k; });
   Object.keys(ALIASES).forEach(function (a) { CANON[norm(a)] = ALIASES[a]; });
@@ -148,7 +145,6 @@
       var canon = CANON[norm(t.textContent)];
       if (canon) t.textContent = canon;
 
-      /* swap the card picture if the project has its own "image" */
       var proj = canon ? PROJECTS[canon] : null;
       if (proj && proj.image) {
         var card = t.closest('.project-card');
@@ -176,7 +172,6 @@
     '@media(min-width:961px){.pm-name{font-size:clamp(.7rem,1.6vh,.8rem);margin-top:clamp(.3rem,.9vh,.55rem)}}';
   document.head.appendChild(pmStyle);
 
-  /* Overlay */
   var overlay = document.createElement('div');
   overlay.className = 'pm-overlay';
   overlay.setAttribute('role', 'dialog');
@@ -241,7 +236,6 @@
     elBadge.textContent = d.badge;
     elBadge.classList.toggle('is-private', !!isPrivate);
     
-    /* Overview */
     elTitle.textContent = cardTitle || d.name;
     if (d.name && norm(d.name) !== norm(cardTitle)) {
       elName.textContent = d.name;
@@ -283,7 +277,6 @@
     elVisit.removeAttribute('aria-disabled');
     if (isPrivate) {
       
-      /* private systems: the button sends the visitor to the contact page */
       elVisit.setAttribute('href', 'contact.html');
       elVisit.removeAttribute('target');
       elVisit.innerHTML = 'Inquire About ' + (d.name || cardTitle) + ' ' + ARROW_ICON;
@@ -319,7 +312,6 @@
     if (e.key === 'Escape') closeOverlay();
   });
 
-  /* Visible Card Friendly */
   var cards = Array.prototype.slice.call(document.querySelectorAll('.project-card:not([aria-hidden="true"])'));
   cards.forEach(function (c) {
     c.setAttribute('tabindex', '0');
@@ -333,7 +325,6 @@
     });
   });
 
-  /* Card Clicking */
   document.addEventListener('click', function (e) {
     var card = e.target && e.target.closest ? e.target.closest('.project-card') : null;
     if (!card || card.getAttribute('aria-hidden') === 'true') return;
