@@ -2175,3 +2175,16 @@ section#education.edu-section{
   .edu-tl .edu-item-title{font-size:.82rem}
   .edu-tl .edu-item-meta{font-size:.66rem}
 }
+
+/* ==========================================================
+   EDUCATION MOBILE: line keeps going from the last item of the
+   2026 block (UI/UX & Web Development Associate) down to the
+   2024 circle, so everything is connected like the design.
+   ========================================================== */
+@media(max-width:960px){
+  .edu-tl .edu-col:last-child .edu-item:last-child::before{
+    top:0;
+    bottom:auto;
+    height:calc(100% + .8rem + 7px);
+  }
+}
