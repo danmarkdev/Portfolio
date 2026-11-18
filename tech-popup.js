@@ -1,8 +1,6 @@
-/* Technical stack popup */
 (function () {
   'use strict';
 
-  /* TechStacks Descriptions */
   var css = `
   /* Shared card look (desktop tooltip + mobile card) */
   .tp-body{
@@ -153,16 +151,13 @@
   st.textContent = css;
   document.head.appendChild(st);
 
-  /* Behavior */
   var grid = document.querySelector('.tech-icon-grid');
   var boxes = Array.prototype.slice.call(document.querySelectorAll('.tech-icon-box'));
   if (!boxes.length) return;
 
-  /* Mobile touch check*/
   var mq = window.matchMedia('(max-width:960px), (pointer:coarse)');
   function isMobile() { return mq.matches; }
 
-  /* Tech Descriptions */
   var DESCRIPTIONS = {
     'HTML5': 'The standard markup language that structures web pages, defining headings, text, images, links, and forms.',
     'CSS3': 'Styles and lays out web pages, controlling colors, fonts, spacing, animations, and responsive design across screen sizes.',
@@ -196,19 +191,16 @@
     'Visual Studio': 'Microsoft\u2019s full-featured IDE for building, debugging, and deploying .NET, C#, and web applications.'
   };
 
-  /* Style every per-icon tooltip like the card */
   boxes.forEach(function (box) {
     var tip = box.querySelector('.tech-tip');
     if (tip) tip.classList.add('tp-body');
 
-    /* Replace the short description with the longer one */
     var nm = box.querySelector('.tech-tip-name');
     var ds = box.querySelector('.tech-tip-desc');
     var key = nm ? nm.textContent.trim() : '';
     if (ds && DESCRIPTIONS[key]) ds.textContent = DESCRIPTIONS[key];
   });
 
-  /* Single mobile card */
   var card = document.createElement('div');
   card.id = 'techPopupCard';
   card.className = 'tp-body';
@@ -217,7 +209,6 @@
 
   var openBox = null;
 
-  /* Popup Screen Inside */
   function place(box) {
     var tip = box.querySelector('.tech-tip');
     if (!tip) return;
@@ -231,7 +222,6 @@
     var vw = document.documentElement.clientWidth;
     var margin = 12;
 
-    /* navigation bar space */
     if (r.top < tipH + 16 + 90) box.classList.add('tip-flip');
 
     var cx = r.left + r.width / 2;
@@ -259,13 +249,11 @@
 
     if (isMobile()) {
       
-      /* Mobile single card top */
       var tip = box.querySelector('.tech-tip');
       if (tip) card.innerHTML = tip.innerHTML;
       card.classList.add('show');
     } else {
       
-      /* Desktop popup icon */
       card.classList.remove('show');
       place(box);
     }
@@ -283,12 +271,10 @@
     var nameEl = box.querySelector('.tech-tip-name');
     if (nameEl) box.setAttribute('aria-label', nameEl.textContent.trim());
 
-    /* Popup position */
     box.addEventListener('mouseenter', function () {
       if (!isMobile()) place(box);
     });
-
-    /* tech icons popup clickable (Desktop/Mobile) */
+    
     box.addEventListener('click', function (e) {
       e.stopPropagation();
       toggle(box);
@@ -302,7 +288,6 @@
     });
   });
 
-  /* click & Tap */
   document.addEventListener('click', function (e) {
     if (!openBox) return;
     if (e.target && e.target.closest && e.target.closest('.tech-icon-box, .orbit-item')) return;
@@ -313,19 +298,16 @@
     if (e.key === 'Escape') closeTip();
   });
 
-  /* Close when the tapped icon scrolls out of view */
   window.addEventListener('scroll', function () {
     if (!openBox) return;
     var r = openBox.getBoundingClientRect();
     if (r.bottom < 0 || r.top > window.innerHeight) closeTip();
   }, { passive: true });
 
-  /* Switching between Mobile / Desktop layout */
   function onModeChange() { closeTip(); }
   if (mq.addEventListener) mq.addEventListener('change', onModeChange);
   else if (mq.addListener) mq.addListener(onModeChange);
 
-  /* Resize & Rotate */
   var lastW = window.innerWidth;
   window.addEventListener('resize', function () {
     if (window.innerWidth === lastW) return;
@@ -336,7 +318,6 @@
     setTimeout(function () { if (openBox && !isMobile()) place(openBox); }, 200);
   });
 
-  /* Orbit icons popup (hero) */
   var techTips = {};
   boxes.forEach(function (box) {
     var n = box.querySelector('.tech-tip-name');
@@ -347,7 +328,6 @@
   var orbitItems = Array.prototype.slice.call(document.querySelectorAll('#photoOrbit .orbit-item'));
   var orbitCard = false;
 
-  /* Technical Stacks Icon name & tags & descriptions */
   orbitItems.forEach(function (it) {
     var html = techTips[it.getAttribute('data-name')];
     it.__tpHtml = html || '';
@@ -358,14 +338,12 @@
     }
   });
 
-  /* Orbit icon clicked & tap */
   function syncOrbitCard() {
     var act = document.querySelector('#photoOrbit .orbit-item.is-active');
     if (act) {
       closeTip(); 
       if (isMobile() && act.__tpHtml) {
         
-        /* Mobile single card top */
         card.innerHTML = act.__tpHtml;
         card.classList.add('show');
         orbitCard = true;
@@ -382,7 +360,6 @@
     });
   }
 
-  /* Close the orbit card  */
   window.addEventListener('scroll', function () {
     if (!orbitCard) return;
     var act = document.querySelector('#photoOrbit .orbit-item.is-active');
