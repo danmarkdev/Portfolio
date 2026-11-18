@@ -929,12 +929,13 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   z-index:1;
 }
 
-/* last column: short line that ends in an arrow */
-.edu-col:last-child .edu-rail::before{right:auto;width:100px}
+/* last column: line runs all the way to the end and finishes with an arrow */
+.edu-col:last-child .edu-rail::before{right:0;width:auto}
 .edu-col:last-child .edu-rail::after{
   content:"";
   position:absolute;
-  left:94px;
+  left:auto;
+  right:1px;
   top:50%;
   width:8px;
   height:8px;
@@ -944,7 +945,17 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 
 /* school block */
-.edu-school{padding-left:1.35rem;margin-bottom:2.2rem}
+.edu-school{position:relative;padding-left:1.35rem;margin-bottom:2.2rem}
+/* vertical line: starts at the circle and runs down into the branch list (no gap) */
+.edu-school::before{
+  content:"";
+  position:absolute;
+  left:6px;
+  top:calc(-1.6rem - 7px);
+  bottom:-2.2rem;
+  width:1px;
+  background:rgba(255,255,255,.4);
+}
 .edu-school h3{
   font-family:var(--font-body);
   font-size:1.2rem;
