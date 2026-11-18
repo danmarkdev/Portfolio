@@ -1970,3 +1970,42 @@ section#education.edu-section{
 @media(max-width:960px){
   section#education.edu-section{padding-top:8rem}
 }
+
+/* EDUCATION: hover / click / tap highlight on each achievement item
+   (item slides right a little, its branch line + tick turn bright white, text glows) */
+.edu-item{
+  transition:transform .25s cubic-bezier(.16,1,.3,1);
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.edu-item::before,
+.edu-item::after{
+  transition:background .25s ease, box-shadow .25s ease;
+}
+.edu-item-title,
+.edu-item-meta{
+  transition:text-shadow .25s ease;
+}
+.edu-item:hover,
+.edu-item:active,
+.edu-item:focus,
+.edu-item:focus-within{
+  transform:translateX(4px);
+}
+.edu-item:hover::before,
+.edu-item:hover::after,
+.edu-item:active::before,
+.edu-item:active::after,
+.edu-item:focus::before,
+.edu-item:focus::after{
+  background:#ffffff;
+  box-shadow:0 0 6px rgba(255,255,255,.55);
+}
+.edu-item:hover .edu-item-title,
+.edu-item:hover .edu-item-meta,
+.edu-item:active .edu-item-title,
+.edu-item:active .edu-item-meta,
+.edu-item:focus .edu-item-title,
+.edu-item:focus .edu-item-meta{
+  text-shadow:0 0 8px rgba(255,255,255,.6);
+}
