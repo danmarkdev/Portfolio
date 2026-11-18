@@ -824,7 +824,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   }
 }
 
-/* Tech Icon bigger size */
+/* Tech icon bigger size */
 @media(min-width:961px){
   .tech-tip{
     bottom:calc(100% + 16px);
@@ -846,19 +846,15 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   .tech-icon-box.tip-flip .tech-tip{top:calc(100% + 16px)}
 }
 
-/* ==========================================================
-   EDUCATION & MILESTONES  (2-column horizontal timeline)
-   2024 (wider) | 2026 (ends with arrow)
-   ========================================================== */
+/* education & milestone horizontal timeline */
 .edu-section{
   background:transparent;
-  padding:9rem 0 6rem;          /* extra top space so the heading clears the floating nav */
+  padding:9rem 0 6rem;         
   position:relative;
   z-index:1;
-  scroll-margin-top:0;          /* section top sits at the very top when "About" is clicked */
+  scroll-margin-top:0;          
 }
 
-/* wider container so the timeline spreads across the screen */
 .edu-section .container{
   width:calc(100% - 86px);
   max-width:1500px;
@@ -887,7 +883,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 .edu-col:last-child{padding-right:0}
 
-/* year label */
+/* year & label */
 .edu-year{
   display:block;
   font-family:var(--font-mono);
@@ -899,7 +895,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   margin-bottom:1.1rem;
 }
 
-/* the line + dot (line runs on into the next column's dot) */
+/* line runs to the next column dot */
 .edu-rail{
   position:relative;
   height:14px;
@@ -929,7 +925,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   z-index:1;
 }
 
-/* last column: line runs all the way to the end and finishes with an arrow */
 .edu-col:last-child .edu-rail::before{right:0;width:auto}
 .edu-col:last-child .edu-rail::after{
   content:"";
@@ -946,7 +941,8 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 
 /* school block */
 .edu-school{position:relative;padding-left:1.35rem;margin-bottom:2.2rem}
-/* vertical line: starts at the circle and runs down into the branch list (no gap) */
+
+/* no gap in vertical lines */
 .edu-school::before{
   content:"";
   position:absolute;
@@ -983,13 +979,12 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   color:#ffffff;
 }
 
-/* achievements list with the little branch ticks */
 .edu-list{list-style:none;margin:0;padding:0 0 0 6px}
 .edu-item{
   position:relative;
   padding:0 0 .85rem 1.55rem;
 }
-.edu-item::before{                 /* vertical branch line */
+.edu-item::before{                
   content:"";
   position:absolute;
   left:0;
@@ -998,7 +993,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   width:1px;
   background:rgba(255,255,255,.4);
 }
-.edu-item::after{                  /* horizontal tick */
+.edu-item::after{                 
   content:"";
   position:absolute;
   left:0;
@@ -1026,7 +1021,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   margin-top:.15rem;
 }
 
-/* smaller laptops: keep 2 columns, slightly smaller text */
+/* smaller laptops keeps 2 columns, slightly smaller text */
 @media(min-width:961px) and (max-width:1279px){
   .edu-school h3{font-size:1rem}
   .edu-course{font-size:.82rem}
@@ -1034,7 +1029,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   .edu-item-meta{font-size:.68rem}
 }
 
-/* TABLET + PHONE: stack the columns, each keeps its own line */
+/* Tablet & mobile stack the columns in each in own line */
 @media(max-width:960px){
   .edu-section{padding:8rem 0 4rem}
   .edu-section .container{width:90%}
@@ -1761,8 +1756,6 @@ footer p{
   .sound-toggle{left:.9rem;bottom:.9rem;width:42px;height:42px}
 }
 
-/* MOBILE PERFORMANCE */
-
 /* Orbit icons */
 .photo-orbit.is-offscreen .orbit-item,
 .photo-orbit.is-offscreen .orbit-counter{animation-play-state:paused}
@@ -1961,8 +1954,6 @@ html body a.back-home.is-pressed.is-pressed{
   border-bottom-color:#1d1d25;
 }
 
-/* EDUCATION: keep heading clear of the floating nav when clicking "About"
-   (more specific selector so it beats section[id]{scroll-margin-top}) */
 section#education.edu-section{
   scroll-margin-top:0;
   padding-top:9rem;
@@ -1971,8 +1962,7 @@ section#education.edu-section{
   section#education.edu-section{padding-top:8rem}
 }
 
-/* EDUCATION: hover / click / tap highlight on each achievement item
-   (item slides right a little, its branch line + tick turn bright white, text glows) */
+/* click & tap glows in education & milestone */
 .edu-item{
   transition:transform .25s cubic-bezier(.16,1,.3,1);
   cursor:pointer;
@@ -2010,12 +2000,7 @@ section#education.edu-section{
   text-shadow:0 0 8px rgba(255,255,255,.6);
 }
 
-/* ==========================================================
-   EDUCATION & MILESTONES: MOBILE / TABLET LAYOUT
-   Vertical timeline: 2026 first, then 2024. The circle sits on
-   the left with the year beside it, and one line runs down from
-   the circle through the school info and every item.
-   ========================================================== */
+/* education & milestone resposive design */
 @media(max-width:960px){
   .edu-section{padding:7rem 0 3.5rem}
   .edu-section .container{width:calc(100% - 36px)}
@@ -2023,7 +2008,7 @@ section#education.edu-section{
   .edu-header{text-align:center;margin-bottom:2.25rem}
   .education-title{font-size:1.6rem;line-height:1.25;letter-spacing:-.02em}
 
-  /* newest first (2026 on top, 2024 below) */
+  /* 2026 in top (education & milestone) */
   .edu-tl{
     display:flex;
     flex-direction:column-reverse;
@@ -2035,7 +2020,6 @@ section#education.edu-section{
     padding-right:0;
   }
 
-  /* year sits right beside the circle */
   .edu-tl .edu-year{
     display:flex;
     align-items:center;
@@ -2046,7 +2030,7 @@ section#education.edu-section{
     letter-spacing:.06em;
   }
 
-  /* circle pinned to the left, vertically centred with the year */
+
   .edu-tl .edu-rail,
   .edu-tl .edu-col:last-child .edu-rail{
     position:absolute;
@@ -2056,7 +2040,7 @@ section#education.edu-section{
     height:14px;
     margin:0;
   }
-  /* no horizontal line / arrow on mobile */
+  
   .edu-tl .edu-rail::before,
   .edu-tl .edu-rail::after,
   .edu-tl .edu-col:last-child .edu-rail::before,
@@ -2064,7 +2048,6 @@ section#education.edu-section{
     display:none;
   }
 
-  /* school block + the line that starts at the circle */
   .edu-tl .edu-school{
     padding-left:25px;
     margin-bottom:1.6rem;
@@ -2082,13 +2065,7 @@ section#education.edu-section{
   .edu-tl .edu-item-meta{font-size:.68rem}
 }
 
-/* ==========================================================
-   EDUCATION ITEMS: click / tap effect (same on desktop + mobile)
-   - the branch line itself stays in place (no broken line)
-   - the tick turns white and slides right, the text slides right and glows
-   - on touch screens the effect stays ~1.5s after the tap so quick
-     taps are visible too
-   ========================================================== */
+/* click & tap effect in education & milestone */
 .edu-item,
 .edu-item:hover,
 .edu-item:active,
@@ -2131,7 +2108,7 @@ section#education.edu-section{
   text-shadow:0 0 8px rgba(255,255,255,.65);
 }
 
-/* touch screens: keep the highlight visible for a moment after the tap */
+/* touch screens in education & milestone */
 @media(hover:none){
   .edu-item::after{
     transition:transform .25s ease 1.5s, background .25s ease 1.5s, box-shadow .25s ease 1.5s;
@@ -2147,9 +2124,7 @@ section#education.edu-section{
   }
 }
 
-/* ==========================================================
-   EDUCATION: MOBILE spacing + text sizes tuned to match the design
-   ========================================================== */
+/* spacing & text sizes in education & milestone */
 @media(max-width:960px){
   section#education.edu-section{padding-top:6rem;padding-bottom:3.5rem}
 
@@ -2176,11 +2151,7 @@ section#education.edu-section{
   .edu-tl .edu-item-meta{font-size:.66rem}
 }
 
-/* ==========================================================
-   EDUCATION MOBILE: line keeps going from the last item of the
-   2026 block (UI/UX & Web Development Associate) down to the
-   2024 circle, so everything is connected like the design.
-   ========================================================== */
+/* connected lines in education & milestone */
 @media(max-width:960px){
   .edu-tl .edu-col:last-child .edu-item:last-child::before{
     top:0;
@@ -2189,11 +2160,7 @@ section#education.edu-section{
   }
 }
 
-/* ==========================================================
-   EDUCATION DESKTOP: click / hover / tap effect like the design
-   The whole item slides right a little, its vertical line and tick
-   turn bright white, and the text glows.
-   ========================================================== */
+/* click & hover design in education & milestone */
 @media(min-width:961px){
   .edu-item{
     transition:transform .25s cubic-bezier(.16,1,.3,1);
@@ -2234,7 +2201,7 @@ section#education.edu-section{
   }
 }
 
-/* touch screens on wide layouts (tablet landscape): keep it visible after a tap */
+/* touch screens layout (mobile & tablet) */
 @media(min-width:961px) and (hover:none){
   .edu-item{transition:transform .25s ease 1.5s}
   .edu-item::before,
@@ -2244,10 +2211,7 @@ section#education.edu-section{
   .edu-item:active::after{transition-delay:0s}
 }
 
-/* ==========================================================
-   EDUCATION: thicker lines (the vertical "I" lines and the
-   horizontal "-" ticks) on mobile + desktop
-   ========================================================== */
+/* thicker lines in education & milestone (desktop layout) */
 .edu-school::before{width:2px}
 
 .edu-item::before{width:2px}
@@ -2262,18 +2226,14 @@ section#education.edu-section{
   .edu-item:last-child::before{height:calc(.68rem + 1px)}
 }
 
-/* keep the 2026 line running down to the 2024 circle on mobile */
+/* circle line */
 @media(max-width:960px){
   .edu-tl .edu-col:last-child .edu-item:last-child::before{
     height:calc(100% + .8rem + 7px);
   }
 }
 
-/* ==========================================================
-   EDUCATION DESKTOP: arrow stops at the "Y" of "UNIVERSITY"
-   in the title "TECHNOLOGICAL UNIVERSITY OF THE PHILIPPINES"
-   (tweak --edu-arrow-len if you want it a bit shorter / longer)
-   ========================================================== */
+/* arrow stops */
 @media(min-width:961px){
   .edu-tl{--edu-arrow-len:18.85rem}
 
@@ -2286,16 +2246,13 @@ section#education.edu-section{
     left:calc(var(--edu-arrow-len) - 12px);
   }
 }
-/* smaller laptops use a smaller title font, so the arrow is shorter too */
+
+/* Title fonts responsive design */
 @media(min-width:961px) and (max-width:1279px){
   .edu-tl{--edu-arrow-len:15.9rem}
 }
 
-/* ==========================================================
-   EDUCATION DESKTOP: arrow head ">" drawn as a bold chevron
-   (clean 2px stroke, same thickness as the line, tip touches the
-   end of the line)
-   ========================================================== */
+/* arrow head in education & milestone */
 @media(min-width:961px){
   .edu-col:last-child .edu-rail::after{
     content:"";
