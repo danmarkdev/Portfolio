@@ -1,4 +1,3 @@
-/* DEVICE CHECK  */
 var COARSE = false;
 var LITE = false;
 try {
@@ -13,7 +12,6 @@ if (LITE) document.documentElement.classList.add('lite-mode');
 var SCROLL_FNS = [];
 var SCROLLING = false;
 
-/* SOUND EFFECTS  */
 var SFX = (function () {
   var audioCtx = null;
   var master = null;
@@ -49,7 +47,6 @@ var SFX = (function () {
     return URL.createObjectURL(new Blob([buf], { type: 'audio/wav' }));
   }
 
-  /* Web Audio on Mobile Devices */
   function iosPlayback() {
     try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) {}
     try {
@@ -148,7 +145,6 @@ var SFX = (function () {
   };
 })();
 
-/* Audio unlock */
 (function () {
   var evts = ['pointerdown', 'pointerup', 'touchstart', 'touchend', 'mousedown', 'click', 'keydown'];
   function unlock() {
@@ -164,11 +160,9 @@ var SFX = (function () {
   });
 })();
 
-/* Sound Hovered */
 var SFX_SELECTOR = 'a, button, .hamburger, .tech-icon-box, .stack-badge, .project-card, .cert-item, .testi-card, .edu-node';
 var sfxHovered = null;
 
-/* Sound Hovered */
 document.addEventListener('mouseover', function (e) {
   var c = e.target && e.target.closest ? e.target.closest(SFX_SELECTOR) : null;
   if (c && c !== sfxHovered) {
@@ -182,13 +176,11 @@ document.addEventListener('mouseout', function (e) {
   if (!related || !sfxHovered.contains(related)) sfxHovered = null;
 });
 
-/* Sound Click */
 document.addEventListener('click', function (e) {
   var t = e.target && e.target.closest ? e.target.closest(SFX_SELECTOR) : null;
   if (t) SFX.click();
 });
 
-/* SOUND ON/OFF BUTTON  */
 (function () {
   var ON_ICON =
     '<svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>' +
@@ -214,14 +206,13 @@ document.addEventListener('click', function (e) {
   btn.addEventListener('click', function () {
     SFX.setMuted(!SFX.isMuted());
     paint();
-    /* Click Sound Handler ON/OFF */
+  
   });
 
   paint();
   document.body.appendChild(btn);
 })();
 
-/*  PRESSED COLOR FLASH */
 (function () {
   var st = document.createElement('style');
   st.textContent =
@@ -246,7 +237,6 @@ document.addEventListener('click', function (e) {
     if (el) flash(el);
   }, true);
 
-  /* navigation white flash */
   document.addEventListener('click', function (e) {
     var a = e.target && e.target.closest ? e.target.closest('a.btn-primary, a.back-home') : null;
     if (!a) return;
@@ -266,7 +256,6 @@ document.addEventListener('click', function (e) {
   }, true);
 })();
 
-/* ICON FALLBACK  */
 document.querySelectorAll('.fb-icon img').forEach(function (img) {
   img.addEventListener('error', function () {
     var wrap = img.closest('.fb-icon');
@@ -292,7 +281,6 @@ document.querySelectorAll('.fb-icon img').forEach(function (img) {
   }, { once: true });
 });
 
-/* HAMBURGER */
 var hbg=document.getElementById('hbg');
 var mnav=document.getElementById('mnav');
 if(hbg&&mnav){
@@ -310,7 +298,6 @@ function closeMenu(){
   if(hbg) hbg.setAttribute('aria-expanded','false');
 }
 
-/* viewport width */
 var MOBILE_BREAKPOINT = window.matchMedia('(max-width: 960px)');
 function handleBreakpointChange(e){
   if(!e.matches) closeMenu();
@@ -321,7 +308,6 @@ if (MOBILE_BREAKPOINT.addEventListener) {
   MOBILE_BREAKPOINT.addListener(handleBreakpointChange);
 }
 
-/* scroll handler  */
 var sections=document.querySelectorAll('section[id]');
 var navLinks=document.querySelectorAll('#nav a:not(.nav-cta)');
 var mobileNavLinks=document.querySelectorAll('#mnav a');
@@ -347,7 +333,6 @@ measureSections();
     queued=false;
     var y=window.scrollY||0;
 
-    /* Scrolling & Touch Devices */
     if(COARSE){
       if(!SCROLLING){ SCROLLING=true; if(orbitEl) orbitEl.classList.add('is-scrolling'); }
       clearTimeout(scrollEndT);
@@ -357,15 +342,12 @@ measureSections();
       },160);
     }
 
-    /* scroll sound */
     acc+=Math.abs(y-lastY);
     lastY=y;
     if(acc>=(COARSE?120:70)){ acc=0; SFX.scroll(); }
 
-    /* header shadow */
     if(headerEl) headerEl.classList.toggle('scrolled',y>30);
 
-    /* active nav link */
     var cur='';
     for(var i=0;i<sectionCache.length;i++){
       if(y>=sectionCache[i].top-120) cur=sectionCache[i].id;
@@ -376,7 +358,6 @@ measureSections();
       mobileNavLinks.forEach(function(a){ a.classList.toggle('active',a.getAttribute('href')==='#'+cur); });
     }
 
-    /* scrolling function */
     for(var j=0;j<SCROLL_FNS.length;j++) SCROLL_FNS[j]();
   }
 
@@ -393,7 +374,6 @@ measureSections();
   if(document.fonts&&document.fonts.ready) document.fonts.ready.then(measureSections);
 })();
 
-/* acive state click */
 [navLinks, mobileNavLinks].forEach(function(list){
   list.forEach(function(a){
     a.addEventListener('click',function(){
@@ -403,7 +383,6 @@ measureSections();
   });
 });
 
-/* technical stack tabs */
 var stackTabs = document.getElementById('stackTabs');
 if(stackTabs){
   var tabBtns = stackTabs.querySelectorAll('.stack-tab-btn');
@@ -417,7 +396,6 @@ if(stackTabs){
   });
 }
 
-/* Scroll reveal */
 var obs=new IntersectionObserver(function(entries){
   entries.forEach(function(e,i){
     if(e.isIntersecting){
@@ -428,7 +406,6 @@ var obs=new IntersectionObserver(function(entries){
 },{threshold:.05,rootMargin:'0px 0px 120px 0px'});
 document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
 
-/* draggable & swipable */
 function initSwipeMarquee(trackId, loopSeconds, direction){
   direction = direction || 1;
   var track = document.getElementById(trackId);
@@ -482,7 +459,6 @@ function initSwipeMarquee(trackId, loopSeconds, direction){
     lastTime = t;
     if(dt > 0.1) dt = 0.1;
 
-    /* off-screen */
     if((!inView || (COARSE && SCROLLING)) && !dragging){
       requestAnimationFrame(tick);
       return;
@@ -577,11 +553,9 @@ function initSwipeMarquee(trackId, loopSeconds, direction){
   requestAnimationFrame(tick);
 }
 
-/* Project static grid */
 initSwipeMarquee('certTrack', 75, 1);
 initSwipeMarquee('certTrack2', 75, -1);
 
-/* contact form "Google Apps Script"  */
 var PAGE_LOADED = Date.now();
 
 function sendMsg(){
@@ -629,7 +603,6 @@ function sendMsg(){
     });
 }
 
-/* COPY PROTECTION */
 document.addEventListener('copy',function(e){ e.preventDefault(); });
 document.addEventListener('cut',function(e){ e.preventDefault(); });
 document.addEventListener('contextmenu',function(e){ e.preventDefault(); });
@@ -638,138 +611,6 @@ document.addEventListener('keydown',function(e){
   if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&['i','j'].includes(e.key.toLowerCase()))) e.preventDefault();
 });
 
-/* EDUCATION & MILESTONES: interactive timeline */
-(function () {
-  var academicData = [
-    {
-      year: '2026',
-      label: 'TUP',
-      range: '2026 - Present',
-      current: true,
-      title: 'Technological University of the Philippines Manila',
-      org: '',
-      desc: 'Bachelor of Technical-Vocational Teacher Education, Major in Computer Programming.',
-      icon: 'cap'
-    },
-    {
-      year: '2024',
-      label: 'STI',
-      range: '2024 - 2026',
-      current: false,
-      title: 'STI College Bacoor',
-      org: 'TVL Track - ICT Major in Mobile Application & Web Development',
-      icon: 'monitor'
-    },
-    {
-      year: '2021',
-      label: 'BNHS',
-      range: '2021 - 2024',
-      current: false,
-      title: 'Bacoor National High School Molino Main',
-      org: 'Technical Drafting, 2D/3D modeling, and digital blueprinting using AutoCAD.',
-      icon: 'chip'
-    }
-  ];
-
-  var recognitionData = [
-    {
-      year: 'Sept 2026',
-      label: 'Ideathon',
-      range: 'Sept 26, 2026',
-      current: true,
-      title: 'AI Visualizer - 7th Place',
-      org: 'AWS Student Builder Group - TUP Manila',
-      desc: 'An AI system concept for generating storefront visuals from text descriptions using AWS Step Functions.',
-      icon: 'trophy'
-    },
-    {
-      year: 'Sept 2026',
-      label: 'Web Development Role',
-      range: 'Sept 26, 2026',
-      current: false,
-      title: 'UI/UX & Web Development Associate',
-      org: 'AWS Student Builder Group - TUP Manila',
-      desc: 'Officially appointed to the role responsible for UI/UX design and Web development in the student builder community.',
-      icon: 'badge'
-    }
-  ];
-
-  var ICONS = {
-    cap: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 1 9l11 6 9-4.9V17h2V9L12 3z"/><path d="M5 13.2V17c0 1.7 3.1 3 7 3s7-1.3 7-3v-3.8l-7 3.8-7-3.8z"/></svg>',
-    monitor: '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="4" width="18" height="13" rx="3"/><rect x="10.5" y="17" width="3" height="2"/><rect x="7.5" y="19.3" width="9" height="1.7" rx="0.85"/><path class="cut" d="M10.6 8.2 8 10.6l2.6 2.6" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path class="cut" d="M13.4 8.2 16 10.6l-2.6 2.6" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-    chip: '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="10" y="1" width="2" height="4"/><rect x="14" y="1" width="2" height="4"/><rect x="10" y="19" width="2" height="4"/><rect x="14" y="19" width="2" height="4"/><rect x="1" y="10" width="4" height="2"/><rect x="1" y="14" width="4" height="2"/><rect x="19" y="10" width="4" height="2"/><rect x="19" y="14" width="4" height="2"/></svg>',
-    trophy: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h12v6a6 6 0 0 1-12 0V3z"/><path d="M6 5H3v2a3 3 0 0 0 3 3M18 5h3v2a3 3 0 0 1-3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="11" y="14" width="2" height="4"/><rect x="7" y="18" width="10" height="3" rx="1"/></svg>',
-    badge: '<svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15 8.5 22 9.3 17 14.1 18.2 21 12 17.6 5.8 21 7 14.1 2 9.3 9 8.5 12 2"/></svg>'
-  };
-
-  function buildTimeline(mountId, data) {
-    var mount = document.getElementById(mountId);
-    if (!mount) return null;
-    mount.innerHTML = '';
-
-    var nodes = data.map(function (item, i) {
-      var btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'edu-node' + (i === 0 ? ' active' : '');
-      btn.setAttribute('data-index', i);
-      btn.innerHTML =
-        '<span class="edu-node-label">' + item.label + '</span>' +
-        '<span class="edu-node-circle">' + ICONS[item.icon] + '</span>' +
-        '<span class="edu-node-year">' + item.year + '</span>';
-      mount.appendChild(btn);
-      return btn;
-    });
-
-    return nodes;
-  }
-
-  function renderDetail(detailId, item) {
-    var detail = document.getElementById(detailId);
-    if (!detail) return;
-    detail.innerHTML =
-      '<div class="edu-detail-date' + (item.current ? ' edu-detail-current' : '') + '">' +
-        '<span class="edu-detail-dot"></span>' + item.range +
-      '</div>' +
-      '<h3 class="edu-detail-title">' + item.title + '</h3>' +
-      (item.org ? '<p class="edu-detail-org">' + item.org + '</p>' : '') +
-      (item.desc ? '<p class="edu-detail-desc">' + item.desc + '</p>' : '');
-  }
-
-  function initTimeline(mountId, detailId, data) {
-    var nodes = buildTimeline(mountId, data);
-    if (!nodes || !nodes.length) return;
-    renderDetail(detailId, data[0]);
-    nodes.forEach(function (btn, i) {
-      btn.addEventListener('click', function () {
-        SFX.tick();
-        nodes.forEach(function (b) { b.classList.remove('active'); });
-        btn.classList.add('active');
-        renderDetail(detailId, data[i]);
-      });
-    });
-  }
-
-  initTimeline('academicTimeline', 'academicDetail', academicData);
-  initTimeline('recognitionTimeline', 'recognitionDetail', recognitionData);
-
-  var eduToggle = document.getElementById('eduToggle');
-  var eduViews = document.querySelectorAll('.edu-timeline-view');
-  if (eduToggle) {
-    eduToggle.addEventListener('click', function (e) {
-      var btn = e.target.closest('.edu-toggle-btn');
-      if (!btn) return;
-      var target = btn.getAttribute('data-view');
-      eduToggle.querySelectorAll('.edu-toggle-btn').forEach(function (b) {
-        b.classList.toggle('active', b === btn);
-      });
-      eduViews.forEach(function (v) {
-        v.classList.toggle('active', v.getAttribute('data-panel') === target);
-      });
-    });
-  }
-})();
-
-/* TESTIMONIALS: 3D fan */
 (function () {
   var deck = document.getElementById('testiDeck');
   if (!deck) return;
@@ -780,7 +621,6 @@ document.addEventListener('keydown',function(e){
   var dotsWrap = document.getElementById('testiDots');
   if (dotsWrap) dotsWrap.style.display = 'none';
 
-  /* Testimonials short text */
   var SHORT_TEXT = {
     'Josh Aguilera':    'Danmark did a great job on the HealthSync Clinic Management System. It\u2019s simple, organized, and easy to use, with features that are practical for daily clinic tasks.',
     'Julia Sardalla':   'The AI Danmark created for me is easy to use and has a creative design. It helped me with my tasks and improved the quality of my work.',
@@ -792,7 +632,6 @@ document.addEventListener('keydown',function(e){
     'Shanell Jamandre': 'Danmark gave me a hugeee help in creating the minigame I desired for my activity simulation for practice teaching. It went to success as he resolved the issues in my minigame program.'
   };
 
-  /* Fallback testimonial */
   var MAX_CHARS = 170;
   function shorten(t) {
     t = t.replace(/\s+/g, ' ').trim();
@@ -806,7 +645,6 @@ document.addEventListener('keydown',function(e){
     return out;
   }
 
-  /* restructure card */
   cards.forEach(function (c) {
     if (c.querySelector('.testi-head')) return;
     var top = c.querySelector('.testi-card-top');
@@ -879,7 +717,6 @@ document.addEventListener('keydown',function(e){
     });
   });
 
-  /* swipe left / right */
   var sx = null, sy = null;
   deck.addEventListener('touchstart', function (e) {
     sx = e.touches[0].clientX;
@@ -910,7 +747,6 @@ document.addEventListener('keydown',function(e){
   render();
 })();
 
-/* TECH TIP EDGE GUARD */
 function computeTipShift(box){
   var tip = box.querySelector('.tech-tip');
   if(!tip) return;
@@ -948,7 +784,6 @@ document.querySelectorAll('.tech-icon-box').forEach(function(box){
   box.addEventListener('focus', function(){ computeTipShift(box); }, true);
 });
 
-/* tooltip touch on hover */
 function adjustAllTechTips(){
   document.querySelectorAll('.tech-icon-box').forEach(computeTipShift);
 }
@@ -968,7 +803,6 @@ function adjustAllTechTips(){
   window.addEventListener('orientationchange', later);
 })();
 
-/* ORBIT DOTS */
 (function () {
   var ring = document.getElementById('orbitRing');
   if (!ring) return;
@@ -1021,7 +855,6 @@ function adjustAllTechTips(){
   });
 })();
 
-/* PAUSE THE ORBITING WHEN OFF-SCREEN */
 (function () {
   var orbit = document.getElementById('photoOrbit');
   if (!orbit || !('IntersectionObserver' in window)) return;
@@ -1030,7 +863,6 @@ function adjustAllTechTips(){
   }, { rootMargin: '60px' }).observe(orbit);
 })();
 
-/* ORBIT ICONS: click or tap an icon -> its name pops up */
 (function () {
   var orbit = document.getElementById('photoOrbit');
   if (!orbit) return;
@@ -1076,7 +908,6 @@ function adjustAllTechTips(){
     });
   });
 
-  /* Tooltip */
   function place(it) {
     var counter = it.querySelector('.orbit-counter');
     var tip = it.querySelector('.orbit-tip');
@@ -1138,7 +969,6 @@ function adjustAllTechTips(){
   window.addEventListener('resize', function () { if (active) place(active); });
 })();
 
-/* NO "-" AT THE END OF A LINE (project descriptions) + highlighted phrases */
 (function () {
   function fixTextNode(node) {
     var text = node.nodeValue;
