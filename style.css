@@ -2146,3 +2146,32 @@ section#education.edu-section{
     transition-delay:0s;
   }
 }
+
+/* ==========================================================
+   EDUCATION: MOBILE spacing + text sizes tuned to match the design
+   ========================================================== */
+@media(max-width:960px){
+  section#education.edu-section{padding-top:6rem;padding-bottom:3.5rem}
+
+  .edu-header{margin-bottom:1.75rem}
+  .education-title{font-size:1.6rem}
+
+  .edu-tl{row-gap:.8rem}
+
+  .edu-tl .edu-year{
+    font-size:1.15rem;
+    margin:0 0 .75rem;
+  }
+  .edu-tl .edu-school{margin-bottom:1.2rem}
+  .edu-tl .edu-school::before{
+    top:calc(-.75rem - 7px);
+    bottom:-1.2rem;
+  }
+  .edu-tl .edu-school h3{font-size:.9rem;margin-bottom:.5rem}
+  .edu-tl .edu-course{font-size:.83rem;margin-bottom:.55rem}
+  .edu-tl .edu-range{font-size:.66rem}
+
+  .edu-tl .edu-item{padding-bottom:.7rem}
+  .edu-tl .edu-item-title{font-size:.82rem}
+  .edu-tl .edu-item-meta{font-size:.66rem}
+}
