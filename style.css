@@ -2269,6 +2269,23 @@ section#education.edu-section{
   }
 }
 
+/* ==========================================================
+   EDUCATION DESKTOP: arrow stops at the "Y" of "UNIVERSITY"
+   in the title "TECHNOLOGICAL UNIVERSITY OF THE PHILIPPINES"
+   (tweak --edu-arrow-len if you want it a bit shorter / longer)
+   ========================================================== */
+@media(min-width:961px){
+  .edu-tl{--edu-arrow-len:18.85rem}
+
+  .edu-col:last-child .edu-rail::before{
+    right:auto;
+    width:calc(var(--edu-arrow-len) - 6px);
+  }
+  .edu-col:last-child .edu-rail::after{
+    right:auto;
+    left:calc(var(--edu-arrow-len) - 12px);
+  }
+}
 /* smaller laptops use a smaller title font, so the arrow is shorter too */
 @media(min-width:961px) and (max-width:1279px){
   .edu-tl{--edu-arrow-len:15.9rem}
