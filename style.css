@@ -2009,3 +2009,75 @@ section#education.edu-section{
 .edu-item:focus .edu-item-meta{
   text-shadow:0 0 8px rgba(255,255,255,.6);
 }
+
+/* ==========================================================
+   EDUCATION & MILESTONES: MOBILE / TABLET LAYOUT
+   Vertical timeline: 2026 first, then 2024. The circle sits on
+   the left with the year beside it, and one line runs down from
+   the circle through the school info and every item.
+   ========================================================== */
+@media(max-width:960px){
+  .edu-section{padding:7rem 0 3.5rem}
+  .edu-section .container{width:calc(100% - 36px)}
+
+  .edu-header{text-align:center;margin-bottom:2.25rem}
+  .education-title{font-size:1.6rem;line-height:1.25;letter-spacing:-.02em}
+
+  /* newest first (2026 on top, 2024 below) */
+  .edu-tl{
+    display:flex;
+    flex-direction:column-reverse;
+    row-gap:2.4rem;
+  }
+  .edu-tl .edu-col,
+  .edu-tl .edu-col:last-child{
+    position:relative;
+    padding-right:0;
+  }
+
+  /* year sits right beside the circle */
+  .edu-tl .edu-year{
+    display:flex;
+    align-items:center;
+    height:28px;
+    padding-left:22px;
+    margin:0 0 1rem;
+    font-size:1.35rem;
+    letter-spacing:.06em;
+  }
+
+  /* circle pinned to the left, vertically centred with the year */
+  .edu-tl .edu-rail,
+  .edu-tl .edu-col:last-child .edu-rail{
+    position:absolute;
+    top:7px;
+    left:0;
+    width:14px;
+    height:14px;
+    margin:0;
+  }
+  /* no horizontal line / arrow on mobile */
+  .edu-tl .edu-rail::before,
+  .edu-tl .edu-rail::after,
+  .edu-tl .edu-col:last-child .edu-rail::before,
+  .edu-tl .edu-col:last-child .edu-rail::after{
+    display:none;
+  }
+
+  /* school block + the line that starts at the circle */
+  .edu-tl .edu-school{
+    padding-left:25px;
+    margin-bottom:1.6rem;
+  }
+  .edu-tl .edu-school::before{
+    top:calc(-1rem - 7px);
+    bottom:-1.6rem;
+  }
+  .edu-tl .edu-school h3{font-size:.95rem}
+  .edu-tl .edu-course{font-size:.85rem}
+  .edu-tl .edu-range{font-size:.7rem}
+
+  .edu-tl .edu-item{padding-left:1.2rem;padding-bottom:.75rem}
+  .edu-tl .edu-item-title{font-size:.85rem}
+  .edu-tl .edu-item-meta{font-size:.68rem}
+}
