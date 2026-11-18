@@ -2275,7 +2275,7 @@ section#education.edu-section{
    (tweak --edu-arrow-len if you want it a bit shorter / longer)
    ========================================================== */
 @media(min-width:961px){
-  .edu-tl{--edu-arrow-len:17.3rem}
+  .edu-tl{--edu-arrow-len:18.35rem}
 
   .edu-col:last-child .edu-rail::before{
     right:auto;
@@ -2288,5 +2288,5 @@ section#education.edu-section{
 }
 /* smaller laptops use a smaller title font, so the arrow is shorter too */
 @media(min-width:961px) and (max-width:1279px){
-  .edu-tl{--edu-arrow-len:14.6rem}
+  .edu-tl{--edu-arrow-len:15.5rem}
 }
