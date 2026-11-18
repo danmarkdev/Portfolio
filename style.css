@@ -2269,24 +2269,27 @@ section#education.edu-section{
   }
 }
 
-/* ==========================================================
-   EDUCATION DESKTOP: arrow stops at the "Y" of "UNIVERSITY"
-   in the title "TECHNOLOGICAL UNIVERSITY OF THE PHILIPPINES"
-   (tweak --edu-arrow-len if you want it a bit shorter / longer)
-   ========================================================== */
-@media(min-width:961px){
-  .edu-tl{--edu-arrow-len:18.35rem}
-
-  .edu-col:last-child .edu-rail::before{
-    right:auto;
-    width:calc(var(--edu-arrow-len) - 6px);
-  }
-  .edu-col:last-child .edu-rail::after{
-    right:auto;
-    left:calc(var(--edu-arrow-len) - 12px);
-  }
-}
 /* smaller laptops use a smaller title font, so the arrow is shorter too */
 @media(min-width:961px) and (max-width:1279px){
-  .edu-tl{--edu-arrow-len:15.5rem}
+  .edu-tl{--edu-arrow-len:15.9rem}
+}
+
+/* ==========================================================
+   EDUCATION DESKTOP: arrow head ">" drawn as a bold chevron
+   (clean 2px stroke, same thickness as the line, tip touches the
+   end of the line)
+   ========================================================== */
+@media(min-width:961px){
+  .edu-col:last-child .edu-rail::after{
+    content:"";
+    position:absolute;
+    top:50%;
+    right:auto;
+    left:calc(var(--edu-arrow-len) - 8px);
+    width:8px;
+    height:14px;
+    border:0;
+    transform:translateY(-50%);
+    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='14' viewBox='0 0 8 14'%3E%3Cpolyline points='1,1 7,7 1,13' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='square' stroke-linejoin='miter'/%3E%3C/svg%3E") no-repeat center / 8px 14px;
+  }
 }
