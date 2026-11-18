@@ -2243,3 +2243,28 @@ section#education.edu-section{
   .edu-item:active::before,
   .edu-item:active::after{transition-delay:0s}
 }
+
+/* ==========================================================
+   EDUCATION: thicker lines (the vertical "I" lines and the
+   horizontal "-" ticks) on mobile + desktop
+   ========================================================== */
+.edu-school::before{width:2px}
+
+.edu-item::before{width:2px}
+.edu-item::after{
+  height:2px;
+  top:calc(.72rem - .5px);
+}
+.edu-item:last-child::before{height:calc(.72rem + 1px)}
+
+@media(max-width:700px){
+  .edu-item::after{top:calc(.68rem - .5px)}
+  .edu-item:last-child::before{height:calc(.68rem + 1px)}
+}
+
+/* keep the 2026 line running down to the 2024 circle on mobile */
+@media(max-width:960px){
+  .edu-tl .edu-col:last-child .edu-item:last-child::before{
+    height:calc(100% + .8rem + 7px);
+  }
+}
