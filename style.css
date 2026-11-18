@@ -3,7 +3,6 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box} 
 
 :root{
-  /* DARK THEME + ORANGE ACCENT */
   --bg:#050507;
   --surface:#0d0d11;
   --accent:#ff7a1a;
@@ -69,13 +68,11 @@ html{scrollbar-width:none}
   margin-bottom: .7rem;
 }
 
-/* What people or clients say */
 #testimonials .sec-eyebrow{color:#ffffff}
 .sec-title-lg{font-size:clamp(2rem,4.5vw,3.1rem)}
 #skills .sec-header{margin-bottom:1.25rem}
 #skills .tech-panel{padding-top:1rem}
 
-/* ANIMATED BACKGROUND CANVAS*/
 #bg-canvas{
   position:fixed;
   inset:0;
@@ -88,7 +85,6 @@ html{scrollbar-width:none}
 
 h1,h2,h3,h4{color:var(--text);font-family:var(--font-heading);letter-spacing:-.02em}
 
-/* Navigation floating header */
 #header{
   position:fixed;
   top:1.1rem;
@@ -367,7 +363,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   --radius:235px;
 }
 
-/* Solar system orbits & orbit gaps */
 .orbit-ring{--ring1:162px;--ring2:182px;--ring3:202px;--o1:246px;--o2:316px;--badge:46px;--badge-icon:26px}
 
 .orbit-line{
@@ -382,10 +377,8 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 .ol-1{width:calc(var(--ring1) * 2);height:calc(var(--ring1) * 2);border:1.5px solid rgba(255,255,255,.14)}
 
-/* Dashed solar line */
 .ol-2{width:calc(var(--ring3) * 2);height:calc(var(--ring3) * 2);border:1.5px dashed rgba(255,255,255,.22)}
 
-/* Solar line */
 .orbit-ring::before{
   content:"";
   position:absolute;
@@ -467,11 +460,9 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   to{transform:translate(-50%,-50%) rotate(calc(var(--angle) * -1 - 360deg))}
 }
 
-/* Orbits left & Right roundings */
 .orbit-item.orb-in{--radius:var(--o1);--dur:42s}
 .orbit-item.orb-out{--radius:var(--o2);--dur:64s}
 
-/* counter rotation orbits */
 .orbit-item.orb-out,
 .orbit-item.orb-out .orbit-counter{animation-direction:reverse}
 
@@ -498,7 +489,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .fb-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .fb-icon img,
 .fb-icon svg{width:15px;height:15px;object-fit:contain;display:block}
-
 
 .fb-icon img[alt="GitHub"],
 .fb-icon img[alt="Vercel"],
@@ -540,7 +530,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 .service-num{display:none}
 
-/* PROJECT CARDS */
 .projects-marquee{
   width:min(1600px, 98%);         
   margin:0 auto;
@@ -579,7 +568,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   transition:border-color .25s ease, background-color .25s ease;
 }
 
-/* hover / tap */
 .project-card:hover,
 .project-card:active,
 .project-card:focus-within{
@@ -665,20 +653,17 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   text-wrap:pretty;          
 }
 
-/* highlighted phrase inside a project description */
 .project-card-desc .hl-white{
   color:#ffffff;
   font-weight:700;
 }
 
-/* SMALLER LAPTOPS Responsive Design */
 @media(min-width:961px) and (max-width:1279px){
   .project-card{padding:14px;gap:20px}
   .project-card-title{font-size:15px}
   .project-card-desc{font-size:12.5px;line-height:1.45;text-align:left}
 }
 
-/* TABLET: 2 */
 @media(max-width:960px){
   .projects-marquee{width:min(640px, 94%)}
   .project-track{grid-template-columns:repeat(4,1fr)}
@@ -687,7 +672,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   .project-card:nth-child(5){grid-column:2 / span 2}
 }
 
-/* MOBILE: 1 */
 @media(max-width:700px){
   .projects-marquee{width:min(320px, 92%)}
   .project-track{grid-template-columns:1fr}
@@ -811,7 +795,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   border-bottom-color:#1d1d25
 }
 
-/* DESKTOP: 10 icons */
 @media(min-width:961px){
   .tech-icon-grid{
     gap:20px;
@@ -824,7 +807,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   }
 }
 
-/* Tech icon bigger size */
 @media(min-width:961px){
   .tech-tip{
     bottom:calc(100% + 16px);
@@ -846,7 +828,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   .tech-icon-box.tip-flip .tech-tip{top:calc(100% + 16px)}
 }
 
-/* education & milestone horizontal timeline */
 .edu-section{
   background:transparent;
   padding:9rem 0 6rem;         
@@ -870,7 +851,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   line-height: 1.2;
 }
 
-/* two columns */
 .edu-tl{
   display:grid;
   grid-template-columns:1.6fr 1fr;
@@ -883,7 +863,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 }
 .edu-col:last-child{padding-right:0}
 
-/* year & label */
 .edu-year{
   display:block;
   font-family:var(--font-mono);
@@ -895,7 +874,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   margin-bottom:1.1rem;
 }
 
-/* line runs to the next column dot */
 .edu-rail{
   position:relative;
   height:14px;
@@ -939,10 +917,8 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   transform:translateY(-50%) rotate(45deg);
 }
 
-/* school block */
 .edu-school{position:relative;padding-left:1.35rem;margin-bottom:2.2rem}
 
-/* no gap in vertical lines */
 .edu-school::before{
   content:"";
   position:absolute;
@@ -1021,7 +997,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   margin-top:.15rem;
 }
 
-/* smaller laptops keeps 2 columns, slightly smaller text */
 @media(min-width:961px) and (max-width:1279px){
   .edu-school h3{font-size:1rem}
   .edu-course{font-size:.82rem}
@@ -1029,7 +1004,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   .edu-item-meta{font-size:.68rem}
 }
 
-/* Tablet & mobile stack the columns in each in own line */
 @media(max-width:960px){
   .edu-section{padding:8rem 0 4rem}
   .edu-section .container{width:90%}
@@ -1054,7 +1028,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   .edu-item:last-child::before{height:.68rem}
 }
 
-/* CERTS */
 .cert-section{background:transparent;position:relative;z-index:1}
 .cert-marquee-row{
   width:100%;
@@ -1145,7 +1118,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
   font-weight: 500;
 }
 
-/* CONTACT SECTION */
 .contact-section{background:transparent;padding:5rem 0 6rem;position:relative;z-index:1}
 .contact-top{text-align:center;margin-bottom:2.5rem}
 .contact-label-top{
@@ -1181,7 +1153,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .contact-round svg{width:20px;height:20px;fill:currentColor;stroke:none}
 .contact-round:hover{color:var(--accent);transform:translateY(-3px);box-shadow:var(--shadow-card-hover);border-color:rgba(255,255,255,.26)}
 
-/* CONTACT PAGE */
 .contact-page-main{min-height:calc(100vh - var(--nav-h));padding-top:calc(var(--nav-h) + 1rem);position:relative;z-index:1}
 .contact-page-section{padding:1rem 0 2.25rem}
 .contact-page-head{max-width:600px;margin:0 auto 3.5rem;text-align:center}
@@ -1277,7 +1248,6 @@ textarea{min-height:120px}
 .contact-form button:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
 #cf-status{font-size:.82rem;min-height:1.2em;color:var(--muted)}
 
-/* BACK TO HOME link (contact page)  */
 .back-home{
   font-family: var(--font-body);
   color: var(--muted);
@@ -1290,7 +1260,6 @@ textarea{min-height:120px}
   transition: color .2s, font-weight .2s;
 }
 
-/* FOOTER */
 footer{background:transparent;border-top:1px solid rgba(255,255,255,.09);padding:2rem 0;position:relative;z-index:1}
 .footer-inner{display:flex;align-items:center;justify-content:space-between}
 footer p{
@@ -1303,11 +1272,9 @@ footer p{
 }
 .footer-logo{font-family: var(--font-heading); font-size:.95rem;font-weight:700;color:var(--dim);letter-spacing:.02em}
 
-/* REVEAL */
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease}
 .reveal.visible{opacity:1;transform:none}
 
-/* Testimonials dark glass 3D  */
 #testimonials{overflow-x:clip}
 
 .testimonial-deck-wrap{
@@ -1427,7 +1394,6 @@ footer p{
   stroke:none;
 }
 
-/* Testimonial Quote Mark */
 .testi-quote-icon{
   font-family:var(--font-heading);
   font-size:1.9rem;
@@ -1463,7 +1429,6 @@ footer p{
     .testimonial-deck-wrap{--card-w:330px;--gap:100px} 
 }
 
-/* Testimonial Cards */
 @media(min-width:961px){
   .testimonial-deck-wrap{
     max-width:1300px;
@@ -1482,7 +1447,6 @@ footer p{
   .testi-text{font-size:.95rem;line-height:1.6}
 }
 
-/* Phone */
 @media(max-width:700px){
   #testimonials{padding-top:3rem}
   #testimonials .sec-header{margin-bottom:.4rem}
@@ -1517,7 +1481,6 @@ footer p{
   .testi-card.testi-active > *{opacity:1}
 }
 
-/* PERSPECTIVE GRID BACKGROUND */
 #grid-bg{
   position:fixed;
   inset:0;
@@ -1566,11 +1529,9 @@ footer p{
 
 #grid-bg:not(.on) .grid-lines{animation-play-state:paused}
 
-
 #bg-canvas{transition:opacity .8s ease}
 #grid-bg.on ~ #bg-canvas{opacity:0}
 
-/* RESPONSIVE Design */
 @media(max-width:960px){
   #nav{display:none}
   #header .nav-cta{display:none}
@@ -1585,7 +1546,6 @@ footer p{
   .photo-orbit{max-width:370px;margin:0 auto} 
   .photo-wrap{width:200px;height:200px}
   
-  /* Orbit icons gap */
   .orbit-ring{--ring1:126px;--ring2:144px;--ring3:162px;--o1:208px;--o2:268px;--badge:40px;--badge-icon:22px}
   .contact-page-grid{grid-template-columns:1fr}
   .footer-inner{flex-direction:column;gap:.5rem;text-align:center}
@@ -1642,7 +1602,6 @@ footer p{
   .contact-page-main{padding-top:calc(var(--nav-h) - .5rem)}
   .contact-page-head{margin-bottom:2rem}
 
-  /* Profile/Photo & Orbit in Mobile Layout */
   .photo-orbit{max-width:340px}
   .photo-wrap{width:192px;height:170px;border-radius:6px;border-width:0}
   .orbit-ring{--o1:104px;--o1b:127px;--o2:150px;--badge:28px;--badge-icon:16px}
@@ -1651,7 +1610,6 @@ footer p{
   .ol-2,
   .orbit-ring::before{display:none}
 
-  /* 1 orbit ring in mobile layout */
   .photo-orbit::before{
     content:"";
     position:absolute;
@@ -1666,13 +1624,11 @@ footer p{
     z-index:1;
   }
 
-  /* inner icon in middle radius (mobile layout) */
   .orbit-item.orb-in[data-name="React"],
   .orbit-item.orb-in[data-name="JavaScript"],
   .orbit-item.orb-in[data-name="Laravel"],
   .orbit-item.orb-in[data-name="MongoDB"]{--radius:var(--o1b)}
 
-  /* hero bio in mobile layout */
   .hero-bio{
     text-wrap:wrap;
     text-align:justify;
@@ -1692,14 +1648,12 @@ footer p{
 @media(max-width:480px){
   .photo-orbit{max-width:310px}
   
-  /* photo & orbit size in mobile layout */
   .hero-name{font-size:2.1rem}
   .section-big-heading{font-size:1.25rem}
   .hero-actions{gap:.5rem}
   .btn-primary,.btn-outline{font-size:.68rem;padding-left:.9rem;padding-right:.9rem;gap:.35rem}
 }
 
-/* MOBILE HEADERS */
 @media(max-width:700px){
   .sec-header{margin-bottom:2rem;text-align:center}
   .sec-title,
@@ -1708,17 +1662,14 @@ footer p{
   .sec-eyebrow{font-size:.65rem;letter-spacing:.12em;margin-bottom:.5rem}
 }
 
-/* MOBILE HERO ORDER */
 @media(max-width:960px){
   .hero-right{order:-1}
   .hero-grid{gap:1.5rem}
 }
 
-/* Straight Orbit */
 .orbit-dot{display:none !important}
 .orbit-ring > div:not([class]){display:none !important}
 
-/* SOUND ON/OFF BUTTON */
 .sound-toggle{
   position:fixed;
   left:1.25rem;
@@ -1756,13 +1707,11 @@ footer p{
   .sound-toggle{left:.9rem;bottom:.9rem;width:42px;height:42px}
 }
 
-/* Orbit icons */
 .photo-orbit.is-offscreen .orbit-item,
 .photo-orbit.is-offscreen .orbit-counter{animation-play-state:paused}
 
 @media(max-width:960px){
   
-  /* backdrop-filter  */
   #header,
   #header.scrolled,
   .sound-toggle{
@@ -1773,7 +1722,6 @@ footer p{
   #header.scrolled{background:rgba(12,12,16,.98)}
   .sound-toggle{background:rgba(12,12,16,.94)}
 
-  /* Grids */
   #grid-bg{
     -webkit-mask-image:none;
     mask-image:none;
@@ -1786,7 +1734,6 @@ footer p{
 
 @media(max-width:700px){
   
-  /* Certificate marquee */
   .cert-marquee-row{
     -webkit-mask-image:none;
     mask-image:none;
@@ -1811,28 +1758,22 @@ footer p{
     background:linear-gradient(270deg, var(--bg), rgba(5,5,7,0));
   }
 
-  /* Lighter shadows on the 3D testimonial cards */
   .testi-card{box-shadow:0 8px 18px -10px rgba(0,0,0,.9)}
   .testi-card.testi-active{box-shadow:0 14px 28px -12px rgba(0,0,0,.95)}
 }
 
-/* WEAK-DEVICE MODE */
 .lite-mode #grid-bg .grid-lines{animation:none}
 .lite-mode .orbit-item,
 .lite-mode .orbit-counter{animation-duration:calc(var(--dur) * 2)}
 
-/* Mobile glitches */
 @media(max-width:960px){
   
-  /* Vanishing Cards */
   .testi-card{will-change:auto}
 
-  /* Scrolling */
   #photoOrbit.is-scrolling .orbit-item,
   #photoOrbit.is-scrolling .orbit-counter{animation-play-state:paused}
 }
 
-/* phone grid */
 #grid-bg .grid-canvas{
   position:absolute;
   inset:0;
@@ -1841,7 +1782,6 @@ footer p{
   display:block;
 }
 
-/* BUTTONS OF VIEW PROJECTS / SEND MESSAGE */
 html body .btn-primary,
 html body .btn-primary:hover,
 html body .btn-primary:active,
@@ -1869,7 +1809,6 @@ html body .contact-form button.is-pressed.is-pressed{
   transform:none !important;
 }
 
-/* BACK TO HOME color fonts */
 html body a.back-home,
 html body a.back-home:visited,
 html body a.back-home:hover,
@@ -1886,8 +1825,6 @@ html body a.back-home.is-pressed.is-pressed{
   transform:none !important;
 }
 
-
-/* Orbit icons (clicking) */
 .orbit-item.is-active{z-index:30}
 .orbit-item.is-active .orbit-counter{z-index:30}
 .photo-orbit.has-active .orbit-item,
@@ -1962,7 +1899,6 @@ section#education.edu-section{
   section#education.edu-section{padding-top:8rem}
 }
 
-/* click & tap glows in education & milestone */
 .edu-item{
   transition:transform .25s cubic-bezier(.16,1,.3,1);
   cursor:pointer;
@@ -2000,7 +1936,6 @@ section#education.edu-section{
   text-shadow:0 0 8px rgba(255,255,255,.6);
 }
 
-/* education & milestone resposive design */
 @media(max-width:960px){
   .edu-section{padding:7rem 0 3.5rem}
   .edu-section .container{width:calc(100% - 36px)}
@@ -2008,7 +1943,6 @@ section#education.edu-section{
   .edu-header{text-align:center;margin-bottom:2.25rem}
   .education-title{font-size:1.6rem;line-height:1.25;letter-spacing:-.02em}
 
-  /* 2026 in top (education & milestone) */
   .edu-tl{
     display:flex;
     flex-direction:column-reverse;
@@ -2029,7 +1963,6 @@ section#education.edu-section{
     font-size:1.35rem;
     letter-spacing:.06em;
   }
-
 
   .edu-tl .edu-rail,
   .edu-tl .edu-col:last-child .edu-rail{
@@ -2065,7 +1998,6 @@ section#education.edu-section{
   .edu-tl .edu-item-meta{font-size:.68rem}
 }
 
-/* click & tap effect in education & milestone */
 .edu-item,
 .edu-item:hover,
 .edu-item:active,
@@ -2108,7 +2040,6 @@ section#education.edu-section{
   text-shadow:0 0 8px rgba(255,255,255,.65);
 }
 
-/* touch screens in education & milestone */
 @media(hover:none){
   .edu-item::after{
     transition:transform .25s ease 1.5s, background .25s ease 1.5s, box-shadow .25s ease 1.5s;
@@ -2124,7 +2055,6 @@ section#education.edu-section{
   }
 }
 
-/* spacing & text sizes in education & milestone */
 @media(max-width:960px){
   section#education.edu-section{padding-top:6rem;padding-bottom:3.5rem}
 
@@ -2151,7 +2081,6 @@ section#education.edu-section{
   .edu-tl .edu-item-meta{font-size:.66rem}
 }
 
-/* connected lines in education & milestone */
 @media(max-width:960px){
   .edu-tl .edu-col:last-child .edu-item:last-child::before{
     top:0;
@@ -2160,7 +2089,6 @@ section#education.edu-section{
   }
 }
 
-/* click & hover design in education & milestone */
 @media(min-width:961px){
   .edu-item{
     transition:transform .25s cubic-bezier(.16,1,.3,1);
@@ -2201,7 +2129,6 @@ section#education.edu-section{
   }
 }
 
-/* touch screens layout (mobile & tablet) */
 @media(min-width:961px) and (hover:none){
   .edu-item{transition:transform .25s ease 1.5s}
   .edu-item::before,
@@ -2211,7 +2138,6 @@ section#education.edu-section{
   .edu-item:active::after{transition-delay:0s}
 }
 
-/* thicker lines in education & milestone (desktop layout) */
 .edu-school::before{width:2px}
 
 .edu-item::before{width:2px}
@@ -2226,14 +2152,12 @@ section#education.edu-section{
   .edu-item:last-child::before{height:calc(.68rem + 1px)}
 }
 
-/* circle line */
 @media(max-width:960px){
   .edu-tl .edu-col:last-child .edu-item:last-child::before{
     height:calc(100% + .8rem + 7px);
   }
 }
 
-/* arrow stops */
 @media(min-width:961px){
   .edu-tl{--edu-arrow-len:18.85rem}
 
@@ -2247,12 +2171,10 @@ section#education.edu-section{
   }
 }
 
-/* Title fonts responsive design */
 @media(min-width:961px) and (max-width:1279px){
   .edu-tl{--edu-arrow-len:15.9rem}
 }
 
-/* arrow head in education & milestone */
 @media(min-width:961px){
   .edu-col:last-child .edu-rail::after{
     content:"";
