@@ -2200,41 +2200,24 @@ section#education.edu-section{
 }
 
 @media(min-width:961px){
-  .orbit-ring{--ring1:162px;--ring2:196px;--ring3:231px}
+  .orbit-ring{--ring1:100px;--ring2:116px;--ring3:130px;--o1:156px;--o2:204px;--badge:32px;--badge-icon:18px}
+  .photo-wrap{width:170px;height:214px}
   .ol-1{border:1.5px dashed rgba(255,255,255,.14)}
   .ol-2{border:1.5px dashed rgba(255,255,255,.22)}
   .orbit-ring::before{border:1.5px solid rgba(255,255,255,.14)}
 }
 
-@media(min-width:961px){
-  .orbit-ring{--o1:270px;--o2:330px;--o3:390px;--badge:52px;--badge-icon:28px}
+@media(min-width:1100px){
+  .orbit-ring{--ring1:112px;--ring2:132px;--ring3:152px;--o1:182px;--o2:236px;--badge:36px;--badge-icon:20px}
+  .photo-wrap{width:200px;height:250px}
+}
 
-  .stack-badge{box-shadow:0 0 22px rgba(0,0,0,.65), 0 8px 18px -8px rgba(0,0,0,.9)}
+@media(min-width:1280px){
+  .orbit-ring{--ring1:130px;--ring2:156px;--ring3:182px;--o1:214px;--o2:280px;--badge:40px;--badge-icon:22px}
+  .photo-wrap{width:230px;height:285px}
+}
 
-  .orbit-ring > .orbit-item:is(:nth-child(3),:nth-child(6),:nth-child(9),:nth-child(14),:nth-child(17),:nth-child(20)){
-    --radius:var(--o1);
-    --dur:44s;
-    animation-direction:normal;
-  }
-  .orbit-ring > .orbit-item:is(:nth-child(3),:nth-child(6),:nth-child(9),:nth-child(14),:nth-child(17),:nth-child(20)) .orbit-counter{
-    animation-direction:normal;
-  }
-
-  .orbit-ring > .orbit-item:is(:nth-child(4),:nth-child(7),:nth-child(10),:nth-child(12),:nth-child(15),:nth-child(18),:nth-child(21)){
-    --radius:var(--o2);
-    --dur:58s;
-    animation-direction:reverse;
-  }
-  .orbit-ring > .orbit-item:is(:nth-child(4),:nth-child(7),:nth-child(10),:nth-child(12),:nth-child(15),:nth-child(18),:nth-child(21)) .orbit-counter{
-    animation-direction:reverse;
-  }
-
-  .orbit-ring > .orbit-item:is(:nth-child(5),:nth-child(8),:nth-child(11),:nth-child(13),:nth-child(16),:nth-child(19)){
-    --radius:var(--o3);
-    --dur:72s;
-    animation-direction:normal;
-  }
-  .orbit-ring > .orbit-item:is(:nth-child(5),:nth-child(8),:nth-child(11),:nth-child(13),:nth-child(16),:nth-child(19)) .orbit-counter{
-    animation-direction:normal;
-  }
+@media(min-width:1400px){
+  .orbit-ring{--ring1:162px;--ring2:196px;--ring3:231px;--o1:268px;--o2:336px;--badge:46px;--badge-icon:26px}
+  .photo-wrap{width:260px;height:320px}
 }
