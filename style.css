@@ -355,6 +355,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
 .photo-wrap img{width:100%;height:100%;object-fit:cover;object-position:center}
 
 @media(min-width:961px){
+  .photo-frame{z-index:4}
   .photo-wrap{
     width:260px;
     height:320px;
