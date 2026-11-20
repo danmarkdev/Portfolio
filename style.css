@@ -2221,3 +2221,9 @@ section#education.edu-section{
   .orbit-ring{--ring1:162px;--ring2:196px;--ring3:231px;--o1:268px;--o2:336px;--badge:46px;--badge-icon:26px}
   .photo-wrap{width:260px;height:320px}
 }
+
+@media(min-width:961px){
+  .photo-orbit .orbit-ring{z-index:6}
+  .photo-orbit .orbit-item.is-active{z-index:60}
+  .photo-orbit .orbit-item.is-active .orbit-counter{z-index:60}
+}
