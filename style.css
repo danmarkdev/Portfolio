@@ -2223,7 +2223,9 @@ section#education.edu-section{
 }
 
 @media(min-width:961px){
-  .photo-orbit .orbit-ring{z-index:6}
+  .photo-orbit{isolation:isolate}
+  .photo-orbit .orbit-ring{z-index:auto}
+  .photo-orbit .orbit-item{z-index:5}
   .photo-orbit .orbit-item.is-active{z-index:60}
   .photo-orbit .orbit-item.is-active .orbit-counter{z-index:60}
 }
