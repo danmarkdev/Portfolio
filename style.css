@@ -2243,7 +2243,7 @@ section#education.edu-section{
     align-items:center;
     justify-content:space-between;
     gap:1.5rem;
-    padding:1rem 3.4rem;
+    padding:1.25rem calc(15.6% - .95rem) 1.25rem 13.3%;
     background:rgba(12,12,18,.9);
     -webkit-backdrop-filter:blur(18px);
     backdrop-filter:blur(18px);
@@ -2258,19 +2258,19 @@ section#education.edu-section{
     box-shadow:0 14px 30px -18px rgba(0,0,0,.9);
   }
   .logo{
-    font-size:1.35rem;
+    font-size:1.5rem;
     letter-spacing:-.02em;
   }
   #nav{
     margin:0 0 0 auto;
-    gap:.7rem;
+    gap:0;
   }
   #nav a{
-    padding:.45rem .85rem;
+    padding:.45rem .95rem;
     border-radius:6px;
     border:1px solid transparent;
     background:none;
-    font-size:.88rem;
+    font-size:1rem;
     font-weight:500;
     color:#ffffff;
     transition:background .2s ease, border-color .2s ease;
@@ -2290,6 +2290,11 @@ section#education.edu-section{
     background:rgba(255,255,255,.07);
     border-color:rgba(255,255,255,.14);
   }
+}
+
+@media(min-width:961px) and (max-width:1279px){
+  #header{padding:1.1rem calc(4% - .95rem) 1.1rem 4%}
+  #nav a{font-size:.92rem;padding:.45rem .7rem}
 }
 
 @media(max-width:960px){
