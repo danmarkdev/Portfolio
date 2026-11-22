@@ -2368,3 +2368,11 @@ section#education.edu-section{
     box-shadow:none;
   }
 }
+
+section#contact{display:none !important}
+
+section#certificates.cert-section{padding-bottom:3rem}
+
+@media(max-width:700px){
+  section#certificates.cert-section{padding-bottom:2rem}
+}
