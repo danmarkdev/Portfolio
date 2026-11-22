@@ -2540,20 +2540,27 @@ html,body{overflow-x:clip;max-width:100%}
 }
 
 .project-title-row{
-  display:block;
+  display:flex;
+  align-items:flex-end;
+  align-items:last baseline;
+  justify-content:flex-start;
+  gap:8px;
   line-height:1.3;
 }
-.project-title-row .project-card-title{display:inline}
+.project-title-row .project-card-title{
+  display:block;
+  min-width:0;
+}
 .project-title-row .project-link-icon{
   display:inline-flex;
   align-items:center;
   justify-content:center;
+  flex-shrink:0;
   width:auto;
   height:auto;
-  margin-left:8px;
+  margin:0 0 3px 0;
   padding:2px;
   border-radius:0;
-  vertical-align:-2px;
   color:rgba(255,255,255,.88);
 }
 .project-title-row .project-link-icon:hover{color:#ffffff;transform:none}
