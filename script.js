@@ -1060,7 +1060,7 @@ function adjustAllTechTips(){
     if(source)text.push(source.textContent.trim());
     img.src=thumb.currentSrc||thumb.src;
     img.alt=title?title.textContent.trim():'Certificate';
-    cap.textContent=text.join(' \u2014 ');
+    cap.textContent=text.join(' - ');
     overlay.classList.add('open');
     overlay.setAttribute('aria-hidden','false');
     document.body.classList.add('cert-open');
