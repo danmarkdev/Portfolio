@@ -66,6 +66,7 @@
 
   function buildCard(item) {
     var card = mk('article', 'fb-card');
+    card.setAttribute('data-pinned', item.pinned ? '1' : '0');
     var name = String(item.name || 'Anonymous');
     var role = item.affiliation ? String(item.affiliation) : 'Visitor';
     var stars = Math.max(1, Math.min(5, parseInt(item.rating, 10) || 5));
@@ -141,7 +142,7 @@
       return;
     }
     showEmpty('Loading feedback\u2026');
-    api(TABLE + '?select=*&order=created_at.desc&limit=' + LIMIT)
+    api(TABLE + '?select=*&order=pinned.desc,created_at.desc&limit=' + LIMIT)
       .then(function (rows) {
         grid.innerHTML = '';
         if (!rows || !rows.length) {
@@ -266,7 +267,11 @@
         try { localStorage.setItem(POST_KEY, String(Date.now())); } catch (err) {}
         if (row) {
           empty.hidden = true;
-          grid.insertBefore(buildCard(row), grid.firstChild);
+          var firstUnpinned = null;
+          for (var i = 0; i < grid.children.length; i++) {
+            if (grid.children[i].getAttribute('data-pinned') !== '1') { firstUnpinned = grid.children[i]; break; }
+          }
+          grid.insertBefore(buildCard(row), firstUnpinned);
           while (grid.children.length > LIMIT) grid.removeChild(grid.lastChild);
         }
         form.reset();
