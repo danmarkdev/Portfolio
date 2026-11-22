@@ -2351,20 +2351,20 @@ section#education.edu-section{
     align-items:center;
     justify-content:center;
     text-align:center;
-    font-size:1.1rem;
-    font-weight:700;
-    padding:1.1rem 1.5rem;
-    border-radius:2px;
-    border:1px solid rgba(255,255,255,.16);
-    background:linear-gradient(180deg, rgba(38,38,42,.85), rgba(22,22,25,.9));
+    font-size:1.05rem;
+    font-weight:500;
+    padding:1.05rem 1.5rem;
+    border-radius:6px;
+    border:1px solid rgba(255,255,255,.14);
+    background:rgba(255,255,255,.07);
     box-shadow:none;
   }
   .mobile-nav a:hover,
   .mobile-nav a:active,
   .mobile-nav a.active{
     color:#ffffff;
-    border-color:#ffffff;
-    background:linear-gradient(180deg, rgba(58,58,63,.9), rgba(34,34,38,.95));
-    box-shadow:0 0 18px rgba(255,255,255,.08);
+    border-color:rgba(255,255,255,.14);
+    background:rgba(255,255,255,.07);
+    box-shadow:none;
   }
 }
