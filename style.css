@@ -2468,3 +2468,5 @@ body.cert-open{overflow:hidden}
   }
   .cert-viewer-caption{font-size:.82rem;padding:.55rem .9rem}
 }
+
+section#certificates ~ footer{display:none !important}
