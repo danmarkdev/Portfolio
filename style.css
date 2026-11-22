@@ -2474,8 +2474,50 @@ section#certificates ~ footer{display:none !important}
 html,body{overflow-x:clip;max-width:100%}
 
 @media(max-width:700px){
-  #testimonials .sec-header{margin-bottom:2.25rem}
-  #testimonials{padding-bottom:6rem}
-  .testimonial-deck-wrap{padding-bottom:7rem}
-  .testi-card{background:linear-gradient(165deg, #1c1c22, #0d0d11)}
+  #testimonials .sec-header{margin-bottom:1.25rem}
+  .testimonial-deck-wrap{padding-bottom:0}
+
+  .testimonial-deck{
+    height:auto !important;
+    display:flex;
+    flex-wrap:nowrap;
+    align-items:stretch;
+    gap:.9rem;
+    margin:0 -5vw;
+    padding:.25rem 5vw 1.25rem;
+    perspective:none;
+    overflow-x:auto;
+    overflow-y:hidden;
+    scroll-snap-type:x mandatory;
+    scroll-padding:0 5vw;
+    touch-action:auto !important;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .testimonial-deck::-webkit-scrollbar{display:none}
+
+  .testi-card,
+  .testi-card.testi-active,
+  .testi-card.testi-far,
+  .testi-card.testi-out{
+    position:relative !important;
+    top:auto;
+    left:auto !important;
+    flex:0 0 84%;
+    width:auto;
+    max-width:none;
+    height:auto !important;
+    transform:none !important;
+    opacity:1 !important;
+    z-index:auto !important;
+    pointer-events:auto;
+    scroll-snap-align:start;
+    background:linear-gradient(165deg, #1c1c22, #0d0d11);
+    border-color:rgba(255,255,255,.14);
+    box-shadow:0 10px 24px -12px rgba(0,0,0,.9);
+    cursor:default;
+  }
+  .testi-card::after{display:none}
+  .testi-card > *,
+  .testi-card:not(.testi-active) > *{opacity:1 !important}
 }
