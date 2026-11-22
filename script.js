@@ -1032,3 +1032,76 @@ function adjustAllTechTips(){
     run();
   }
 })();
+
+(function(){
+  var overlay=document.createElement('div');
+  overlay.className='cert-viewer';
+  overlay.setAttribute('role','dialog');
+  overlay.setAttribute('aria-modal','true');
+  overlay.setAttribute('aria-hidden','true');
+  overlay.innerHTML='<button type="button" class="cert-viewer-close" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg></button><figure class="cert-viewer-figure"><img class="cert-viewer-img" alt=""/><figcaption class="cert-viewer-caption"></figcaption></figure>';
+  document.body.appendChild(overlay);
+
+  var img=overlay.querySelector('.cert-viewer-img');
+  var cap=overlay.querySelector('.cert-viewer-caption');
+  var closeBtn=overlay.querySelector('.cert-viewer-close');
+  var down=false;
+  var moved=false;
+  var startX=0;
+  var startY=0;
+
+  function openViewer(item){
+    var thumb=item.querySelector('img');
+    if(!thumb)return;
+    var title=item.querySelector('h4');
+    var source=item.querySelector('p');
+    var text=[];
+    if(title)text.push(title.textContent.trim());
+    if(source)text.push(source.textContent.trim());
+    img.src=thumb.currentSrc||thumb.src;
+    img.alt=title?title.textContent.trim():'Certificate';
+    cap.textContent=text.join(' \u2014 ');
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden','false');
+    document.body.classList.add('cert-open');
+  }
+
+  function closeViewer(){
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden','true');
+    document.body.classList.remove('cert-open');
+  }
+
+  document.addEventListener('pointerdown',function(e){
+    down=true;
+    moved=false;
+    startX=e.clientX;
+    startY=e.clientY;
+  },true);
+
+  document.addEventListener('pointermove',function(e){
+    if(!down)return;
+    if(Math.abs(e.clientX-startX)>6||Math.abs(e.clientY-startY)>6)moved=true;
+  },true);
+
+  document.addEventListener('pointerup',function(){down=false},true);
+  document.addEventListener('pointercancel',function(){down=false;moved=true},true);
+
+  document.addEventListener('click',function(e){
+    if(overlay.classList.contains('open'))return;
+    var item=e.target.closest('.cert-item');
+    if(!item)return;
+    if(moved){moved=false;return}
+    openViewer(item);
+  });
+
+  closeBtn.addEventListener('click',closeViewer);
+
+  overlay.addEventListener('click',function(e){
+    if(e.target===overlay||e.target.classList.contains('cert-viewer-figure'))closeViewer();
+  });
+
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&overlay.classList.contains('open'))closeViewer();
+  });
+})();
