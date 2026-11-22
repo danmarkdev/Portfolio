@@ -1,6 +1,6 @@
 (function () {
-  var SUPABASE_URL = 'YOUR_SUPABASE_URL';
-  var SUPABASE_KEY = 'YOUR_SUPABASE_ANON_KEY';
+  var SUPABASE_URL = 'https://clwfpsfitruokqrxfoyt.supabase.co';
+  var SUPABASE_KEY = 'sb_publishable_ve9e-w9WgQKLfrvC-1DVRQ_VpCcKP0E';
   var TABLE = 'feedback';
   var LIMIT = 12;
   var LIKED_KEY = 'fb_liked';
