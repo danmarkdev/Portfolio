@@ -2470,3 +2470,8 @@ body.cert-open{overflow:hidden}
 }
 
 section#certificates ~ footer{display:none !important}
+
+@media(max-width:700px){
+  .testimonial-deck-wrap{padding-bottom:7rem}
+  .testi-card{background:linear-gradient(165deg, #1c1c22, #0d0d11)}
+}
