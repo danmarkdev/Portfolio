@@ -2291,3 +2291,75 @@ section#education.edu-section{
     border-color:rgba(255,255,255,.14);
   }
 }
+
+@media(max-width:960px){
+  :root{--nav-h:64px}
+  #header,
+  #header.scrolled{
+    top:0;
+    left:0;
+    transform:none;
+    width:100%;
+    max-width:none;
+    padding:.8rem 1.1rem;
+    background:rgba(5,5,7,.98);
+    border:none;
+    border-bottom:1px solid rgba(255,255,255,.18);
+    border-radius:0;
+    box-shadow:none;
+  }
+  .logo{
+    font-size:1.1rem;
+    letter-spacing:.04em;
+  }
+  .hamburger{
+    width:44px;
+    height:44px;
+    border-radius:2px;
+    border:1px solid rgba(255,255,255,.55);
+    background:rgba(255,255,255,.04);
+  }
+  .hamburger:hover{background:rgba(255,255,255,.1)}
+  .hamburger span{width:18px}
+
+  body.menu-open #header{
+    background:transparent;
+    border-bottom-color:transparent;
+  }
+  body.menu-open .logo{visibility:hidden}
+  #header:has(.hamburger.open){
+    background:transparent;
+    border-bottom-color:transparent;
+  }
+  #header:has(.hamburger.open) .logo{visibility:hidden}
+
+  .mobile-nav{
+    justify-content:flex-start;
+    gap:.9rem;
+    padding:6.25rem 1.5rem 2rem;
+  }
+  .mobile-nav::before,
+  .mobile-nav::after{display:none}
+  .mobile-nav a{
+    max-width:324px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    font-size:1.1rem;
+    font-weight:700;
+    padding:1.1rem 1.5rem;
+    border-radius:2px;
+    border:1px solid rgba(255,255,255,.16);
+    background:linear-gradient(180deg, rgba(38,38,42,.85), rgba(22,22,25,.9));
+    box-shadow:none;
+  }
+  .mobile-nav a:hover,
+  .mobile-nav a:active,
+  .mobile-nav a.active{
+    color:#ffffff;
+    border-color:#ffffff;
+    background:linear-gradient(180deg, rgba(58,58,63,.9), rgba(34,34,38,.95));
+    box-shadow:0 0 18px rgba(255,255,255,.08);
+  }
+}
