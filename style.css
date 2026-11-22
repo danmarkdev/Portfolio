@@ -2243,7 +2243,7 @@ section#education.edu-section{
     align-items:center;
     justify-content:space-between;
     gap:1.5rem;
-    padding:1.25rem calc(15.6% - .95rem) 1.25rem 13.3%;
+    padding:1.2rem calc(5.4% - .7rem) 1.2rem 3.9%;
     background:rgba(12,12,18,.9);
     -webkit-backdrop-filter:blur(18px);
     backdrop-filter:blur(18px);
@@ -2263,14 +2263,14 @@ section#education.edu-section{
   }
   #nav{
     margin:0 0 0 auto;
-    gap:0;
+    gap:1.35rem;
   }
   #nav a{
-    padding:.45rem .95rem;
+    padding:.45rem .7rem;
     border-radius:6px;
     border:1px solid transparent;
     background:none;
-    font-size:1rem;
+    font-size:.95rem;
     font-weight:500;
     color:#ffffff;
     transition:background .2s ease, border-color .2s ease;
@@ -2293,8 +2293,8 @@ section#education.edu-section{
 }
 
 @media(min-width:961px) and (max-width:1279px){
-  #header{padding:1.1rem calc(4% - .95rem) 1.1rem 4%}
-  #nav a{font-size:.92rem;padding:.45rem .7rem}
+  #nav{gap:.6rem}
+  #nav a{font-size:.88rem}
 }
 
 @media(max-width:960px){
