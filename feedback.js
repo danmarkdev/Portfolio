@@ -1,304 +1,285 @@
-.feedback-section{padding-top:0;padding-bottom:7rem}
+(function () {
+  var SUPABASE_URL = 'YOUR_SUPABASE_URL';
+  var SUPABASE_KEY = 'YOUR_SUPABASE_ANON_KEY';
+  var TABLE = 'feedback';
+  var LIMIT = 12;
+  var LIKED_KEY = 'fb_liked';
+  var POST_KEY = 'fb_last_post';
+  var COOLDOWN = 60000;
 
-.fb-head{margin-bottom:2.25rem;display:flex;flex-direction:column;align-items:center;gap:1.1rem}
+  var grid = document.getElementById('fbGrid');
+  var empty = document.getElementById('fbEmpty');
+  var openBtn = document.getElementById('fbOpen');
+  var modal = document.getElementById('fbModal');
+  var closeBtn = document.getElementById('fbClose');
+  var form = document.getElementById('fbForm');
+  var nameEl = document.getElementById('fbName');
+  var affEl = document.getElementById('fbAff');
+  var msgEl = document.getElementById('fbMsg');
+  var honeyEl = document.getElementById('fbWebsite');
+  var rateEl = document.getElementById('fbRate');
+  var statusEl = document.getElementById('fbStatus');
+  var submitBtn = document.getElementById('fbSubmit');
+  if (!grid || !modal || !form) return;
 
-.fb-open{
-  display:inline-flex;
-  align-items:center;
-  gap:.6rem;
-  padding:.75rem 1.4rem;
-  background:#1a1b25;
-  color:#ffffff;
-  border:1px solid rgba(255,255,255,.7);
-  border-radius:12px;
-  font-family:var(--font-body);
-  font-size:.9rem;
-  font-weight:700;
-  cursor:pointer;
-  box-shadow:0 10px 24px -12px rgba(0,0,0,.9);
-  transition:background .2s ease, border-color .2s ease, transform .15s ease;
-}
-.fb-open:hover{background:#242634;border-color:#ffffff;transform:translateY(-2px)}
-.fb-open:active{transform:none}
-.fb-open svg{width:15px;height:15px;fill:currentColor;flex-shrink:0}
+  var configured = /^https?:\/\//.test(SUPABASE_URL) && SUPABASE_KEY.indexOf('YOUR_') !== 0;
+  var rating = 5;
+  var openedAt = 0;
+  var liked = [];
+  try { liked = JSON.parse(localStorage.getItem(LIKED_KEY) || '[]'); } catch (e) { liked = []; }
+  if (!Array.isArray(liked)) liked = [];
 
-.fb-wrap{width:min(1180px,92%);margin:0 auto}
+  var STAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>';
+  var HEART = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>';
 
-.fb-grid{
-  display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:20px;
-}
+  function api(path, opts) {
+    opts = opts || {};
+    var headers = { apikey: SUPABASE_KEY, 'Content-Type': 'application/json' };
+    if (SUPABASE_KEY.indexOf('eyJ') === 0) headers.Authorization = 'Bearer ' + SUPABASE_KEY;
+    if (opts.prefer) headers.Prefer = opts.prefer;
+    return fetch(SUPABASE_URL.replace(/\/$/, '') + '/rest/v1/' + path, {
+      method: opts.method || 'GET',
+      headers: headers,
+      body: opts.body ? JSON.stringify(opts.body) : undefined
+    }).then(function (res) {
+      if (!res.ok) throw new Error('http ' + res.status);
+      return res.json();
+    });
+  }
 
-.fb-card{
-  min-width:0;
-  display:flex;
-  flex-direction:column;
-  gap:20px;
-  padding:22px;
-  background:#0d0e13;
-  border:1px solid rgba(255,255,255,.2);
-  border-radius:20px;
-  box-shadow:0 14px 30px -16px rgba(0,0,0,.9);
-  transition:border-color .25s ease, background-color .25s ease;
-}
-.fb-card:hover{border-color:rgba(255,255,255,.6);background:#10121a}
+  function mk(tag, cls, text) {
+    var el = document.createElement(tag);
+    if (cls) el.className = cls;
+    if (text !== undefined) el.textContent = text;
+    return el;
+  }
 
-.fb-card-top{display:flex;align-items:center;gap:12px}
-.fb-avatar{
-  width:42px;
-  height:42px;
-  flex-shrink:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#1a1b25;
-  border:1px solid rgba(255,255,255,.28);
-  border-radius:50%;
-  color:#ffffff;
-  font-family:var(--font-heading);
-  font-size:1rem;
-  font-weight:700;
-}
-.fb-who{min-width:0;flex:1;display:flex;flex-direction:column;gap:2px}
-.fb-name{
-  color:#ffffff;
-  font-family:var(--font-body);
-  font-size:.95rem;
-  font-weight:600;
-  line-height:1.2;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-.fb-role{
-  color:#ffffff;
-  font-family:var(--font-body);
-  font-size:.75rem;
-  line-height:1.2;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-.fb-stars{display:flex;gap:2px;flex-shrink:0}
-.fb-stars svg{width:14px;height:14px;fill:#e0b83a;display:block}
-.fb-stars svg.off{fill:rgba(255,255,255,.16)}
+  function fmtDate(v) {
+    var d = new Date(v);
+    if (isNaN(d.getTime())) return '';
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  }
 
-.fb-text{
-  flex:1;
-  color:#e3e5ee;
-  font-family:var(--font-body);
-  font-size:.92rem;
-  line-height:1.6;
-  text-align:justify;
-  text-justify:inter-word;
-  overflow-wrap:anywhere;
-}
+  function saveLiked() {
+    try { localStorage.setItem(LIKED_KEY, JSON.stringify(liked)); } catch (e) {}
+  }
 
-.fb-foot{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  padding-top:14px;
-  border-top:1px solid rgba(255,255,255,.1);
-}
-.fb-date{color:#ffffff;font-family:var(--font-body);font-size:.78rem}
-.fb-like{
-  display:inline-flex;
-  align-items:center;
-  gap:7px;
-  padding:.32rem .7rem;
-  background:transparent;
-  color:#ffffff;
-  border:1px solid rgba(255,255,255,.3);
-  border-radius:100px;
-  font-family:var(--font-body);
-  font-size:.78rem;
-  font-weight:500;
-  cursor:pointer;
-  transition:border-color .2s ease, background .2s ease;
-}
-.fb-like:hover{border-color:#ffffff;background:rgba(255,255,255,.05)}
-.fb-like:disabled{opacity:.6;cursor:default}
-.fb-like svg{width:14px;height:14px;fill:#ffffff;transition:fill .2s ease, transform .2s ease}
-.fb-like.liked svg{fill:#ff5c7a;transform:scale(1.1)}
+  function buildCard(item) {
+    var card = mk('article', 'fb-card');
+    var name = String(item.name || 'Anonymous');
+    var role = item.affiliation ? String(item.affiliation) : 'Visitor';
+    var stars = Math.max(1, Math.min(5, parseInt(item.rating, 10) || 5));
 
-.fb-empty{
-  text-align:center;
-  color:var(--muted);
-  font-family:var(--font-body);
-  font-size:.95rem;
-  padding:2rem 0;
-}
-.fb-empty[hidden]{display:none}
+    var top = mk('div', 'fb-card-top');
+    top.appendChild(mk('div', 'fb-avatar', name.charAt(0).toUpperCase()));
 
-.fb-modal{
-  position:fixed;
-  inset:0;
-  z-index:3100;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:1rem;
-  background:rgba(3,3,5,.82);
-  -webkit-backdrop-filter:blur(6px);
-  backdrop-filter:blur(6px);
-  opacity:0;
-  visibility:hidden;
-  transition:opacity .25s ease, visibility 0s linear .25s;
-}
-.fb-modal.open{
-  opacity:1;
-  visibility:visible;
-  transition:opacity .25s ease, visibility 0s linear 0s;
-}
+    var who = mk('div', 'fb-who');
+    who.appendChild(mk('div', 'fb-name', name));
+    who.appendChild(mk('div', 'fb-role', role));
+    top.appendChild(who);
 
-.fb-dialog{
-  position:relative;
-  width:min(480px,100%);
-  max-height:calc(100vh - 2rem);
-  overflow-y:auto;
-  padding:30px;
-  background:#0d0e13;
-  border:1px solid rgba(255,255,255,.3);
-  border-radius:22px;
-  overscroll-behavior:contain;
-  box-shadow:0 30px 80px -20px rgba(0,0,0,.95);
-  transform:translateY(12px);
-  transition:transform .25s ease;
-  scrollbar-width:none;
-}
-.fb-dialog::-webkit-scrollbar{display:none}
-.fb-modal.open .fb-dialog{transform:none}
+    var starWrap = mk('div', 'fb-stars');
+    starWrap.setAttribute('aria-label', 'Rated ' + stars + ' out of 5');
+    for (var i = 1; i <= 5; i++) {
+      var holder = document.createElement('span');
+      holder.innerHTML = STAR;
+      var svg = holder.firstChild;
+      if (i > stars) svg.setAttribute('class', 'off');
+      starWrap.appendChild(svg);
+    }
+    top.appendChild(starWrap);
+    card.appendChild(top);
 
-.fb-close{
-  position:absolute;
-  top:22px;
-  right:22px;
-  width:28px;
-  height:28px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:transparent;
-  border:none;
-  color:#ffffff;
-  cursor:pointer;
-}
-.fb-close svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round}
-.fb-close:hover{opacity:.7}
+    card.appendChild(mk('p', 'fb-text', '\u201C' + String(item.message || '') + '\u201D'));
 
-.fb-dialog-head{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-right:34px}
-.fb-dialog-icon{
-  width:48px;
-  height:48px;
-  flex-shrink:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#1a1b25;
-  border:1px solid rgba(255,255,255,.28);
-  border-radius:14px;
-  color:#ffffff;
-}
-.fb-dialog-icon svg{width:22px;height:22px;fill:currentColor}
-.fb-dialog-head h3{
-  color:#ffffff;
-  font-family:var(--font-body);
-  font-size:1.2rem;
-  font-weight:700;
-  letter-spacing:-.02em;
-  line-height:1.2;
-}
-.fb-dialog-head p{color:#e3e5ee;font-family:var(--font-body);font-size:.85rem;margin-top:2px}
+    var foot = mk('div', 'fb-foot');
+    foot.appendChild(mk('span', 'fb-date', fmtDate(item.created_at)));
 
-.fb-form{display:flex;flex-direction:column;gap:16px}
-.fb-row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.fb-field{display:flex;flex-direction:column;gap:8px;min-width:0}
-.fb-field label{
-  color:#ffffff;
-  font-family:var(--font-body);
-  font-size:.85rem;
-  font-weight:700;
-}
-.fb-field input,
-.fb-field textarea{
-  width:100%;
-  background:#1a1b25;
-  color:#ffffff;
-  border:1px solid rgba(255,255,255,.28);
-  border-radius:12px;
-  font-family:var(--font-body);
-  font-size:.92rem;
-  padding:.8rem 1rem;
-  outline:none;
-  transition:border-color .2s ease;
-}
-.fb-field input{height:44px}
-.fb-field textarea{min-height:84px;resize:vertical}
-.fb-field input::placeholder,
-.fb-field textarea::placeholder{color:#8a8da3}
-.fb-field input:focus,
-.fb-field textarea:focus{border-color:#ffffff}
+    var likeBtn = mk('button', 'fb-like');
+    likeBtn.type = 'button';
+    likeBtn.setAttribute('aria-label', 'Like this feedback');
+    likeBtn.innerHTML = HEART;
+    var count = mk('span', 'fb-like-count', String(item.likes || 0));
+    likeBtn.appendChild(count);
+    if (liked.indexOf(item.id) !== -1) likeBtn.classList.add('liked');
 
-.fb-rate{display:flex;gap:6px}
-.fb-rate button{
-  width:30px;
-  height:30px;
-  padding:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:transparent;
-  border:none;
-  cursor:pointer;
-}
-.fb-rate svg{width:28px;height:28px;fill:#4a4c5c;transition:fill .15s ease, transform .15s ease}
-.fb-rate button.on svg{fill:#e0b83a}
-.fb-rate button:hover svg{transform:scale(1.12)}
+    likeBtn.addEventListener('click', function () {
+      if (likeBtn.disabled || !configured) return;
+      var isLiked = liked.indexOf(item.id) !== -1;
+      likeBtn.disabled = true;
+      api('rpc/' + (isLiked ? 'unlike_feedback' : 'like_feedback'), { method: 'POST', body: { fid: item.id } })
+        .then(function (n) {
+          var next = typeof n === 'number' ? n : Math.max(0, (item.likes || 0) + (isLiked ? -1 : 1));
+          item.likes = next;
+          count.textContent = String(next);
+          if (isLiked) {
+            liked = liked.filter(function (x) { return x !== item.id; });
+            likeBtn.classList.remove('liked');
+          } else {
+            liked.push(item.id);
+            likeBtn.classList.add('liked');
+          }
+          saveLiked();
+        })
+        .catch(function () {})
+        .then(function () { likeBtn.disabled = false; });
+    });
 
-.fb-hp{
-  position:absolute;
-  left:-9999px;
-  width:1px;
-  height:1px;
-  opacity:0;
-  pointer-events:none;
-}
+    foot.appendChild(likeBtn);
+    card.appendChild(foot);
+    return card;
+  }
 
-.fb-status{min-height:1.2em;font-family:var(--font-body);font-size:.82rem;color:var(--muted)}
-.fb-status.err{color:#ff6b6b}
-.fb-status.ok{color:#22c55e}
+  function showEmpty(text) {
+    empty.textContent = text;
+    empty.hidden = false;
+  }
 
-.fb-submit{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:.6rem;
-  width:100%;
-  height:46px;
-  background:#1a1b25;
-  color:#ffffff;
-  border:1px solid rgba(255,255,255,.7);
-  border-radius:12px;
-  font-family:var(--font-body);
-  font-size:.92rem;
-  font-weight:700;
-  cursor:pointer;
-  transition:background .2s ease, border-color .2s ease;
-}
-.fb-submit:hover{background:#242634;border-color:#ffffff}
-.fb-submit:disabled{opacity:.55;cursor:not-allowed}
-.fb-submit svg{width:16px;height:16px;fill:currentColor}
+  function loadFeedback() {
+    if (!configured) {
+      showEmpty('Feedback is not available yet.');
+      return;
+    }
+    showEmpty('Loading feedback\u2026');
+    api(TABLE + '?select=*&order=created_at.desc&limit=' + LIMIT)
+      .then(function (rows) {
+        grid.innerHTML = '';
+        if (!rows || !rows.length) {
+          showEmpty('No feedback yet. Be the first to leave one!');
+          return;
+        }
+        empty.hidden = true;
+        rows.forEach(function (row) { grid.appendChild(buildCard(row)); });
+      })
+      .catch(function () {
+        showEmpty('Could not load feedback right now.');
+      });
+  }
 
-@media(max-width:1100px){
-  .fb-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-}
-@media(max-width:640px){
-  .fb-grid{grid-template-columns:1fr}
-  .fb-row2{grid-template-columns:1fr}
-  .fb-dialog{padding:24px 20px}
-  .fb-close{top:16px;right:16px}
-  .feedback-section{padding-bottom:5rem}
-}
+  function paintRate(n) {
+    Array.prototype.forEach.call(rateEl.children, function (b, i) {
+      b.classList.toggle('on', i < n);
+      b.setAttribute('aria-checked', (i + 1) === rating ? 'true' : 'false');
+    });
+  }
+
+  (function buildRate() {
+    rateEl.setAttribute('role', 'radiogroup');
+    rateEl.setAttribute('aria-label', 'Rating');
+    for (var i = 1; i <= 5; i++) {
+      (function (n) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.setAttribute('role', 'radio');
+        b.setAttribute('aria-label', n + ' star' + (n > 1 ? 's' : ''));
+        b.innerHTML = STAR;
+        b.addEventListener('mouseenter', function () { paintRate(n); });
+        b.addEventListener('focus', function () { paintRate(n); });
+        b.addEventListener('click', function () { rating = n; paintRate(rating); });
+        rateEl.appendChild(b);
+      })(i);
+    }
+    rateEl.addEventListener('mouseleave', function () { paintRate(rating); });
+    rateEl.addEventListener('focusout', function () { paintRate(rating); });
+    paintRate(rating);
+  })();
+
+  function setStatus(text, kind) {
+    statusEl.textContent = text || '';
+    statusEl.className = 'fb-status' + (kind ? ' ' + kind : '');
+  }
+
+  var lockY = 0;
+
+  function currentY() {
+    return window.pageYOffset || document.documentElement.scrollTop || 0;
+  }
+
+  function keepScroll() {
+    if (Math.abs(currentY() - lockY) > 1) {
+      window.scrollTo({ top: lockY, left: 0, behavior: 'instant' });
+    }
+  }
+
+  function openModal() {
+    setStatus('');
+    openedAt = Date.now();
+    lockY = currentY();
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    setTimeout(function () {
+      try { nameEl.focus({ preventScroll: true }); } catch (err) { nameEl.focus(); }
+      keepScroll();
+    }, 60);
+  }
+
+  function closeModal() {
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+  }
+
+  window.addEventListener('scroll', function () {
+    if (modal.classList.contains('open')) keepScroll();
+  }, { passive: true });
+
+  function blockOutside(e) {
+    if (!modal.classList.contains('open')) return;
+    if (e.target && e.target.closest && e.target.closest('.fb-dialog')) return;
+    e.preventDefault();
+  }
+  modal.addEventListener('wheel', blockOutside, { passive: false });
+  modal.addEventListener('touchmove', blockOutside, { passive: false });
+
+  openBtn.addEventListener('click', openModal);
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!configured) { setStatus('Feedback is not available yet.', 'err'); return; }
+
+    var name = nameEl.value.trim();
+    var aff = affEl.value.trim();
+    var msg = msgEl.value.trim();
+
+    if (honeyEl && honeyEl.value) return;
+    if (!name || !msg) { setStatus('Please fill in your name and message.', 'err'); return; }
+    if (Date.now() - openedAt < 2500) { setStatus('Please take a moment to write your message.', 'err'); return; }
+
+    var last = 0;
+    try { last = parseInt(localStorage.getItem(POST_KEY) || '0', 10) || 0; } catch (err) { last = 0; }
+    if (Date.now() - last < COOLDOWN) { setStatus('Please wait a minute before posting again.', 'err'); return; }
+
+    submitBtn.disabled = true;
+    setStatus('Posting\u2026');
+
+    api(TABLE + '?select=*', {
+      method: 'POST',
+      prefer: 'return=representation',
+      body: { name: name.slice(0, 40), affiliation: aff ? aff.slice(0, 40) : null, rating: rating, message: msg.slice(0, 500) }
+    })
+      .then(function (rows) {
+        var row = rows && rows[0];
+        try { localStorage.setItem(POST_KEY, String(Date.now())); } catch (err) {}
+        if (row) {
+          empty.hidden = true;
+          grid.insertBefore(buildCard(row), grid.firstChild);
+          while (grid.children.length > LIMIT) grid.removeChild(grid.lastChild);
+        }
+        form.reset();
+        rating = 5;
+        paintRate(rating);
+        setStatus('Thank you for your feedback!', 'ok');
+        setTimeout(closeModal, 900);
+      })
+      .catch(function () {
+        setStatus('Could not post right now. Please try again.', 'err');
+      })
+      .then(function () { submitBtn.disabled = false; });
+  });
+
+  loadFeedback();
+})();
