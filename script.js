@@ -628,7 +628,6 @@ document.addEventListener('keydown',function(e){
     'Clark Zablan':     'His development was quite fast, even remarkable. From learning the basics, he has gained a lot of knowledge and solved many problems.',
     'Benny Scoggins':   'He is very passionate about his work and pours his time, skills, and knowledge into it. He finds solutions you wouldn\u2019t think of.',
     'Asher Brum':       'His growth was exemplary and worthy of imitation, and his programming skills were commendable even from his early stages.',
-    'Joaquin Flores':   'Danmark handled the design and back-end work alone and delivered on time. He\u2019s honest, responsible, and a snappy developer.',
     'Ken Cuaresma':     'Danmark is a skilled and dedicated developer. He is easy to work with, takes every project seriously, and I would definitely recommend him.',
     'Shanell Jamandre': 'Danmark gave me a hugeee help in creating the minigame I desired for my activity simulation for practice teaching. It went to success as he resolved the issues in my minigame program.'
   };
