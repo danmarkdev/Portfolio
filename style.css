@@ -2478,6 +2478,8 @@ html,body{overflow-x:clip;max-width:100%}
   .testimonial-deck-wrap{padding-bottom:0}
 
   .testimonial-deck{
+    width:auto;
+    max-width:none;
     height:auto !important;
     display:flex;
     flex-wrap:nowrap;
@@ -2503,7 +2505,7 @@ html,body{overflow-x:clip;max-width:100%}
     position:relative !important;
     top:auto;
     left:auto !important;
-    flex:0 0 84%;
+    flex:0 0 88%;
     width:auto;
     max-width:none;
     height:auto !important;
@@ -2520,4 +2522,19 @@ html,body{overflow-x:clip;max-width:100%}
   .testi-card::after{display:none}
   .testi-card > *,
   .testi-card:not(.testi-active) > *{opacity:1 !important}
+
+  .testi-head{gap:.55rem}
+  .testi-avatar{width:40px;height:40px;font-size:1rem}
+  .testi-name{
+    font-size:.92rem;
+    white-space:nowrap;
+    min-width:0;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .testi-rating{
+    padding:.25rem .55rem .25rem .45rem;
+    font-size:.72rem;
+    gap:.3rem;
+  }
 }
