@@ -2371,10 +2371,10 @@ section#education.edu-section{
 
 section#contact{display:none !important}
 
-section#certificates.cert-section{padding-bottom:4.5rem}
+section#certificates.cert-section{padding-bottom:10rem}
 
 @media(max-width:700px){
-  section#certificates.cert-section{padding-bottom:3rem}
+  section#certificates.cert-section{padding-bottom:10rem}
 }
 
 .cert-item{cursor:zoom-in}
