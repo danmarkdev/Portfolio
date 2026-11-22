@@ -1059,18 +1059,43 @@ function adjustAllTechTips(){
     var text=[];
     if(title)text.push(title.textContent.trim());
     if(source)text.push(source.textContent.trim());
-    img.src=thumb.currentSrc||thumb.src;
+    var nextSrc=thumb.currentSrc||thumb.src;
+    clearTimeout(clearT);
+    img.style.transition='none';
+    img.style.opacity='0';
+    img.onload=function(){
+      img.style.transition='opacity .2s ease';
+      img.style.opacity='1';
+    };
+    img.onerror=function(){
+      img.style.transition='opacity .2s ease';
+      img.style.opacity='1';
+    };
+    img.removeAttribute('src');
     img.alt=title?title.textContent.trim():'Certificate';
     cap.textContent=text.join(' - ');
+    img.src=nextSrc;
+    if(img.complete&&img.naturalWidth>0){
+      img.style.transition='opacity .2s ease';
+      img.style.opacity='1';
+    }
     overlay.classList.add('open');
     overlay.setAttribute('aria-hidden','false');
     document.body.classList.add('cert-open');
   }
 
+  var clearT;
   function closeViewer(){
     overlay.classList.remove('open');
     overlay.setAttribute('aria-hidden','true');
     document.body.classList.remove('cert-open');
+    clearTimeout(clearT);
+    clearT=setTimeout(function(){
+      if(overlay.classList.contains('open'))return;
+      img.style.opacity='0';
+      img.removeAttribute('src');
+      cap.textContent='';
+    },300);
   }
 
   document.addEventListener('pointerdown',function(e){
