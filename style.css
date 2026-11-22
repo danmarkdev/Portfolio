@@ -2471,7 +2471,11 @@ body.cert-open{overflow:hidden}
 
 section#certificates ~ footer{display:none !important}
 
+html,body{overflow-x:clip;max-width:100%}
+
 @media(max-width:700px){
+  #testimonials .sec-header{margin-bottom:2.25rem}
+  #testimonials{padding-bottom:6rem}
   .testimonial-deck-wrap{padding-bottom:7rem}
   .testi-card{background:linear-gradient(165deg, #1c1c22, #0d0d11)}
 }
