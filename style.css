@@ -2239,9 +2239,9 @@ section#education.edu-section{
     transform:none;
     width:100%;
     max-width:none;
-    display:grid;
-    grid-template-columns:1fr auto 1fr;
+    display:flex;
     align-items:center;
+    justify-content:space-between;
     gap:1.5rem;
     padding:1rem 3.4rem;
     background:rgba(12,12,18,.9);
@@ -2258,14 +2258,12 @@ section#education.edu-section{
     box-shadow:0 14px 30px -18px rgba(0,0,0,.9);
   }
   .logo{
-    justify-self:start;
     font-size:1.35rem;
     letter-spacing:-.02em;
   }
   #nav{
-    justify-self:center;
-    margin:0;
-    gap:.25rem;
+    margin:0 0 0 auto;
+    gap:.7rem;
   }
   #nav a{
     padding:.45rem .85rem;
