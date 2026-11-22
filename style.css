@@ -2234,45 +2234,46 @@ section#education.edu-section{
 
 @media(min-width:961px){
   #header{
-    top:1.25rem;
-    left:50%;
-    transform:translateX(-50%);
-    width:calc(100% - 3rem);
-    max-width:1140px;
-    display:grid;
-    grid-template-columns:1fr auto 1fr;
+    top:0;
+    left:0;
+    transform:none;
+    width:100%;
+    max-width:none;
+    display:flex;
     align-items:center;
+    justify-content:space-between;
     gap:1.5rem;
-    padding:.85rem 2rem;
-    background:rgba(12,12,16,.82);
+    padding:1rem max(1.75rem, calc((100% - var(--max-w)) / 2));
+    background:rgba(12,12,18,.9);
     -webkit-backdrop-filter:blur(18px);
     backdrop-filter:blur(18px);
-    border:1px solid var(--border);
-    border-radius:14px;
-    box-shadow:var(--shadow-card);
+    border:none;
+    border-bottom:1px solid var(--border);
+    border-radius:0;
+    box-shadow:none;
   }
   #header.scrolled{
-    background:rgba(12,12,16,.94);
-    border-color:rgba(255,255,255,.16);
-    box-shadow:var(--shadow-card-hover);
+    background:rgba(12,12,18,.96);
+    border-bottom-color:rgba(255,255,255,.14);
+    box-shadow:0 14px 30px -18px rgba(0,0,0,.9);
   }
   .logo{
-    justify-self:start;
     font-size:1.35rem;
     letter-spacing:-.02em;
   }
   #nav{
-    justify-self:center;
-    margin:0;
-    gap:2.25rem;
+    margin:0 0 0 auto;
+    gap:.25rem;
   }
   #nav a{
-    padding:.4rem 0;
-    border-radius:0;
+    padding:.45rem .85rem;
+    border-radius:6px;
+    border:1px solid transparent;
     background:none;
     font-size:.88rem;
     font-weight:500;
-    color:var(--muted);
+    color:#ffffff;
+    transition:background .2s ease, border-color .2s ease;
   }
   #nav a:not(.nav-cta)::after{
     content:none;
@@ -2280,11 +2281,13 @@ section#education.edu-section{
   #nav a:not(.nav-cta):hover{
     color:#ffffff;
     font-weight:500;
-    background:none;
+    background:rgba(255,255,255,.04);
+    border-color:transparent;
   }
   #nav a:not(.nav-cta).active{
-    color:var(--accent);
+    color:#ffffff;
     font-weight:500;
-    background:none;
+    background:rgba(255,255,255,.07);
+    border-color:rgba(255,255,255,.14);
   }
 }
