@@ -2197,29 +2197,36 @@ section#education.edu-section{
 }
 
 @media(min-width:961px){
-  .orbit-ring{--ring1:78px;--ring2:90px;--ring3:102px;--o1:122px;--o2:160px;--badge:28px;--badge-icon:16px}
-  .photo-wrap{width:140px;height:176px}
+  .hero-grid{--orbit-w:410px}
+  .container.hero-grid{
+    width:calc(100% - 2.5rem);
+    max-width:none;
+    grid-template-columns:minmax(0,1fr) var(--orbit-w);
+    gap:1rem;
+  }
+  .hero-right{width:var(--orbit-w);justify-self:end}
+  .photo-orbit{width:var(--orbit-w);max-width:none}
+  .orbit-ring{--ring1:92px;--ring2:108px;--ring3:124px;--o1:146px;--o2:188px;--badge:30px;--badge-icon:17px}
+  .photo-wrap{width:150px;height:190px}
   .ol-1{border:1.5px dashed rgba(255,255,255,.14)}
   .ol-2{border:1.5px dashed rgba(255,255,255,.22)}
   .orbit-ring::before{border:1.5px solid rgba(255,255,255,.14)}
 }
 
 @media(min-width:1130px){
-  .orbit-ring{--ring1:90px;--ring2:104px;--ring3:118px;--o1:138px;--o2:182px;--badge:30px;--badge-icon:17px}
-  .photo-wrap{width:150px;height:190px}
+  .hero-grid{--orbit-w:540px}
+  .orbit-ring{--ring1:120px;--ring2:146px;--ring3:172px;--o1:200px;--o2:250px;--badge:36px;--badge-icon:20px}
+  .photo-wrap{width:190px;height:236px}
 }
 
-@media(min-width:1346px){
-  .orbit-ring{--ring1:112px;--ring2:132px;--ring3:152px;--o1:182px;--o2:236px;--badge:36px;--badge-icon:20px}
-  .photo-wrap{width:200px;height:250px}
-}
-
-@media(min-width:1526px){
-  .orbit-ring{--ring1:130px;--ring2:156px;--ring3:182px;--o1:214px;--o2:280px;--badge:40px;--badge-icon:22px}
+@media(min-width:1280px){
+  .hero-grid{--orbit-w:638px}
+  .orbit-ring{--ring1:144px;--ring2:174px;--ring3:205px;--o1:238px;--o2:296px;--badge:42px;--badge-icon:24px}
   .photo-wrap{width:230px;height:285px}
 }
 
-@media(min-width:1646px){
+@media(min-width:1400px){
+  .hero-grid{--orbit-w:722px}
   .orbit-ring{--ring1:162px;--ring2:196px;--ring3:231px;--o1:268px;--o2:336px;--badge:46px;--badge-icon:26px}
   .photo-wrap{width:260px;height:320px}
 }
@@ -2315,7 +2322,7 @@ section#education.edu-section{
     border-color:rgba(255,255,255,.22);
   }
 
-  .hero-name{font-size:clamp(1.8rem,3vw,3.4rem)}
+  .hero-name{font-size:clamp(1.5rem,2.35vw,3rem)}
 
   .sound-toggle{
     z-index:1001;
@@ -2350,6 +2357,15 @@ section#education.edu-section{
   .project-card{padding:21px;gap:30px}
   .project-card-title{font-size:17px}
   .project-card-desc{font-size:14px;line-height:1.4;text-align:justify}
+}
+
+@media(min-width:1400px){
+  .projects-marquee{width:min(1134px, 94%)}
+  .project-track{grid-template-columns:repeat(8,1fr)}
+  .project-card{grid-column:span 2;padding:21px;gap:30px}
+  .project-card:nth-child(5){grid-column:4 / span 2}
+  .project-card-title{font-size:17px;font-weight:600}
+  .project-card-desc{font-size:14px;font-weight:400;line-height:1.4;text-align:justify}
 }
 
 section#contact{display:none !important}
