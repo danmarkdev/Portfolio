@@ -1442,9 +1442,28 @@ footer p{
   .testimonial-deck-wrap{
     max-width:1300px;
     --card-w:360px;
-    --step:28px;
+    --gap:clamp(112px, 10.5vw, 150px);
+    --drop:28px;
+    padding-bottom:calc(var(--drop) * 3 + 1rem);
+  }
+  .testimonial-deck{
+    display:block;
+    height:300px !important;
+    padding-bottom:0;
+    perspective:1000px;
+    perspective-origin:50% 42%;
   }
   .testi-card{
+    position:absolute !important;
+    top:0 !important;
+    left:50% !important;
+    grid-area:auto;
+    transform-origin:50% 50%;
+    transform:
+      translateX(-50%)
+      translateX(calc(var(--o, 0) * var(--gap)))
+      translateY(calc(min(var(--a, 0), 3) * var(--drop)))
+      translateZ(calc(var(--a, 0) * -100px));
     padding:1.2rem 1.5rem 1.4rem;
     gap:.65rem;
     border-radius:22px;
