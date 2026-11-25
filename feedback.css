@@ -296,7 +296,7 @@
   .fb-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 
-@media(max-width:640px){
+@media(max-width:700px){
   .feedback-section{padding-bottom:4rem}
 
   .fb-head{align-items:stretch;gap:1rem;margin-bottom:1.5rem;padding:0 8px}
@@ -304,31 +304,40 @@
   .fb-open:hover{transform:none}
 
   .fb-wrap{width:100%}
-  .fb-grid{
-    display:flex;
-    gap:13px;
-    padding:0 8px 6px;
-    overflow-x:auto;
-    overflow-y:hidden;
+
+  #fbGrid.fb-grid{
+    display:flex !important;
+    gap:10px !important;
+    padding:0 8px 6px !important;
+    overflow-x:auto !important;
+    overflow-y:hidden !important;
     scroll-snap-type:x mandatory;
     scroll-padding:0 8px;
     -webkit-overflow-scrolling:touch;
     scrollbar-width:none;
   }
-  .fb-grid::-webkit-scrollbar{display:none}
-  .fb-grid::after{content:"";flex:0 0 1px}
+  #fbGrid.fb-grid::-webkit-scrollbar{display:none}
+  #fbGrid.fb-grid::after{content:"";flex:0 0 1px}
 
-  .fb-card{
-    flex:0 0 min(292px, calc(100vw - 100px));
-    width:min(292px, calc(100vw - 100px));
-    max-width:none;
-    gap:14px;
-    padding:20px 20px 16px;
+  #fbGrid.fb-grid .fb-card{
+    flex:0 0 256px !important;
+    width:256px !important;
+    max-width:256px !important;
+    gap:10px !important;
+    padding:14px 16px 12px !important;
     scroll-snap-align:start;
   }
-  .fb-card-top{gap:12px}
-  .fb-text{font-size:.9rem;line-height:1.5}
-  .fb-foot{padding-top:12px}
+  #fbGrid.fb-grid .fb-card-top{gap:10px !important}
+  #fbGrid.fb-grid .fb-avatar{width:36px !important;height:36px !important;font-size:.9rem !important}
+  #fbGrid.fb-grid .fb-name{font-size:.86rem !important}
+  #fbGrid.fb-grid .fb-role{font-size:.68rem !important}
+  #fbGrid.fb-grid .fb-stars{gap:1px !important}
+  #fbGrid.fb-grid .fb-stars svg{width:11px !important;height:11px !important}
+  #fbGrid.fb-grid .fb-text{font-size:.8rem !important;line-height:1.4 !important;flex:0 0 auto !important}
+  #fbGrid.fb-grid .fb-foot{padding-top:10px !important}
+  #fbGrid.fb-grid .fb-date{font-size:.7rem !important}
+  #fbGrid.fb-grid .fb-like{padding:.22rem .55rem !important;font-size:.7rem !important;gap:5px !important}
+  #fbGrid.fb-grid .fb-like svg{width:12px !important;height:12px !important}
 
   .fb-row2{grid-template-columns:1fr}
   .fb-dialog{padding:24px 20px}
