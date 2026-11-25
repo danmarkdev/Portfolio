@@ -299,19 +299,19 @@
 @media(max-width:640px){
   .feedback-section{padding-bottom:4rem}
 
-  .fb-head{align-items:stretch;gap:1rem;margin-bottom:1.5rem}
+  .fb-head{align-items:stretch;gap:1rem;margin-bottom:1.5rem;padding:0 8px}
   .fb-open{width:100%;justify-content:center}
   .fb-open:hover{transform:none}
 
   .fb-wrap{width:100%}
   .fb-grid{
     display:flex;
-    gap:14px;
-    padding:0 4% 6px;
+    gap:13px;
+    padding:0 8px 6px;
     overflow-x:auto;
     overflow-y:hidden;
     scroll-snap-type:x mandatory;
-    scroll-padding:0 4%;
+    scroll-padding:0 8px;
     -webkit-overflow-scrolling:touch;
     scrollbar-width:none;
   }
@@ -319,10 +319,16 @@
   .fb-grid::after{content:"";flex:0 0 1px}
 
   .fb-card{
-    flex:0 0 78%;
-    max-width:290px;
+    flex:0 0 min(292px, calc(100vw - 100px));
+    width:min(292px, calc(100vw - 100px));
+    max-width:none;
+    gap:14px;
+    padding:20px 20px 16px;
     scroll-snap-align:start;
   }
+  .fb-card-top{gap:12px}
+  .fb-text{font-size:.9rem;line-height:1.5}
+  .fb-foot{padding-top:12px}
 
   .fb-row2{grid-template-columns:1fr}
   .fb-dialog{padding:24px 20px}
