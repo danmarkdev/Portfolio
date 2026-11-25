@@ -307,6 +307,7 @@
 
   #fbGrid.fb-grid{
     display:flex !important;
+    align-items:flex-start !important;
     gap:10px !important;
     padding:0 8px 6px !important;
     overflow-x:auto !important;
@@ -323,8 +324,11 @@
     flex:0 0 256px !important;
     width:256px !important;
     max-width:256px !important;
+    height:auto !important;
+    min-height:0 !important;
+    align-self:flex-start !important;
     gap:10px !important;
-    padding:14px 16px 12px !important;
+    padding:14px 16px 10px !important;
     scroll-snap-align:start;
   }
   #fbGrid.fb-grid .fb-card-top{gap:10px !important}
@@ -333,9 +337,9 @@
   #fbGrid.fb-grid .fb-role{font-size:.68rem !important}
   #fbGrid.fb-grid .fb-stars{gap:1px !important}
   #fbGrid.fb-grid .fb-stars svg{width:11px !important;height:11px !important}
-  #fbGrid.fb-grid .fb-text{font-size:.8rem !important;line-height:1.4 !important;flex:0 0 auto !important}
-  #fbGrid.fb-grid .fb-foot{padding-top:10px !important}
-  #fbGrid.fb-grid .fb-date{font-size:.7rem !important}
+  #fbGrid.fb-grid .fb-text{font-size:.8rem !important;line-height:1.4 !important;flex:0 0 auto !important;margin:0 !important}
+  #fbGrid.fb-grid .fb-foot{padding-top:10px !important;margin:0 !important}
+  #fbGrid.fb-grid .fb-date{font-size:.7rem !important;line-height:1.2 !important}
   #fbGrid.fb-grid .fb-like{padding:.22rem .55rem !important;font-size:.7rem !important;gap:5px !important}
   #fbGrid.fb-grid .fb-like svg{width:12px !important;height:12px !important}
 
